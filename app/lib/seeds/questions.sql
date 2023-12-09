@@ -16,7 +16,7 @@ VALUES (
     'NATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Work number / native
     question_id,
@@ -33,7 +33,7 @@ VALUES (
     'NATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Email address / native
     question_id,
@@ -50,7 +50,7 @@ VALUES (
     'NATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Other email address / native
     question_id,
@@ -67,7 +67,7 @@ VALUES (
     'NATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Last name / native / irl
     question_id,
@@ -84,7 +84,7 @@ VALUES (
     'NATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Phone number / native / irl
     question_id,
@@ -101,7 +101,7 @@ VALUES (
     'NATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Address / native / irl
     question_id,
@@ -118,7 +118,7 @@ VALUES (
     'NATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Other address / native / irl
     question_id,
@@ -135,7 +135,7 @@ VALUES (
     'NATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Birthday / pseudo
     question_id,
@@ -152,7 +152,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Birthdate / pseudo
     question_id,
@@ -169,7 +169,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Father's birthday / pseudo
     question_id,
@@ -186,7 +186,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Mother's birthday / pseudo
     question_id,
@@ -203,7 +203,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Girlfriend's birthday / pseudo
     question_id,
@@ -220,7 +220,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Crush's birthday / pseudo
     question_id,
@@ -237,7 +237,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Father's birthdate / pseudo
     question_id,
@@ -254,7 +254,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Mother's birthdate / pseudo
     question_id,
@@ -271,7 +271,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Girlfriend's birthdate / pseudo
     question_id,
@@ -288,7 +288,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Crush's birthdate / pseudo
     question_id,
@@ -305,7 +305,7 @@ VALUES (
     'PSEUDO',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite actor / custom
     question_id,
@@ -324,7 +324,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite actress / custom
 -- !! Former 'Favorite series' !! --
@@ -344,7 +344,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime character / custom
     question_id,
@@ -361,7 +361,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime waifu / custom
     question_id,
@@ -378,7 +378,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime series / custom
     question_id,
@@ -395,7 +395,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime franchise / custom
     question_id,
@@ -412,7 +412,7 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime studio / custom
     question_id,
@@ -429,5 +429,5 @@ VALUES (
     'CUSTOM',
     now(),
     now()
-);
+); -- Done. 
 
