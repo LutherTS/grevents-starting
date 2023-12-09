@@ -28,19 +28,19 @@ VALUES ( -- from “me” to Alice
     'IRL',
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Alice to “me”
 SET 
     contact_mirror_id = 'd82d3469-a60c-4696-9c02-b7b93ce32c7c',
     contact_updated_at = now()
-WHERE contact_id = '47b3155e-8af4-471a-919e-d4d470667b65'; 
+WHERE contact_id = '47b3155e-8af4-471a-919e-d4d470667b65'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Alice
 SET 
     contact_mirror_id = '47b3155e-8af4-471a-919e-d4d470667b65',
     contact_updated_at = now()
-WHERE contact_id = 'd82d3469-a60c-4696-9c02-b7b93ce32c7c';
+WHERE contact_id = 'd82d3469-a60c-4696-9c02-b7b93ce32c7c'; -- Done.
 
 -- “me” and Bianca / relation combination “friend” --
 
@@ -69,19 +69,19 @@ VALUES ( -- from “me” to Bianca
     'FRIEND',
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Bianca to “me”
 SET 
     contact_mirror_id = '25e9b4aa-4ccc-4d8d-8921-531bd04aa8db',
     contact_updated_at = now()
-WHERE contact_id = 'b8d1d6bd-89b1-4759-aef9-71d6cf09b69f'; 
+WHERE contact_id = 'b8d1d6bd-89b1-4759-aef9-71d6cf09b69f'; -- Done.
 
 UPDATE Contacts -- mirror contact from “me” to Bianca
 SET 
     contact_mirror_id = 'b8d1d6bd-89b1-4759-aef9-71d6cf09b69f',
     contact_updated_at = now()
-WHERE contact_id = '25e9b4aa-4ccc-4d8d-8921-531bd04aa8db';
+WHERE contact_id = '25e9b4aa-4ccc-4d8d-8921-531bd04aa8db'; -- Done.
 
 -- “me” and Candice / relation combination “none” --
 
@@ -110,19 +110,19 @@ VALUES ( -- from “me” to Candice
     'NONE',
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Candice to “me”
 SET 
     contact_mirror_id = '0c6ab84c-7937-497b-b10f-d3b9e36936e9',
     contact_updated_at = now()
-WHERE contact_id = 'fa42999f-12f7-47ed-b1ca-d3406f5a1c53'; 
+WHERE contact_id = 'fa42999f-12f7-47ed-b1ca-d3406f5a1c53'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Candice
 SET 
     contact_mirror_id = 'fa42999f-12f7-47ed-b1ca-d3406f5a1c53',
     contact_updated_at = now()
-WHERE contact_id = '0c6ab84c-7937-497b-b10f-d3b9e36936e9';
+WHERE contact_id = '0c6ab84c-7937-497b-b10f-d3b9e36936e9'; -- Done. 
 
 -- “me” and Danny / relation combination nonexistent --
 
@@ -153,19 +153,19 @@ VALUES ( -- from “me” to Lucas
     'FRIEND',
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Lucas to “me”
 SET 
     contact_mirror_id = '05e5c7d9-c6c5-4a41-890d-177963339ea3',
     contact_updated_at = now()
-WHERE contact_id = '6bb14ae7-6518-4f8b-a631-4ed1784fee37'; 
+WHERE contact_id = '6bb14ae7-6518-4f8b-a631-4ed1784fee37'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Lucas
 SET 
     contact_mirror_id = '6bb14ae7-6518-4f8b-a631-4ed1784fee37',
     contact_updated_at = now()
-WHERE contact_id = '05e5c7d9-c6c5-4a41-890d-177963339ea3';
+WHERE contact_id = '05e5c7d9-c6c5-4a41-890d-177963339ea3'; -- Done. 
 
 -- “me” and Malcolm / relation combination “irl” --
 
@@ -194,19 +194,19 @@ VALUES ( -- from “me” to Malcolm
     'IRL',
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Malcolm to “me”
 SET 
     contact_mirror_id = '16e15409-7067-4076-8fac-3511ce066fe0',
     contact_updated_at = now()
-WHERE contact_id = 'a482ca35-d86f-4d0e-8da8-d557f3d8ec93'; 
+WHERE contact_id = 'a482ca35-d86f-4d0e-8da8-d557f3d8ec93'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Malcolm
 SET 
     contact_mirror_id = 'a482ca35-d86f-4d0e-8da8-d557f3d8ec93',
     contact_updated_at = now()
-WHERE contact_id = '16e15409-7067-4076-8fac-3511ce066fe0';
+WHERE contact_id = '16e15409-7067-4076-8fac-3511ce066fe0'; -- Done. 
 
 -- “me” and Nancy / relation combination “blocking” --
 
@@ -235,19 +235,19 @@ VALUES ( -- from “me” to Nancy
     FALSE,
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Nancy to “me”
 SET 
     contact_mirror_id = '283d9040-54ef-45c7-b7c1-217e768e7536',
     contact_updated_at = now()
-WHERE contact_id = '1e52e857-d2b3-4b06-b3a9-a2d127e962ba'; 
+WHERE contact_id = '1e52e857-d2b3-4b06-b3a9-a2d127e962ba'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Nancy
 SET 
     contact_mirror_id = '1e52e857-d2b3-4b06-b3a9-a2d127e962ba',
     contact_updated_at = now()
-WHERE contact_id = '283d9040-54ef-45c7-b7c1-217e768e7536';
+WHERE contact_id = '283d9040-54ef-45c7-b7c1-217e768e7536'; -- Done. 
 
 -- “me” and Ophelia / relation combination “blocked” --
 
@@ -276,19 +276,19 @@ VALUES ( -- from “me” to Ophelia
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Ophelia to “me”
 SET 
     contact_mirror_id = '99b1fb21-c053-4a53-b1ab-87ac7fdb5d2d',
     contact_updated_at = now()
-WHERE contact_id = '293be617-e711-4f2a-ae35-af959d012289'; 
+WHERE contact_id = '293be617-e711-4f2a-ae35-af959d012289'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Ophelia
 SET 
     contact_mirror_id = '293be617-e711-4f2a-ae35-af959d012289',
     contact_updated_at = now()
-WHERE contact_id = '99b1fb21-c053-4a53-b1ab-87ac7fdb5d2d';
+WHERE contact_id = '99b1fb21-c053-4a53-b1ab-87ac7fdb5d2d'; -- Done. 
 
 -- “me” and Pamela / relation combination “blocking-and-blocked” --
 
@@ -317,17 +317,17 @@ VALUES ( -- from “me” to Pamela
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 UPDATE Contacts -- mirror contact from Pamela to “me”
 SET 
     contact_mirror_id = '3b6e4401-9068-4da9-9c01-55478b701bc4',
     contact_updated_at = now()
-WHERE contact_id = '2dcdaa5d-1de0-4d7b-99d4-5e36ce9d25c7'; 
+WHERE contact_id = '2dcdaa5d-1de0-4d7b-99d4-5e36ce9d25c7'; -- Done. 
 
 UPDATE Contacts -- mirror contact from “me” to Pamela
 SET 
     contact_mirror_id = '2dcdaa5d-1de0-4d7b-99d4-5e36ce9d25c7',
     contact_updated_at = now()
-WHERE contact_id = '3b6e4401-9068-4da9-9c01-55478b701bc4';
+WHERE contact_id = '3b6e4401-9068-4da9-9c01-55478b701bc4'; -- Done. 
 
