@@ -3,6 +3,8 @@
 
 INSERT INTO UserQuestions ( -- LePapier, First name
 -- native / pinned
+-- for preexisting native not irl (answer live) 
+-- when creating same native not irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -23,6 +25,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Last name
 -- native / irl / pinned
+-- for preexisting native irl (answer live) 
+-- when creating same native irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -477,6 +481,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Other email address
 -- native
+-- for preexisting native not irl (answer deleted) 
+-- when creating same native not irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -513,6 +519,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Other address
 -- native / irl
+-- for preexisting native irl (answer deleted) 
+-- when creating same native irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -531,6 +539,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Birthday
 -- pseudonative
+-- for preexisting pseudonative not irl (answer live) 
+-- when creating same pseudonative not irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -551,6 +561,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Mother's birthday
 -- pseudonative
+-- for preexisting pseudonative not irl (answer deleted) 
+-- when creating same pseudonative not irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -615,6 +627,8 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Birthdate
 -- pseudonative / irl
+-- for preexisting pseudonative irl (answer live) 
+-- when creating same pseudonative irl criteria
     userquestion_id,
     user_id,
     question_id,
@@ -633,20 +647,24 @@ VALUES (
     now()
 );
 
-INSERT INTO Questions ( -- LePapier, Mother's birthdate
+INSERT INTO UserQuestions ( -- LePapier, Mother's birthdate
 -- pseudonative / irl
+-- for preexisting pseudonative irl (answer deleted) 
+-- when creating same pseudonative irl criteria
+    userquestion_id,
+    user_id,
     question_id,
-    question_name,
-    question_state,
-    question_kind,
-    question_created_at,
-    question_updated_at
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
 )
 VALUES (
+    'c31920e6-6417-4786-beed-7642e0f846c5',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
     '4caf41b5-61af-4f69-be69-f6e74c899ed9',
-    'Mother’s birthdate',
     'LIVE',
-    'PSEUDO',
+    'PSEUDONATIVEIRL',
     now(),
     now()
 );
@@ -691,6 +709,86 @@ VALUES (
     '7052b6ca-28c7-4a8f-859d-c93dc6db36cc',
     'LIVE',
     'PSEUDONATIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Favorite anime character
+-- custom / not shared / pinned
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_is_pinned,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '1c05f09d-64a3-4b3c-a276-eb88fa65be25',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '7e1cdcaa-8a34-4e37-8648-ecbc0480c60c',
+    'LIVE',
+    TRUE,
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Favorite anime waifu
+-- custom / shared (1) / pinned -- (1 UserQuestionFriend 'DELETED')
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_is_pinned,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '6435cb5e-68f9-4e9d-bcb5-aa7d1cce1771',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '48b6148e-4480-4d7e-b538-2b7ef5643342',
+    'LIVE',
+    TRUE,
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Favorite anime series
+-- custom / not shared
+-- for preexisting custom (answer live) 
+-- when creating same custom criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '70a7faaa-83de-4b9f-a32c-99ff4bbc3723',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '98f11a85-08c7-43b9-8c58-b62725da6294',
+    'LIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Favorite anime franchise
+-- custom / not shared
+-- for preexisting custom (answer deleted) 
+-- when creating same custom criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '9441a1f6-34f1-404c-825c-a6e1dfed656f',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    'a674ba4b-b26b-4b81-990d-891cbc337503',
+    'LIVE',
     now(),
     now()
 );
