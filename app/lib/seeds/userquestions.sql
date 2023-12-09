@@ -309,7 +309,7 @@ VALUES (
     now()
 );
 
-INSERT INTO UserQuestions ( -- Malcolm, First name
+INSERT INTO UserQuestions ( -- MisterX, First name
 -- native / pinned
     userquestion_id,
     user_id,
@@ -329,7 +329,7 @@ VALUES (
     now()
 );
 
-INSERT INTO UserQuestions ( -- Malcolm, Last name
+INSERT INTO UserQuestions ( -- MisterX, Last name
 -- native / irl
     userquestion_id,
     user_id,
@@ -604,7 +604,7 @@ VALUES (
 );
 
 INSERT INTO UserQuestions ( -- LePapier, Crush's birthday
--- pseudonative / irl 
+-- pseudonative / irl
 -- for preexisting pseudonative irl (answer deleted) 
 -- when creating same pseudonative not irl criteria
     userquestion_id,
