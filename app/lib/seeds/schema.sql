@@ -6,14 +6,13 @@ CREATE TYPE user_state AS ENUM (
     'LIVE',
     'DELETED',
     'DEACTIVATED'
-
-);
+); -- Done. 
 
 CREATE TYPE user_status_title AS ENUM (
     'NONE',
     'WELCOMETOGREVENTS',
     'WELCOMEBACKTOGREVENTS'
-);
+); -- Done. 
 
 CREATE TYPE user_status_dashboard AS ENUM (
     'NONE',
@@ -23,7 +22,7 @@ CREATE TYPE user_status_dashboard AS ENUM (
     'FRIENDCODEUPDATED',
     'TEMPORARYPASSWORDCHANGED',
     'REDIRECTEDTODASHBOARD'
-);
+); -- Done.
 
 CREATE TYPE user_status_personal_info AS ENUM (
     'NONE',
@@ -43,7 +42,7 @@ CREATE TYPE user_status_personal_info AS ENUM (
     'USERQUESTIONFRIENDUPDATED',
     'USERQUESTIONFRIENDDELETED',
     'REDIRECTEDTOPERSONALINFO'
-);
+); -- Done.
 
 CREATE TABLE Users (
     user_id char(36) NOT NULL PRIMARY KEY,
@@ -59,19 +58,19 @@ CREATE TABLE Users (
     user_has_temporary_password boolean DEFAULT FALSE NOT NULL,
     user_created_at timestamp NOT NULL,
     user_updated_at timestamp NOT NULL
-);
+); -- Done.
 
 CREATE TYPE contact_state AS ENUM (
     'NONE',
     'LIVE',
     'DELETED'
-);
+); -- Done.
 
 CREATE TYPE contact_kind AS ENUM (
     'NONE',
     'FRIEND',
     'IRL'
-);
+); -- Done.
 
 CREATE TYPE contact_process_relationship AS ENUM (
     'NONE',
@@ -79,7 +78,7 @@ CREATE TYPE contact_process_relationship AS ENUM (
     'SENTIRL',
     'ANNULFRIEND',
     'ANNULIRL'
-);
+); -- Done.
 
 CREATE TYPE contact_status_relationship AS ENUM (
     'NONE',
@@ -95,7 +94,7 @@ CREATE TYPE contact_status_relationship AS ENUM (
     'NOWIRLS',
     'NOLONGERFRIENDS',
     'NOLONGERIRLS'
-);
+); -- Done.
 
 CREATE TYPE contact_status_blocking AS ENUM (
     'NONE',
@@ -103,7 +102,7 @@ CREATE TYPE contact_status_blocking AS ENUM (
     'NOWUNBLOCKING',
     'NOWBLOCKED',
     'NOWUNBLOCKED'
-);
+); -- Done.
 
 CREATE TABLE Contacts (
     contact_id char(36) NOT NULL PRIMARY KEY,
@@ -127,13 +126,13 @@ CREATE TABLE Contacts (
         user_first_id, 
         user_last_id
     )
-);
+); -- Done.
 
 CREATE TYPE question_state AS ENUM (
     'NONE',
     'LIVE',
     'DELETED'
-);
+); -- Done.
 
 CREATE TYPE question_kind AS ENUM ( 
     'NONE',
@@ -141,7 +140,7 @@ CREATE TYPE question_kind AS ENUM (
     'NATIVEIRL',
     'PSEUDO',
     'CUSTOM'
-);
+); -- Done.
 
 CREATE TABLE Questions (
     question_id char(36) NOT NULL PRIMARY KEY,
@@ -156,19 +155,19 @@ CREATE TABLE Questions (
         question_kind, 
         question_name
     )
-);
+); -- Done.
 
 CREATE TYPE userquestion_state AS ENUM (
     'NONE',
     'LIVE',
     'DELETED'
-);
+); -- Done.
 
 CREATE TYPE userquestion_kind AS ENUM (
     'NONE',
     'PSEUDONATIVE',
     'PSEUDONATIVEIRL'
-);
+); -- Done.
 
 CREATE TABLE UserQuestions (
     userquestion_id char(36) NOT NULL PRIMARY KEY,
@@ -186,13 +185,13 @@ CREATE TABLE UserQuestions (
         user_id, 
         question_id
     )
-);
+); -- Done.
 
 CREATE TYPE userquestionfriend_state AS ENUM (
     'NONE',
     'LIVE',
     'DELETED'
-);
+); -- Done.
 
 CREATE TABLE UserQuestionFriends (
     userquestionfriend_id char(36) NOT NULL PRIMARY KEY,
@@ -206,14 +205,13 @@ CREATE TABLE UserQuestionFriends (
         userquestion_id, 
         contact_id
     )
-);
+); -- Done.
 
 CREATE TYPE answer_state AS ENUM (
     'NONE',
     'LIVE',
-    'DELETED',
-    'OVERDELETED'
-);
+    'DELETED'
+); -- Done.
 
 CREATE TABLE Answers (
     answer_id char(36) NOT NULL PRIMARY KEY,
@@ -223,5 +221,5 @@ CREATE TABLE Answers (
     answer_state answer_state DEFAULT 'NONE' NOT NULL,
     answer_created_at timestamp NOT NULL,
     answer_updated_at timestamp NOT NULL
-);
+); -- Done.
 
