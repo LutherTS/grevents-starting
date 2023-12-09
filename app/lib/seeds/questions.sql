@@ -421,6 +421,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime studio / custom
+-- for no preexisting custom criteria from user yet
     question_id,
     question_name,
     question_state,
