@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 
+/* To limit database calls during development
 async function fetchUserByUsername(username: string) {
   console.log(username);
   try {
@@ -16,6 +17,7 @@ async function fetchUserByUsername(username: string) {
     throw new Error("Failed to fetch user data.");
   }
 }
+*/
 
 export default async function PersonalInfo({
   params,
@@ -25,11 +27,12 @@ export default async function PersonalInfo({
   };
 }) {
   const username = params.username;
-  const user = await fetchUserByUsername(username);
+  // const user = await fetchUserByUsername(username);
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
-      <p>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</p>
+      {/* <p>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</p> */}
+      <p>Welcome to {username}&apos;s Personal Info.</p>
     </main>
   );
 }
