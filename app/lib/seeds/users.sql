@@ -22,7 +22,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Alice / Alice-chan
     user_id,
@@ -45,7 +45,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Bianca / Trovounette
     user_id,
@@ -68,7 +68,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Candice / Candi
     user_id,
@@ -91,7 +91,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Danny / D-Dan
     user_id,
@@ -114,7 +114,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,
@@ -137,7 +137,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Users ( -- Malcolm / MisterX
     user_id,
@@ -160,7 +160,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done.
 
 INSERT INTO Users ( -- Nancy / Nonyes
     user_id,
@@ -183,7 +183,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done.
 
 INSERT INTO Users ( -- Ophelia / Ophelia-swan
     user_id,
@@ -206,7 +206,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done.
 
 INSERT INTO Users ( -- Pamela / Pimpampoum
     user_id,
@@ -229,5 +229,5 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
