@@ -457,3 +457,241 @@ VALUES (
     now()
 );
 
+INSERT INTO UserQuestions ( -- LePapier, Email address
+-- native
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '4f46465a-b43b-49c3-9e8c-5871c3b3accd',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    'b80f6893-f013-4964-b770-6935ef8fc4a4',
+    'LIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Other email address
+-- native
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '7ff43513-de87-49bd-9186-46d840fbff1c',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    'ba3a314a-98a4-419d-a0c7-6d9eab5ac2cf',
+    'LIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Address
+-- native / irl
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '9e14dd28-fea0-45ed-8b14-b0e44cf9333d',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '6e451910-5f31-4649-9451-ad135663e71d',
+    'LIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Other address
+-- native / irl
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '94350b03-3368-45a3-9431-ae480e21970b',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '05e01dae-1884-478c-aa19-2231355948ee',
+    'LIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Birthday
+-- pseudonative
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '308602f3-1ecc-4089-a9f8-5beda1ff6b7d',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '34ce07f9-03c3-41b9-b36d-26bbebcf4998',
+    'LIVE',
+    'PSEUDONATIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Mother's birthday
+-- pseudonative
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '302aab4f-412c-4588-a804-fefd7af92f47',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '1eb27595-094d-421e-a508-14b53cf99c42',
+    'LIVE',
+    'PSEUDONATIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Girlfriend's birthday
+-- pseudonative / irl 
+-- for preexisting pseudonative irl (answer live) 
+-- when creating same pseudonative not irl criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    'f67ae4be-6c09-4d05-a0f4-a859c06756a5',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    'ec7370c8-18ad-4df3-85da-96d141c1a67e',
+    'LIVE',
+    'PSEUDONATIVEIRL',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Crush's birthday
+-- pseudonative / irl 
+-- for preexisting pseudonative irl (answer deleted) 
+-- when creating same pseudonative not irl criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    'beed9e53-0ff9-445c-8bfe-dd39ed0ae20a',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '40b2ecf3-397c-4be0-81f4-99363a4d1a53',
+    'LIVE',
+    'PSEUDONATIVEIRL',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Birthdate
+-- pseudonative / irl
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    'd25f5552-9a9f-440b-860c-1591f59eec4f',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '4b7bcb0d-2eb1-4783-a762-7fbfb7106f6d',
+    'LIVE',
+    'PSEUDONATIVEIRL',
+    now(),
+    now()
+);
+
+INSERT INTO Questions ( -- LePapier, Mother's birthdate
+-- pseudonative / irl
+    question_id,
+    question_name,
+    question_state,
+    question_kind,
+    question_created_at,
+    question_updated_at
+)
+VALUES (
+    '4caf41b5-61af-4f69-be69-f6e74c899ed9',
+    'Mother’s birthdate',
+    'LIVE',
+    'PSEUDO',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Girlfriend's birthdate
+-- pseudonative
+-- for preexisting pseudonative not irl (answer live) 
+-- when creating same pseudonative irl criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '6d9d2ced-00ac-466a-bcd6-ee01bd390b03',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '73fe5a9d-3bc2-477d-abe4-bda3efaf7573',
+    'LIVE',
+    'PSEUDONATIVE',
+    now(),
+    now()
+);
+
+INSERT INTO UserQuestions ( -- LePapier, Crush's birthdate
+-- pseudonative
+-- for preexisting pseudonative not irl (answer deleted) 
+-- when creating same pseudonative irl criteria
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_kind,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    'f70c608c-0112-4b27-97b6-8d82ac18550d',
+    '2640aaf6-20b5-497c-b980-fbee374830c2',
+    '7052b6ca-28c7-4a8f-859d-c93dc6db36cc',
+    'LIVE',
+    'PSEUDONATIVE',
+    now(),
+    now()
+);
+
