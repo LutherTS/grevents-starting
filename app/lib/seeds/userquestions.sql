@@ -21,7 +21,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Last name
 -- native / irl / pinned
@@ -43,7 +43,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Alice-chan, First name
 -- native / pinned
@@ -63,7 +63,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Alice-chan, Last name
 -- native / irl
@@ -81,7 +81,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite actress
 -- custom / shared (1)
@@ -100,7 +100,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Alice-chan, Favorite actor
 -- custom / shared (1)
@@ -118,7 +118,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite actor
 -- custom / not shared
@@ -136,7 +136,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Alice-chan, Favorite actress
 -- custom / not shared
@@ -155,7 +155,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Trovounette, First name
 -- native / pinned
@@ -175,7 +175,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Trovounette, Last name
 -- native / irl
@@ -193,7 +193,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Candi, First name
 -- native / pinned
@@ -213,7 +213,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Candi, Last name
 -- native / irl
@@ -231,7 +231,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- D-Dan, First name
 -- native / pinned
@@ -251,7 +251,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- D-Dan, Last name
 -- native / irl
@@ -269,7 +269,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Lucario, First name
 -- native / pinned
@@ -289,7 +289,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Lucario, Last name
 -- native / irl
@@ -307,7 +307,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- MisterX, First name
 -- native / pinned
@@ -327,7 +327,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- MisterX, Last name
 -- native / irl
