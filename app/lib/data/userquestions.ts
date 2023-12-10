@@ -8,10 +8,10 @@ export async function fetchUserQuestionByIDAndUser(
   user: User
 ) {
   noStore();
-  // console.log(user);
   // console.log(userQuestionId);
+  // console.log(user);
   try {
-    const data = await sql<any>` -- UserQuestion
+    const data = await sql<UserQuestion>` -- UserQuestion
     SELECT * FROM UserQuestions
 
     JOIN Users ON UserQuestions.user_id = Users.user_id

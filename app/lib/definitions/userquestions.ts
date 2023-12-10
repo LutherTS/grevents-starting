@@ -13,4 +13,22 @@ export type UserQuestion = {
   userquestion_pinned_at: string;
   userquestion_up_to_irl_at: string;
   userquestion_down_to_irl_at: string;
-}; // Missing User and Question types.
+  user_state: string;
+  user_status_title: string;
+  user_status_dashboard: string;
+  user_status_personal_info: string;
+  user_username: string;
+  user_email: string;
+  user_password: string;
+  user_app_wide_name: string;
+  user_friend_code: string;
+  user_has_temporary_password: boolean;
+  user_created_at: string;
+  user_updated_at: string;
+  question_state: string;
+  question_kind: string;
+  question_name: string;
+  question_is_suggested: boolean;
+  question_created_at: string;
+  question_updated_at: string;
+};

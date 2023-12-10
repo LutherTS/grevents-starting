@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
 import { unstable_noStore as noStore } from "next/cache";
 import { User } from "../definitions/users";
+import { UserQuestion } from "../definitions/userquestions";
 
 export async function fetchUserPinnedAnswers(userId: string) {
   noStore();
@@ -240,11 +241,12 @@ export async function fetchUserCustomAnswers(userId: string) {
 }
 
 export async function findAnswerByUserQuestionAndUser(
-  userQuestion: any, // UserQuestion
+  userQuestion: UserQuestion,
   user: User
 ) {
   noStore();
-  // console.log(userId);
+  // console.log(userQuestion);
+  // console.log(user);
   try {
     const data = await sql<Answer>`
       SELECT 
