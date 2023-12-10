@@ -1,6 +1,6 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+// import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { fetchUserPinnedAnswers } from "@/app/lib/data/answers";
-import { notFound } from "next/navigation";
+// import { notFound } from "next/navigation";
 
 export default async function PersonalInfo({
   params,
@@ -10,19 +10,19 @@ export default async function PersonalInfo({
   };
 }) {
   const username = params.username;
-  const user = await fetchUserByUsername(username);
+  // const user = await fetchUserByUsername(username);
   // const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
 
-  if (!user) {
-    notFound();
-  }
+  // if (!user) {
+  //   notFound();
+  // }
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
         {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</h1> */}
         <h1>Welcome to {username}&apos;s Personal Info.</h1>
-        {/* {pinnedAnswers && (
+        {/* {pinnedAnswers.length > 0 && (
           <>
             <p className="pt-2">Find their pinned criteria below.</p>
             <ol className="pt-2 space-y-2">
