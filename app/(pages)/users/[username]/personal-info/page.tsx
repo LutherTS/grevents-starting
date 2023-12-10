@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 
-// /* To limit database calls during development
+/* To limit database calls during development
 async function fetchUserByUsername(username: string) {
   // console.log(username);
   try {
@@ -46,7 +46,7 @@ async function fetchUserPinnedAnswers(user_id: string) {
     throw new Error("Failed to fetch user pinned answers.");
   }
 }
-// */
+*/
 
 export default async function PersonalInfo({
   params,
@@ -56,16 +56,16 @@ export default async function PersonalInfo({
   };
 }) {
   const username = params.username;
-  const user = await fetchUserByUsername(username);
-  const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
+  // const user = await fetchUserByUsername(username);
+  // const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
-        <h1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</h1>
-        {/* <h1>Welcome to {username}&apos;s Personal Info.</h1> */}
+        {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</h1> */}
+        <h1>Welcome to {username}&apos;s Personal Info.</h1>
         <p className="pt-2">Find their pinned criteria below.</p>
-        {pinnedAnswers && (
+        {/* {pinnedAnswers && (
           <ol className="pt-4 space-y-2">
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
@@ -76,7 +76,7 @@ export default async function PersonalInfo({
               );
             })}
           </ol>
-        )}
+        )} */}
       </div>
     </main>
   );
