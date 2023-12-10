@@ -17,18 +17,20 @@ export default async function PersonalInfo({
       <div className="text-center max-w-prose">
         {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</h1> */}
         <h1>Welcome to {username}&apos;s Personal Info.</h1>
-        <p className="pt-2">Find their pinned criteria below.</p>
         {/* {pinnedAnswers && (
-          <ol className="pt-4 space-y-2">
-            {pinnedAnswers.map((pinnedAnswer) => {
-              return (
-                <li key={pinnedAnswer.answer_id}>
-                  <p>{pinnedAnswer.question_name}</p>
-                  <p>{pinnedAnswer.answer_value}</p>
-                </li>
-              );
-            })}
-          </ol>
+          <>
+            <p className="pt-2">Find their pinned criteria below.</p>
+            <ol className="pt-2 space-y-2">
+              {pinnedAnswers.map((pinnedAnswer) => {
+                return (
+                  <li key={pinnedAnswer.answer_id}>
+                    <p>{pinnedAnswer.question_name}</p>
+                    <p>{pinnedAnswer.answer_value}</p>
+                  </li>
+                );
+              })}
+            </ol>
+          </>
         )} */}
       </div>
     </main>
