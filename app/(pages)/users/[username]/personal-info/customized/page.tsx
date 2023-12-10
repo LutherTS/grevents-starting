@@ -7,7 +7,7 @@
 import Link from "next/link";
 // import { notFound } from "next/navigation";
 
-export default async function Customized({
+export default async function CustomizedPage({
   params,
 }: {
   params: {

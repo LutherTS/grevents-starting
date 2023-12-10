@@ -3,7 +3,7 @@
 import Link from "next/link";
 // import { notFound } from "next/navigation";
 
-export default async function PersonalInfo({
+export default async function PersonalInfoPage({
   params,
 }: {
   params: {
