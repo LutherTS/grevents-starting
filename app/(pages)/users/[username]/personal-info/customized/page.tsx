@@ -5,6 +5,7 @@
 //   fetchUserCustomAnswers,
 // } from "@/app/lib/data/answers";
 // import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function Customized({
   params,
@@ -78,6 +79,22 @@ export default async function Customized({
             </ol>
           </>
         )} */}
+        <div>
+          <Link
+            href={`/users/${username}/personal-info/standardized`}
+            className="underline inline-block pt-2"
+          >
+            To Standardized criteria
+          </Link>
+        </div>
+        <div>
+          <Link
+            href={`/users/${username}/personal-info`}
+            className="underline inline-block pt-2"
+          >
+            To Personal Info
+          </Link>
+        </div>
       </div>
     </main>
   );

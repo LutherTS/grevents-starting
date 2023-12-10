@@ -1,6 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { fetchUserPinnedAnswers } from "@/app/lib/data/answers";
 // import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function PersonalInfo({
   params,
@@ -37,6 +38,22 @@ export default async function PersonalInfo({
             </ol>
           </>
         )} */}
+        <div>
+          <Link
+            href={`/users/${username}/personal-info/standardized`}
+            className="underline inline-block pt-2"
+          >
+            To all standardized criteria
+          </Link>
+        </div>
+        <div>
+          <Link
+            href={`/users/${username}/personal-info/customized`}
+            className="underline inline-block pt-2"
+          >
+            To all customized criteria
+          </Link>
+        </div>
       </div>
     </main>
   );

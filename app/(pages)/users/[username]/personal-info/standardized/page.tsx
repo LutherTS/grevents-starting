@@ -4,6 +4,7 @@
 //   fetchUserNativeNotIrlAnswers,
 // } from "@/app/lib/data/answers";
 // import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function Stardardized({
   params,
@@ -58,6 +59,22 @@ export default async function Stardardized({
             </ol>
           </>
         )} */}
+        <div>
+          <Link
+            href={`/users/${username}/personal-info/customized`}
+            className="underline inline-block pt-2"
+          >
+            To Customized criteria
+          </Link>
+        </div>
+        <div>
+          <Link
+            href={`/users/${username}/personal-info`}
+            className="underline inline-block pt-2"
+          >
+            To Personal Info
+          </Link>
+        </div>
       </div>
     </main>
   );

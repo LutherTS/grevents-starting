@@ -93,7 +93,7 @@ export async function fetchUserNativeIrlAnswers(user_id: string) {
 
 export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
   // noStore();
-  console.log(user_id);
+  // console.log(user_id);
   try {
     const data = await sql`
       SELECT Questions.question_name, Answers.answer_value, Answers.answer_id, UserQuestions.userquestion_id FROM Answers 
@@ -114,7 +114,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
       ORDER BY Questions.question_name ASC
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
@@ -124,7 +124,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
 
 export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
   // noStore();
-  console.log(user_id);
+  // console.log(user_id);
   try {
     const data = await sql`
       SELECT Questions.question_name, Answers.answer_value, Answers.answer_id, UserQuestions.userquestion_id FROM Answers 
@@ -145,7 +145,7 @@ export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
       ORDER BY Questions.question_name ASC
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
@@ -155,7 +155,7 @@ export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
 
 export async function fetchUserCustomAnswers(user_id: string) {
   // noStore();
-  console.log(user_id);
+  // console.log(user_id);
   try {
     const data = await sql`
       SELECT Questions.question_name, Answers.answer_value, Answers.answer_id, UserQuestions.userquestion_id FROM Answers 
@@ -175,7 +175,7 @@ export async function fetchUserCustomAnswers(user_id: string) {
       ORDER BY Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
