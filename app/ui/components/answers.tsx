@@ -13,7 +13,14 @@ export async function Answer({ answer }: { answer: Answer }) {
   return (
     <>
       <li>
-        <p>{answer.question_name}</p>
+        <p>
+          {answer.question_name}
+          {(answer.question_kind === "NATIVE" || "NATIVEIRL") && <> / native</>}
+          {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
+          {answer.question_kind === "CUSTOM" && <> / custom</>}
+          {(answer.question_kind === "NATIVEIRL" ||
+            answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
+        </p>
         <p>{answer.answer_value}</p>
       </li>
     </>
