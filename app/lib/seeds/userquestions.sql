@@ -66,11 +66,12 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO UserQuestions ( -- Alice-chan, Last name
--- native / irl
+-- native / irl / pinned
     userquestion_id,
     user_id,
     question_id,
     userquestion_state,
+    userquestion_is_pinned,
     userquestion_created_at,
     userquestion_updated_at
 )
@@ -79,6 +80,7 @@ VALUES (
     'e17bc7f7-b93f-4915-9f72-83d055c66e77',
     '2a389094-1259-4a3d-8126-8635aeab39fc',
     'LIVE',
+    TRUE,
     now(),
     now()
 ); -- Done. 
