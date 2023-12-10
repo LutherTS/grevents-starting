@@ -1,11 +1,12 @@
 import { sql } from "@vercel/postgres";
-// import { unstable_noStore as noStore } from "next/cache";
+import { User } from "../definitions/users";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchUserByUsername(username: string) {
-  // noStore();
+  noStore();
   // console.log(username);
   try {
-    const data = await sql`
+    const data = await sql<User>`
       SELECT * FROM Users
 
       WHERE user_username = ${username}
