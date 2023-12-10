@@ -7,6 +7,18 @@ import {
   fetchUserCustomAnswers,
 } from "@/app/lib/data/answers";
 import { User } from "@/app/lib/definitions/users";
+import { Answer } from "@/app/lib/definitions/answers";
+
+export async function Answer({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <li>
+        <p>{answer.question_name}</p>
+        <p>{answer.answer_value}</p>
+      </li>
+    </>
+  );
+}
 
 export async function PinnedAnswers({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
@@ -19,10 +31,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
           <ol className="pt-2 space-y-2">
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
-                <li key={pinnedAnswer.answer_id}>
-                  <p>{pinnedAnswer.question_name}</p>
-                  <p>{pinnedAnswer.answer_value}</p>
-                </li>
+                <Answer answer={pinnedAnswer} key={pinnedAnswer.answer_id} />
               );
             })}
           </ol>
@@ -45,10 +54,10 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
           <ol className="pt-2 space-y-2">
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
-                <li key={userNativeNotIrlAnswer.answer_id}>
-                  <p>{userNativeNotIrlAnswer.question_name}</p>
-                  <p>{userNativeNotIrlAnswer.answer_value}</p>
-                </li>
+                <Answer
+                  answer={userNativeNotIrlAnswer}
+                  key={userNativeNotIrlAnswer.answer_id}
+                />
               );
             })}
           </ol>
@@ -69,10 +78,10 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
           <ol className="pt-2 space-y-2">
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
-                <li key={userNativeIrlAnswer.answer_id}>
-                  <p>{userNativeIrlAnswer.question_name}</p>
-                  <p>{userNativeIrlAnswer.answer_value}</p>
-                </li>
+                <Answer
+                  answer={userNativeIrlAnswer}
+                  key={userNativeIrlAnswer.answer_id}
+                />
               );
             })}
           </ol>
@@ -95,10 +104,10 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
             {userPseudonativeNotIrlAnswers.map(
               (userPseudonativeNotIrlAnswer) => {
                 return (
-                  <li key={userPseudonativeNotIrlAnswer.answer_id}>
-                    <p>{userPseudonativeNotIrlAnswer.question_name}</p>
-                    <p>{userPseudonativeNotIrlAnswer.answer_value}</p>
-                  </li>
+                  <Answer
+                    answer={userPseudonativeNotIrlAnswer}
+                    key={userPseudonativeNotIrlAnswer.answer_id}
+                  />
                 );
               }
             )}
@@ -122,10 +131,10 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
           <ol className="pt-2 space-y-2">
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
-                <li key={userPseudonativeIrlAnswer.answer_id}>
-                  <p>{userPseudonativeIrlAnswer.question_name}</p>
-                  <p>{userPseudonativeIrlAnswer.answer_value}</p>
-                </li>
+                <Answer
+                  answer={userPseudonativeIrlAnswer}
+                  key={userPseudonativeIrlAnswer.answer_id}
+                />
               );
             })}
           </ol>
@@ -146,10 +155,10 @@ export async function UserCustomAnswers({ user }: { user: User }) {
           <ol className="pt-2 space-y-2">
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
-                <li key={userCustomAnswer.answer_id}>
-                  <p>{userCustomAnswer.question_name}</p>
-                  <p>{userCustomAnswer.answer_value}</p>
-                </li>
+                <Answer
+                  answer={userCustomAnswer}
+                  key={userCustomAnswer.answer_id}
+                />
               );
             })}
           </ol>
