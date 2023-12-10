@@ -345,7 +345,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Nonyes, First name
 -- native / pinned
@@ -365,7 +365,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Nonyes, Last name
 -- native / irl
@@ -383,7 +383,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Ophelia, First name
 -- native / pinned
@@ -403,7 +403,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Ophelia, Last name
 -- native / irl
@@ -421,7 +421,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Pimpampoum, First name
 -- native / pinned
@@ -441,7 +441,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- Pimpampoum, Last name
 -- native / irl
@@ -459,7 +459,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Email address
 -- native
@@ -477,7 +477,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Other email address
 -- native
@@ -497,7 +497,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Address
 -- native / irl
@@ -515,7 +515,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Other address
 -- native / irl
@@ -535,7 +535,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Birthday
 -- pseudonative
@@ -557,7 +557,7 @@ VALUES (
     'PSEUDONATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Mother's birthday
 -- pseudonative
@@ -579,7 +579,7 @@ VALUES (
     'PSEUDONATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Girlfriend's birthday
 -- pseudonative / irl 
@@ -601,7 +601,7 @@ VALUES (
     'PSEUDONATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Crush's birthday
 -- pseudonative / irl
@@ -623,7 +623,7 @@ VALUES (
     'PSEUDONATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Birthdate
 -- pseudonative / irl
@@ -645,7 +645,7 @@ VALUES (
     'PSEUDONATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Mother's birthdate
 -- pseudonative / irl
@@ -667,7 +667,7 @@ VALUES (
     'PSEUDONATIVEIRL',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Girlfriend's birthdate
 -- pseudonative
@@ -689,7 +689,7 @@ VALUES (
     'PSEUDONATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Crush's birthdate
 -- pseudonative
@@ -711,7 +711,7 @@ VALUES (
     'PSEUDONATIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite anime character
 -- custom / not shared / pinned
@@ -731,7 +731,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite anime waifu
 -- custom / shared (1) / pinned -- (1 UserQuestionFriend 'DELETED')
@@ -751,7 +751,7 @@ VALUES (
     TRUE,
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite anime series
 -- custom / not shared
@@ -771,7 +771,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite anime franchise
 -- custom / not shared
@@ -791,5 +791,5 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
