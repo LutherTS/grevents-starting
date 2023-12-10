@@ -18,7 +18,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestionFriends ( -- Alice-chan, Favorite actor
 -- shared to LePapier
@@ -36,7 +36,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestionFriends ( -- LePapier, Favorite anime waifu
 -- shared to Alice-chan
@@ -54,7 +54,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO UserQuestionFriends ( -- LePapier, Favorite anime waifu
 -- no longer shared to Trovounette
@@ -72,5 +72,5 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
