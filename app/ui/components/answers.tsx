@@ -15,24 +15,22 @@ export async function Answer({ answer }: { answer: Answer }) {
 
   return (
     <>
-      <li>
-        <p>
-          {answer.question_name}
-          {(answer.question_kind === "NATIVE" ||
-            answer.question_kind === "NATIVEIRL") && <> / native</>}
-          {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
-          {answer.question_kind === "CUSTOM" && <> / custom</>}
-          {(answer.question_kind === "NATIVEIRL" ||
-            answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
-          {answer.question_kind === "CUSTOM" &&
-            userQuestionFriendsCount < 1 && <> / not shared</>}
-          {answer.question_kind === "CUSTOM" &&
-            userQuestionFriendsCount >= 1 && (
-              <> / shared ({userQuestionFriendsCount})</>
-            )}
-        </p>
-        <p>{answer.answer_value}</p>
-      </li>
+      <p className="pt-2">
+        {answer.question_name}
+        {(answer.question_kind === "NATIVE" ||
+          answer.question_kind === "NATIVEIRL") && <> / native</>}
+        {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
+        {answer.question_kind === "CUSTOM" && <> / custom</>}
+        {(answer.question_kind === "NATIVEIRL" ||
+          answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
+        {answer.question_kind === "CUSTOM" && userQuestionFriendsCount < 1 && (
+          <> / not shared</>
+        )}
+        {answer.question_kind === "CUSTOM" && userQuestionFriendsCount >= 1 && (
+          <> / shared ({userQuestionFriendsCount})</>
+        )}
+      </p>
+      <p className="pt-2">{answer.answer_value}</p>
     </>
   );
 }
@@ -45,10 +43,12 @@ export async function PinnedAnswers({ user }: { user: User }) {
       {pinnedAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their pinned criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
-                <Answer answer={pinnedAnswer} key={pinnedAnswer.answer_id} />
+                <li key={pinnedAnswer.answer_id}>
+                  <Answer answer={pinnedAnswer} />
+                </li>
               );
             })}
           </ol>
@@ -68,13 +68,12 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
       {userNativeNotIrlAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their native criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
-                <Answer
-                  answer={userNativeNotIrlAnswer}
-                  key={userNativeNotIrlAnswer.answer_id}
-                />
+                <li key={userNativeNotIrlAnswer.answer_id}>
+                  <Answer answer={userNativeNotIrlAnswer} />
+                </li>
               );
             })}
           </ol>
@@ -92,13 +91,12 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
       {userNativeIrlAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their native irl criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
-                <Answer
-                  answer={userNativeIrlAnswer}
-                  key={userNativeIrlAnswer.answer_id}
-                />
+                <li key={userNativeIrlAnswer.answer_id}>
+                  <Answer answer={userNativeIrlAnswer} />
+                </li>
               );
             })}
           </ol>
@@ -117,14 +115,13 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
       {userPseudonativeNotIrlAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their pseudonative criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {userPseudonativeNotIrlAnswers.map(
               (userPseudonativeNotIrlAnswer) => {
                 return (
-                  <Answer
-                    answer={userPseudonativeNotIrlAnswer}
-                    key={userPseudonativeNotIrlAnswer.answer_id}
-                  />
+                  <li key={userPseudonativeNotIrlAnswer.answer_id}>
+                    <Answer answer={userPseudonativeNotIrlAnswer} />
+                  </li>
                 );
               }
             )}
@@ -145,13 +142,12 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
       {userPseudonativeIrlAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their pseudonative irl criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
-                <Answer
-                  answer={userPseudonativeIrlAnswer}
-                  key={userPseudonativeIrlAnswer.answer_id}
-                />
+                <li key={userPseudonativeIrlAnswer.answer_id}>
+                  <Answer answer={userPseudonativeIrlAnswer} />
+                </li>
               );
             })}
           </ol>
@@ -169,13 +165,12 @@ export async function UserCustomAnswers({ user }: { user: User }) {
       {userCustomAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their custom criteria below.</p>
-          <ol className="pt-2 space-y-2">
+          <ol>
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
-                <Answer
-                  answer={userCustomAnswer}
-                  key={userCustomAnswer.answer_id}
-                />
+                <li key={userCustomAnswer.answer_id}>
+                  <Answer answer={userCustomAnswer} />
+                </li>
               );
             })}
           </ol>

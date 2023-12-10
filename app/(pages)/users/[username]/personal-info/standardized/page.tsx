@@ -6,7 +6,7 @@
 import Link from "next/link";
 // import { notFound } from "next/navigation";
 
-export default async function Stardardized({
+export default async function StardardizedPage({
   params,
 }: {
   params: {
