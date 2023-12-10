@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
 import { unstable_noStore as noStore } from "next/cache";
+import { User } from "../definitions/users";
 
 export async function fetchUserPinnedAnswers(userId: string) {
   noStore();
@@ -235,5 +236,45 @@ export async function fetchUserCustomAnswers(userId: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user custom answers.");
+  }
+}
+
+export async function findAnswerByUserQuestionAndUser(
+  userQuestion: any, // UserQuestion
+  user: User
+) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+        Questions.question_name, 
+        Answers.answer_value, 
+        Answers.answer_id,
+        UserQuestions.userquestion_is_pinned,
+        Questions.question_kind,
+        UserQuestions.userquestion_kind,
+        UserQuestions.userquestion_id
+      FROM Answers
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Users ON Answers.user_id = Users.user_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      
+      WHERE Answers.userquestion_id = ${userQuestion.userquestion_id}
+      AND Answers.user_id = ${user.user_id}
+      
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+
+      LIMIT 1;
+    `;
+    // console.log(data);
+    return data.rows[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user question answer.");
   }
 }
