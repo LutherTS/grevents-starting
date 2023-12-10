@@ -19,7 +19,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Last name
 -- native / irl / pinned
@@ -39,7 +39,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Alice-chan, First name
 -- native / pinned
@@ -59,7 +59,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Alice-chan, Last name
 -- native / irl
@@ -79,7 +79,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite actress
 -- custom / shared (1)
@@ -100,7 +100,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Alice-chan, Favorite actor
 -- custom / shared (1)
@@ -120,7 +120,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite actor
 -- custom / not shared
@@ -140,7 +140,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Alice-chan, Favorite actress
 -- custom / not shared
@@ -161,7 +161,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Trovounette, First name
 -- native / pinned
@@ -181,7 +181,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Trovounette, Last name
 -- native / irl
@@ -201,7 +201,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Candi, First name
 -- native / pinned
@@ -221,7 +221,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Candi, Last name
 -- native / irl
@@ -241,7 +241,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- D-Dan, First name
 -- native / pinned
@@ -261,7 +261,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- D-Dan, Last name
 -- native / irl
@@ -281,7 +281,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Lucario, First name
 -- native / pinned
@@ -301,7 +301,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Lucario, Last name
 -- native / irl
@@ -321,7 +321,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- MisterX, First name
 -- native / pinned
@@ -341,7 +341,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- MisterX, Last name
 -- native / irl
@@ -361,7 +361,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Nonyes, First name
 -- native / pinned
@@ -381,7 +381,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Nonyes, Last name
 -- native / irl
@@ -401,7 +401,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Ophelia, First name
 -- native / pinned
@@ -421,7 +421,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Ophelia, Last name
 -- native / irl
@@ -441,7 +441,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Pimpampoum, First name
 -- native / pinned
@@ -461,7 +461,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- Pimpampoum, Last name
 -- native / irl
@@ -481,7 +481,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Email address
 -- native
@@ -501,7 +501,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Other email address
 -- native
@@ -521,7 +521,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Address
 -- native / irl
@@ -541,7 +541,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Other address
 -- native / irl
@@ -561,7 +561,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Birthday
 -- pseudonative
@@ -581,7 +581,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Mother's birthday
 -- pseudonative
@@ -601,7 +601,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Girlfriend's birthday
 -- pseudonative / irl 
@@ -621,7 +621,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Crush's birthday
 -- pseudonative / irl
@@ -641,7 +641,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Birthdate
 -- pseudonative / irl
@@ -661,7 +661,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Mother's birthdate
 -- pseudonative / irl
@@ -681,7 +681,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Girlfriend's birthdate
 -- pseudonative
@@ -701,7 +701,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Crush's birthdate
 -- pseudonative
@@ -721,7 +721,7 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite anime character
 -- custom / not shared / pinned
@@ -741,7 +741,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite anime waifu
 -- custom / shared (1) / pinned -- (1 UserQuestionFriend 'DELETED')
@@ -761,7 +761,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite anime series
 -- custom / not shared
@@ -781,7 +781,7 @@ VALUES (
     'LIVE',
     now(),
     now()
-);
+); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite anime franchise
 -- custom / not shared
@@ -801,5 +801,5 @@ VALUES (
     'DELETED',
     now(),
     now()
-);
+); -- Done. 
 
