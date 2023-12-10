@@ -1,7 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import {
-//   UserNativeIrlAnswers,
 //   UserNativeNotIrlAnswers,
+//   UserNativeIrlAnswers,
 // } from "@/app/ui/components/answers";
 import Link from "next/link";
 // import { notFound } from "next/navigation";
@@ -24,9 +24,9 @@ export default async function Stardardized({
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
         <h1>Welcome to {username}&apos;s Standardized Info.</h1>
-        {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</h1> */}
-        {/* <UserNativeNotIrlAnswers user={user} /> */}
-        {/* <UserNativeIrlAnswers user={user} /> */}
+        {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</h1>
+        <UserNativeNotIrlAnswers user={user} />
+        <UserNativeIrlAnswers user={user} /> */}
         <div>
           <Link
             href={`/users/${username}/personal-info/customized`}

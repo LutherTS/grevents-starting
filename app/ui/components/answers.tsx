@@ -1,10 +1,10 @@
 import {
-  fetchUserCustomAnswers,
-  fetchUserNativeIrlAnswers,
-  fetchUserNativeNotIrlAnswers,
   fetchUserPinnedAnswers,
-  fetchUserPseudonativeIrlAnswers,
+  fetchUserNativeNotIrlAnswers,
+  fetchUserNativeIrlAnswers,
   fetchUserPseudonativeNotIrlAnswers,
+  fetchUserPseudonativeIrlAnswers,
+  fetchUserCustomAnswers,
 } from "@/app/lib/data/answers";
 import { User } from "@/app/lib/definitions/users";
 
