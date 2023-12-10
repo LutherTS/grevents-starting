@@ -1,8 +1,9 @@
-// import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/lib/data/users";
 // import {
 //   fetchUserNativeIrlAnswers,
 //   fetchUserNativeNotIrlAnswers,
 // } from "@/app/lib/data/answers";
+import { notFound } from "next/navigation";
 
 export default async function Stardardized({
   params,
@@ -12,11 +13,15 @@ export default async function Stardardized({
   };
 }) {
   const username = params.username;
-  // const user = await fetchUserByUsername(username);
+  const user = await fetchUserByUsername(username);
   // const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
   //   user.user_id
   // );
   // const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
+
+  if (!user) {
+    notFound();
+  }
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">

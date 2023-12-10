@@ -1,5 +1,6 @@
-// import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { fetchUserPinnedAnswers } from "@/app/lib/data/answers";
+import { notFound } from "next/navigation";
 
 export default async function PersonalInfo({
   params,
@@ -9,8 +10,12 @@ export default async function PersonalInfo({
   };
 }) {
   const username = params.username;
-  // const user = await fetchUserByUsername(username);
+  const user = await fetchUserByUsername(username);
   // const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
+
+  if (!user) {
+    notFound();
+  }
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
