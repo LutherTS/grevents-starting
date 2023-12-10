@@ -4,8 +4,9 @@ import { Answer } from "../definitions/answers";
 
 export async function countUserQuestionFriends(answer: Answer) {
   noStore();
+  // console.log(answer.question_kind);
   // console.log(answer.userquestion_id);
-  if (answer.userquestion_id) {
+  if (answer.question_kind === "CUSTOM") {
     try {
       const data = await sql`
       SELECT COUNT(userquestionfriend_id) FROM UserQuestionFriends
