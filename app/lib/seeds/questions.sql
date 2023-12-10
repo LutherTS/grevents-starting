@@ -19,6 +19,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Work number / native
+-- for no preexisting native not irl criteria from user yet
     question_id,
     question_name,
     question_state,
@@ -87,6 +88,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Phone number / native / irl
+-- for no preexisting native irl criteria from user yet
     question_id,
     question_name,
     question_state,
@@ -172,6 +174,8 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Father's birthday / pseudo
+-- for no preexisting pseudonative criteria from user yet
+-- for not irl purposes
     question_id,
     question_name,
     question_state,
@@ -240,6 +244,8 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Father's birthdate / pseudo
+-- for no preexisting pseudonative criteria from user yet
+-- for irl purposes
     question_id,
     question_name,
     question_state,
@@ -415,6 +421,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Favorite anime studio / custom
+-- for no preexisting custom criteria from user yet
     question_id,
     question_name,
     question_state,
