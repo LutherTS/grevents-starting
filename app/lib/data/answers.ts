@@ -1,10 +1,10 @@
 import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
-// import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from "next/cache";
 
-export async function fetchUserPinnedAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserPinnedAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -21,8 +21,8 @@ export async function fetchUserPinnedAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
 
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND UserQuestions.userquestion_is_pinned = TRUE
 
       AND Answers.answer_state = 'LIVE'
@@ -41,9 +41,9 @@ export async function fetchUserPinnedAnswers(user_id: string) {
   }
 }
 
-export async function fetchUserNativeNotIrlAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserNativeNotIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -60,8 +60,8 @@ export async function fetchUserNativeNotIrlAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
       
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND Questions.question_kind = 'NATIVE'
       
       AND Answers.answer_state = 'LIVE'
@@ -80,9 +80,9 @@ export async function fetchUserNativeNotIrlAnswers(user_id: string) {
   }
 }
 
-export async function fetchUserNativeIrlAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserNativeIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -99,8 +99,8 @@ export async function fetchUserNativeIrlAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
       
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND Questions.question_kind = 'NATIVEIRL'
       
       AND Answers.answer_state = 'LIVE'
@@ -119,9 +119,9 @@ export async function fetchUserNativeIrlAnswers(user_id: string) {
   }
 }
 
-export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -138,8 +138,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
       
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND Questions.question_kind = 'PSEUDO'
       AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
       
@@ -159,9 +159,9 @@ export async function fetchUserPseudonativeNotIrlAnswers(user_id: string) {
   }
 }
 
-export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserPseudonativeIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -178,8 +178,8 @@ export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
       
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND Questions.question_kind = 'PSEUDO'
       AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
       
@@ -199,9 +199,9 @@ export async function fetchUserPseudonativeIrlAnswers(user_id: string) {
   }
 }
 
-export async function fetchUserCustomAnswers(user_id: string) {
-  // noStore();
-  // console.log(user_id);
+export async function fetchUserCustomAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -218,8 +218,8 @@ export async function fetchUserCustomAnswers(user_id: string) {
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
       
-      WHERE UserQuestions.user_id = ${user_id}
-      AND Answers.user_id = ${user_id}
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
       AND Questions.question_kind = 'CUSTOM'
       
       AND Answers.answer_state = 'LIVE'

@@ -6,10 +6,13 @@ import {
   fetchUserPseudonativeIrlAnswers,
   fetchUserCustomAnswers,
 } from "@/app/lib/data/answers";
+import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 
 export async function Answer({ answer }: { answer: Answer }) {
+  const userQuestionFriendsCount = await countUserQuestionFriends(answer);
+
   return (
     <>
       <li>
@@ -21,6 +24,12 @@ export async function Answer({ answer }: { answer: Answer }) {
           {answer.question_kind === "CUSTOM" && <> / custom</>}
           {(answer.question_kind === "NATIVEIRL" ||
             answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
+          {answer.question_kind === "CUSTOM" &&
+            userQuestionFriendsCount < 1 && <> / not shared</>}
+          {answer.question_kind === "CUSTOM" &&
+            userQuestionFriendsCount >= 1 && (
+              <> / shared ({userQuestionFriendsCount})</>
+            )}
         </p>
         <p>{answer.answer_value}</p>
       </li>

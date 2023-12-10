@@ -1,9 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
-// import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchUserByUsername(username: string) {
-  // noStore();
+  noStore();
   // console.log(username);
   try {
     const data = await sql<User>`
