@@ -24,13 +24,13 @@ export default async function CustomizedPage({
   return (
     <main className="min-h-screen px-8 py-32 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
-        {/* <h1>Welcome to {username}&apos;s Customized Info.</h1> */}
-        <h1 className="font-semibold">
+        <h1>Welcome to {username}&apos;s Customized Info.</h1>
+        {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Customized Info.
         </h1>
         <UserPseudonativeNotIrlAnswers user={user} />
         <UserPseudonativeIrlAnswers user={user} />
-        <UserCustomAnswers user={user} />
+        <UserCustomAnswers user={user} /> */}
         <div>
           <Link
             href={`/users/${username}/personal-info/standardized`}

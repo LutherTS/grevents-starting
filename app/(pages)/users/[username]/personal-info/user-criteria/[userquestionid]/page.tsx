@@ -33,14 +33,14 @@ export default async function UserQuestionPage({
     <>
       <main className="min-h-screen px-8 py-32 w-full flex justify-center items-center">
         <div className="text-center max-w-prose">
-          {/* <h1>Welcome to {username}&apos;s User Criteria.</h1>
+          <h1>Welcome to {username}&apos;s User Criteria.</h1>
           <p className="pt-2">Below is the userQuestionId so far:</p>
-          <p className="pt-2">{userQuestionId}.</p> */}
-          <h1 className="font-semibold">
+          <p className="pt-2">{userQuestionId}.</p>
+          {/* <h1 className="font-semibold">
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
           </h1>
-          <Criteria answer={userQuestionAnswer} />
+          <Criteria answer={userQuestionAnswer} /> */}
           <div>
             <Link
               href={`/users/${username}/personal-info/customized`}
