@@ -1,11 +1,11 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import {
-  UserPseudonativeNotIrlAnswers,
-  UserPseudonativeIrlAnswers,
-  UserCustomAnswers,
-} from "@/app/ui/components/answers";
+  ManyUserPseudonativeNotIrlCriteria,
+  ManyUserPseudonativeIrlCriteria,
+  ManyUserCustomCriteria,
+} from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function CustomizedPage({
   params,
@@ -28,25 +28,17 @@ export default async function CustomizedPage({
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Customized Info.
         </h1>
-        <UserPseudonativeNotIrlAnswers user={user} />
-        <UserPseudonativeIrlAnswers user={user} />
-        <UserCustomAnswers user={user} />
-        <div>
-          <Link
-            href={`/users/${username}/personal-info/standardized`}
-            className="inline-block pt-2 underline"
-          >
-            To Standardized criteria
-          </Link>
-        </div>
-        <div>
-          <Link
-            href={`/users/${username}/personal-info`}
-            className="inline-block pt-2 underline"
-          >
-            To Personal Info
-          </Link>
-        </div>
+        <ManyUserPseudonativeNotIrlCriteria user={user} />
+        <ManyUserPseudonativeIrlCriteria user={user} />
+        <ManyUserCustomCriteria user={user} />
+        <PageLink
+          href={`/users/${username}/personal-info/standardized`}
+          name={"To Standardized criteria"}
+        />
+        <PageLink
+          href={`/users/${username}/personal-info`}
+          name={"To Personal Info"}
+        />
       </div>
     </main>
   );

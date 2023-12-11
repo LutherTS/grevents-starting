@@ -1,7 +1,7 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
-import { PinnedAnswers } from "@/app/ui/components/answers";
+import { ManyPinnedCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function PersonalInfoPage({
   params,
@@ -24,23 +24,15 @@ export default async function PersonalInfoPage({
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Personal Info.
         </h1>
-        <PinnedAnswers user={user} />
-        <div>
-          <Link
-            href={`/users/${username}/personal-info/standardized`}
-            className="inline-block pt-2 underline"
-          >
-            To all standardized criteria
-          </Link>
-        </div>
-        <div>
-          <Link
-            href={`/users/${username}/personal-info/customized`}
-            className="inline-block pt-2 underline"
-          >
-            To all customized criteria
-          </Link>
-        </div>
+        <ManyPinnedCriteria user={user} />
+        <PageLink
+          href={`/users/${username}/personal-info/standardized`}
+          name={"To Standardized criteria"}
+        />
+        <PageLink
+          href={`/users/${username}/personal-info/customized`}
+          name={"To Customized criteria"}
+        />
       </div>
     </main>
   );

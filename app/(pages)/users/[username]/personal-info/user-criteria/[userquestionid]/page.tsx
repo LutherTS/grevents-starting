@@ -1,11 +1,11 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
 import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
-import { Criteria } from "@/app/ui/components/answers";
-import { ManyFriends } from "@/app/ui/components/contacts";
-import { ManyUserQuestionFriends } from "@/app/ui/components/userquestionfriends";
+import { OneCriteria } from "@/app/components/server/answers";
+import { ManyFriends } from "@/app/components/server/contacts";
+import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function UserQuestionPage({
   params,
@@ -36,31 +36,23 @@ export default async function UserQuestionPage({
       <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
         <div className="max-w-prose text-center">
           {/* <h1>Welcome to {username}&apos;s User Criteria.</h1>
-          <p className="pt-2">Below is the userQuestionId so far:</p>
-          <p className="pt-2">{userQuestionId}.</p> */}
+          <p className="pt-2">Below is the userQuestionId so far</p>
+          <p className="pt-2">{userQuestionId}</p> */}
           <h1 className="font-semibold">
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
           </h1>
-          <Criteria answer={userQuestionAnswer} />
+          <OneCriteria answer={userQuestionAnswer} />
           <ManyFriends user={user} />
           <ManyUserQuestionFriends userQuestion={userQuestion} />
-          <div>
-            <Link
-              href={`/users/${username}/personal-info/customized`}
-              className="inline-block pt-2 underline"
-            >
-              To Customized criteria
-            </Link>
-          </div>
-          <div>
-            <Link
-              href={`/users/${username}/personal-info`}
-              className="inline-block pt-2 underline"
-            >
-              To Personal Info
-            </Link>
-          </div>
+          <PageLink
+            href={`/users/${username}/personal-info/customized`}
+            name={"To Customized criteria"}
+          />
+          <PageLink
+            href={`/users/${username}/personal-info`}
+            name={"To Personal Info"}
+          />
         </div>
       </main>
     </>
