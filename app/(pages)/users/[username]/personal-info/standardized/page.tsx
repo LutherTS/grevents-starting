@@ -2,7 +2,7 @@
 // import {
 //   ManyUserNativeNotIrlCriteria,
 //   ManyUserNativeIrlCriteria,
-// } from "@/app/ui/components/answers";
+// } from "@/app/components/server/answers";
 // import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
 

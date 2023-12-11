@@ -1,5 +1,5 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
-// import { ManyPinnedCriteria } from "@/app/ui/components/answers";
+// import { ManyPinnedCriteria } from "@/app/components/server/answers";
 // import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
 
