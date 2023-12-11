@@ -8,8 +8,8 @@ export async function fetchCustomUserQuestionByIDAndUser(
   user: User
 ) {
   // noStore();
-  console.log(userQuestionId);
-  console.log(user);
+  // console.log(userQuestionId);
+  // console.log(user);
   try {
     const data = await sql<UserQuestion>` -- UserQuestion
     SELECT * FROM UserQuestions

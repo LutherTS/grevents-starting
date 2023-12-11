@@ -167,7 +167,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
 
 export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   // noStore();
-  console.log(userId);
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -208,7 +208,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
 
 export async function fetchUserCustomAnswers(userId: string) {
   // noStore();
-  console.log(userId);
+  // console.log(userId);
   try {
     const data = await sql<Answer>`
       SELECT 

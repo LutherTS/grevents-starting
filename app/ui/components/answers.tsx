@@ -9,8 +9,6 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
-// import { usePathname } from "next/navigation";
-// import Link from "next/link";
 import { Criteria } from "./Criteria";
 
 export async function CriteriaQuestion({ answer }: { answer: Answer }) {
@@ -44,93 +42,6 @@ export async function CriteriaAnswer({ answer }: { answer: Answer }) {
     </>
   );
 }
-
-// export async function Criteria({ answer }: { answer: Answer }) {
-//   const pathname = usePathname();
-//   const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
-
-//   return (
-//     <>
-//       {pathname === answerCustomizedPath ? (
-//         <div>
-//           <Link
-//             href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
-//             className="underline inline-block"
-//           >
-//             <CriteriaQuestion answer={answer} />
-//             <CriteriaAnswer answer={answer} />
-//           </Link>
-//         </div>
-//       ) : (
-//         <>
-//           <CriteriaQuestion answer={answer} />
-//           <CriteriaAnswer answer={answer} />
-//         </>
-//       )}
-//     </>
-//   );
-// }
-
-// export async function Answer({ answer }: { answer: Answer }) {
-//   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
-//   const pathname = usePathname();
-//   const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
-
-//   /* Pseudocode
-//   I'm going to need to make another component to refactor.
-//   Two in fact : <AnswerQuestion /> <AnswerAnswer />
-//   Or <Criteria /> <Question /> <Answer />
-//   */
-
-//   return (
-//     <>
-//       {pathname === answerCustomizedPath ? (
-//         <div>
-//           <Link
-//             href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
-//             className="underline inline-block pt-2"
-//           >
-//             <p className="pt-2">
-//               {answer.question_name}
-//               {(answer.question_kind === "NATIVE" ||
-//                 answer.question_kind === "NATIVEIRL") && <> / native</>}
-//               {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
-//               {answer.question_kind === "CUSTOM" && <> / custom</>}
-//               {(answer.question_kind === "NATIVEIRL" ||
-//                 answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
-//               {answer.question_kind === "CUSTOM" &&
-//                 userQuestionFriendsCount < 1 && <> / not shared</>}
-//               {answer.question_kind === "CUSTOM" &&
-//                 userQuestionFriendsCount >= 1 && (
-//                   <> / shared ({userQuestionFriendsCount})</>
-//                 )}
-//             </p>
-//             <p className="pt-2">{answer.answer_value}</p>
-//           </Link>
-//         </div>
-//       ) : (
-//         <>
-//           <p className="pt-2">
-//             {answer.question_name}
-//             {(answer.question_kind === "NATIVE" ||
-//               answer.question_kind === "NATIVEIRL") && <> / native</>}
-//             {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
-//             {answer.question_kind === "CUSTOM" && <> / custom</>}
-//             {(answer.question_kind === "NATIVEIRL" ||
-//               answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
-//             {answer.question_kind === "CUSTOM" &&
-//               userQuestionFriendsCount < 1 && <> / not shared</>}
-//             {answer.question_kind === "CUSTOM" &&
-//               userQuestionFriendsCount >= 1 && (
-//                 <> / shared ({userQuestionFriendsCount})</>
-//               )}
-//           </p>
-//           <p className="pt-2">{answer.answer_value}</p>
-//         </>
-//       )}
-//     </>
-//   );
-// }
 
 export async function PinnedAnswers({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
