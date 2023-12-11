@@ -1,9 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 
 export async function countUserQuestionFriends(answer: Answer) {
-  noStore();
+  // noStore();
   // console.log(answer.question_kind);
   // console.log(answer.userquestion_id);
   if (answer.question_kind === "CUSTOM") {

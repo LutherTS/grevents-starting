@@ -1,11 +1,11 @@
 import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 
 export async function fetchUserPinnedAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -16,7 +16,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers 
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -44,7 +45,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
 }
 
 export async function fetchUserNativeNotIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -55,7 +56,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -83,7 +85,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
 }
 
 export async function fetchUserNativeIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -94,7 +96,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -122,7 +125,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
 }
 
 export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -133,7 +136,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -162,7 +166,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
 }
 
 export async function fetchUserPseudonativeIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -173,7 +177,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -202,7 +207,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
 }
 
 export async function fetchUserCustomAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const data = await sql<Answer>`
@@ -213,7 +218,8 @@ export async function fetchUserCustomAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -244,7 +250,7 @@ export async function findAnswerByUserQuestionAndUser(
   userQuestion: UserQuestion,
   user: User
 ) {
-  noStore();
+  // noStore();
   // console.log(userQuestion);
   // console.log(user);
   try {
@@ -256,7 +262,8 @@ export async function findAnswerByUserQuestionAndUser(
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id

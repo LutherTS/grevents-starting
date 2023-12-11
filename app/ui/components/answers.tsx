@@ -9,8 +9,9 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
+import Link from "next/link";
 
-export async function Answer({ answer }: { answer: Answer }) {
+export async function CriteriaQuestion({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
 
   return (
@@ -30,7 +31,39 @@ export async function Answer({ answer }: { answer: Answer }) {
           <> / shared ({userQuestionFriendsCount})</>
         )}
       </p>
+    </>
+  );
+}
+
+export function CriteriaAnswer({ answer }: { answer: Answer }) {
+  return (
+    <>
       <p className="pt-2">{answer.answer_value}</p>
+    </>
+  );
+}
+
+export async function Criteria({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <CriteriaQuestion answer={answer} />
+      <CriteriaAnswer answer={answer} />
+    </>
+  );
+}
+
+export async function LinkCriteria({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <div>
+        <Link
+          href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
+          className="underline inline-block"
+        >
+          <CriteriaQuestion answer={answer} />
+        </Link>
+      </div>
+      <CriteriaAnswer answer={answer} />
     </>
   );
 }
@@ -47,7 +80,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
                 <li key={pinnedAnswer.answer_id}>
-                  <Answer answer={pinnedAnswer} />
+                  <Criteria answer={pinnedAnswer} />
                 </li>
               );
             })}
@@ -72,7 +105,7 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
                 <li key={userNativeNotIrlAnswer.answer_id}>
-                  <Answer answer={userNativeNotIrlAnswer} />
+                  <Criteria answer={userNativeNotIrlAnswer} />
                 </li>
               );
             })}
@@ -95,7 +128,7 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
                 <li key={userNativeIrlAnswer.answer_id}>
-                  <Answer answer={userNativeIrlAnswer} />
+                  <Criteria answer={userNativeIrlAnswer} />
                 </li>
               );
             })}
@@ -120,7 +153,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
               (userPseudonativeNotIrlAnswer) => {
                 return (
                   <li key={userPseudonativeNotIrlAnswer.answer_id}>
-                    <Answer answer={userPseudonativeNotIrlAnswer} />
+                    <Criteria answer={userPseudonativeNotIrlAnswer} />
                   </li>
                 );
               }
@@ -146,7 +179,7 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
                 <li key={userPseudonativeIrlAnswer.answer_id}>
-                  <Answer answer={userPseudonativeIrlAnswer} />
+                  <Criteria answer={userPseudonativeIrlAnswer} />
                 </li>
               );
             })}
@@ -169,7 +202,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
                 <li key={userCustomAnswer.answer_id}>
-                  <Answer answer={userCustomAnswer} />
+                  <LinkCriteria answer={userCustomAnswer} />
                 </li>
               );
             })}
