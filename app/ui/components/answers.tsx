@@ -35,7 +35,7 @@ export async function CriteriaQuestion({ answer }: { answer: Answer }) {
   );
 }
 
-export async function CriteriaAnswer({ answer }: { answer: Answer }) {
+export function CriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="pt-2">{answer.answer_value}</p>

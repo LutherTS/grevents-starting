@@ -1,7 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { PinnedAnswers } from "@/app/ui/components/answers";
-import Link from "next/link";
 // import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function PersonalInfoPage({
   params,
