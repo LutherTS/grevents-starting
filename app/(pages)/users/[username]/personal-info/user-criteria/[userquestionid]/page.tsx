@@ -1,8 +1,9 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
-import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
-import { Criteria } from "@/app/ui/components/answers";
-import { notFound } from "next/navigation";
+// import { fetchUserByUsername } from "@/app/lib/data/users";
+// import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
+// import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
+// import { fetchAllUserFriends } from "@/app/lib/data/contacts";
+// import { Criteria } from "@/app/ui/components/answers";
+// import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export default async function UserQuestionPage({
@@ -15,19 +16,19 @@ export default async function UserQuestionPage({
 }) {
   const username = params.username;
   const userQuestionId = params.userquestionid;
-  const user = await fetchUserByUsername(username);
-  const userQuestion = await fetchCustomUserQuestionByIDAndUser(
-    userQuestionId,
-    user
-  );
-  const userQuestionAnswer = await findAnswerByUserQuestionAndUser(
-    userQuestion,
-    user
-  );
+  // const user = await fetchUserByUsername(username);
+  // const userQuestion = await fetchCustomUserQuestionByIDAndUser(
+  //   userQuestionId,
+  //   user
+  // );
+  // const userQuestionAnswer = await findAnswerByUserQuestionAndUser(
+  //   userQuestion,
+  //   user
+  // );
 
-  if (!user || !userQuestion) {
-    notFound();
-  }
+  // if (!user || !userQuestion || !userQuestionAnswer) {
+  //   notFound();
+  // }
 
   return (
     <>
@@ -40,7 +41,7 @@ export default async function UserQuestionPage({
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
           </h1>
-          <Criteria answer={userQuestionAnswer} /> */}
+          <Criteria answer={userQuestionAnswer} />*/}
           <div>
             <Link
               href={`/users/${username}/personal-info/customized`}
