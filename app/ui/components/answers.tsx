@@ -9,10 +9,11 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import Link from "next/link";
+import { Criteria } from "./Criteria";
 
-export async function Question({ answer }: { answer: Answer }) {
+export async function CriteriaQuestion({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
 
   return (
@@ -36,7 +37,7 @@ export async function Question({ answer }: { answer: Answer }) {
   );
 }
 
-export async function Answer({ answer }: { answer: Answer }) {
+export async function CriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="pt-2">{answer.answer_value}</p>
@@ -44,31 +45,31 @@ export async function Answer({ answer }: { answer: Answer }) {
   );
 }
 
-export async function Criteria({ answer }: { answer: Answer }) {
-  const pathname = usePathname();
-  const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
+// export async function Criteria({ answer }: { answer: Answer }) {
+//   const pathname = usePathname();
+//   const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
 
-  return (
-    <>
-      {pathname === answerCustomizedPath ? (
-        <div>
-          <Link
-            href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
-            className="underline inline-block"
-          >
-            <Question answer={answer} />
-            <Answer answer={answer} />
-          </Link>
-        </div>
-      ) : (
-        <>
-          <Question answer={answer} />
-          <Answer answer={answer} />
-        </>
-      )}
-    </>
-  );
-}
+//   return (
+//     <>
+//       {pathname === answerCustomizedPath ? (
+//         <div>
+//           <Link
+//             href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
+//             className="underline inline-block"
+//           >
+//             <CriteriaQuestion answer={answer} />
+//             <CriteriaAnswer answer={answer} />
+//           </Link>
+//         </div>
+//       ) : (
+//         <>
+//           <CriteriaQuestion answer={answer} />
+//           <CriteriaAnswer answer={answer} />
+//         </>
+//       )}
+//     </>
+//   );
+// }
 
 // export async function Answer({ answer }: { answer: Answer }) {
 //   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
