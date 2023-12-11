@@ -1,13 +1,13 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchCustomUserQuestionByIDAndUser(
   userQuestionId: string,
   user: User
 ) {
-  noStore();
+  // noStore();
   console.log(userQuestionId);
   console.log(user);
   try {
