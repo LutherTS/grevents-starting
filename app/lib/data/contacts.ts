@@ -1,10 +1,10 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import { Friend } from "../definitions/contacts";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchAllUserFriends(user: User) {
-  noStore();
+  // noStore();
   // console.log(user);
   try {
     const data = await sql<Friend>`
