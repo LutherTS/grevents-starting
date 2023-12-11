@@ -9,8 +9,10 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-export async function Answer({ answer }: { answer: Answer }) {
+export async function Question({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
 
   return (
@@ -30,10 +32,104 @@ export async function Answer({ answer }: { answer: Answer }) {
           <> / shared ({userQuestionFriendsCount})</>
         )}
       </p>
+    </>
+  );
+}
+
+export async function Answer({ answer }: { answer: Answer }) {
+  return (
+    <>
       <p className="pt-2">{answer.answer_value}</p>
     </>
   );
 }
+
+export async function Criteria({ answer }: { answer: Answer }) {
+  const pathname = usePathname();
+  const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
+
+  return (
+    <>
+      {pathname === answerCustomizedPath ? (
+        <div>
+          <Link
+            href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
+            className="underline inline-block"
+          >
+            <Question answer={answer} />
+            <Answer answer={answer} />
+          </Link>
+        </div>
+      ) : (
+        <>
+          <Question answer={answer} />
+          <Answer answer={answer} />
+        </>
+      )}
+    </>
+  );
+}
+
+// export async function Answer({ answer }: { answer: Answer }) {
+//   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
+//   const pathname = usePathname();
+//   const answerCustomizedPath = `/users/${answer.user_username}/personal-info/customized`;
+
+//   /* Pseudocode
+//   I'm going to need to make another component to refactor.
+//   Two in fact : <AnswerQuestion /> <AnswerAnswer />
+//   Or <Criteria /> <Question /> <Answer />
+//   */
+
+//   return (
+//     <>
+//       {pathname === answerCustomizedPath ? (
+//         <div>
+//           <Link
+//             href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
+//             className="underline inline-block pt-2"
+//           >
+//             <p className="pt-2">
+//               {answer.question_name}
+//               {(answer.question_kind === "NATIVE" ||
+//                 answer.question_kind === "NATIVEIRL") && <> / native</>}
+//               {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
+//               {answer.question_kind === "CUSTOM" && <> / custom</>}
+//               {(answer.question_kind === "NATIVEIRL" ||
+//                 answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
+//               {answer.question_kind === "CUSTOM" &&
+//                 userQuestionFriendsCount < 1 && <> / not shared</>}
+//               {answer.question_kind === "CUSTOM" &&
+//                 userQuestionFriendsCount >= 1 && (
+//                   <> / shared ({userQuestionFriendsCount})</>
+//                 )}
+//             </p>
+//             <p className="pt-2">{answer.answer_value}</p>
+//           </Link>
+//         </div>
+//       ) : (
+//         <>
+//           <p className="pt-2">
+//             {answer.question_name}
+//             {(answer.question_kind === "NATIVE" ||
+//               answer.question_kind === "NATIVEIRL") && <> / native</>}
+//             {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
+//             {answer.question_kind === "CUSTOM" && <> / custom</>}
+//             {(answer.question_kind === "NATIVEIRL" ||
+//               answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
+//             {answer.question_kind === "CUSTOM" &&
+//               userQuestionFriendsCount < 1 && <> / not shared</>}
+//             {answer.question_kind === "CUSTOM" &&
+//               userQuestionFriendsCount >= 1 && (
+//                 <> / shared ({userQuestionFriendsCount})</>
+//               )}
+//           </p>
+//           <p className="pt-2">{answer.answer_value}</p>
+//         </>
+//       )}
+//     </>
+//   );
+// }
 
 export async function PinnedAnswers({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
@@ -47,7 +143,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
                 <li key={pinnedAnswer.answer_id}>
-                  <Answer answer={pinnedAnswer} />
+                  <Criteria answer={pinnedAnswer} />
                 </li>
               );
             })}
@@ -72,7 +168,7 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
                 <li key={userNativeNotIrlAnswer.answer_id}>
-                  <Answer answer={userNativeNotIrlAnswer} />
+                  <Criteria answer={userNativeNotIrlAnswer} />
                 </li>
               );
             })}
@@ -95,7 +191,7 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
                 <li key={userNativeIrlAnswer.answer_id}>
-                  <Answer answer={userNativeIrlAnswer} />
+                  <Criteria answer={userNativeIrlAnswer} />
                 </li>
               );
             })}
@@ -120,7 +216,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
               (userPseudonativeNotIrlAnswer) => {
                 return (
                   <li key={userPseudonativeNotIrlAnswer.answer_id}>
-                    <Answer answer={userPseudonativeNotIrlAnswer} />
+                    <Criteria answer={userPseudonativeNotIrlAnswer} />
                   </li>
                 );
               }
@@ -146,7 +242,7 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
                 <li key={userPseudonativeIrlAnswer.answer_id}>
-                  <Answer answer={userPseudonativeIrlAnswer} />
+                  <Criteria answer={userPseudonativeIrlAnswer} />
                 </li>
               );
             })}
@@ -169,7 +265,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
                 <li key={userCustomAnswer.answer_id}>
-                  <Answer answer={userCustomAnswer} />
+                  <Criteria answer={userCustomAnswer} />
                 </li>
               );
             })}
