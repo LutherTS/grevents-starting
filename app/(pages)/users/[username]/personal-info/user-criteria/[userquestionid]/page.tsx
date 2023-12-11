@@ -5,7 +5,7 @@
 // import { ManyFriends } from "@/app/ui/components/contacts";
 // import { ManyUserQuestionFriends } from "@/app/ui/components/userquestionfriends";
 // import { notFound } from "next/navigation";
-import { PageLink } from "@/app/ui/components/links";
+import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function UserQuestionPage({
   params,

@@ -4,7 +4,7 @@
 //   ManyUserNativeIrlCriteria,
 // } from "@/app/ui/components/answers";
 // import { notFound } from "next/navigation";
-import { PageLink } from "@/app/ui/components/links";
+import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function StardardizedPage({
   params,
