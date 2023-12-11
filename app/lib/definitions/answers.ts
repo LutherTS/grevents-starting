@@ -9,4 +9,5 @@ export type Answer = {
   question_kind: string;
   userquestion_kind: string;
   userquestion_id: string;
+  user_username: string;
 };

@@ -16,7 +16,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers 
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -55,7 +56,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -94,7 +96,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -133,7 +136,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -173,7 +177,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -213,7 +218,8 @@ export async function fetchUserCustomAnswers(userId: string) {
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -256,7 +262,8 @@ export async function findAnswerByUserQuestionAndUser(
         UserQuestions.userquestion_is_pinned,
         Questions.question_kind,
         UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id
+        UserQuestions.userquestion_id,
+        Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
