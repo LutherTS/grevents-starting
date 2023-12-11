@@ -58,7 +58,7 @@ export async function LinkCriteria({ answer }: { answer: Answer }) {
       <div>
         <Link
           href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
-          className="underline inline-block"
+          className="inline-block underline"
         >
           <CriteriaQuestion answer={answer} />
         </Link>
@@ -75,7 +75,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
     <>
       {pinnedAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pinned criteria below.</p>
+          <p className="pt-2">Find their pinned criteria below</p>
           <ol>
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
@@ -93,14 +93,14 @@ export async function PinnedAnswers({ user }: { user: User }) {
 
 export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
   const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
-    user.user_id
+    user.user_id,
   );
 
   return (
     <>
       {userNativeNotIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their native criteria below.</p>
+          <p className="pt-2">Find their native criteria below</p>
           <ol>
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
@@ -123,7 +123,7 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
     <>
       {userNativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their native irl criteria below.</p>
+          <p className="pt-2">Find their native irl criteria below</p>
           <ol>
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
@@ -147,7 +147,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
     <>
       {userPseudonativeNotIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pseudonative criteria below.</p>
+          <p className="pt-2">Find their pseudonative criteria below</p>
           <ol>
             {userPseudonativeNotIrlAnswers.map(
               (userPseudonativeNotIrlAnswer) => {
@@ -156,7 +156,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
                     <Criteria answer={userPseudonativeNotIrlAnswer} />
                   </li>
                 );
-              }
+              },
             )}
           </ol>
         </>
@@ -167,14 +167,14 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
 
 export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
   const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
-    user.user_id
+    user.user_id,
   );
 
   return (
     <>
       {userPseudonativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pseudonative irl criteria below.</p>
+          <p className="pt-2">Find their pseudonative irl criteria below</p>
           <ol>
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
@@ -197,7 +197,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
     <>
       {userCustomAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their custom criteria below.</p>
+          <p className="pt-2">Find their custom criteria below</p>
           <ol>
             {userCustomAnswers.map((userCustomAnswer) => {
               return (

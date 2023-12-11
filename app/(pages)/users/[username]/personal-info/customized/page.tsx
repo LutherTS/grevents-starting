@@ -22,8 +22,8 @@ export default async function CustomizedPage({
   }
 
   return (
-    <main className="min-h-screen px-8 py-32 w-full flex justify-center items-center">
-      <div className="text-center max-w-prose">
+    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+      <div className="max-w-prose text-center">
         {/* <h1>Welcome to {username}&apos;s Customized Info.</h1> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Customized Info.
@@ -34,7 +34,7 @@ export default async function CustomizedPage({
         <div>
           <Link
             href={`/users/${username}/personal-info/standardized`}
-            className="underline inline-block pt-2"
+            className="inline-block pt-2 underline"
           >
             To Standardized criteria
           </Link>
@@ -42,7 +42,7 @@ export default async function CustomizedPage({
         <div>
           <Link
             href={`/users/${username}/personal-info`}
-            className="underline inline-block pt-2"
+            className="inline-block pt-2 underline"
           >
             To Personal Info
           </Link>

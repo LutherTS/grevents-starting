@@ -1,6 +1,29 @@
-import { fetchAllUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
+import {
+  countUserQuestionFriends,
+  fetchAllUserQuestionFriends,
+} from "@/app/lib/data/userquestionfriends";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
+
+export async function ManyUserQuestionFriendsLabel({
+  userQuestion,
+}: {
+  userQuestion: UserQuestion;
+}) {
+  const userQuestionFriendsCount = await countUserQuestionFriends(userQuestion);
+
+  return (
+    <>
+      {userQuestionFriendsCount >= 2 ? (
+        <p className="pt-2">
+          Shared with the following friends ({userQuestionFriendsCount})
+        </p>
+      ) : (
+        <p className="pt-2">Shared with the following friend (1)</p>
+      )}
+    </>
+  );
+}
 
 export function OneUserQuestionFriend({
   userQuestionFriend,
@@ -23,17 +46,14 @@ export async function ManyUserQuestionFriends({
   userQuestion: UserQuestion;
 }) {
   // userQuestion
-  const allUserQuestionFriends = await fetchAllUserQuestionFriends(
-    userQuestion
-  );
+  const allUserQuestionFriends =
+    await fetchAllUserQuestionFriends(userQuestion);
 
   return (
     <>
       {allUserQuestionFriends.length > 0 && (
         <>
-          <p className="pt-2">User criteria shared to the friend(s) below.</p>
-          {/* This is going to need another server component to dynamic the text in correspondance with the number of friends when applicable. 
-          In fact, same with friend and friends. */}
+          <ManyUserQuestionFriendsLabel userQuestion={userQuestion} />
           <ol>
             {allUserQuestionFriends.map((userQuestionFriend) => {
               return (
