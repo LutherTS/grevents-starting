@@ -28,7 +28,7 @@ export async function countUserQuestionFriends(answer: Answer) {
 export async function fetchAllUserQuestionFriends(userQuestion: any) {
   // UserQuestion
   // noStore();
-  console.log(userQuestion);
+  // console.log(userQuestion);
   try {
     const data = await sql<UserQuestionFriend>`
       SELECT 
@@ -64,7 +64,7 @@ export async function fetchAllUserQuestionFriends(userQuestion: any) {
 
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
