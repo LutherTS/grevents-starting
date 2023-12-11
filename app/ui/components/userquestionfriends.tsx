@@ -31,7 +31,8 @@ export async function ManyUserQuestionFriends({
     <>
       {allUserQuestionFriends.length > 0 && (
         <>
-          <p className="pt-2">User criteria shared to the friends below.</p>
+          <p className="pt-2">User criteria shared to the friend(s) below.</p>
+          {/* This is going to need another server component to dynamic the text in correspondance with the number of friends when applicable. */}
           <ol>
             {allUserQuestionFriends.map((userQuestionFriend) => {
               return (
