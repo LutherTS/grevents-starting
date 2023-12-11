@@ -1,7 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
 // import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
-// import { Criteria } from "@/app/ui/components/Criteria";
+// import { Criteria } from "@/app/ui/components/answers";
 // import { notFound } from "next/navigation";
 import Link from "next/link";
 

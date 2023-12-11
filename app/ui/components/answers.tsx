@@ -9,7 +9,8 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
-import { Criteria } from "./Criteria";
+// import { Criteria } from "./Criteria";
+import Link from "next/link";
 
 export async function CriteriaQuestion({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
@@ -39,6 +40,31 @@ export function CriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="pt-2">{answer.answer_value}</p>
+    </>
+  );
+}
+
+export async function Criteria({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <CriteriaQuestion answer={answer} />
+      <CriteriaAnswer answer={answer} />
+    </>
+  );
+}
+
+export async function LinkCriteria({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <div>
+        <Link
+          href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
+          className="underline inline-block"
+        >
+          <CriteriaQuestion answer={answer} />
+        </Link>
+      </div>
+      <CriteriaAnswer answer={answer} />
     </>
   );
 }
@@ -177,7 +203,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
                 <li key={userCustomAnswer.answer_id}>
-                  <Criteria answer={userCustomAnswer} />
+                  <LinkCriteria answer={userCustomAnswer} />
                 </li>
               );
             })}
