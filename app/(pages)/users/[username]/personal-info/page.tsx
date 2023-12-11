@@ -18,10 +18,12 @@ export default async function PersonalInfoPage({
   }
 
   return (
-    <main className="min-h-screen p-8 w-full flex justify-center items-center">
+    <main className="min-h-screen px-8 py-32 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
         {/* <h1>Welcome to {username}&apos;s Personal Info.</h1> */}
-        <h1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</h1>
+        <h1 className="font-semibold">
+          Welcome to {user.user_app_wide_name}&apos;s Personal Info.
+        </h1>
         <PinnedAnswers user={user} />
         <div>
           <Link
