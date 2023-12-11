@@ -11,15 +11,16 @@ export async function Criteria({ answer }: { answer: Answer }) {
 
   return (
     <>
-      {pathname === answerCustomizedPath ? (
+      {pathname === answerCustomizedPath &&
+      answer.question_kind === "CUSTOM" ? (
         <div>
           <Link
             href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
             className="underline inline-block"
           >
             <CriteriaQuestion answer={answer} />
-            <CriteriaAnswer answer={answer} />
           </Link>
+          <CriteriaAnswer answer={answer} />
         </div>
       ) : (
         <>

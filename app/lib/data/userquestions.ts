@@ -19,7 +19,7 @@ export async function fetchCustomUserQuestionByIDAndUser(
     
     WHERE UserQuestions.userquestion_id = ${userQuestionId}
     AND Users.user_id = ${user.user_id}
-    -- AND Questions.question_kind = 'CUSTOM'
+    AND Questions.question_kind = 'CUSTOM'
     
     AND UserQuestions.userquestion_state = 'LIVE'
     AND Users.user_state = 'LIVE'
