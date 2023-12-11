@@ -23,9 +23,8 @@ export async function ManyUserQuestionFriends({
   userQuestion: UserQuestion;
 }) {
   // userQuestion
-  const allUserQuestionFriends = await fetchAllUserQuestionFriends(
-    userQuestion
-  );
+  const allUserQuestionFriends =
+    await fetchAllUserQuestionFriends(userQuestion);
 
   return (
     <>

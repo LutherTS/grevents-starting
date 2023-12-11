@@ -33,8 +33,8 @@ export default async function UserQuestionPage({
 
   return (
     <>
-      <main className="min-h-screen px-8 py-32 w-full flex justify-center items-center">
-        <div className="text-center max-w-prose">
+      <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+        <div className="max-w-prose text-center">
           <h1>Welcome to {username}&apos;s User Criteria.</h1>
           <p className="pt-2">Below is the userQuestionId so far:</p>
           <p className="pt-2">{userQuestionId}.</p>
@@ -48,7 +48,7 @@ export default async function UserQuestionPage({
           <div>
             <Link
               href={`/users/${username}/personal-info/customized`}
-              className="underline inline-block pt-2"
+              className="inline-block pt-2 underline"
             >
               To Customized criteria
             </Link>
@@ -56,7 +56,7 @@ export default async function UserQuestionPage({
           <div>
             <Link
               href={`/users/${username}/personal-info`}
-              className="underline inline-block pt-2"
+              className="inline-block pt-2 underline"
             >
               To Personal Info
             </Link>

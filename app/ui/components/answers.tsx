@@ -58,7 +58,7 @@ export async function LinkCriteria({ answer }: { answer: Answer }) {
       <div>
         <Link
           href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
-          className="underline inline-block"
+          className="inline-block underline"
         >
           <CriteriaQuestion answer={answer} />
         </Link>
@@ -93,7 +93,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
 
 export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
   const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
-    user.user_id
+    user.user_id,
   );
 
   return (
@@ -156,7 +156,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
                     <Criteria answer={userPseudonativeNotIrlAnswer} />
                   </li>
                 );
-              }
+              },
             )}
           </ol>
         </>
@@ -167,7 +167,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
 
 export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
   const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
-    user.user_id
+    user.user_id,
   );
 
   return (
