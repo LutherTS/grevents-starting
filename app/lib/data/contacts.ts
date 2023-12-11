@@ -1,12 +1,13 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
+import { Friend } from "../definitions/contacts";
 // import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchAllUserFriends(user: User) {
   // noStore();
-  console.log(user);
+  // console.log(user);
   try {
-    const data = await sql` -- <Contact>
+    const data = await sql<Friend>`
       SELECT 
         u.user_app_wide_name, 
         u.user_username, 
@@ -38,7 +39,7 @@ export async function fetchAllUserFriends(user: User) {
 
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
