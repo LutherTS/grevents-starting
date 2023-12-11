@@ -1,11 +1,11 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import {
-  UserPseudonativeNotIrlAnswers,
-  UserPseudonativeIrlAnswers,
-  UserCustomAnswers,
-} from "@/app/ui/components/answers";
+// import { fetchUserByUsername } from "@/app/lib/data/users";
+// import {
+//   UserPseudonativeNotIrlAnswers,
+//   UserPseudonativeIrlAnswers,
+//   UserCustomAnswers,
+// } from "@/app/ui/components/answers";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+// import { notFound } from "next/navigation";
 
 export default async function CustomizedPage({
   params,
@@ -15,20 +15,20 @@ export default async function CustomizedPage({
   };
 }) {
   const username = params.username;
-  const user = await fetchUserByUsername(username);
+  // const user = await fetchUserByUsername(username);
 
-  if (!user) {
-    notFound();
-  }
+  // if (!user) {
+  //   notFound();
+  // }
 
   return (
     <main className="min-h-screen p-8 w-full flex justify-center items-center">
       <div className="text-center max-w-prose">
-        {/* <h1>Welcome to {username}&apos;s Customized Info.</h1> */}
-        <h1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</h1>
+        <h1>Welcome to {username}&apos;s Customized Info.</h1>
+        {/* <h1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</h1>
         <UserPseudonativeNotIrlAnswers user={user} />
         <UserPseudonativeIrlAnswers user={user} />
-        <UserCustomAnswers user={user} />
+        <UserCustomAnswers user={user} /> */}
         <div>
           <Link
             href={`/users/${username}/personal-info/standardized`}
