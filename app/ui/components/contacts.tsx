@@ -19,7 +19,7 @@ export async function ManyFriends({ user }: { user: User }) {
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="pt-2">Find their list of friends below.</p>
+          <p className="pt-2">Find their list of friend(s) below</p>
           <ol>
             {allUserFriends.map((userFriend) => {
               return (

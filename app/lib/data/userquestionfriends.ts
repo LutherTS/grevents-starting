@@ -1,18 +1,21 @@
 import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
+import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 // import { unstable_noStore as noStore } from "next/cache";
 
-export async function countUserQuestionFriends(answer: Answer) {
+export async function countUserQuestionFriends(
+  answerOrUserQuestion: Answer | UserQuestion,
+) {
   // noStore();
-  // console.log(answer.question_kind);
-  // console.log(answer.userquestion_id);
-  if (answer.question_kind === "CUSTOM") {
+  // console.log(answerOrUserQuestion.question_kind);
+  // console.log(answerOrUserQuestion.userquestion_id);
+  if (answerOrUserQuestion.question_kind === "CUSTOM") {
     try {
       const data = await sql`
       SELECT COUNT(userquestionfriend_id) FROM UserQuestionFriends
   
-      WHERE userquestion_id = ${answer.userquestion_id}
+      WHERE userquestion_id = ${answerOrUserQuestion.userquestion_id}
       
       AND userquestionfriend_state = 'LIVE';
       `;
@@ -25,7 +28,7 @@ export async function countUserQuestionFriends(answer: Answer) {
   }
 }
 
-export async function fetchAllUserQuestionFriends(userQuestion: any) {
+export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   // UserQuestion
   // noStore();
   // console.log(userQuestion);

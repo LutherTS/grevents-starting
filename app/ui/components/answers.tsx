@@ -75,7 +75,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
     <>
       {pinnedAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pinned criteria below.</p>
+          <p className="pt-2">Find their pinned criteria below</p>
           <ol>
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
@@ -100,7 +100,7 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
     <>
       {userNativeNotIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their native criteria below.</p>
+          <p className="pt-2">Find their native criteria below</p>
           <ol>
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
@@ -123,7 +123,7 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
     <>
       {userNativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their native irl criteria below.</p>
+          <p className="pt-2">Find their native irl criteria below</p>
           <ol>
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
@@ -147,7 +147,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
     <>
       {userPseudonativeNotIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pseudonative criteria below.</p>
+          <p className="pt-2">Find their pseudonative criteria below</p>
           <ol>
             {userPseudonativeNotIrlAnswers.map(
               (userPseudonativeNotIrlAnswer) => {
@@ -174,7 +174,7 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
     <>
       {userPseudonativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their pseudonative irl criteria below.</p>
+          <p className="pt-2">Find their pseudonative irl criteria below</p>
           <ol>
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
@@ -197,7 +197,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
     <>
       {userCustomAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their custom criteria below.</p>
+          <p className="pt-2">Find their custom criteria below</p>
           <ol>
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
