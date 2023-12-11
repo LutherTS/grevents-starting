@@ -11,7 +11,7 @@ import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 import Link from "next/link";
 
-export async function CriteriaQuestion({ answer }: { answer: Answer }) {
+export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
 
   return (
@@ -35,7 +35,7 @@ export async function CriteriaQuestion({ answer }: { answer: Answer }) {
   );
 }
 
-export function CriteriaAnswer({ answer }: { answer: Answer }) {
+export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="pt-2">{answer.answer_value}</p>
@@ -43,16 +43,16 @@ export function CriteriaAnswer({ answer }: { answer: Answer }) {
   );
 }
 
-export async function Criteria({ answer }: { answer: Answer }) {
+export async function OneCriteria({ answer }: { answer: Answer }) {
   return (
     <>
-      <CriteriaQuestion answer={answer} />
-      <CriteriaAnswer answer={answer} />
+      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaAnswer answer={answer} />
     </>
   );
 }
 
-export async function LinkCriteria({ answer }: { answer: Answer }) {
+export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   return (
     <>
       <div>
@@ -60,15 +60,15 @@ export async function LinkCriteria({ answer }: { answer: Answer }) {
           href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
           className="inline-block underline"
         >
-          <CriteriaQuestion answer={answer} />
+          <OneCriteriaQuestion answer={answer} />
         </Link>
       </div>
-      <CriteriaAnswer answer={answer} />
+      <OneCriteriaAnswer answer={answer} />
     </>
   );
 }
 
-export async function PinnedAnswers({ user }: { user: User }) {
+export async function ManyPinnedCriteria({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
 
   return (
@@ -80,7 +80,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
             {pinnedAnswers.map((pinnedAnswer) => {
               return (
                 <li key={pinnedAnswer.answer_id}>
-                  <Criteria answer={pinnedAnswer} />
+                  <OneCriteria answer={pinnedAnswer} />
                 </li>
               );
             })}
@@ -91,7 +91,7 @@ export async function PinnedAnswers({ user }: { user: User }) {
   );
 }
 
-export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
+export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
   const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
     user.user_id,
   );
@@ -105,7 +105,7 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
             {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
               return (
                 <li key={userNativeNotIrlAnswer.answer_id}>
-                  <Criteria answer={userNativeNotIrlAnswer} />
+                  <OneCriteria answer={userNativeNotIrlAnswer} />
                 </li>
               );
             })}
@@ -116,7 +116,7 @@ export async function UserNativeNotIrlAnswers({ user }: { user: User }) {
   );
 }
 
-export async function UserNativeIrlAnswers({ user }: { user: User }) {
+export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
   const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
 
   return (
@@ -128,7 +128,7 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
             {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
               return (
                 <li key={userNativeIrlAnswer.answer_id}>
-                  <Criteria answer={userNativeIrlAnswer} />
+                  <OneCriteria answer={userNativeIrlAnswer} />
                 </li>
               );
             })}
@@ -139,7 +139,11 @@ export async function UserNativeIrlAnswers({ user }: { user: User }) {
   );
 }
 
-export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
+export async function ManyUserPseudonativeNotIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
   const userPseudonativeNotIrlAnswers =
     await fetchUserPseudonativeNotIrlAnswers(user.user_id);
 
@@ -153,7 +157,7 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
               (userPseudonativeNotIrlAnswer) => {
                 return (
                   <li key={userPseudonativeNotIrlAnswer.answer_id}>
-                    <Criteria answer={userPseudonativeNotIrlAnswer} />
+                    <OneCriteria answer={userPseudonativeNotIrlAnswer} />
                   </li>
                 );
               },
@@ -165,7 +169,11 @@ export async function UserPseudonativeNotIrlAnswers({ user }: { user: User }) {
   );
 }
 
-export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
+export async function ManyUserPseudonativeIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
   const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
     user.user_id,
   );
@@ -179,7 +187,7 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
             {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
               return (
                 <li key={userPseudonativeIrlAnswer.answer_id}>
-                  <Criteria answer={userPseudonativeIrlAnswer} />
+                  <OneCriteria answer={userPseudonativeIrlAnswer} />
                 </li>
               );
             })}
@@ -190,7 +198,7 @@ export async function UserPseudonativeIrlAnswers({ user }: { user: User }) {
   );
 }
 
-export async function UserCustomAnswers({ user }: { user: User }) {
+export async function ManyUserCustomCriteria({ user }: { user: User }) {
   const userCustomAnswers = await fetchUserCustomAnswers(user.user_id);
 
   return (
@@ -202,7 +210,7 @@ export async function UserCustomAnswers({ user }: { user: User }) {
             {userCustomAnswers.map((userCustomAnswer) => {
               return (
                 <li key={userCustomAnswer.answer_id}>
-                  <LinkCriteria answer={userCustomAnswer} />
+                  <OneLinkCriteria answer={userCustomAnswer} />
                 </li>
               );
             })}

@@ -1,7 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
 // import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
-// import { Criteria } from "@/app/ui/components/answers";
+// import { OneCriteria } from "@/app/ui/components/answers";
 // import { ManyFriends } from "@/app/ui/components/contacts";
 // import { ManyUserQuestionFriends } from "@/app/ui/components/userquestionfriends";
 // import { notFound } from "next/navigation";
@@ -42,7 +42,7 @@ export default async function UserQuestionPage({
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
           </h1>
-          <Criteria answer={userQuestionAnswer} />
+          <OneCriteria answer={userQuestionAnswer} />
           <ManyFriends user={user} />
           <ManyUserQuestionFriends userQuestion={userQuestion} /> */}
           <PageLink

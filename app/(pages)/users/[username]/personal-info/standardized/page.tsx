@@ -1,7 +1,7 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import {
-//   UserNativeNotIrlAnswers,
-//   UserNativeIrlAnswers,
+//   ManyUserNativeNotIrlCriteria,
+//   ManyUserNativeIrlCriteria,
 // } from "@/app/ui/components/answers";
 // import { notFound } from "next/navigation";
 import { PageLink } from "@/app/ui/components/links";
@@ -27,8 +27,8 @@ export default async function StardardizedPage({
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Standardized Info.
         </h1>
-        <UserNativeNotIrlAnswers user={user} />
-        <UserNativeIrlAnswers user={user} /> */}
+        <ManyUserNativeNotIrlCriteria user={user} />
+        <ManyUserNativeIrlCriteria user={user} /> */}
         <PageLink
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
