@@ -9,7 +9,6 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
-// import { Criteria } from "./Criteria";
 import Link from "next/link";
 
 export async function CriteriaQuestion({ answer }: { answer: Answer }) {
