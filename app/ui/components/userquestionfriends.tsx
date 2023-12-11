@@ -16,7 +16,7 @@ export async function ManyUserQuestionFriendsLabel({
     <>
       {userQuestionFriendsCount >= 2 ? (
         <p className="pt-2">
-          Shared with the following friends ({userQuestionFriendsCount}).
+          Shared with the following friends ({userQuestionFriendsCount})
         </p>
       ) : (
         <p className="pt-2">Shared with the following friend (1)</p>
@@ -54,9 +54,6 @@ export async function ManyUserQuestionFriends({
       {allUserQuestionFriends.length > 0 && (
         <>
           <ManyUserQuestionFriendsLabel userQuestion={userQuestion} />
-          {/* This is going to need another server component to dynamize the text in correspondance with the number of friends when applicable. 
-          In fact, same with friend and friends.
-          No. Not in friends on contacts.tsx because this is not meant to be there in the input select of the final code. */}
           <ol>
             {allUserQuestionFriends.map((userQuestionFriend) => {
               return (

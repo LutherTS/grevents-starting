@@ -74,3 +74,23 @@ VALUES (
     now()
 ); -- Done. 
 
+-- PLUS
+
+INSERT INTO UserQuestionFriends ( -- LePapier, Favorite anime waifu
+-- shared to MisterX
+    userquestionfriend_id,
+    userquestion_id,
+    contact_id,
+    userquestionfriend_state,
+    userquestionfriend_created_at,
+    userquestionfriend_updated_at
+)
+VALUES (
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    '6435cb5e-68f9-4e9d-bcb5-aa7d1cce1771',
+    'a482ca35-d86f-4d0e-8da8-d557f3d8ec93',
+    'LIVE',
+    now(),
+    now()
+);
+
