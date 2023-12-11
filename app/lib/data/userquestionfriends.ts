@@ -29,7 +29,6 @@ export async function countUserQuestionFriends(
 }
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
-  // UserQuestion
   // noStore();
   // console.log(userQuestion);
   try {
