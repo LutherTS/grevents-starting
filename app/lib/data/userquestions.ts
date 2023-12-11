@@ -12,7 +12,35 @@ export async function fetchCustomUserQuestionByIDAndUser(
   // console.log(user);
   try {
     const data = await sql<UserQuestion>` -- UserQuestion
-    SELECT * FROM UserQuestions
+    SELECT
+      UserQuestions.userquestion_id,
+      UserQuestions.user_id,
+      UserQuestions.question_id,
+      UserQuestions.userquestion_state,
+      UserQuestions.userquestion_kind,
+      UserQuestions.userquestion_is_pinned,
+      UserQuestions.userquestion_created_at,
+      UserQuestions.userquestion_updated_at,
+      UserQuestions.userquestion_pinned_at,
+      UserQuestions.userquestion_up_to_irl_at,
+      UserQuestions.userquestion_down_to_irl_at,
+      Users.user_state,
+      Users.user_status_title,
+      Users.user_status_dashboard,
+      Users.user_status_personal_info,
+      Users.user_username,
+      Users.user_app_wide_name,
+      Users.user_friend_code,
+      Users.user_has_temporary_password,
+      Users.user_created_at,
+      Users.user_updated_at,
+      Questions.question_state,
+      Questions.question_kind,
+      Questions.question_name,
+      Questions.question_is_suggested,
+      Questions.question_created_at,
+      Questions.question_updated_at
+    FROM UserQuestions
 
     JOIN Users ON UserQuestions.user_id = Users.user_id
     JOIN Questions ON UserQuestions.question_id = Questions.question_id
