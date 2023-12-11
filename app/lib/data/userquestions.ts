@@ -3,7 +3,7 @@ import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
 
-export async function fetchUserQuestionByIDAndUser(
+export async function fetchCustomUserQuestionByIDAndUser(
   userQuestionId: string,
   user: User
 ) {
@@ -19,6 +19,7 @@ export async function fetchUserQuestionByIDAndUser(
     
     WHERE UserQuestions.userquestion_id = ${userQuestionId}
     AND Users.user_id = ${user.user_id}
+    AND Questions.question_kind = 'CUSTOM'
     
     AND UserQuestions.userquestion_state = 'LIVE'
     AND Users.user_state = 'LIVE'

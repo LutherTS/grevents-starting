@@ -1,5 +1,5 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
-// import { fetchUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
+// import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
 // import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
 // import { Answer } from "@/app/ui/components/answers";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export default async function UserQuestionPage({
   const username = params.username;
   const userQuestionId = params.userquestionid;
   // const user = await fetchUserByUsername(username);
-  // const userQuestion = await fetchUserQuestionByIDAndUser(userQuestionId, user);
+  // const userQuestion = await fetchCustomUserQuestionByIDAndUser(userQuestionId, user);
   // const userQuestionAnswer = await findAnswerByUserQuestionAndUser(
   //   userQuestion,
   //   user
