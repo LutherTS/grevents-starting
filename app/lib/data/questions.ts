@@ -10,9 +10,9 @@ export async function fetchAllNativeNotIrlQuestions() {
   try {
     const data = await sql<NativeNotIrlQuestion>`
       SELECT 
-        question_name,
-        question_kind,
-        question_id
+          question_name,
+          question_kind,
+          question_id
       FROM Questions
 
       WHERE question_kind = 'NATIVE'
@@ -34,9 +34,9 @@ export async function fetchAllNativeIrlQuestions() {
   try {
     const data = await sql<NativeIrlQuestion>`
       SELECT 
-        question_name,
-        question_kind,
-        question_id
+          question_name,
+          question_kind,
+          question_id
       FROM Questions
 
       WHERE question_kind = 'NATIVEIRL'

@@ -5,6 +5,12 @@ import {
   fetchUserPseudonativeNotIrlAnswers,
   fetchUserPseudonativeIrlAnswers,
   fetchUserCustomAnswers,
+  fetchUserPinnedNotIrlAnswers,
+  fetchUserUnpinnedNativeNotIrlAnswers,
+  fetchUserUnpinnedPseudonativeNotIrlAnswers,
+  fetchUserPinnedNotAndIrlAnswers,
+  fetchUserUnpinnedNativeIrlAnswers,
+  fetchUserUnpinnedPseudonativeIrlAnswers,
 } from "@/app/lib/data/answers";
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
@@ -214,6 +220,175 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
                 </li>
               );
             })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyPinnedNotIrlCriteria({ user }: { user: User }) {
+  const pinnedNotIrlAnswers = await fetchUserPinnedNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {pinnedNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their pinned criteria below</p>
+          <ol>
+            {pinnedNotIrlAnswers.map((pinnedNotIrlAnswer) => {
+              return (
+                <li key={pinnedNotIrlAnswer.answer_id}>
+                  <OneCriteria answer={pinnedNotIrlAnswer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeNotIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedNativeNotIrlAnswers =
+    await fetchUserUnpinnedNativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {userUnpinnedNativeNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) native criteria below</p>
+          <ol>
+            {userUnpinnedNativeNotIrlAnswers.map(
+              (userUnpinnedNativeNotIrlAnswer) => {
+                return (
+                  <li key={userUnpinnedNativeNotIrlAnswer.answer_id}>
+                    <OneCriteria answer={userUnpinnedNativeNotIrlAnswer} />
+                  </li>
+                );
+              },
+            )}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedPseudonativeNotIrlAnswers =
+    await fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {userUnpinnedPseudonativeNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) pseudonative criteria below</p>
+          <ol>
+            {userUnpinnedPseudonativeNotIrlAnswers.map(
+              (userUnpinnedPseudonativeNotIrlAnswer) => {
+                return (
+                  <li key={userUnpinnedPseudonativeNotIrlAnswer.answer_id}>
+                    <OneCriteria
+                      answer={userUnpinnedPseudonativeNotIrlAnswer}
+                    />
+                  </li>
+                );
+              },
+            )}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyPinnedNotAndIrlCriteria({ user }: { user: User }) {
+  const pinnedNotAndIrlAnswers = await fetchUserPinnedNotAndIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      {pinnedNotAndIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their pinned criteria below</p>
+          <ol>
+            {pinnedNotAndIrlAnswers.map((pinnedNotAndIrlAnswer) => {
+              return (
+                <li key={pinnedNotAndIrlAnswer.answer_id}>
+                  <OneCriteria answer={pinnedNotAndIrlAnswer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedNativeIrlAnswers = await fetchUserUnpinnedNativeIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      {userUnpinnedNativeIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) native criteria below</p>
+          <ol>
+            {userUnpinnedNativeIrlAnswers.map((userUnpinnedNativeIrlAnswer) => {
+              return (
+                <li key={userUnpinnedNativeIrlAnswer.answer_id}>
+                  <OneCriteria answer={userUnpinnedNativeIrlAnswer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedPseudonativeIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedPseudonativeIrlAnswers =
+    await fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {userUnpinnedPseudonativeIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) pseudonative criteria below</p>
+          <ol>
+            {userUnpinnedPseudonativeIrlAnswers.map(
+              (userUnpinnedPseudonativeIrlAnswer) => {
+                return (
+                  <li key={userUnpinnedPseudonativeIrlAnswer.answer_id}>
+                    <OneCriteria answer={userUnpinnedPseudonativeIrlAnswer} />
+                  </li>
+                );
+              },
+            )}
           </ol>
         </>
       )}

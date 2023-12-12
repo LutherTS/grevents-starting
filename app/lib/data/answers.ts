@@ -10,14 +10,14 @@ export async function fetchUserPinnedAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers 
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -33,7 +33,9 @@ export async function fetchUserPinnedAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY UserQuestions.userquestion_pinned_at DESC, Answers.answer_updated_at DESC
+      ORDER BY 
+          UserQuestions.userquestion_pinned_at DESC, 
+          Answers.answer_updated_at DESC
       LIMIT 10;
     `;
     // console.log(data);
@@ -50,14 +52,14 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -73,7 +75,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY Answers.answer_created_at ASC
+      ORDER BY 
+          Answers.answer_created_at ASC
       LIMIT 10;
     `;
     // console.log(data);
@@ -90,14 +93,14 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -113,7 +116,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY Answers.answer_created_at ASC
+      ORDER BY 
+          Answers.answer_created_at ASC
       LIMIT 10;
     `;
     // console.log(data);
@@ -130,14 +134,14 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -154,7 +158,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY Questions.question_name ASC
+      ORDER BY 
+          Questions.question_name ASC
       LIMIT 10;
     `;
     // console.log(data);
@@ -171,14 +176,14 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -195,7 +200,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY Questions.question_name ASC
+      ORDER BY 
+          Questions.question_name ASC
       LIMIT 10;
     `;
     // console.log(data);
@@ -212,14 +218,14 @@ export async function fetchUserCustomAnswers(userId: string) {
   try {
     const data = await sql<Answer>`
       SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -285,5 +291,288 @@ export async function findAnswerByUserQuestionAndUser(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user question answer.");
+  }
+}
+
+export async function fetchUserPinnedNotIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers 
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND UserQuestions.userquestion_is_pinned = TRUE
+      AND (
+          (
+              Questions.question_kind = 'NATIVE'
+          )
+          OR (
+              Questions.question_kind = 'PSEUDO' AND
+              UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+          )
+      )
+
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          UserQuestions.userquestion_pinned_at DESC, 
+          Answers.answer_updated_at DESC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned not irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+      
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND Questions.question_kind = 'NATIVE'
+      AND UserQuestions.userquestion_is_pinned = FALSE
+      
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          Answers.answer_created_at ASC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native not irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
+  userId: string,
+) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+      
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND Questions.question_kind = 'PSEUDO'
+      AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+      AND UserQuestions.userquestion_is_pinned = FALSE
+      
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          Questions.question_name ASC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative not irl answers.",
+    );
+  }
+}
+
+export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers 
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND UserQuestions.userquestion_is_pinned = TRUE
+      AND (
+          (
+              Questions.question_kind = 'NATIVE'
+          )
+          OR (
+              Questions.question_kind = 'NATIVEIRL'
+          )
+          OR (
+              Questions.question_kind = 'PSEUDO' AND
+              UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+          )
+          OR (
+              Questions.question_kind = 'PSEUDO' AND
+              UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+          )
+      )
+
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          UserQuestions.userquestion_pinned_at DESC, 
+          Answers.answer_updated_at DESC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned not and irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+      
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND Questions.question_kind = 'NATIVEIRL'
+      AND UserQuestions.userquestion_is_pinned = FALSE
+      
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          Answers.answer_created_at ASC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
+  noStore();
+  // console.log(userId);
+  try {
+    const data = await sql<Answer>`
+      SELECT 
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+      FROM Answers
+
+      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+      JOIN Questions ON UserQuestions.question_id = Questions.question_id
+      JOIN Users ON Answers.user_id = Users.user_id
+      
+      WHERE UserQuestions.user_id = ${userId}
+      AND Answers.user_id = ${userId}
+      AND Questions.question_kind = 'PSEUDO'
+      AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+      AND UserQuestions.userquestion_is_pinned = FALSE
+      
+      AND Answers.answer_state = 'LIVE'
+      AND UserQuestions.userquestion_state = 'LIVE'
+      AND Questions.question_state = 'LIVE'
+      AND Users.user_state = 'LIVE'
+
+      ORDER BY 
+          Questions.question_name ASC
+      LIMIT 10;
+    `;
+    // console.log(data);
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
   }
 }

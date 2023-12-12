@@ -9,9 +9,9 @@ export async function fetchAllUserFriends(user: User) {
   try {
     const data = await sql<Friend>`
       SELECT 
-        u.user_app_wide_name, 
-        u.user_username, 
-        c1.contact_id 
+          u.user_app_wide_name, 
+          u.user_username, 
+          c1.contact_id 
       FROM Contacts c1
       
       JOIN Users u ON c1.user_last_id = u.user_id
@@ -20,7 +20,7 @@ export async function fetchAllUserFriends(user: User) {
       WHERE c1.user_first_id = ${user.user_id}
       AND (
           (
-              c1.contact_kind = 'FRIEND'  AND 
+              c1.contact_kind = 'FRIEND' AND 
               c2.contact_kind = 'FRIEND' AND
               c1.contact_blocking = FALSE AND
               c2.contact_blocking = FALSE

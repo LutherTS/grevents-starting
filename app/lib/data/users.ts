@@ -8,17 +8,17 @@ export async function fetchUserByUsername(username: string) {
   try {
     const data = await sql<User>`
       SELECT
-        user_id,
-        user_state,
-        user_status_title,
-        user_status_dashboard,
-        user_status_personal_info,
-        user_username,
-        user_app_wide_name,
-        user_friend_code,
-        user_has_temporary_password,
-        user_created_at,
-        user_updated_at
+          user_id,
+          user_state,
+          user_status_title,
+          user_status_dashboard,
+          user_status_personal_info,
+          user_username,
+          user_app_wide_name,
+          user_friend_code,
+          user_has_temporary_password,
+          user_created_at,
+          user_updated_at
       FROM Users
 
       WHERE user_username = ${username}

@@ -34,9 +34,9 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   try {
     const data = await sql<UserQuestionFriend>`
       SELECT 
-        u.user_app_wide_name, 
-        u.user_username, 
-        uqf.userquestionfriend_id 
+          u.user_app_wide_name, 
+          u.user_username, 
+          uqf.userquestionfriend_id 
       FROM UserQuestionFriends uqf
       
       JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
