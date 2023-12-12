@@ -1,6 +1,7 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { ManyPinnedCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function PersonalInfoPage({
@@ -24,7 +25,15 @@ export default async function PersonalInfoPage({
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Personal Info.
         </h1>
-        <ManyPinnedCriteria user={user} />
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyPinnedCriteria user={user} />
+        </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized`}
           name={"To Standardized criteria"}

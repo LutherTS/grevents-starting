@@ -5,6 +5,7 @@ import {
   ManyUserCustomCriteria,
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function CustomizedPage({
@@ -28,9 +29,17 @@ export default async function CustomizedPage({
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Customized Info.
         </h1>
-        <ManyUserPseudonativeNotIrlCriteria user={user} />
-        <ManyUserPseudonativeIrlCriteria user={user} />
-        <ManyUserCustomCriteria user={user} />
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyUserPseudonativeNotIrlCriteria user={user} />
+          <ManyUserPseudonativeIrlCriteria user={user} />
+          <ManyUserCustomCriteria user={user} />
+        </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/customized/modify-criteria`}
           name={"Modify"}

@@ -5,6 +5,7 @@ import {
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
+import { Suspense } from "react";
 
 export default async function ModifyCriteriaCustomizedPage({
   params,
@@ -28,8 +29,16 @@ export default async function ModifyCriteriaCustomizedPage({
           Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
           Customized.
         </h1>
-        <ManyUserPseudonativeNotIrlCriteria user={user} />
-        <ManyUserPseudonativeIrlCriteria user={user} />
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyUserPseudonativeNotIrlCriteria user={user} />
+          <ManyUserPseudonativeIrlCriteria user={user} />
+        </Suspense>
         <p className="pt-2">
           (Custom criteria have their own dynamic modify page directly available
           from the parent Customized criteria page.)

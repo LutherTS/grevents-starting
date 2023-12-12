@@ -5,6 +5,7 @@ import {
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
+import { Suspense } from "react";
 
 export default async function ModifyCriteriaStandardizedPage({
   params,
@@ -28,8 +29,16 @@ export default async function ModifyCriteriaStandardizedPage({
           Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
           Standardized.
         </h1>
-        <ManyUserNativeNotIrlCriteria user={user} />
-        <ManyUserNativeIrlCriteria user={user} />
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyUserNativeNotIrlCriteria user={user} />
+          <ManyUserNativeIrlCriteria user={user} />
+        </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized`}
           name={"Cancel"}

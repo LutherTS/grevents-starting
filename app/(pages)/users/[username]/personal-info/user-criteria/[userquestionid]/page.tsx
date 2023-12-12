@@ -6,6 +6,7 @@ import { ManyFriends } from "@/app/components/server/contacts";
 import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
+import { Suspense } from "react";
 
 export default async function UserQuestionPage({
   params,
@@ -42,9 +43,17 @@ export default async function UserQuestionPage({
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
           </h1>
-          <OneCriteria answer={userQuestionAnswer} />
-          <ManyFriends user={user} />
-          <ManyUserQuestionFriends userQuestion={userQuestion} />
+          <Suspense
+            fallback={
+              <>
+                <p className="pt-2">Loading...</p>
+              </>
+            }
+          >
+            <OneCriteria answer={userQuestionAnswer} />
+            <ManyFriends user={user} />
+            <ManyUserQuestionFriends userQuestion={userQuestion} />
+          </Suspense>
           <PageLink
             href={`/users/${username}/personal-info/customized`}
             name={"To Customized criteria"}
