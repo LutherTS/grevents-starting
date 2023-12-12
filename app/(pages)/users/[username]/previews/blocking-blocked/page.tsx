@@ -34,7 +34,7 @@ export default async function BlockingBlockedPreviewPage({
           CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
           APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
         </p>
-        <p className="pt-2">Unblock if that's OK with you</p> */}
+        <p className="pt-2">Unblock if that&apos;s OK with you</p> */}
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
