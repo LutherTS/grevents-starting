@@ -1,12 +1,15 @@
-import { fetchAllUserFriends } from "@/app/lib/data/contacts";
-import { Friend } from "@/app/lib/definitions/contacts";
+import {
+  fetchAllUserFriends,
+  fetchAllUserContacts,
+} from "@/app/lib/data/contacts";
+import { Friend, Contact } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
 
-export function OneFriend({ contact }: { contact: Friend }) {
+export function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
       <p className="pt-2">
-        {contact.user_app_wide_name} / {contact.user_username}
+        {friend.user_app_wide_name} / {friend.user_username}
       </p>
     </>
   );
@@ -24,7 +27,40 @@ export async function ManyFriends({ user }: { user: User }) {
             {allUserFriends.map((userFriend) => {
               return (
                 <li key={userFriend.contact_id}>
-                  <OneFriend contact={userFriend} />
+                  <OneFriend friend={userFriend} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export function OneContact({ contact }: { contact: Contact }) {
+  return (
+    <>
+      <p className="pt-2">{contact.user_username}</p>
+    </>
+  );
+}
+
+export async function ManyContacts({ user }: { user: User }) {
+  const allUserContacts = await fetchAllUserContacts(user);
+
+  return (
+    <>
+      {allUserContacts.length > 0 && (
+        <>
+          <p className="pt-2">
+            Select a user you're acquainted with. (userlast in searchParams.)
+          </p>
+          <ol>
+            {allUserContacts.map((userContact) => {
+              return (
+                <li key={userContact.contact_id}>
+                  <OneContact contact={userContact} />
                 </li>
               );
             })}
