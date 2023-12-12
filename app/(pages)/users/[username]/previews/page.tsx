@@ -36,12 +36,12 @@ export default async function PreviewsPage({
           name={`To "irl" preview`}
         />
         <PageLink
-          href={`/users/${username}/previews/blocking`}
-          name={`To "blocking" preview`}
+          href={`/users/${username}/previews/i-am-blocking`}
+          name={`To "i-am-blocking" preview`}
         />
         <PageLink
-          href={`/users/${username}/previews/blocked`}
-          name={`To "blocked" preview`}
+          href={`/users/${username}/previews/has-me-blocked`}
+          name={`To "has-me-blocked" preview`}
         />
         <PageLink
           href={`/users/${username}/previews/blocking-blocked`}
