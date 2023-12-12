@@ -24,7 +24,9 @@ export default async function NonePreviewPage({
         <p className="pt-2">Block</p>
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s None Preview.
-        </h1> */}
+        </h1>
+        <p className="pt-2">Send friend request</p>
+        <p className="pt-2">Block</p> */}
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

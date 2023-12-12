@@ -28,7 +28,13 @@ export default async function BlockingPreviewPage({
         <p className="pt-2">Block them back</p>
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s I Am Blocking Preview.
-        </h1> */}
+        </h1>
+        <p className="pt-2 font-semibold text-red-500">
+          YOU CAN NO LONGER ACCESS ANY OF THE INFORMATION OF{" "}
+          {username.toUpperCase()} ACROSS THE ENTIRE APPLICATION, FUTURE COMMON
+          GROUPS AND FUTURE COMMON EVENTS INCLUDED.
+        </p>
+        <p className="pt-2">Block them back</p> */}
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

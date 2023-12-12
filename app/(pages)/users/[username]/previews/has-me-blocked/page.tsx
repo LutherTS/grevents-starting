@@ -28,7 +28,13 @@ export default async function BlockedPreviewPage({
         <p className="pt-2">Unblock</p>
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Has Me Blocked Preview.
-        </h1> */}
+        </h1>
+        <p className="pt-2 font-semibold">
+          {username.toUpperCase()} CAN NO LONGER ACCESS ANY OF YOUR INFORMATION
+          ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON
+          EVENTS INCLUDED.
+        </p>
+        <p className="pt-2">Unblock</p> */}
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
