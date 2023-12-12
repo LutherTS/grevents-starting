@@ -4,6 +4,7 @@ import {
   ManyUserNativeIrlCriteria,
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function StardardizedPage({
@@ -27,8 +28,16 @@ export default async function StardardizedPage({
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Standardized Info.
         </h1>
-        <ManyUserNativeNotIrlCriteria user={user} />
-        <ManyUserNativeIrlCriteria user={user} />
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyUserNativeNotIrlCriteria user={user} />
+          <ManyUserNativeIrlCriteria user={user} />
+        </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized/modify-criteria`}
           name={"Modify"}
