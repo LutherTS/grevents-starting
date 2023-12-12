@@ -2,7 +2,6 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import {
   ManyUserPseudonativeNotIrlCriteria,
   ManyUserPseudonativeIrlCriteria,
-  ManyUserCustomCriteria,
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
