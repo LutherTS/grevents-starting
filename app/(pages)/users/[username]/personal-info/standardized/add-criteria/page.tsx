@@ -16,8 +16,11 @@ export default async function AddCriteriaStandardizedPage({
 }) {
   const username = params.username;
   const user = await fetchUserByUsername(username);
-  const allNativeNotIrlQuestions = await fetchAllNativeNotIrlQuestions();
-  const allNativeIrlQuestions = await fetchAllNativeIrlQuestions();
+
+  const [allNativeNotIrlQuestions, allNativeIrlQuestions] = await Promise.all([
+    fetchAllNativeNotIrlQuestions(),
+    fetchAllNativeIrlQuestions(),
+  ]);
 
   if (!user) {
     notFound();
@@ -72,7 +75,8 @@ export default async function AddCriteriaStandardizedPage({
             </>
           )}
           {/* </Suspense> */}
-          {/* Suspense doesn't work here because I'm fetching for the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch. */}
+          {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
+          For now I'm choosing to map directly on the page, but eventually I'll do so on the form component once I'll reach the development phase when I'm mutating data. */}
           <PageLink
             href={`/users/${username}/personal-info/standardized`}
             name={"Cancel"}
