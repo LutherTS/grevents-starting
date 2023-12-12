@@ -22,7 +22,7 @@ export async function ManyFriends({ user }: { user: User }) {
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="pt-2">Find their list of friend(s) below</p>
+          <p className="pt-2">Find your list of friend(s) below</p>
           <ol>
             {allUserFriends.map((userFriend) => {
               return (
@@ -51,21 +51,21 @@ export async function ManyContacts({ user }: { user: User }) {
 
   return (
     <>
-      {allUserContacts.length > 0 && (
-        <>
-          <p className="pt-2">
-            Select a user you're acquainted with. (userlast in searchParams.)
-          </p>
-          <ol>
-            {allUserContacts.map((userContact) => {
-              return (
-                <li key={userContact.contact_id}>
-                  <OneContact contact={userContact} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
+      <p className="pt-2">
+        Select a user you're acquainted with. (userlast in searchParams.)
+      </p>
+      {allUserContacts.length > 0 ? (
+        <ol>
+          {allUserContacts.map((userContact) => {
+            return (
+              <li key={userContact.contact_id}>
+                <OneContact contact={userContact} />
+              </li>
+            );
+          })}
+        </ol>
+      ) : (
+        <p className="pt-2">You aren't acquainted with any user.</p>
       )}
     </>
   );

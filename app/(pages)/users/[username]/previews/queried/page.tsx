@@ -1,6 +1,6 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
 // import { notFound } from "next/navigation";
-import { ManyContacts } from "@/app/components/server/contacts";
+// import { ManyContacts } from "@/app/components/server/contacts";
 import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
 import { PageLink } from "@/app/components/agnostic/links";
 
@@ -38,7 +38,7 @@ export default async function NonePreviewPage({
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Queried Previews.
         </h1>
-        <ManyContacts user={user}> />
+        <ManyContacts user={user} />
         {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
         <ManyRelationCombinations />
         {relCombo !== "" && <p className="pt-2">relcombo: {relCombo}</p>} */}

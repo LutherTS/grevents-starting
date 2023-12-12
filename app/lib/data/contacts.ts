@@ -49,13 +49,13 @@ export async function fetchAllUserFriends(user: User) {
 
 export async function fetchAllUserContacts(user: User) {
   noStore();
-  console.log(user);
+  // console.log(user);
   try {
     const data = await sql<Contact>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
-          c1.contact_id c1_id 
+          c1.contact_id 
       FROM Contacts c1
 
       JOIN Users u ON c1.user_last_id = u.user_id
@@ -65,11 +65,11 @@ export async function fetchAllUserContacts(user: User) {
       
       AND c1.contact_state = 'LIVE'
       AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE';
+      AND c2.contact_state = 'LIVE'
 
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
