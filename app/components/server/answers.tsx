@@ -395,3 +395,25 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteria({
     </>
   );
 }
+
+export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
+  return (
+    <>
+      <ManyPinnedNotIrlCriteria user={user} />
+      <ManyUserUnpinnedNativeNotIrlCriteria user={user} />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
+  return (
+    <>
+      <ManyPinnedNotAndIrlCriteria user={user} />
+      <ManyUserUnpinnedNativeNotIrlCriteria user={user} />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
+      <ManyUserUnpinnedNativeIrlCriteria user={user} />
+      <ManyUserUnpinnedPseudonativeIrlCriteria user={user} />
+    </>
+  );
+}
