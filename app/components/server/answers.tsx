@@ -11,11 +11,13 @@ import {
   fetchUserPinnedNotAndIrlAnswers,
   fetchUserUnpinnedNativeIrlAnswers,
   fetchUserUnpinnedPseudonativeIrlAnswers,
+  fetchUserSharedToContactCustomAnswers,
 } from "@/app/lib/data/answers";
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 import Link from "next/link";
+import { GatheredContact } from "@/app/lib/definitions/contacts";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   const userQuestionFriendsCount = await countUserQuestionFriends(answer);
@@ -414,6 +416,38 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
       <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
       <ManyUserUnpinnedNativeIrlCriteria user={user} />
       <ManyUserUnpinnedPseudonativeIrlCriteria user={user} />
+    </>
+  );
+}
+
+export async function ManyUserSharedToContactCustomAnswers({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
+}) {
+  const userSharedToContactCustomAnswers =
+    await fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_id);
+
+  return (
+    <>
+      {userSharedToContactCustomAnswers.length > 0 && (
+        <>
+          <p className="pt-2">See the custom answers they can see below</p>
+          <ol>
+            {userSharedToContactCustomAnswers.map(
+              (userSharedToContactCustomAnswer) => {
+                return (
+                  <li key={userSharedToContactCustomAnswer.answer_id}>
+                    <OneCriteria answer={userSharedToContactCustomAnswer} />
+                  </li>
+                );
+              },
+            )}
+          </ol>
+        </>
+      )}
     </>
   );
 }
