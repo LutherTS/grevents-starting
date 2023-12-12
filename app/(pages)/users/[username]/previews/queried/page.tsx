@@ -9,6 +9,7 @@
 // } from "@/app/components/server/answers";
 // import { Suspense } from "react";
 import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
+import { relationCombinations } from "@/app/lib/utils/lists";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function NonePreviewPage({
@@ -23,12 +24,12 @@ export default async function NonePreviewPage({
     relcombo?: string;
   };
 }) {
+  console.log(relationCombinations);
   const username = params.username;
   const userLast = searchParams?.userlast || "";
   let relCombo = searchParams?.relcombo || "";
   // const user = await fetchUserByUsername(username);
   // const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
-
   // if (
   //   relCombo === "" &&
   //   gatheredContact &&
@@ -53,6 +54,7 @@ export default async function NonePreviewPage({
   // if (!user) {
   //   notFound();
   // }
+  console.log(relCombo);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
@@ -63,14 +65,35 @@ export default async function NonePreviewPage({
         </p>
         {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
         <ManyRelationCombinations />
-        {relCombo !== "" && <p className="pt-2">relcombo: {relCombo}</p>}
+        {/* {relCombo !== "" && <p className="pt-2">relcombo: {relCombo}</p>} */}
+        {relCombo !== "" && (
+          <>
+            {relationCombinations.includes(relCombo) ? (
+              <p className="pt-2">relcombo: {relCombo}</p>
+            ) : (
+              <p className="pt-2">
+                There is no such relation combinaison defined.
+              </p>
+            )}
+          </>
+        )}
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Queried Previews.
         </h1>
         <ManyContacts user={user} />
-        {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
+        {gatheredContact ? (<p className="pt-2">userlast: {userLast}</p>) : (<p className="pt-2">You aren't acquainted with any such user.</p>)}
         <ManyRelationCombinations />
-        {relCombo !== "" && <p className="pt-2">relcombo: {relCombo}</p>}
+        {relCombo !== "" && (
+          <>
+            {relationCombinations.includes(relCombo) ? (
+              <p className="pt-2">relcombo: {relCombo}</p>
+            ) : (
+              <p className="pt-2">
+                There is no such relation combinaison defined.
+              </p>
+            )}
+          </>
+        )}
         <Suspense
           fallback={
             <>
