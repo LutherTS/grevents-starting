@@ -3,10 +3,10 @@ import {
   NativeNotIrlQuestion,
   NativeIrlQuestion,
 } from "../definitions/questions";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchAllNativeNotIrlQuestions() {
-  noStore();
+  // noStore();
   try {
     const data = await sql<NativeNotIrlQuestion>`
       SELECT 
@@ -30,7 +30,7 @@ export async function fetchAllNativeNotIrlQuestions() {
 }
 
 export async function fetchAllNativeIrlQuestions() {
-  noStore();
+  // noStore();
   try {
     const data = await sql<NativeIrlQuestion>`
       SELECT 

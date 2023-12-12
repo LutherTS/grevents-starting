@@ -2,12 +2,12 @@ import { sql } from "@vercel/postgres";
 import { Answer } from "../definitions/answers";
 import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 
 export async function countUserQuestionFriends(
   answerOrUserQuestion: Answer | UserQuestion,
 ) {
-  noStore();
+  // noStore();
   // console.log(answerOrUserQuestion.question_kind);
   // console.log(answerOrUserQuestion.userquestion_id);
   if (answerOrUserQuestion.question_kind === "CUSTOM") {
@@ -29,7 +29,7 @@ export async function countUserQuestionFriends(
 }
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
-  noStore();
+  // noStore();
   // console.log(userQuestion);
   try {
     const data = await sql<UserQuestionFriend>`
