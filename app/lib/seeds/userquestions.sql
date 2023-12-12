@@ -543,6 +543,7 @@ INSERT INTO UserQuestions ( -- LePapier, Birthday
 -- pseudonative
 -- for preexisting pseudonative not irl (answer live) 
 -- when creating same pseudonative not irl criteria
+-- NOW PINNED --
     userquestion_id,
     user_id,
     question_id,
@@ -631,6 +632,7 @@ INSERT INTO UserQuestions ( -- LePapier, Birthdate
 -- pseudonative / irl
 -- for preexisting pseudonative irl (answer live) 
 -- when creating same pseudonative irl criteria
+-- NOW PINNED --
     userquestion_id,
     user_id,
     question_id,

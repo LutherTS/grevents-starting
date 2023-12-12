@@ -5,6 +5,9 @@ import {
   fetchUserPseudonativeNotIrlAnswers,
   fetchUserPseudonativeIrlAnswers,
   fetchUserCustomAnswers,
+  fetchUserPinnedNotIrlAnswers,
+  fetchUserUnpinnedNativeNotIrlAnswers,
+  fetchUserUnpinnedPseudonativeNotIrlAnswers,
 } from "@/app/lib/data/answers";
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
@@ -214,6 +217,91 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
                 </li>
               );
             })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyPinnedNotIrlCriteria({ user }: { user: User }) {
+  const pinnedNotIrlAnswers = await fetchUserPinnedNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {pinnedNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their pinned criteria below</p>
+          <ol>
+            {pinnedNotIrlAnswers.map((pinnedNotIrlAnswer) => {
+              return (
+                <li key={pinnedNotIrlAnswer.answer_id}>
+                  <OneCriteria answer={pinnedNotIrlAnswer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeNotIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedNativeNotIrlAnswers =
+    await fetchUserUnpinnedNativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {userUnpinnedNativeNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their native criteria below</p>
+          <ol>
+            {userUnpinnedNativeNotIrlAnswers.map(
+              (userUnpinnedNativeNotIrlAnswer) => {
+                return (
+                  <li key={userUnpinnedNativeNotIrlAnswer.answer_id}>
+                    <OneCriteria answer={userUnpinnedNativeNotIrlAnswer} />
+                  </li>
+                );
+              },
+            )}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedPseudonativeNotIrlAnswers =
+    await fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      {userUnpinnedPseudonativeNotIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their pseudonative criteria below</p>
+          <ol>
+            {userUnpinnedPseudonativeNotIrlAnswers.map(
+              (userUnpinnedPseudonativeNotIrlAnswer) => {
+                return (
+                  <li key={userUnpinnedPseudonativeNotIrlAnswer.answer_id}>
+                    <OneCriteria
+                      answer={userUnpinnedPseudonativeNotIrlAnswer}
+                    />
+                  </li>
+                );
+              },
+            )}
           </ol>
         </>
       )}

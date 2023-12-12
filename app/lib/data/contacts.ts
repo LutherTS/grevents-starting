@@ -20,7 +20,7 @@ export async function fetchAllUserFriends(user: User) {
       WHERE c1.user_first_id = ${user.user_id}
       AND (
           (
-              c1.contact_kind = 'FRIEND'  AND 
+              c1.contact_kind = 'FRIEND' AND 
               c2.contact_kind = 'FRIEND' AND
               c1.contact_blocking = FALSE AND
               c2.contact_blocking = FALSE
