@@ -549,6 +549,7 @@ INSERT INTO UserQuestions ( -- LePapier, Birthday
     question_id,
     userquestion_state,
     userquestion_kind,
+    userquestion_is_pinned,
     userquestion_created_at,
     userquestion_updated_at
 )
@@ -558,6 +559,7 @@ VALUES (
     '34ce07f9-03c3-41b9-b36d-26bbebcf4998',
     'LIVE',
     'PSEUDONATIVE',
+    TRUE,
     now(),
     now()
 ); -- Done. 
@@ -638,6 +640,7 @@ INSERT INTO UserQuestions ( -- LePapier, Birthdate
     question_id,
     userquestion_state,
     userquestion_kind,
+    userquestion_is_pinned,
     userquestion_created_at,
     userquestion_updated_at
 )
@@ -647,6 +650,7 @@ VALUES (
     '4b7bcb0d-2eb1-4783-a762-7fbfb7106f6d',
     'LIVE',
     'PSEUDONATIVEIRL',
+    TRUE,
     now(),
     now()
 ); -- Done. 
