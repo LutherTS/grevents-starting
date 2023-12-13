@@ -47,6 +47,7 @@ export function OneContact({ contact }: { contact: Contact }) {
 }
 
 export async function ManyContacts({ user }: { user: User }) {
+  // No longer in use.
   const allUserContacts = await fetchAllUserContacts(user);
 
   return (

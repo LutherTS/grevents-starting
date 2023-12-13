@@ -352,7 +352,7 @@ export async function ManyUserUnpinnedNativeIrlCriteria({
     <>
       {userUnpinnedNativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their (other) native criteria below</p>
+          <p className="pt-2">Find their (other) native irl criteria below</p>
           <ol>
             {userUnpinnedNativeIrlAnswers.map((userUnpinnedNativeIrlAnswer) => {
               return (
@@ -380,7 +380,9 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteria({
     <>
       {userUnpinnedPseudonativeIrlAnswers.length > 0 && (
         <>
-          <p className="pt-2">Find their (other) pseudonative criteria below</p>
+          <p className="pt-2">
+            Find their (other) pseudonative irl criteria below
+          </p>
           <ol>
             {userUnpinnedPseudonativeIrlAnswers.map(
               (userUnpinnedPseudonativeIrlAnswer) => {

@@ -48,6 +48,7 @@ export async function fetchAllUserFriends(user: User) {
 }
 
 export async function fetchAllUserContacts(user: User) {
+  // No longer in use.
   noStore();
   // console.log(user);
   try {
