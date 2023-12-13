@@ -77,18 +77,29 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   );
 }
 
-export async function ManyCriteria({ answers }: { answers: Answer[] }) {
+export async function ManyCriteria({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
   return (
     <>
-      <ol>
-        {answers.map((answer) => {
-          return (
-            <li key={answer.answer_id}>
-              <OneCriteria answer={answer} />
-            </li>
-          );
-        })}
-      </ol>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
     </>
   );
 }
@@ -125,12 +136,7 @@ export async function ManyUserPinnedCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {pinnedAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pinned criteria below</p>
-          <ManyCriteria answers={pinnedAnswers} />
-        </>
-      )}
+      <ManyCriteria answers={pinnedAnswers} label={answersLabels.pinned} />
     </>
   );
 }
@@ -142,12 +148,10 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userNativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their native criteria below</p>
-          <ManyCriteria answers={userNativeNotIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userNativeNotIrlAnswers}
+        label={answersLabels.nativeNotIrl}
+      />
     </>
   );
 }
@@ -157,12 +161,10 @@ export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userNativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their native irl criteria below</p>
-          <ManyCriteria answers={userNativeIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userNativeIrlAnswers}
+        label={answersLabels.nativeIrl}
+      />
     </>
   );
 }
@@ -177,12 +179,10 @@ export async function ManyUserPseudonativeNotIrlCriteria({
 
   return (
     <>
-      {userPseudonativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pseudonative criteria below</p>
-          <ManyCriteria answers={userPseudonativeNotIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userPseudonativeNotIrlAnswers}
+        label={answersLabels.pseudonativeNotIrl}
+      />
     </>
   );
 }
@@ -198,12 +198,10 @@ export async function ManyUserPseudonativeIrlCriteria({
 
   return (
     <>
-      {userPseudonativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pseudonative irl criteria below</p>
-          <ManyCriteria answers={userPseudonativeIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userPseudonativeIrlAnswers}
+        label={answersLabels.pseudonativeIrl}
+      />
     </>
   );
 }
@@ -213,10 +211,7 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyLinkCriteria
-        answers={userCustomAnswers}
-        label={answersLabels.custom}
-      />
+      <ManyCriteria answers={userCustomAnswers} label={answersLabels.custom} />
     </>
   );
 }
@@ -226,12 +221,10 @@ export async function ManyUserPinnedNotIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {pinnedNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pinned criteria below</p>
-          <ManyCriteria answers={pinnedNotIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={pinnedNotIrlAnswers}
+        label={answersLabels.pinnedNotIrl}
+      />
     </>
   );
 }
@@ -246,12 +239,10 @@ export async function ManyUserUnpinnedNativeNotIrlCriteria({
 
   return (
     <>
-      {userUnpinnedNativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) native criteria below</p>
-          <ManyCriteria answers={userUnpinnedNativeNotIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        label={answersLabels.unpinnedNativeNotIrl}
+      />
     </>
   );
 }
@@ -266,12 +257,10 @@ export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
 
   return (
     <>
-      {userUnpinnedPseudonativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) pseudonative criteria below</p>
-          <ManyCriteria answers={userUnpinnedPseudonativeNotIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        label={answersLabels.unpinnedPseudonativeNotIrl}
+      />
     </>
   );
 }
@@ -287,12 +276,10 @@ export async function ManyUserPinnedNotAndIrlCriteria({
 
   return (
     <>
-      {pinnedNotAndIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pinned criteria below</p>
-          <ManyCriteria answers={pinnedNotAndIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={pinnedNotAndIrlAnswers}
+        label={answersLabels.pinnedNotAndIrl}
+      />
     </>
   );
 }
@@ -308,12 +295,10 @@ export async function ManyUserUnpinnedNativeIrlCriteria({
 
   return (
     <>
-      {userUnpinnedNativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) native irl criteria below</p>
-          <ManyCriteria answers={userUnpinnedNativeIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userUnpinnedNativeIrlAnswers}
+        label={answersLabels.unpinnedNativeIrl}
+      />
     </>
   );
 }
@@ -328,14 +313,10 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteria({
 
   return (
     <>
-      {userUnpinnedPseudonativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">
-            Find their (other) pseudonative irl criteria below
-          </p>
-          <ManyCriteria answers={userUnpinnedPseudonativeIrlAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeIrlAnswers}
+        label={answersLabels.unpinnedPseudonativeIrl}
+      />
     </>
   );
 }
@@ -374,12 +355,10 @@ export async function ManyUserSharedToContactCustomAnswers({
 
   return (
     <>
-      {userSharedToContactCustomAnswers.length > 0 && (
-        <>
-          <p className="pt-2">See the custom answers they can see below</p>
-          <ManyCriteria answers={userSharedToContactCustomAnswers} />
-        </>
-      )}
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        label={answersLabels.sharedToContactCustom}
+      />
     </>
   );
 }
@@ -391,34 +370,7 @@ export async function ManyUserPinnedNotIrlCriteriaTwo({
 }) {
   return (
     <>
-      <ManyCriteriaTwo answers={answers} label={answersLabels.pinnedNotIrl} />
-    </>
-  );
-}
-
-export async function ManyCriteriaTwo({
-  answers,
-  label,
-}: {
-  answers: Answer[];
-  label: AnswersLabel;
-}) {
-  return (
-    <>
-      {answers.length > 0 && (
-        <>
-          <p className="pt-2">{label}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteria answer={answer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
     </>
   );
 }
@@ -430,7 +382,7 @@ export async function ManyUserUnpinnedNativeNotIrlCriteriaTwo({
 }) {
   return (
     <>
-      <ManyCriteriaTwo
+      <ManyCriteria
         answers={answers}
         label={answersLabels.unpinnedNativeNotIrl}
       />
@@ -445,7 +397,7 @@ export async function ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo({
 }) {
   return (
     <>
-      <ManyCriteriaTwo
+      <ManyCriteria
         answers={answers}
         label={answersLabels.unpinnedPseudonativeNotIrl}
       />
@@ -460,10 +412,7 @@ export async function ManyUserUnpinnedNativeIrlCriteriaTwo({
 }) {
   return (
     <>
-      <ManyCriteriaTwo
-        answers={answers}
-        label={answersLabels.unpinnedNativeIrl}
-      />
+      <ManyCriteria answers={answers} label={answersLabels.unpinnedNativeIrl} />
     </>
   );
 }
@@ -475,7 +424,7 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteriaTwo({
 }) {
   return (
     <>
-      <ManyCriteriaTwo
+      <ManyCriteria
         answers={answers}
         label={answersLabels.unpinnedPseudonativeIrl}
       />

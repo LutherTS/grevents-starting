@@ -28,6 +28,7 @@ export const answersLabels: { [K in AnswersLabelKey]: AnswersLabel } = {
   pinnedNotAndIrl: "Find their pinned for irl criteria below",
   unpinnedNativeIrl: "Find their (other) native irl criteria below",
   unpinnedPseudonativeIrl: "Find their (other) pseudonative irl criteria below",
+  sharedToContactCustom: "See the custom answers they can see below",
 };
 
 export type AnswersLabelKey =
@@ -42,7 +43,8 @@ export type AnswersLabelKey =
   | "unpinnedPseudonativeNotIrl"
   | "pinnedNotAndIrl"
   | "unpinnedNativeIrl"
-  | "unpinnedPseudonativeIrl";
+  | "unpinnedPseudonativeIrl"
+  | "sharedToContactCustom";
 
 export type AnswersLabel =
   | "Find their pinned criteria below"
@@ -56,4 +58,5 @@ export type AnswersLabel =
   | "Find their (other) pseudonative criteria below"
   | "Find their pinned for irl criteria below"
   | "Find their (other) native irl criteria below"
-  | "Find their (other) pseudonative irl criteria below";
+  | "Find their (other) pseudonative irl criteria below"
+  | "See the custom answers they can see below";
