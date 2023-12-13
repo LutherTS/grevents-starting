@@ -3,10 +3,8 @@
 // import { notFound } from "next/navigation";
 // // import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
 // import {
-//   // ManyRelComboFriendCriteria, // currently being refactored
-//   // ManyRelComboIrlCriteria, // currently being refactored
-//   ManyRelComboFriendCriteriaTwo,
-//   ManyRelComboIrlCriteriaTwo,
+//   ManyRelComboFriendCriteria,
+//   ManyRelComboIrlCriteria,
 //   ManyUserSharedToContactCustomAnswers,
 // } from "@/app/components/server/answers";
 // import { Suspense } from "react";
@@ -112,9 +110,9 @@ export default async function QueriedPreviewPage({
           }
         >
           {relCombo === "friend" && (
-            <ManyRelComboFriendCriteriaTwo user={user} />
+            <ManyRelComboFriendCriteria user={user} />
           )}
-          {relCombo === "irl" && <ManyRelComboIrlCriteriaTwo user={user} />}
+          {relCombo === "irl" && <ManyRelComboIrlCriteria user={user} />}
           {gatheredContact && (relCombo === "friend" || relCombo === "irl") && (
             <ManyUserSharedToContactCustomAnswers
               user={user}

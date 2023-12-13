@@ -216,31 +216,85 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
   );
 }
 
-export async function ManyUserPinnedNotIrlCriteria({ user }: { user: User }) {
-  const pinnedNotIrlAnswers = await fetchUserPinnedNotIrlAnswers(user.user_id);
+export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+  ]);
 
   return (
     <>
-      <ManyCriteria
-        answers={pinnedNotIrlAnswers}
-        label={answersLabels.pinnedNotIrl}
+      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
       />
     </>
   );
 }
 
-export async function ManyUserUnpinnedNativeNotIrlCriteria({
-  user,
-}: {
-  user: User;
-}) {
-  const userUnpinnedNativeNotIrlAnswers =
-    await fetchUserUnpinnedNativeNotIrlAnswers(user.user_id);
+export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
+  const [
+    pinnedNotAndIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotAndIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
+  ]);
 
   return (
     <>
-      <ManyCriteria
+      <ManyUserPinnedNotIrlCriteria answers={pinnedNotAndIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
         answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedNativeIrlCriteria
+        answers={userUnpinnedNativeIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeIrlCriteria
+        answers={userUnpinnedPseudonativeIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyUserPinnedNotIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeNotIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria
+        answers={answers}
         label={answersLabels.unpinnedNativeNotIrl}
       />
     </>
@@ -248,97 +302,43 @@ export async function ManyUserUnpinnedNativeNotIrlCriteria({
 }
 
 export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedPseudonativeNotIrlAnswers =
-    await fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id);
-
   return (
     <>
       <ManyCriteria
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answers={answers}
         label={answersLabels.unpinnedPseudonativeNotIrl}
       />
     </>
   );
 }
 
-export async function ManyUserPinnedNotAndIrlCriteria({
-  user,
-}: {
-  user: User;
-}) {
-  const pinnedNotAndIrlAnswers = await fetchUserPinnedNotAndIrlAnswers(
-    user.user_id,
-  );
-
-  return (
-    <>
-      <ManyCriteria
-        answers={pinnedNotAndIrlAnswers}
-        label={answersLabels.pinnedNotAndIrl}
-      />
-    </>
-  );
-}
-
 export async function ManyUserUnpinnedNativeIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedNativeIrlAnswers = await fetchUserUnpinnedNativeIrlAnswers(
-    user.user_id,
-  );
-
   return (
     <>
-      <ManyCriteria
-        answers={userUnpinnedNativeIrlAnswers}
-        label={answersLabels.unpinnedNativeIrl}
-      />
+      <ManyCriteria answers={answers} label={answersLabels.unpinnedNativeIrl} />
     </>
   );
 }
 
 export async function ManyUserUnpinnedPseudonativeIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedPseudonativeIrlAnswers =
-    await fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id);
-
   return (
     <>
       <ManyCriteria
-        answers={userUnpinnedPseudonativeIrlAnswers}
+        answers={answers}
         label={answersLabels.unpinnedPseudonativeIrl}
       />
-    </>
-  );
-}
-
-export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
-  return (
-    <>
-      <ManyUserPinnedNotIrlCriteria user={user} />
-      <ManyUserUnpinnedNativeNotIrlCriteria user={user} />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
-    </>
-  );
-}
-
-export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
-  return (
-    <>
-      <ManyUserPinnedNotAndIrlCriteria user={user} />
-      <ManyUserUnpinnedNativeNotIrlCriteria user={user} />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
-      <ManyUserUnpinnedNativeIrlCriteria user={user} />
-      <ManyUserUnpinnedPseudonativeIrlCriteria user={user} />
     </>
   );
 }
@@ -358,133 +358,6 @@ export async function ManyUserSharedToContactCustomAnswers({
       <ManyCriteria
         answers={userSharedToContactCustomAnswers}
         label={answersLabels.sharedToContactCustom}
-      />
-    </>
-  );
-}
-
-export async function ManyUserPinnedNotIrlCriteriaTwo({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedNativeNotIrlCriteriaTwo({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria
-        answers={answers}
-        label={answersLabels.unpinnedNativeNotIrl}
-      />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria
-        answers={answers}
-        label={answersLabels.unpinnedPseudonativeNotIrl}
-      />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedNativeIrlCriteriaTwo({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria answers={answers} label={answersLabels.unpinnedNativeIrl} />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedPseudonativeIrlCriteriaTwo({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria
-        answers={answers}
-        label={answersLabels.unpinnedPseudonativeIrl}
-      />
-    </>
-  );
-}
-
-export async function ManyRelComboFriendCriteriaTwo({ user }: { user: User }) {
-  const [
-    pinnedNotIrlAnswers,
-    userUnpinnedNativeNotIrlAnswers,
-    userUnpinnedPseudonativeNotIrlAnswers,
-  ] = await Promise.all([
-    fetchUserPinnedNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
-  ]);
-
-  return (
-    <>
-      <ManyUserPinnedNotIrlCriteriaTwo answers={pinnedNotIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteriaTwo
-        answers={userUnpinnedNativeNotIrlAnswers}
-      />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-      />
-    </>
-  );
-}
-
-export async function ManyRelComboIrlCriteriaTwo({ user }: { user: User }) {
-  const [
-    pinnedNotIrlAnswers,
-    userUnpinnedNativeNotIrlAnswers,
-    userUnpinnedPseudonativeNotIrlAnswers,
-    userUnpinnedNativeIrlAnswers,
-    userUnpinnedPseudonativeIrlAnswers,
-  ] = await Promise.all([
-    fetchUserPinnedNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
-  ]);
-
-  return (
-    <>
-      <ManyUserPinnedNotIrlCriteriaTwo answers={pinnedNotIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteriaTwo
-        answers={userUnpinnedNativeNotIrlAnswers}
-      />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-      />
-      <ManyUserUnpinnedNativeIrlCriteriaTwo
-        answers={userUnpinnedNativeIrlAnswers}
-      />
-      <ManyUserUnpinnedPseudonativeIrlCriteriaTwo
-        answers={userUnpinnedPseudonativeIrlAnswers}
       />
     </>
   );
