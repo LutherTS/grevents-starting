@@ -7,7 +7,7 @@ export function ManyRelationCombinations() {
       {relationCombinations.length > 0 && (
         <>
           <p className="pt-2">
-            Select a relation combination between you and this user you've
+            Select a relation combination between you and this user you&apos;ve
             selected. (relcombo in searchParams.)
           </p>
           <ol>

@@ -47,8 +47,8 @@ export async function fetchAllUserFriends(user: User) {
   }
 }
 
+/* No longer in use.
 export async function fetchAllUserContacts(user: User) {
-  // No longer in use.
   noStore();
   // console.log(user);
   try {
@@ -77,6 +77,7 @@ export async function fetchAllUserContacts(user: User) {
     throw new Error("Failed to fetch user contacts.");
   }
 }
+*/
 
 export async function gatherContactByUserAndUsername(
   user: User,

@@ -62,7 +62,7 @@ export default async function QueriedPreviewPage({
       <div className="max-w-prose text-center">
         <h1>Welcome to {username}&apos;s Queried Previews.</h1>
         <p className="pt-2">
-          Select a user you're acquainted with. (userlast in searchParams.)
+          Select a user you&apos;re acquainted with. (userlast in searchParams.)
         </p>
         {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
         <ManyRelationCombinations />
@@ -88,7 +88,7 @@ export default async function QueriedPreviewPage({
             {gatheredContact ? (
               <p className="pt-2">userlast: {userLast}</p>
             ) : (
-              <p className="pt-2">You aren't acquainted with any such user.</p>
+              <p className="pt-2">You aren&apos;t acquainted with any such user.</p>
             )}
           </>
         )}

@@ -46,14 +46,14 @@ export function OneContact({ contact }: { contact: Contact }) {
   );
 }
 
+/* No longer in use.
 export async function ManyContacts({ user }: { user: User }) {
-  // No longer in use.
   const allUserContacts = await fetchAllUserContacts(user);
 
   return (
     <>
       <p className="pt-2">
-        Select a user you're acquainted with. (userlast in searchParams.)
+        Select a user you&apos;re acquainted with. (userlast in searchParams.)
       </p>
       {allUserContacts.length > 0 ? (
         <ol>
@@ -66,8 +66,9 @@ export async function ManyContacts({ user }: { user: User }) {
           })}
         </ol>
       ) : (
-        <p className="pt-2">You aren't acquainted with any user.</p>
+        <p className="pt-2">You aren&apos;t acquainted with any user.</p>
       )}
     </>
   );
 }
+*/
