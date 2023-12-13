@@ -400,12 +400,116 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteria({
   );
 }
 
+// const [allNativeNotIrlQuestions, allNativeIrlQuestions] = await Promise.all([
+//   fetchAllNativeNotIrlQuestions(),
+//   fetchAllNativeIrlQuestions(),
+// ]);
+
 export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
   return (
     <>
       <ManyPinnedNotIrlCriteria user={user} />
       <ManyUserUnpinnedNativeNotIrlCriteria user={user} />
       <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
+    </>
+  );
+}
+
+export async function ManyRelComboFriendCriteriaTwo({ user }: { user: User }) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+  ]);
+
+  return (
+    <>
+      <ManyPinnedNotIrlCriteriaTwo answers={pinnedNotIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteriaTwo
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyPinnedNotIrlCriteriaTwo({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">Find their pinned criteria below</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeNotIrlCriteriaTwo({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) native criteria below</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) pseudonative criteria below</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
     </>
   );
 }
@@ -418,6 +522,61 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
       <ManyUserUnpinnedPseudonativeNotIrlCriteria user={user} />
       <ManyUserUnpinnedNativeIrlCriteria user={user} />
       <ManyUserUnpinnedPseudonativeIrlCriteria user={user} />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteriaTwo({ user }: { user: User }) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+  ]);
+
+  return (
+    <>
+      <ManyPinnedNotIrlCriteriaTwo answers={pinnedNotIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteriaTwo
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedNativeIrlCriteriaTwo({
+  user,
+}: {
+  user: User;
+}) {
+  const userUnpinnedNativeIrlAnswers = await fetchUserUnpinnedNativeIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      {userUnpinnedNativeIrlAnswers.length > 0 && (
+        <>
+          <p className="pt-2">Find their (other) native irl criteria below</p>
+          <ol>
+            {userUnpinnedNativeIrlAnswers.map((userUnpinnedNativeIrlAnswer) => {
+              return (
+                <li key={userUnpinnedNativeIrlAnswer.answer_id}>
+                  <OneCriteria answer={userUnpinnedNativeIrlAnswer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
     </>
   );
 }
