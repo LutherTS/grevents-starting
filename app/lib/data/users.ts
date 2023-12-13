@@ -40,7 +40,7 @@ export async function findOtherUserByFriendCodeAgainstUser(
   user: User,
 ) {
   noStore();
-  console.log(friendCode);
+  // console.log(friendCode);
   try {
     const data = await sql<FriendCodeUser>`
       SELECT
@@ -57,7 +57,7 @@ export async function findOtherUserByFriendCodeAgainstUser(
       
       LIMIT 1;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows[0];
   } catch (error) {
     console.error("Database Error:", error);
