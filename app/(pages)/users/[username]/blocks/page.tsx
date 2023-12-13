@@ -3,8 +3,8 @@ import {
   ManyWhoIAmBlocking,
   ManyWhoHaveMeBlocked,
 } from "@/app/components/server/contacts";
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function BlocksPage({

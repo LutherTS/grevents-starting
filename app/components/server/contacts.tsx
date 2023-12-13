@@ -1,10 +1,10 @@
 import {
   fetchAllUserFriends,
+  // fetchAllUserContacts,
   fetchAllUserIrlFriends,
   fetchAllUserNotIrlFriends,
   fetchAllUserWhoHaveMeBlocked,
   fetchAllUserWhoIAmBlocking,
-  // fetchAllUserContacts,
 } from "@/app/lib/data/contacts";
 import {
   Block,
@@ -174,7 +174,7 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
     <>
       {allUserWhoHaveMeBlocked.length > 0 ? (
         <>
-          <p className="pt-2">Blocked users</p>
+          <p className="pt-2">Users that have me blocked</p>
           <ol>
             {allUserWhoHaveMeBlocked.map((whoHaveMeBlocked) => {
               return (
