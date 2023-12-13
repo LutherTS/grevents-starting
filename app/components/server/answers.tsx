@@ -109,6 +109,33 @@ export async function ManyLinkCriteria({ answers }: { answers: Answer[] }) {
   );
 }
 
+export async function ManyLinkCriteriaTwo({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneLinkCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
 export async function ManyUserPinnedCriteria({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
 
@@ -202,12 +229,16 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userCustomAnswers.length > 0 && (
+      {/* {userCustomAnswers.length > 0 && (
         <>
           <p className="pt-2">Find their custom criteria below</p>
           <ManyLinkCriteria answers={userCustomAnswers} />
         </>
-      )}
+      )} */}
+      <ManyLinkCriteriaTwo
+        answers={userCustomAnswers}
+        label={answersLabels.custom}
+      />
     </>
   );
 }
