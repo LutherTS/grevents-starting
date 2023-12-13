@@ -532,11 +532,13 @@ export async function ManyRelComboIrlCriteriaTwo({ user }: { user: User }) {
     userUnpinnedNativeNotIrlAnswers,
     userUnpinnedPseudonativeNotIrlAnswers,
     userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
   ] = await Promise.all([
     fetchUserPinnedNotIrlAnswers(user.user_id),
     fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
   ]);
 
   return (
@@ -548,29 +550,58 @@ export async function ManyRelComboIrlCriteriaTwo({ user }: { user: User }) {
       <ManyUserUnpinnedPseudonativeNotIrlCriteriaTwo
         answers={userUnpinnedPseudonativeNotIrlAnswers}
       />
+      <ManyUserUnpinnedNativeIrlCriteriaTwo
+        answers={userUnpinnedNativeIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeIrlCriteriaTwo
+        answers={userUnpinnedPseudonativeIrlAnswers}
+      />
     </>
   );
 }
 
 export async function ManyUserUnpinnedNativeIrlCriteriaTwo({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedNativeIrlAnswers = await fetchUserUnpinnedNativeIrlAnswers(
-    user.user_id,
-  );
-
   return (
     <>
-      {userUnpinnedNativeIrlAnswers.length > 0 && (
+      {answers.length > 0 && (
         <>
           <p className="pt-2">Find their (other) native irl criteria below</p>
           <ol>
-            {userUnpinnedNativeIrlAnswers.map((userUnpinnedNativeIrlAnswer) => {
+            {answers.map((answer) => {
               return (
-                <li key={userUnpinnedNativeIrlAnswer.answer_id}>
-                  <OneCriteria answer={userUnpinnedNativeIrlAnswer} />
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserUnpinnedPseudonativeIrlCriteriaTwo({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">
+            Find their (other) pseudonative irl criteria below
+          </p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
                 </li>
               );
             })}
