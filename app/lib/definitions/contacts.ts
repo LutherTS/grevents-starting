@@ -23,3 +23,9 @@ export type GatheredContact = {
   c1_id: string;
   c1_mirror_id: string;
 };
+
+export type Block = {
+  user_app_wide_name: string;
+  user_username: string;
+  contact_id: string;
+};

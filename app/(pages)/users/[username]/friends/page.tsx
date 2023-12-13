@@ -1,5 +1,10 @@
-// import { fetchUserByUsername } from "@/app/lib/data/users";
-// import { notFound } from "next/navigation";
+import { fetchUserByUsername } from "@/app/lib/data/users";
+import {
+  ManyIrlFriends,
+  ManyNotIrlFriends,
+} from "@/app/components/server/contacts";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function FriendsPage({
@@ -10,21 +15,31 @@ export default async function FriendsPage({
   };
 }) {
   const username = params.username;
-  // const user = await fetchUserByUsername(username);
+  const user = await fetchUserByUsername(username);
 
-  // if (!user) {
-  //   notFound();
-  // }
+  if (!user) {
+    notFound();
+  }
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        <h1>Welcome to {username}&apos;s Friends.</h1>
+        {/* <h1>Welcome to {username}&apos;s Friends.</h1>
         <p className="pt-2">Friends (not upgraded to irl)</p>
-        <p className="pt-2">Upgraded to irl</p>
-        {/* <h1 className="font-semibold">
+        <p className="pt-2">Upgraded to irl</p> */}
+        <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Friends.
-        </h1> */}
+        </h1>
+        <Suspense
+          fallback={
+            <>
+              <p className="pt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManyNotIrlFriends user={user} />
+          <ManyIrlFriends user={user} />
+        </Suspense>
         <PageLink
           href={`/users/${username}/blocks`}
           name={`See blocked users`}
