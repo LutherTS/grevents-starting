@@ -35,13 +35,10 @@ export default async function AddCriteriaStandardizedPage({
             Welcome to {user.user_app_wide_name}&apos;s Add Criteria
             Standardized.
           </h1> */}
-          {/* <Suspense
-            fallback={
-              <>
-                <p className="pt-2">Loading...</p>
-              </>
-            }
-          > */}
+          <PageLink
+            href={`/users/${username}/dashboard`}
+            name={`back to dashboard`}
+          />
           {/* {allNativeNotIrlQuestions.length > 0 && (
             <>
               <p className="pt-2">Select a native question below</p>
@@ -74,7 +71,6 @@ export default async function AddCriteriaStandardizedPage({
               </ol>
             </>
           )} */}
-          {/* </Suspense> */}
           {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
           For now I'm choosing to map directly on the page, but eventually I'll do so on the form component once I'll reach the development phase when I'm mutating data. */}
           <PageLink

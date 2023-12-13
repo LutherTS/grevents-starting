@@ -24,8 +24,12 @@ export default async function PersonalInfoPage({
         <h1>Welcome to {username}&apos;s Personal Info.</h1>
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Personal Info.
-        </h1>
-        <Suspense
+        </h1> */}
+        <PageLink
+          href={`/users/${username}/dashboard`}
+          name={`back to dashboard`}
+        />
+        {/* <Suspense
           fallback={
             <>
               <p className="pt-2">Loading...</p>

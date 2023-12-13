@@ -24,6 +24,10 @@ export default async function PreviewsPage({
           Welcome to {user.user_app_wide_name}&apos;s Previews.
         </h1> */}
         <PageLink
+          href={`/users/${username}/dashboard`}
+          name={`back to dashboard`}
+        />
+        <PageLink
           href={`/users/${username}/previews/none`}
           name={`To "none" preview`}
         />

@@ -25,6 +25,10 @@ export default async function AddCriteriaCustomizedPage({
             Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
           </h1> */}
           <PageLink
+            href={`/users/${username}/dashboard`}
+            name={`back to dashboard`}
+          />
+          <PageLink
             href={`/users/${username}/personal-info/customized`}
             name={"Cancel"}
           />
