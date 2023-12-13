@@ -88,8 +88,8 @@ export async function gatherContactByUserAndUsername(
   username: string,
 ) {
   noStore();
-  console.log(user);
-  console.log(username);
+  // console.log(user);
+  // console.log(username);
   if (username !== "") {
     try {
       const data = await sql<GatheredContact>`
@@ -116,7 +116,7 @@ export async function gatherContactByUserAndUsername(
 
       LIMIT 1;
     `;
-      console.log(data);
+      // console.log(data);
       return data.rows[0];
     } catch (error) {
       console.error("Database Error:", error);
