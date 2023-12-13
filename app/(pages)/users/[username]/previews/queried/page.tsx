@@ -1,13 +1,13 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import { gatherContactByUserAndUsername } from "@/app/lib/data/contacts";
-import { notFound } from "next/navigation";
-// import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
-import {
-  ManyRelComboFriendCriteria,
-  ManyRelComboIrlCriteria,
-  ManyUserSharedToContactCustomAnswers,
-} from "@/app/components/server/answers";
-import { Suspense } from "react";
+// import { fetchUserByUsername } from "@/app/lib/data/users";
+// import { gatherContactByUserAndUsername } from "@/app/lib/data/contacts";
+// import { notFound } from "next/navigation";
+// // import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
+// import {
+//   ManyRelComboFriendCriteria,
+//   ManyRelComboIrlCriteria,
+//   ManyUserSharedToContactCustomAnswers,
+// } from "@/app/components/server/answers";
+// import { Suspense } from "react";
 import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
 import { relationCombinations } from "@/app/lib/utils/lists";
 import { PageLink } from "@/app/components/agnostic/links";
@@ -27,38 +27,38 @@ export default async function QueriedPreviewPage({
   const username = params.username;
   const userLast = searchParams?.userlast || "";
   let relCombo = searchParams?.relcombo || "";
-  const user = await fetchUserByUsername(username);
-  const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
+  // const user = await fetchUserByUsername(username);
+  // const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
 
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "FRIEND" &&
-    gatheredContact.c2_kind === "FRIEND" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "friend";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "IRL" &&
-    gatheredContact.c2_kind === "IRL" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "irl";
-  }
+  // if (
+  //   relCombo === "" &&
+  //   gatheredContact &&
+  //   gatheredContact.c1_kind === "FRIEND" &&
+  //   gatheredContact.c2_kind === "FRIEND" &&
+  //   gatheredContact.c1_blocking === false &&
+  //   gatheredContact.c2_blocking === false
+  // ) {
+  //   relCombo = "friend";
+  // }
+  // if (
+  //   relCombo === "" &&
+  //   gatheredContact &&
+  //   gatheredContact.c1_kind === "IRL" &&
+  //   gatheredContact.c2_kind === "IRL" &&
+  //   gatheredContact.c1_blocking === false &&
+  //   gatheredContact.c2_blocking === false
+  // ) {
+  //   relCombo = "irl";
+  // }
 
-  if (!user) {
-    notFound();
-  }
+  // if (!user) {
+  //   notFound();
+  // }
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        {/* <h1>Welcome to {username}&apos;s Queried Previews.</h1>
+        <h1>Welcome to {username}&apos;s Queried Previews.</h1>
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
@@ -78,8 +78,8 @@ export default async function QueriedPreviewPage({
               </p>
             )}
           </>
-        )} */}
-        <h1 className="font-semibold">
+        )}
+        {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Queried Previews.
         </h1>
         <PageLink
@@ -127,7 +127,7 @@ export default async function QueriedPreviewPage({
               contact={gatheredContact}
             />
           )}
-        </Suspense>
+        </Suspense> */}
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
