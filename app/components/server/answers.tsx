@@ -93,23 +93,7 @@ export async function ManyCriteria({ answers }: { answers: Answer[] }) {
   );
 }
 
-export async function ManyLinkCriteria({ answers }: { answers: Answer[] }) {
-  return (
-    <>
-      <ol>
-        {answers.map((answer) => {
-          return (
-            <li key={answer.answer_id}>
-              <OneLinkCriteria answer={answer} />
-            </li>
-          );
-        })}
-      </ol>
-    </>
-  );
-}
-
-export async function ManyLinkCriteriaTwo({
+export async function ManyLinkCriteria({
   answers,
   label,
 }: {
@@ -229,13 +213,7 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {/* {userCustomAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their custom criteria below</p>
-          <ManyLinkCriteria answers={userCustomAnswers} />
-        </>
-      )} */}
-      <ManyLinkCriteriaTwo
+      <ManyLinkCriteria
         answers={userCustomAnswers}
         label={answersLabels.custom}
       />
