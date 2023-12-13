@@ -16,3 +16,10 @@ export type User = {
   user_created_at: string;
   user_updated_at: string;
 };
+
+export type FriendCodeUser = {
+  user_id: string;
+  user_username: string;
+  user_app_wide_name: string;
+  user_friend_code: string;
+};

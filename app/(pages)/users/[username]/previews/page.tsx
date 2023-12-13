@@ -51,6 +51,10 @@ export default async function PreviewsPage({
           href={`/users/${username}/previews/queried`}
           name={`To queried previews`}
         />
+        <PageLink
+          href={`/users/${username}/friends/find`}
+          name={`Search for contacts`}
+        />
       </div>
     </main>
   );

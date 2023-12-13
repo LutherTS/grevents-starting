@@ -598,8 +598,8 @@ export async function fetchUserSharedToContactCustomAnswers(
   contactId: string,
 ) {
   noStore();
-  console.log(userId);
-  console.log(contactId);
+  // console.log(userId);
+  // console.log(contactId);
   try {
     const data = await sql<Answer>`
       SELECT 
@@ -650,7 +650,7 @@ export async function fetchUserSharedToContactCustomAnswers(
           q.question_name ASC
       LIMIT 10;
     `;
-    console.log(data);
+    // console.log(data);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
