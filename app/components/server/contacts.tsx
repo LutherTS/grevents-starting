@@ -2,7 +2,10 @@ import {
   fetchAllUserFriends,
   // fetchAllUserContacts,
 } from "@/app/lib/data/contacts";
-import { Friend, Contact } from "@/app/lib/definitions/contacts";
+import {
+  Friend,
+  // Contact
+} from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
 
 export function OneFriend({ friend }: { friend: Friend }) {
@@ -38,6 +41,7 @@ export async function ManyFriends({ user }: { user: User }) {
   );
 }
 
+/* No longer in use.
 export function OneContact({ contact }: { contact: Contact }) {
   return (
     <>
@@ -46,7 +50,7 @@ export function OneContact({ contact }: { contact: Contact }) {
   );
 }
 
-/* No longer in use.
+
 export async function ManyContacts({ user }: { user: User }) {
   const allUserContacts = await fetchAllUserContacts(user);
 
