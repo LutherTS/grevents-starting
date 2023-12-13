@@ -7,11 +7,11 @@ export type Friend = {
   contact_id: string;
 };
 
-export type Contact = {
-  user_app_wide_name: string;
-  user_username: string;
-  contact_id: string;
-};
+// export type Contact = {
+//   user_app_wide_name: string;
+//   user_username: string;
+//   contact_id: string;
+// };
 
 export type GatheredContact = {
   user_app_wide_name: string;

@@ -1,6 +1,10 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
-import { Contact, Friend, GatheredContact } from "../definitions/contacts";
+import {
+  Friend,
+  // Contact,
+  GatheredContact,
+} from "../definitions/contacts";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchAllUserFriends(user: User) {

@@ -1,6 +1,6 @@
 import {
   fetchAllUserFriends,
-  fetchAllUserContacts,
+  // fetchAllUserContacts,
 } from "@/app/lib/data/contacts";
 import { Friend, Contact } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";

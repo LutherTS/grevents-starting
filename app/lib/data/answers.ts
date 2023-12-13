@@ -3,7 +3,22 @@ import { Answer } from "../definitions/answers";
 import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
-import { GatheredContact } from "../definitions/contacts";
+// import pRetry, { AbortError } from "p-retry";
+
+/* Moving on from p-retry for now.
+const run = async () => {
+	const response = await fetch('https://sindresorhus.com/unicorn');
+
+	// Abort retrying if the resource doesn't exist
+	if (response.status === 404) {
+		throw new AbortError(response.statusText);
+	}
+
+	return response.blob();
+};
+
+console.log(await pRetry(run, {retries: 5}));
+*/
 
 export async function fetchUserPinnedAnswers(userId: string) {
   noStore();
