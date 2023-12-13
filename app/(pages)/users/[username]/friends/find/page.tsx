@@ -1,6 +1,6 @@
 import {
   fetchUserByUsername,
-  findUserByFriendCode,
+  findOtherUserByFriendCodeAgainstUser,
 } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
@@ -19,7 +19,10 @@ export default async function FindFriendsPage({
   const username = params.username;
   const friendCode = searchParams?.friendcode || "";
   const user = await fetchUserByUsername(username);
-  const friendCodeUser = await findUserByFriendCode(friendCode);
+  const friendCodeUser = await findOtherUserByFriendCodeAgainstUser(
+    friendCode,
+    user,
+  );
 
   if (!user) {
     notFound();
@@ -37,7 +40,7 @@ export default async function FindFriendsPage({
             {friendCodeUser ? (
               <p className="pt-2">friendcode: {friendCode}</p>
             ) : (
-              <p className="pt-2">No user found with this friend code.</p>
+              <p className="pt-2">No other user found with this friend code.</p>
             )}
           </>
         )}

@@ -35,7 +35,10 @@ export async function fetchUserByUsername(username: string) {
   }
 }
 
-export async function findUserByFriendCode(friendCode: string) {
+export async function findOtherUserByFriendCodeAgainstUser(
+  friendCode: string,
+  user: User,
+) {
   noStore();
   console.log(friendCode);
   try {
@@ -48,6 +51,7 @@ export async function findUserByFriendCode(friendCode: string) {
       FROM Users
 
       WHERE user_friend_code = ${friendCode}
+      AND user_id != ${user.user_id}
 
       AND user_state = 'LIVE'
       
