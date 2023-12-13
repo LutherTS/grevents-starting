@@ -116,6 +116,30 @@ VALUES (
     now()
 ); -- Done. 
 
+INSERT INTO Users ( -- Elijah / El-Hadj
+-- NEW, NO CONTACTS, NO ANSWERS --
+    user_id,
+    user_username,
+    user_email,
+    user_password,
+    user_app_wide_name,
+    user_friend_code,
+    user_state,
+    user_created_at,
+    user_updated_at
+)
+VALUES (
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    'El-Hadj',
+    'e@e.com',
+    'password',
+    'Elijah',
+    's73urd6kvbxj',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,
     user_username,

@@ -11,10 +11,13 @@ import {
   fetchUserPinnedNotAndIrlAnswers,
   fetchUserUnpinnedNativeIrlAnswers,
   fetchUserUnpinnedPseudonativeIrlAnswers,
+  fetchUserSharedToContactCustomAnswers,
 } from "@/app/lib/data/answers";
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
+import { GatheredContact } from "@/app/lib/definitions/contacts";
+import { AnswersLabel, answersLabels } from "@/app/lib/utils/lists";
 import Link from "next/link";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
@@ -74,25 +77,66 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   );
 }
 
-export async function ManyPinnedCriteria({ user }: { user: User }) {
-  const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
-
+export async function ManyCriteria({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
   return (
     <>
-      {pinnedAnswers.length > 0 && (
+      {answers.length > 0 && (
         <>
-          <p className="pt-2">Find their pinned criteria below</p>
+          <p className="pt-2">{label}</p>
           <ol>
-            {pinnedAnswers.map((pinnedAnswer) => {
+            {answers.map((answer) => {
               return (
-                <li key={pinnedAnswer.answer_id}>
-                  <OneCriteria answer={pinnedAnswer} />
+                <li key={answer.answer_id}>
+                  <OneCriteria answer={answer} />
                 </li>
               );
             })}
           </ol>
         </>
       )}
+    </>
+  );
+}
+
+export async function ManyLinkCriteria({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="pt-2">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneLinkCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyUserPinnedCriteria({ user }: { user: User }) {
+  const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);
+
+  return (
+    <>
+      <ManyCriteria answers={pinnedAnswers} label={answersLabels.pinned} />
     </>
   );
 }
@@ -104,20 +148,10 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userNativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their native criteria below</p>
-          <ol>
-            {userNativeNotIrlAnswers.map((userNativeNotIrlAnswer) => {
-              return (
-                <li key={userNativeNotIrlAnswer.answer_id}>
-                  <OneCriteria answer={userNativeNotIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={userNativeNotIrlAnswers}
+        label={answersLabels.nativeNotIrl}
+      />
     </>
   );
 }
@@ -127,20 +161,10 @@ export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userNativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their native irl criteria below</p>
-          <ol>
-            {userNativeIrlAnswers.map((userNativeIrlAnswer) => {
-              return (
-                <li key={userNativeIrlAnswer.answer_id}>
-                  <OneCriteria answer={userNativeIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={userNativeIrlAnswers}
+        label={answersLabels.nativeIrl}
+      />
     </>
   );
 }
@@ -155,22 +179,10 @@ export async function ManyUserPseudonativeNotIrlCriteria({
 
   return (
     <>
-      {userPseudonativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pseudonative criteria below</p>
-          <ol>
-            {userPseudonativeNotIrlAnswers.map(
-              (userPseudonativeNotIrlAnswer) => {
-                return (
-                  <li key={userPseudonativeNotIrlAnswer.answer_id}>
-                    <OneCriteria answer={userPseudonativeNotIrlAnswer} />
-                  </li>
-                );
-              },
-            )}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={userPseudonativeNotIrlAnswers}
+        label={answersLabels.pseudonativeNotIrl}
+      />
     </>
   );
 }
@@ -186,20 +198,10 @@ export async function ManyUserPseudonativeIrlCriteria({
 
   return (
     <>
-      {userPseudonativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pseudonative irl criteria below</p>
-          <ol>
-            {userPseudonativeIrlAnswers.map((userPseudonativeIrlAnswer) => {
-              return (
-                <li key={userPseudonativeIrlAnswer.answer_id}>
-                  <OneCriteria answer={userPseudonativeIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={userPseudonativeIrlAnswers}
+        label={answersLabels.pseudonativeIrl}
+      />
     </>
   );
 }
@@ -209,189 +211,154 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      {userCustomAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their custom criteria below</p>
-          <ol>
-            {userCustomAnswers.map((userCustomAnswer) => {
-              return (
-                <li key={userCustomAnswer.answer_id}>
-                  <OneLinkCriteria answer={userCustomAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria answers={userCustomAnswers} label={answersLabels.custom} />
     </>
   );
 }
 
-export async function ManyPinnedNotIrlCriteria({ user }: { user: User }) {
-  const pinnedNotIrlAnswers = await fetchUserPinnedNotIrlAnswers(user.user_id);
+export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+  ]);
 
   return (
     <>
-      {pinnedNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pinned criteria below</p>
-          <ol>
-            {pinnedNotIrlAnswers.map((pinnedNotIrlAnswer) => {
-              return (
-                <li key={pinnedNotIrlAnswer.answer_id}>
-                  <OneCriteria answer={pinnedNotIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
+  const [
+    pinnedNotAndIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotAndIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
+  ]);
+
+  return (
+    <>
+      <ManyUserPinnedNotIrlCriteria answers={pinnedNotAndIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedNativeIrlCriteria
+        answers={userUnpinnedNativeIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeIrlCriteria
+        answers={userUnpinnedPseudonativeIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyUserPinnedNotIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
     </>
   );
 }
 
 export async function ManyUserUnpinnedNativeNotIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedNativeNotIrlAnswers =
-    await fetchUserUnpinnedNativeNotIrlAnswers(user.user_id);
-
   return (
     <>
-      {userUnpinnedNativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) native criteria below</p>
-          <ol>
-            {userUnpinnedNativeNotIrlAnswers.map(
-              (userUnpinnedNativeNotIrlAnswer) => {
-                return (
-                  <li key={userUnpinnedNativeNotIrlAnswer.answer_id}>
-                    <OneCriteria answer={userUnpinnedNativeNotIrlAnswer} />
-                  </li>
-                );
-              },
-            )}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={answers}
+        label={answersLabels.unpinnedNativeNotIrl}
+      />
     </>
   );
 }
 
 export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedPseudonativeNotIrlAnswers =
-    await fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id);
-
   return (
     <>
-      {userUnpinnedPseudonativeNotIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) pseudonative criteria below</p>
-          <ol>
-            {userUnpinnedPseudonativeNotIrlAnswers.map(
-              (userUnpinnedPseudonativeNotIrlAnswer) => {
-                return (
-                  <li key={userUnpinnedPseudonativeNotIrlAnswer.answer_id}>
-                    <OneCriteria
-                      answer={userUnpinnedPseudonativeNotIrlAnswer}
-                    />
-                  </li>
-                );
-              },
-            )}
-          </ol>
-        </>
-      )}
-    </>
-  );
-}
-
-export async function ManyPinnedNotAndIrlCriteria({ user }: { user: User }) {
-  const pinnedNotAndIrlAnswers = await fetchUserPinnedNotAndIrlAnswers(
-    user.user_id,
-  );
-
-  return (
-    <>
-      {pinnedNotAndIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their pinned criteria below</p>
-          <ol>
-            {pinnedNotAndIrlAnswers.map((pinnedNotAndIrlAnswer) => {
-              return (
-                <li key={pinnedNotAndIrlAnswer.answer_id}>
-                  <OneCriteria answer={pinnedNotAndIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={answers}
+        label={answersLabels.unpinnedPseudonativeNotIrl}
+      />
     </>
   );
 }
 
 export async function ManyUserUnpinnedNativeIrlCriteria({
-  user,
+  answers,
 }: {
-  user: User;
+  answers: Answer[];
 }) {
-  const userUnpinnedNativeIrlAnswers = await fetchUserUnpinnedNativeIrlAnswers(
-    user.user_id,
-  );
-
   return (
     <>
-      {userUnpinnedNativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) native criteria below</p>
-          <ol>
-            {userUnpinnedNativeIrlAnswers.map((userUnpinnedNativeIrlAnswer) => {
-              return (
-                <li key={userUnpinnedNativeIrlAnswer.answer_id}>
-                  <OneCriteria answer={userUnpinnedNativeIrlAnswer} />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
+      <ManyCriteria answers={answers} label={answersLabels.unpinnedNativeIrl} />
     </>
   );
 }
 
 export async function ManyUserUnpinnedPseudonativeIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria
+        answers={answers}
+        label={answersLabels.unpinnedPseudonativeIrl}
+      />
+    </>
+  );
+}
+
+export async function ManyUserSharedToContactCustomAnswers({
   user,
+  contact,
 }: {
   user: User;
+  contact: GatheredContact;
 }) {
-  const userUnpinnedPseudonativeIrlAnswers =
-    await fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id);
+  const userSharedToContactCustomAnswers =
+    await fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_id);
 
   return (
     <>
-      {userUnpinnedPseudonativeIrlAnswers.length > 0 && (
-        <>
-          <p className="pt-2">Find their (other) pseudonative criteria below</p>
-          <ol>
-            {userUnpinnedPseudonativeIrlAnswers.map(
-              (userUnpinnedPseudonativeIrlAnswer) => {
-                return (
-                  <li key={userUnpinnedPseudonativeIrlAnswer.answer_id}>
-                    <OneCriteria answer={userUnpinnedPseudonativeIrlAnswer} />
-                  </li>
-                );
-              },
-            )}
-          </ol>
-        </>
-      )}
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        label={answersLabels.sharedToContactCustom}
+      />
     </>
   );
 }

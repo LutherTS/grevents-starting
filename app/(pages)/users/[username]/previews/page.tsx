@@ -47,6 +47,10 @@ export default async function PreviewsPage({
           href={`/users/${username}/previews/blocking-blocked`}
           name={`To "blocking-blocked" preview`}
         />
+        <PageLink
+          href={`/users/${username}/previews/queried`}
+          name={`To queried previews`}
+        />
       </div>
     </main>
   );

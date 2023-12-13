@@ -1,5 +1,5 @@
 // import { fetchUserByUsername } from "@/app/lib/data/users";
-// import { ManyPinnedCriteria } from "@/app/components/server/answers";
+// import { ManyUserPinnedCriteria } from "@/app/components/server/answers";
 // import { notFound } from "next/navigation";
 // import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
@@ -32,7 +32,7 @@ export default async function PersonalInfoPage({
             </>
           }
         >
-          <ManyPinnedCriteria user={user} />
+          <ManyUserPinnedCriteria user={user} />
         </Suspense> */}
         <PageLink
           href={`/users/${username}/personal-info/standardized`}
