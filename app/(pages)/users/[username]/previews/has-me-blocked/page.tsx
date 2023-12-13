@@ -38,7 +38,7 @@ export default async function BlockedPreviewPage({
           name={`back to dashboard`}
         />
         <p className="pt-2 font-semibold">
-          {username.toUpperCase()} CAN NO LONGER ACCESS ANY OF YOUR INFORMATION
+          {user.user_username.toUpperCase()} CAN NO LONGER ACCESS ANY OF YOUR INFORMATION
           ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON
           EVENTS INCLUDED.
         </p>

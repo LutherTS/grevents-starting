@@ -25,15 +25,23 @@ export default async function ModifyCriteriaCustomizedPage({
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
         <h1>Welcome to {username}&apos;s Modify Criteria Customized.</h1>
-        {/* <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
-          Customized.
-        </h1> */}
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        {/* <Suspense
+        <p className="pt-2">
+          (Custom criteria have their own dynamic modify page directly available
+          from the parent Customized criteria page.)
+        </p>
+        {/* <h1 className="font-semibold">
+          Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
+          Customized.
+        </h1>
+        <PageLink
+          href={`/users/${username}/dashboard`}
+          name={`back to dashboard`}
+        />
+        <Suspense
           fallback={
             <>
               <p className="pt-2">Loading...</p>
@@ -42,11 +50,11 @@ export default async function ModifyCriteriaCustomizedPage({
         >
           <ManyUserPseudonativeNotIrlCriteria user={user} />
           <ManyUserPseudonativeIrlCriteria user={user} />
-        </Suspense> */}
+        </Suspense>
         <p className="pt-2">
           (Custom criteria have their own dynamic modify page directly available
           from the parent Customized criteria page.)
-        </p>
+        </p> */}
         <PageLink
           href={`/users/${username}/personal-info/customized`}
           name={"Cancel"}

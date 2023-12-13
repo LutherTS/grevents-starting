@@ -31,6 +31,10 @@ export default async function BlocksPage({
         />
         <p className="pt-2">Blocked users</p>
         <p className="pt-2">Users that have me blocked</p>
+        <p className="pt-2">
+          If you&apos;ve blocked each other, the other user may appear in both
+          Blocked users and Users that have me blocked.
+        </p>
         {/* <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Blocks.
         </h1>
@@ -48,11 +52,11 @@ export default async function BlocksPage({
           <ManyWhoIAmBlocking user={user} />
           <ManyWhoHaveMeBlocked user={user} />
         </Suspense>
-        <PageLink href={`/users/${username}/friends`} name={`See friends`} />
         <p className="pt-2">
           If you&apos;ve blocked each other, the other user may appear in both
           Blocked users and Users that have me blocked.
         </p> */}
+        <PageLink href={`/users/${username}/friends`} name={`See friends`} />
       </div>
     </main>
   );
