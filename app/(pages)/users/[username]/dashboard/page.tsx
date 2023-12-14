@@ -14,7 +14,6 @@ export default async function DashboardPage({
 }) {
   const username = params.username;
   const user = await fetchUserByUsername(username);
-  console.log(user);
 
   if (!user) {
     notFound();

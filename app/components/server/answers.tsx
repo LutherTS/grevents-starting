@@ -211,7 +211,10 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyCriteria answers={userCustomAnswers} label={answersLabels.custom} />
+      <ManyLinkCriteria
+        answers={userCustomAnswers}
+        label={answersLabels.custom}
+      />
     </>
   );
 }
@@ -257,7 +260,7 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyUserPinnedNotIrlCriteria answers={pinnedNotAndIrlAnswers} />
+      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
       <ManyUserUnpinnedNativeNotIrlCriteria
         answers={userUnpinnedNativeNotIrlAnswers}
       />
@@ -282,6 +285,18 @@ export async function ManyUserPinnedNotIrlCriteria({
   return (
     <>
       <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
+    </>
+  );
+}
+
+export async function ManyUserPinnedNotAndIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria answers={answers} label={answersLabels.pinnedNotAndIrl} />
     </>
   );
 }

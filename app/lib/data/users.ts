@@ -5,7 +5,7 @@ import pRetry from "p-retry";
 
 export async function fetchUserByUsername(username: string) {
   noStore();
-  console.log(username);
+  // console.log(username);
   try {
     const run = async () => {
       const data = await sql<User>`
@@ -29,11 +29,11 @@ export async function fetchUserByUsername(username: string) {
       
       LIMIT 1;
     `;
-      console.log(data);
+      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: 5 });
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -67,7 +67,9 @@ export async function findOtherUserByFriendCodeAgainstUser(
       // console.log(data);
       return data.rows[0];
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch friend code user data.");

@@ -26,7 +26,9 @@ export async function fetchAllNativeNotIrlQuestions() {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch native not irl questions.");
@@ -53,7 +55,9 @@ export async function fetchAllNativeIrlQuestions() {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch native irl questions.");

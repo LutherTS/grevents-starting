@@ -60,7 +60,9 @@ export async function fetchUserPinnedAnswersBis(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned answers.");
@@ -105,7 +107,9 @@ export async function fetchUserPinnedAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned answers.");
@@ -149,7 +153,9 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native not irl answers.");
@@ -193,7 +199,9 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native irl answers.");
@@ -238,7 +246,9 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pseudonative not irl answers.");
@@ -283,7 +293,9 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pseudonative irl answers.");
@@ -326,7 +338,9 @@ export async function fetchUserCustomAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user custom answers.");
@@ -371,7 +385,9 @@ export async function findAnswerByUserQuestionAndUser(
       // console.log(data);
       return data.rows[0];
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user question answer.");
@@ -425,7 +441,9 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned not irl answers.");
@@ -470,7 +488,9 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned native not irl answers.");
@@ -518,7 +538,9 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
@@ -581,7 +603,9 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned not and irl answers.");
@@ -626,7 +650,9 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned native irl answers.");
@@ -672,7 +698,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
@@ -740,7 +768,9 @@ export async function fetchUserSharedToContactCustomAnswers(
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user shared to contact custom answers.");

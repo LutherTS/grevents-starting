@@ -24,7 +24,9 @@ export async function countUserQuestionFriends(
         // console.log(data);
         return data.rows[0].count;
       };
-      console.log(await pRetry(run, { retries: 5 }));
+      const data = await pRetry(run, { retries: 5 });
+      // console.log(data);
+      return data;
     } catch (error) {
       console.error("Database Error:", error);
       throw new Error("Failed to count user question friends.");
@@ -74,7 +76,9 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user friends.");

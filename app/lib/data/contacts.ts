@@ -44,7 +44,9 @@ export async function fetchAllUserFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user friends.");
@@ -78,7 +80,9 @@ export async function fetchAllUserContacts(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user contacts.");
@@ -123,7 +127,9 @@ export async function gatherContactByUserAndUsername(
         // console.log(data);
         return data.rows[0];
       };
-      console.log(await pRetry(run, { retries: 5 }));
+      const data = await pRetry(run, { retries: 5 });
+      // console.log(data);
+      return data;
     } catch (error) {
       console.error("Database Error:", error);
       throw new Error("Failed to gather contact.");
@@ -163,7 +169,9 @@ export async function fetchAllUserNotIrlFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");
@@ -202,7 +210,9 @@ export async function fetchAllUserIrlFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user irl friends.");
@@ -240,7 +250,9 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");
@@ -278,7 +290,9 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
       // console.log(data);
       return data.rows;
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");

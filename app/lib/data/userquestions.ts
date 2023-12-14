@@ -60,7 +60,9 @@ export async function fetchCustomUserQuestionByIDAndUser(
       // console.log(data);
       return data.rows[0];
     };
-    console.log(await pRetry(run, { retries: 5 }));
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user question data.");
