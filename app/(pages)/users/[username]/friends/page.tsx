@@ -29,8 +29,8 @@ export default async function FriendsPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">Friends (not upgraded to irl)</p>
-        <p className="pt-2">Upgraded to irl</p> */}
+        <p className="mt-2">Friends (not upgraded to irl)</p>
+        <p className="mt-2">Upgraded to irl</p> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Friends.
         </h1>
@@ -41,7 +41,7 @@ export default async function FriendsPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >

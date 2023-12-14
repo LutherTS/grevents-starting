@@ -36,7 +36,7 @@ export default async function DashboardPage({
         >
           <p>App-wide name *</p>
         </PageLinkWithChildren>
-        <p className="pt-2">{user.user_app_wide_name}</p>
+        <p className="mt-2">{user.user_app_wide_name}</p>
         <PageLink
           href={`/users/${username}/personal-info`}
           name={`More personal info`}

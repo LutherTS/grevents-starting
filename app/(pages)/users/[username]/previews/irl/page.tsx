@@ -26,8 +26,8 @@ export default async function IrlPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">Downgrade friendship from irl</p>
-        <p className="pt-2">Unfriend</p> */}
+        <p className="mt-2">Downgrade friendship from irl</p>
+        <p className="mt-2">Unfriend</p> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Irl Preview.
         </h1>
@@ -38,14 +38,14 @@ export default async function IrlPreviewPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
           <ManyRelComboIrlCriteria user={user} />
         </Suspense>
-        <p className="pt-2">Downgrade friendship from irl</p>
-        <p className="pt-2">Unfriend</p>
+        <p className="mt-2">Downgrade friendship from irl</p>
+        <p className="mt-2">Unfriend</p>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

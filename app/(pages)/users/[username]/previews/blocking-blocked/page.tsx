@@ -24,14 +24,14 @@ export default async function BlockingBlockedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2 font-semibold text-red-500">
+        <p className="mt-2 font-semibold text-red-500">
           <span className="text-black dark:text-white">
             YOU AND {username.toUpperCase()}
           </span>{" "}
           CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
           APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
         </p>
-        <p className="pt-2">Unblock if that&apos;s OK with you</p> */}
+        <p className="mt-2">Unblock if that&apos;s OK with you</p> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Blocking Blocked Preview.
         </h1>
@@ -39,14 +39,14 @@ export default async function BlockingBlockedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2 font-semibold text-red-500">
+        <p className="mt-2 font-semibold text-red-500">
           <span className="text-black">
             YOU AND {user.user_username.toUpperCase()}
           </span>{" "}
           CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
           APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
         </p>
-        <p className="pt-2">Unblock if that&apos;s OK with you</p>
+        <p className="mt-2">Unblock if that&apos;s OK with you</p>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

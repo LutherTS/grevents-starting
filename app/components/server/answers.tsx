@@ -25,7 +25,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
 
   return (
     <>
-      <p className="pt-2">
+      <p className="mt-2">
         {answer.question_name}
         {(answer.question_kind === "NATIVE" ||
           answer.question_kind === "NATIVEIRL") && <> / native</>}
@@ -47,7 +47,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
 export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
-      <p className="pt-2">{answer.answer_value}</p>
+      <p className="mt-2">{answer.answer_value}</p>
     </>
   );
 }
@@ -88,7 +88,7 @@ export async function ManyCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="pt-2">{label}</p>
+          <p className="mt-2">{label}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -115,7 +115,7 @@ export async function ManyLinkCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="pt-2">{label}</p>
+          <p className="mt-2">{label}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -211,7 +211,10 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyCriteria answers={userCustomAnswers} label={answersLabels.custom} />
+      <ManyLinkCriteria
+        answers={userCustomAnswers}
+        label={answersLabels.custom}
+      />
     </>
   );
 }
@@ -257,7 +260,7 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyUserPinnedNotIrlCriteria answers={pinnedNotAndIrlAnswers} />
+      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
       <ManyUserUnpinnedNativeNotIrlCriteria
         answers={userUnpinnedNativeNotIrlAnswers}
       />
@@ -282,6 +285,18 @@ export async function ManyUserPinnedNotIrlCriteria({
   return (
     <>
       <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
+    </>
+  );
+}
+
+export async function ManyUserPinnedNotAndIrlCriteria({
+  answers,
+}: {
+  answers: Answer[];
+}) {
+  return (
+    <>
+      <ManyCriteria answers={answers} label={answersLabels.pinnedNotAndIrl} />
     </>
   );
 }

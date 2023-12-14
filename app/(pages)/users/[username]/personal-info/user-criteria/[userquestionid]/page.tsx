@@ -41,8 +41,8 @@ export default async function UserQuestionPage({
             href={`/users/${username}/dashboard`}
             name={`back to dashboard`}
           />
-          <p className="pt-2">Below is the userQuestionId so far</p>
-          <p className="pt-2">{userQuestionId}</p> */}
+          <p className="mt-2">Below is the userQuestionId so far</p>
+          <p className="mt-2">{userQuestionId}</p> */}
           <h1 className="font-semibold">
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
@@ -54,7 +54,7 @@ export default async function UserQuestionPage({
           <Suspense
             fallback={
               <>
-                <p className="pt-2">Loading...</p>
+                <p className="mt-2">Loading...</p>
               </>
             }
           >

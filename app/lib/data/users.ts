@@ -1,12 +1,14 @@
 import { sql } from "@vercel/postgres";
 import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
 
 export async function fetchUserByUsername(username: string) {
   noStore();
   // console.log(username);
   try {
-    const data = await sql<User>`
+    const run = async () => {
+      const data = await sql<User>`
       SELECT
           user_id,
           user_state,
@@ -27,8 +29,12 @@ export async function fetchUserByUsername(username: string) {
       
       LIMIT 1;
     `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows[0];
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user data.");
@@ -42,7 +48,8 @@ export async function findOtherUserByFriendCodeAgainstUser(
   noStore();
   // console.log(friendCode);
   try {
-    const data = await sql<FriendCodeUser>`
+    const run = async () => {
+      const data = await sql<FriendCodeUser>`
       SELECT
           user_id,
           user_username,
@@ -57,8 +64,12 @@ export async function findOtherUserByFriendCodeAgainstUser(
       
       LIMIT 1;
     `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows[0];
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch friend code user data.");

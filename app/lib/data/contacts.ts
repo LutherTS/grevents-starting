@@ -2,12 +2,14 @@ import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import { Friend, Block, GatheredContact } from "../definitions/contacts";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
 
 export async function fetchAllUserFriends(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Friend>`
+    const run = async () => {
+      const data = await sql<Friend>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -39,8 +41,12 @@ export async function fetchAllUserFriends(user: User) {
 
       LIMIT 10;
     `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user friends.");
@@ -52,26 +58,31 @@ export async function fetchAllUserContacts(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Contact>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
+    const run = async () => {
+      const data = await sql<Contact>`
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
 
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user contacts.");
@@ -88,7 +99,8 @@ export async function gatherContactByUserAndUsername(
   // console.log(username);
   if (username !== "") {
     try {
-      const data = await sql<GatheredContact>`
+      const run = async () => {
+        const data = await sql<GatheredContact>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -112,8 +124,12 @@ export async function gatherContactByUserAndUsername(
 
       LIMIT 1;
     `;
+        // console.log(data);
+        return data.rows[0];
+      };
+      const data = await pRetry(run, { retries: 5 });
       // console.log(data);
-      return data.rows[0];
+      return data;
     } catch (error) {
       console.error("Database Error:", error);
       throw new Error("Failed to gather contact.");
@@ -125,7 +141,8 @@ export async function fetchAllUserNotIrlFriends(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Friend>`
+    const run = async () => {
+      const data = await sql<Friend>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -149,8 +166,12 @@ export async function fetchAllUserNotIrlFriends(user: User) {
 
       LIMIT 10;
     `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");
@@ -161,7 +182,8 @@ export async function fetchAllUserIrlFriends(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Friend>`
+    const run = async () => {
+      const data = await sql<Friend>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -185,8 +207,12 @@ export async function fetchAllUserIrlFriends(user: User) {
 
       LIMIT 10;
     `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user irl friends.");
@@ -197,7 +223,8 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Block>`
+    const run = async () => {
+      const data = await sql<Block>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -220,8 +247,12 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
 
       LIMIT 10;
     `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");
@@ -232,7 +263,8 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   noStore();
   // console.log(user);
   try {
-    const data = await sql<Block>`
+    const run = async () => {
+      const data = await sql<Block>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -255,8 +287,12 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
 
       LIMIT 10;
     `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: 5 });
     // console.log(data);
-    return data.rows;
+    return data;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");

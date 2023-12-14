@@ -33,6 +33,16 @@ export default async function QueriedPreviewPage({
   if (
     relCombo === "" &&
     gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "none";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
     gatheredContact.c1_kind === "FRIEND" &&
     gatheredContact.c2_kind === "FRIEND" &&
     gatheredContact.c1_blocking === false &&
@@ -50,6 +60,36 @@ export default async function QueriedPreviewPage({
   ) {
     relCombo = "irl";
   }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === true &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "i-am-blocking";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === true
+  ) {
+    relCombo = "has-me-blocked";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "blocking-blocked";
+  }
 
   if (!user) {
     notFound();
@@ -63,17 +103,17 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           Select a user you&apos;re acquainted with. (userlast in searchParams.)
         </p>
-        {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
+        {userLast !== "" && <p className="mt-2">userlast: {userLast}</p>}
         <ManyRelationCombinations />
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (
-              <p className="pt-2">relcombo: {relCombo}</p>
+              <p className="mt-2">relcombo: {relCombo}</p>
             ) : (
-              <p className="pt-2">
+              <p className="mt-2">
                 There is no such relation combinaison defined.
               </p>
             )}
@@ -86,16 +126,16 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           Type the username of a user you are acquainted with.
         </p>
         {userLast !== "" && (
           <>
             {gatheredContact ? (
-              <p className="pt-2">userlast: {userLast}</p>
+              <p className="mt-2">userlast: {userLast}</p>
             ) : (
-              <p className="pt-2">
-                You aren&apos;t acquainted with any such user.
+              <p className="mt-2">
+                You aren&apos;t acquainted with any such other user.
               </p>
             )}
           </>
@@ -104,9 +144,9 @@ export default async function QueriedPreviewPage({
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (
-              <p className="pt-2">relcombo: {relCombo}</p>
+              <p className="mt-2">relcombo: {relCombo}</p>
             ) : (
-              <p className="pt-2">
+              <p className="mt-2">
                 There is no such relation combinaison defined.
               </p>
             )}
@@ -115,12 +155,16 @@ export default async function QueriedPreviewPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
-          {relCombo === "friend" && <ManyRelComboFriendCriteria user={user} />}
-          {relCombo === "irl" && <ManyRelComboIrlCriteria user={user} />}
+          {gatheredContact && relCombo === "friend" && (
+            <ManyRelComboFriendCriteria user={user} />
+          )}
+          {gatheredContact && relCombo === "irl" && (
+            <ManyRelComboIrlCriteria user={user} />
+          )}
           {gatheredContact && (relCombo === "friend" || relCombo === "irl") && (
             <ManyUserSharedToContactCustomAnswers
               user={user}

@@ -16,7 +16,7 @@ import { User } from "@/app/lib/definitions/users";
 export function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
-      <p className="pt-2">
+      <p className="mt-2">
         {friend.user_app_wide_name} / {friend.user_username}
       </p>
     </>
@@ -30,7 +30,7 @@ export async function ManyFriends({ user }: { user: User }) {
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="pt-2">Find your list of friend(s) below</p>
+          <p className="mt-2">Find your list of friend(s) below</p>
           <ol>
             {allUserFriends.map((userFriend) => {
               return (
@@ -50,7 +50,7 @@ export async function ManyFriends({ user }: { user: User }) {
 export function OneContact({ contact }: { contact: Contact }) {
   return (
     <>
-      <p className="pt-2">{contact.user_username}</p>
+      <p className="mt-2">{contact.user_username}</p>
     </>
   );
 }
@@ -61,7 +61,7 @@ export async function ManyContacts({ user }: { user: User }) {
 
   return (
     <>
-      <p className="pt-2">
+      <p className="mt-2">
         Select a user you&apos;re acquainted with. (userlast in searchParams.)
       </p>
       {allUserContacts.length > 0 ? (
@@ -75,7 +75,7 @@ export async function ManyContacts({ user }: { user: User }) {
           })}
         </ol>
       ) : (
-        <p className="pt-2">You aren&apos;t acquainted with any user.</p>
+        <p className="mt-2">You aren&apos;t acquainted with any user.</p>
       )}
     </>
   );
@@ -89,7 +89,7 @@ export async function ManyNotIrlFriends({ user }: { user: User }) {
     <>
       {allUserNotIrlFriends.length > 0 ? (
         <>
-          <p className="pt-2">Friends (not upgraded to irl)</p>
+          <p className="mt-2">Friends (not upgraded to irl)</p>
           <ol>
             {allUserNotIrlFriends.map((notIrlFriend) => {
               return (
@@ -101,7 +101,7 @@ export async function ManyNotIrlFriends({ user }: { user: User }) {
           </ol>
         </>
       ) : (
-        <p className="pt-2">You do not have any not irl friends.</p>
+        <p className="mt-2">You do not have any not irl friends.</p>
       )}
     </>
   );
@@ -114,7 +114,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
     <>
       {allUserIrlFriends.length > 0 ? (
         <>
-          <p className="pt-2">Upgraded to irl</p>
+          <p className="mt-2">Upgraded to irl</p>
           <ol>
             {allUserIrlFriends.map((irlFriend) => {
               return (
@@ -126,7 +126,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
           </ol>
         </>
       ) : (
-        <p className="pt-2">You do not have any irl friends.</p>
+        <p className="mt-2">You do not have any irl friends.</p>
       )}
     </>
   );
@@ -135,7 +135,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
 export function OneBlock({ block }: { block: Block }) {
   return (
     <>
-      <p className="pt-2">
+      <p className="mt-2">
         {block.user_app_wide_name} / {block.user_username}
       </p>
     </>
@@ -149,7 +149,7 @@ export async function ManyWhoIAmBlocking({ user }: { user: User }) {
     <>
       {allUserWhoIAmBlocking.length > 0 ? (
         <>
-          <p className="pt-2">Blocked users</p>
+          <p className="mt-2">Blocked users</p>
           <ol>
             {allUserWhoIAmBlocking.map((whoIAmBlocking) => {
               return (
@@ -161,7 +161,7 @@ export async function ManyWhoIAmBlocking({ user }: { user: User }) {
           </ol>
         </>
       ) : (
-        <p className="pt-2">You do not have any blocked users.</p>
+        <p className="mt-2">You do not have any blocked users.</p>
       )}
     </>
   );
@@ -174,7 +174,7 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
     <>
       {allUserWhoHaveMeBlocked.length > 0 ? (
         <>
-          <p className="pt-2">Users that have me blocked</p>
+          <p className="mt-2">Users that have me blocked</p>
           <ol>
             {allUserWhoHaveMeBlocked.map((whoHaveMeBlocked) => {
               return (
@@ -186,7 +186,7 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
           </ol>
         </>
       ) : (
-        <p className="pt-2">You do not have any users that have you blocked.</p>
+        <p className="mt-2">You do not have any users that have you blocked.</p>
       )}
     </>
   );

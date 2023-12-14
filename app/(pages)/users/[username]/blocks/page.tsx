@@ -29,9 +29,9 @@ export default async function BlocksPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">Blocked users</p>
-        <p className="pt-2">Users that have me blocked</p>
-        <p className="pt-2">
+        <p className="mt-2">Blocked users</p>
+        <p className="mt-2">Users that have me blocked</p>
+        <p className="mt-2">
           If you&apos;ve blocked each other, the other user may appear in both
           Blocked users and Users that have me blocked.
         </p> */}
@@ -45,14 +45,14 @@ export default async function BlocksPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
           <ManyWhoIAmBlocking user={user} />
           <ManyWhoHaveMeBlocked user={user} />
         </Suspense>
-        <p className="pt-2">
+        <p className="mt-2">
           If you&apos;ve blocked each other, the other user may appear in both
           Blocked users and Users that have me blocked.
         </p>

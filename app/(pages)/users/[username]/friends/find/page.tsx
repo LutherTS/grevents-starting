@@ -36,7 +36,7 @@ export default async function FindContactsPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        {friendCode !== "" && <p className="pt-2">friend code: {friendCode}</p>} */}
+        {friendCode !== "" && <p className="mt-2">friend code: {friendCode}</p>} */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Find Contacts.
         </h1>
@@ -44,23 +44,23 @@ export default async function FindContactsPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           Find a user by their friend code. (Temporarily friendcode in
           searchParams.)
         </p>
         {friendCode !== "" && (
           <>
             {friendCodeUser ? (
-              <p className="pt-2">friendcode: {friendCode}</p>
+              <p className="mt-2">friendcode: {friendCode}</p>
             ) : (
-              <p className="pt-2">No other user found with this friend code.</p>
+              <p className="mt-2">No other user found with this friend code.</p>
             )}
           </>
         )}
         {friendCodeUser && (
           <>
-            <p className="pt-2">Here&apos;s the user you&apos;re looking for</p>
-            <p className="pt-2">
+            <p className="mt-2">Here&apos;s the user you&apos;re looking for</p>
+            <p className="mt-2">
               {friendCodeUser.user_app_wide_name} /{" "}
               {friendCodeUser.user_username} / {friendCodeUser.user_friend_code}
             </p>

@@ -39,7 +39,7 @@ export default async function StardardizedPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
