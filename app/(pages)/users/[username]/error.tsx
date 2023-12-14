@@ -22,8 +22,8 @@ export default function ErrorPage({
       <div className="max-w-prose text-center">
         <h1>Something went wrong. Probably.</h1>
         <p className="mt-2">
-          Database calls can be messy sometimes, so it doesn't hurt to try again
-          at least once. (If that fails, go for a hard refresh.)
+          Database calls can be messy sometimes, so it doesn&apos;t hurt to try
+          again at least once. (If that fails, go for a hard refresh.)
         </p>
         <button
           className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400"
