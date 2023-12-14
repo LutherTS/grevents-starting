@@ -1,5 +1,6 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
+import { RelationCombinationIAmBlocking } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function BlockingPreviewPage({
@@ -37,12 +38,7 @@ export default async function BlockingPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="mt-2 font-semibold text-red-500">
-          YOU CAN NO LONGER ACCESS ANY OF THE INFORMATION OF{" "}
-          {user.user_username.toUpperCase()} ACROSS THE ENTIRE APPLICATION,
-          FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
-        </p>
-        <p className="mt-2">Block them back</p>
+        <RelationCombinationIAmBlocking user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

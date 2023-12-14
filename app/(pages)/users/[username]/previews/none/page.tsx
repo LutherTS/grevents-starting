@@ -1,5 +1,6 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
+import { RelationCombinationNone } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function NonePreviewPage({
@@ -33,8 +34,7 @@ export default async function NonePreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="mt-2">Send friend request</p>
-        <p className="mt-2">Block</p>
+        <RelationCombinationNone />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
