@@ -1,6 +1,11 @@
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
-import { Friend, Block, GatheredContact } from "../definitions/contacts";
+import {
+  Friend,
+  Block,
+  GatheredContact,
+  FoundContact,
+} from "../definitions/contacts";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
@@ -296,5 +301,47 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user not irl friends.");
+  }
+}
+
+export async function findContactByUserAnSession(
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  noStore();
+  // console.log(user);
+  // console.log(session);
+  try {
+    const run = async () => {
+      const data = await sql<FoundContact>`
+      SELECT 
+          c1.contact_kind c1_kind, 
+          c1.contact_blocking c1_blocking, 
+          c2.contact_kind c2_kind, 
+          c2.contact_blocking c2_blocking, 
+          c1.contact_id c1_id, 
+          c1.contact_mirror_id c1_mirror_id 
+      FROM Contacts c1
+
+      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+      
+      WHERE c1.user_first_id = ${user.user_id}
+      AND c1.user_last_id = ${session.user.user_id}
+      
+      AND c1.contact_state = 'LIVE'
+      AND u.user_state = 'LIVE'
+      AND c2.contact_state = 'LIVE'
+
+      LIMIT 1;
+    `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to gather contact.");
   }
 }

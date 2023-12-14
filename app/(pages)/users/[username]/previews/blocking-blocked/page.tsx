@@ -40,7 +40,7 @@ export default async function BlockingBlockedPreviewPage({
           name={`back to dashboard`}
         />
         <p className="mt-2 font-semibold text-red-500">
-          <span className="text-black">
+          <span className="text-black: dark:text-white">
             YOU AND {user.user_username.toUpperCase()}
           </span>{" "}
           CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE

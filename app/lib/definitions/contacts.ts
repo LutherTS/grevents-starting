@@ -29,3 +29,12 @@ export type Block = {
   user_username: string;
   contact_id: string;
 };
+
+export type FoundContact = {
+  c1_kind: string;
+  c1_blocking: boolean;
+  c2_kind: string;
+  c2_blocking: boolean;
+  c1_id: string;
+  c1_mirror_id: string;
+};
