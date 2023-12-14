@@ -5,12 +5,13 @@ import { User } from "@/app/lib/definitions/users";
 import { PageLink } from "@/app/components/agnostic/links";
 import {
   RelationCombinationNone,
-  RelationCombinationFriend,
-  RelationCombinationIrl,
+  RelationCombinationFriendCustom,
+  RelationCombinationIrlCustom,
   RelationCombinationIAmBlocking,
   RelationCombinationHasMeBlocked,
   RelationCombinationBlockingBlocked,
 } from "@/app/components/agnostic/relcombos";
+import { RelationCombination, defineRelCombo } from "@/app/lib/utils/relcombos";
 
 export default async function UserPage({
   params,
@@ -19,7 +20,7 @@ export default async function UserPage({
     username: string;
   };
 }) {
-  // const session: { [K in "user"]: User } = {
+  // const session: { [K in "user"]: User } = { // “me”
   //   user: {
   //     user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
   //     user_state: "LIVE",
@@ -36,6 +37,7 @@ export default async function UserPage({
   // };
 
   const session: { [K in "user"]: User } = {
+    // Alice
     user: {
       user_id: "e17bc7f7-b93f-4915-9f72-83d055c66e77",
       user_state: "LIVE",
@@ -62,85 +64,57 @@ export default async function UserPage({
 
   const foundContact = await findContactByUserAndSession(user, session);
 
-  let relCombo = "";
+  let relCombo: RelationCombination | "" = "";
 
-  if (
-    foundContact &&
-    foundContact.c1_kind === "NONE" &&
-    foundContact.c2_kind === "NONE" &&
-    foundContact.c1_blocking === false &&
-    foundContact.c2_blocking === false
-  ) {
-    relCombo = "none";
-  }
-  if (
-    foundContact &&
-    foundContact.c1_kind === "FRIEND" &&
-    foundContact.c2_kind === "FRIEND" &&
-    foundContact.c1_blocking === false &&
-    foundContact.c2_blocking === false
-  ) {
-    relCombo = "friend";
-  }
-  if (
-    foundContact &&
-    foundContact.c1_kind === "IRL" &&
-    foundContact.c2_kind === "IRL" &&
-    foundContact.c1_blocking === false &&
-    foundContact.c2_blocking === false
-  ) {
-    relCombo = "irl";
-  }
-  if (
-    foundContact &&
-    foundContact.c1_kind === "NONE" &&
-    foundContact.c2_kind === "NONE" &&
-    foundContact.c1_blocking === true &&
-    foundContact.c2_blocking === false
-  ) {
-    relCombo = "i-am-blocking";
-  }
-  if (
-    foundContact &&
-    foundContact.c1_kind === "NONE" &&
-    foundContact.c2_kind === "NONE" &&
-    foundContact.c1_blocking === false &&
-    foundContact.c2_blocking === true
-  ) {
-    relCombo = "has-me-blocked";
-  }
-  if (
-    foundContact &&
-    foundContact.c1_kind === "NONE" &&
-    foundContact.c2_kind === "NONE" &&
-    foundContact.c1_blocking === false &&
-    foundContact.c2_blocking === false
-  ) {
-    relCombo = "blocking-blocked";
-  }
+  relCombo = defineRelCombo(foundContact);
 
-  relCombo = "blocking-blocked";
+  // relCombo = "none";
+  // relCombo = "friend";
+  // relCombo = "irl";
+  // relCombo = "i-am-blocking";
+  // relCombo = "has-me-blocked";
+  // relCombo = "blocking-blocked";
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
         {session ? (
           <>
-            <h1>Welcome to {username}&apos;s Page.</h1>
+            <h1>Welcome to {user.user_app_wide_name}&apos;s Page.</h1>
             <PageLink
               // @ts-ignore // for type never during session object testing
               href={`/users/${session.user.user_username}/dashboard`}
               name={`back to dashboard`}
             />
+            {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "none" && <RelationCombinationNone />}
-            {relCombo === "friend" && <RelationCombinationFriend user={user} />}
-            {relCombo === "irl" && <RelationCombinationIrl user={user} />}
+            {/* @ts-ignore // for intentional during relCombo testing */}
+            {relCombo === "friend" && (
+              <>
+                <RelationCombinationFriendCustom
+                  user={user}
+                  contact={foundContact}
+                />
+              </>
+            )}
+            {/* @ts-ignore // for intentional during relCombo testing */}
+            {relCombo === "irl" && (
+              <>
+                <RelationCombinationIrlCustom
+                  user={user}
+                  contact={foundContact}
+                />
+              </>
+            )}
+            {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "i-am-blocking" && (
               <RelationCombinationIAmBlocking user={user} />
             )}
+            {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "has-me-blocked" && (
               <RelationCombinationHasMeBlocked user={user} />
             )}
+            {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "blocking-blocked" && (
               <RelationCombinationBlockingBlocked user={user} />
             )}
@@ -153,13 +127,6 @@ export default async function UserPage({
             </h1>
           </>
         )}
-        {/* <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Page.
-        </h1>
-        <PageLink
-          href={`/users/${session.user.user_username}/dashboard`}
-          name={`back to dashboard`}
-        /> */}
       </div>
     </main>
   );

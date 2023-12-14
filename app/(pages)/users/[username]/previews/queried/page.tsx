@@ -2,15 +2,21 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import { gatherContactByUserAndUsername } from "@/app/lib/data/contacts";
 import { notFound } from "next/navigation";
 // import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
-import {
-  ManyRelComboFriendCriteria,
-  ManyRelComboIrlCriteria,
-  ManyUserSharedToContactCustomAnswers,
-} from "@/app/components/server/answers";
 import { Suspense } from "react";
 import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
-import { relationCombinations } from "@/app/lib/utils/lists";
+import {
+  defineGatheredRelCombo,
+  relationCombinations,
+} from "@/app/lib/utils/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
+import {
+  RelationCombinationNone,
+  RelationCombinationFriendCustom,
+  RelationCombinationIrlCustom,
+  RelationCombinationIAmBlocking,
+  RelationCombinationHasMeBlocked,
+  RelationCombinationBlockingBlocked,
+} from "@/app/components/agnostic/relcombos";
 
 export default async function QueriedPreviewPage({
   params,
@@ -30,65 +36,8 @@ export default async function QueriedPreviewPage({
   const user = await fetchUserByUsername(username);
   const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
 
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "NONE" &&
-    gatheredContact.c2_kind === "NONE" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "none";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "FRIEND" &&
-    gatheredContact.c2_kind === "FRIEND" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "friend";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "IRL" &&
-    gatheredContact.c2_kind === "IRL" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "irl";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "NONE" &&
-    gatheredContact.c2_kind === "NONE" &&
-    gatheredContact.c1_blocking === true &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "i-am-blocking";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "NONE" &&
-    gatheredContact.c2_kind === "NONE" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === true
-  ) {
-    relCombo = "has-me-blocked";
-  }
-  if (
-    relCombo === "" &&
-    gatheredContact &&
-    gatheredContact.c1_kind === "NONE" &&
-    gatheredContact.c2_kind === "NONE" &&
-    gatheredContact.c1_blocking === false &&
-    gatheredContact.c2_blocking === false
-  ) {
-    relCombo = "blocking-blocked";
+  if (gatheredContact !== undefined) {
+    relCombo = defineGatheredRelCombo(relCombo, gatheredContact);
   }
 
   if (!user) {
@@ -159,17 +108,33 @@ export default async function QueriedPreviewPage({
             </>
           }
         >
+          {gatheredContact && relCombo === "none" && (
+            <RelationCombinationNone />
+          )}
           {gatheredContact && relCombo === "friend" && (
-            <ManyRelComboFriendCriteria user={user} />
+            <>
+              <RelationCombinationFriendCustom
+                user={user}
+                contact={gatheredContact}
+              />
+            </>
           )}
           {gatheredContact && relCombo === "irl" && (
-            <ManyRelComboIrlCriteria user={user} />
+            <>
+              <RelationCombinationIrlCustom
+                user={user}
+                contact={gatheredContact}
+              />
+            </>
           )}
-          {gatheredContact && (relCombo === "friend" || relCombo === "irl") && (
-            <ManyUserSharedToContactCustomAnswers
-              user={user}
-              contact={gatheredContact}
-            />
+          {gatheredContact && relCombo === "i-am-blocking" && (
+            <RelationCombinationIAmBlocking user={user} />
+          )}
+          {gatheredContact && relCombo === "has-me-blocked" && (
+            <RelationCombinationHasMeBlocked user={user} />
+          )}
+          {gatheredContact && relCombo === "blocking-blocked" && (
+            <RelationCombinationBlockingBlocked user={user} />
           )}
         </Suspense>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />

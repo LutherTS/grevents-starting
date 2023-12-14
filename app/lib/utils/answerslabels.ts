@@ -1,20 +1,3 @@
-export const relationCombinations = [
-  "none",
-  "friend",
-  "irl",
-  "i-am-blocking",
-  "has-me-blocked",
-  "blocking-blocked",
-];
-
-export type RelationCombination =
-  | "none"
-  | "friend"
-  | "irl"
-  | "i-am-blocking"
-  | "has-me-blocked"
-  | "blocking-blocked";
-
 export const answersLabels: { [K in AnswersLabelKey]: AnswersLabel } = {
   pinned: "Find their pinned criteria below",
   nativeNotIrl: "Find their native criteria below",

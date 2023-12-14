@@ -16,8 +16,8 @@ import {
 import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
-import { GatheredContact } from "@/app/lib/definitions/contacts";
-import { AnswersLabel, answersLabels } from "@/app/lib/utils/lists";
+import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
+import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
@@ -363,7 +363,7 @@ export async function ManyUserSharedToContactCustomAnswers({
   contact,
 }: {
   user: User;
-  contact: GatheredContact;
+  contact: GatheredContact | FoundContact;
 }) {
   const userSharedToContactCustomAnswers =
     await fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_id);

@@ -3,7 +3,9 @@ import { Suspense } from "react";
 import {
   ManyRelComboFriendCriteria,
   ManyRelComboIrlCriteria,
+  ManyUserSharedToContactCustomAnswers,
 } from "../server/answers";
+import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 
 export function RelationCombinationNone() {
   // { user }: { user: User }
@@ -88,6 +90,56 @@ export function RelationCombinationBlockingBlocked({ user }: { user: User }) {
         APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
       <p className="mt-2">Unblock if that&apos;s OK with you</p>
+    </>
+  );
+}
+
+export function RelationCombinationFriendCustom({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact | FoundContact;
+}) {
+  return (
+    <>
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyRelComboFriendCriteria user={user} />
+        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+      </Suspense>
+      <p className="mt-2">Upgrade friendship to irl</p>
+      <p className="mt-2">Unfriend</p>
+    </>
+  );
+}
+
+export function RelationCombinationIrlCustom({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact | FoundContact;
+}) {
+  return (
+    <>
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyRelComboIrlCriteria user={user} />
+        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+      </Suspense>
+      <p className="mt-2">Downgrade friendship from irl</p>
+      <p className="mt-2">Unfriend</p>
     </>
   );
 }
