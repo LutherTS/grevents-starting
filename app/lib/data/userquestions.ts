@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
 
 export async function fetchCustomUserQuestionByIDAndUser(
   userQuestionId: string,
@@ -11,7 +12,8 @@ export async function fetchCustomUserQuestionByIDAndUser(
   // console.log(userQuestionId);
   // console.log(user);
   try {
-    const data = await sql<UserQuestion>` -- UserQuestion
+    const run = async () => {
+      const data = await sql<UserQuestion>` -- UserQuestion
     SELECT
         UserQuestions.userquestion_id,
         UserQuestions.user_id,
@@ -55,8 +57,10 @@ export async function fetchCustomUserQuestionByIDAndUser(
 
     LIMIT 1;
     `;
-    // console.log(data);
-    return data.rows[0];
+      // console.log(data);
+      return data.rows[0];
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user question data.");

@@ -4,11 +4,13 @@ import {
   NativeIrlQuestion,
 } from "../definitions/questions";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
 
 export async function fetchAllNativeNotIrlQuestions() {
   noStore();
   try {
-    const data = await sql<NativeNotIrlQuestion>`
+    const run = async () => {
+      const data = await sql<NativeNotIrlQuestion>`
       SELECT 
           question_name,
           question_kind,
@@ -21,8 +23,10 @@ export async function fetchAllNativeNotIrlQuestions() {
 
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch native not irl questions.");
@@ -32,7 +36,8 @@ export async function fetchAllNativeNotIrlQuestions() {
 export async function fetchAllNativeIrlQuestions() {
   noStore();
   try {
-    const data = await sql<NativeIrlQuestion>`
+    const run = async () => {
+      const data = await sql<NativeIrlQuestion>`
       SELECT 
           question_name,
           question_kind,
@@ -45,8 +50,10 @@ export async function fetchAllNativeIrlQuestions() {
 
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch native irl questions.");

@@ -3,9 +3,11 @@ import { Answer } from "../definitions/answers";
 import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
+
+/* Trying out p-retry.
 import pRetry, { AbortError } from "p-retry";
 
-/* Moving on from p-retry for now.
 const run = async () => {
 	const response = await fetch('https://sindresorhus.com/unicorn');
 
@@ -24,8 +26,8 @@ export async function fetchUserPinnedAnswersBis(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    // const run = async () => {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -55,10 +57,10 @@ export async function fetchUserPinnedAnswersBis(userId: string) {
           Answers.answer_updated_at DESC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
-    // };
-    // console.log(await pRetry(run, { retries: 5 }));
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned answers.");
@@ -69,7 +71,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -99,8 +102,10 @@ export async function fetchUserPinnedAnswers(userId: string) {
           Answers.answer_updated_at DESC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned answers.");
@@ -111,7 +116,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -140,8 +146,10 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
           Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native not irl answers.");
@@ -152,7 +160,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -181,8 +190,10 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
           Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native irl answers.");
@@ -193,7 +204,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -223,8 +235,10 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
           Questions.question_name ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pseudonative not irl answers.");
@@ -235,7 +249,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -265,8 +280,10 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
           Questions.question_name ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pseudonative irl answers.");
@@ -277,7 +294,8 @@ export async function fetchUserCustomAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -305,8 +323,10 @@ export async function fetchUserCustomAnswers(userId: string) {
       ORDER BY Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user custom answers.");
@@ -321,7 +341,8 @@ export async function findAnswerByUserQuestionAndUser(
   // console.log(userQuestion);
   // console.log(user);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
         Questions.question_name, 
         Answers.answer_value, 
@@ -347,8 +368,10 @@ export async function findAnswerByUserQuestionAndUser(
 
       LIMIT 1;
     `;
-    // console.log(data);
-    return data.rows[0];
+      // console.log(data);
+      return data.rows[0];
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user question answer.");
@@ -359,7 +382,8 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -398,8 +422,10 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
           Answers.answer_updated_at DESC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned not irl answers.");
@@ -410,7 +436,8 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -440,8 +467,10 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
           Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned native not irl answers.");
@@ -454,7 +483,8 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -485,8 +515,10 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
           Questions.question_name ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
@@ -499,7 +531,8 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -545,8 +578,10 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
           Answers.answer_updated_at DESC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned not and irl answers.");
@@ -557,7 +592,8 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -587,8 +623,10 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
           Answers.answer_created_at ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned native irl answers.");
@@ -599,7 +637,8 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
   noStore();
   // console.log(userId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           Questions.question_name, 
           Answers.answer_value, 
@@ -630,8 +669,10 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
           Questions.question_name ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
@@ -646,7 +687,8 @@ export async function fetchUserSharedToContactCustomAnswers(
   // console.log(userId);
   // console.log(contactId);
   try {
-    const data = await sql<Answer>`
+    const run = async () => {
+      const data = await sql<Answer>`
       SELECT 
           q.question_name, 
           a.answer_value, 
@@ -695,8 +737,10 @@ export async function fetchUserSharedToContactCustomAnswers(
           q.question_name ASC
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user shared to contact custom answers.");

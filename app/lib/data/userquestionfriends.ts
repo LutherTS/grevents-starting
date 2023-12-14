@@ -3,6 +3,7 @@ import { Answer } from "../definitions/answers";
 import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
+import pRetry from "p-retry";
 
 export async function countUserQuestionFriends(
   answerOrUserQuestion: Answer | UserQuestion,
@@ -12,15 +13,18 @@ export async function countUserQuestionFriends(
   // console.log(answerOrUserQuestion.userquestion_id);
   if (answerOrUserQuestion.question_kind === "CUSTOM") {
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
       SELECT COUNT(userquestionfriend_id) FROM UserQuestionFriends
   
       WHERE userquestion_id = ${answerOrUserQuestion.userquestion_id}
       
       AND userquestionfriend_state = 'LIVE';
       `;
-      // console.log(data);
-      return data.rows[0].count;
+        // console.log(data);
+        return data.rows[0].count;
+      };
+      console.log(await pRetry(run, { retries: 5 }));
     } catch (error) {
       console.error("Database Error:", error);
       throw new Error("Failed to count user question friends.");
@@ -32,7 +36,8 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   noStore();
   // console.log(userQuestion);
   try {
-    const data = await sql<UserQuestionFriend>`
+    const run = async () => {
+      const data = await sql<UserQuestionFriend>`
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
@@ -66,8 +71,10 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
 
       LIMIT 10;
     `;
-    // console.log(data);
-    return data.rows;
+      // console.log(data);
+      return data.rows;
+    };
+    console.log(await pRetry(run, { retries: 5 }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user friends.");
