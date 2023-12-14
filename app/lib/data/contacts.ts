@@ -304,7 +304,7 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   }
 }
 
-export async function findContactByUserAnSession(
+export async function findContactByUserAndSession(
   user: User,
   session: { [K in "user"]: User },
 ) {
