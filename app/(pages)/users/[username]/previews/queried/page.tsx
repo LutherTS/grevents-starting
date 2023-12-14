@@ -33,6 +33,16 @@ export default async function QueriedPreviewPage({
   if (
     relCombo === "" &&
     gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "none";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
     gatheredContact.c1_kind === "FRIEND" &&
     gatheredContact.c2_kind === "FRIEND" &&
     gatheredContact.c1_blocking === false &&
@@ -49,6 +59,36 @@ export default async function QueriedPreviewPage({
     gatheredContact.c2_blocking === false
   ) {
     relCombo = "irl";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === true &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "i-am-blocking";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === true
+  ) {
+    relCombo = "has-me-blocked";
+  }
+  if (
+    relCombo === "" &&
+    gatheredContact &&
+    gatheredContact.c1_kind === "NONE" &&
+    gatheredContact.c2_kind === "NONE" &&
+    gatheredContact.c1_blocking === false &&
+    gatheredContact.c2_blocking === false
+  ) {
+    relCombo = "blocking-blocked";
   }
 
   if (!user) {
