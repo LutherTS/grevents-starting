@@ -63,17 +63,17 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           Select a user you&apos;re acquainted with. (userlast in searchParams.)
         </p>
-        {userLast !== "" && <p className="pt-2">userlast: {userLast}</p>}
+        {userLast !== "" && <p className="mt-2">userlast: {userLast}</p>}
         <ManyRelationCombinations />
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (
-              <p className="pt-2">relcombo: {relCombo}</p>
+              <p className="mt-2">relcombo: {relCombo}</p>
             ) : (
-              <p className="pt-2">
+              <p className="mt-2">
                 There is no such relation combinaison defined.
               </p>
             )}
@@ -86,15 +86,15 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           Type the username of a user you are acquainted with.
         </p>
         {userLast !== "" && (
           <>
             {gatheredContact ? (
-              <p className="pt-2">userlast: {userLast}</p>
+              <p className="mt-2">userlast: {userLast}</p>
             ) : (
-              <p className="pt-2">
+              <p className="mt-2">
                 You aren&apos;t acquainted with any such other user.
               </p>
             )}
@@ -104,9 +104,9 @@ export default async function QueriedPreviewPage({
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (
-              <p className="pt-2">relcombo: {relCombo}</p>
+              <p className="mt-2">relcombo: {relCombo}</p>
             ) : (
-              <p className="pt-2">
+              <p className="mt-2">
                 There is no such relation combinaison defined.
               </p>
             )}
@@ -115,7 +115,7 @@ export default async function QueriedPreviewPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >

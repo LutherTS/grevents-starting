@@ -24,8 +24,8 @@ export default async function NonePreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">Send friend request</p>
-        <p className="pt-2">Block</p> */}
+        <p className="mt-2">Send friend request</p>
+        <p className="mt-2">Block</p> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s None Preview.
         </h1>
@@ -33,8 +33,8 @@ export default async function NonePreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">Send friend request</p>
-        <p className="pt-2">Block</p>
+        <p className="mt-2">Send friend request</p>
+        <p className="mt-2">Block</p>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

@@ -4,7 +4,7 @@ export function PageLink({ href, name }: { href: string; name: string }) {
   return (
     <>
       <div>
-        <Link href={href} className="inline-block pt-2 underline">
+        <Link href={href} className="mt-2 inline-block underline">
           {name}
         </Link>
       </div>
@@ -22,7 +22,7 @@ export function PageLinkWithChildren({
   return (
     <>
       <div>
-        <Link href={href} className="inline-block pt-2 underline">
+        <Link href={href} className="mt-2 inline-block underline">
           {children}
         </Link>
       </div>

@@ -44,12 +44,12 @@ export default async function AddCriteriaStandardizedPage({
           />
           {allNativeNotIrlQuestions.length > 0 && (
             <>
-              <p className="pt-2">Select a native question below</p>
+              <p className="mt-2">Select a native question below</p>
               <ol>
                 {allNativeNotIrlQuestions.map((nativeNotIrlQuestion) => {
                   return (
                     <li key={nativeNotIrlQuestion.question_id}>
-                      <p className="pt-2">
+                      <p className="mt-2">
                         {nativeNotIrlQuestion.question_name} / native
                       </p>
                     </li>
@@ -60,12 +60,12 @@ export default async function AddCriteriaStandardizedPage({
           )}
           {allNativeIrlQuestions.length > 0 && (
             <>
-              <p className="pt-2">Select a native irl question below</p>
+              <p className="mt-2">Select a native irl question below</p>
               <ol>
                 {allNativeIrlQuestions.map((nativeIrlQuestion) => {
                   return (
                     <li key={nativeIrlQuestion.question_id}>
-                      <p className="pt-2">
+                      <p className="mt-2">
                         {nativeIrlQuestion.question_name} / native / irl
                       </p>
                     </li>

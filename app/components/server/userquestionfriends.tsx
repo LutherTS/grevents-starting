@@ -15,11 +15,11 @@ export async function ManyUserQuestionFriendsLabel({
   return (
     <>
       {userQuestionFriendsCount >= 2 ? (
-        <p className="pt-2">
+        <p className="mt-2">
           Shared with the following friends ({userQuestionFriendsCount})
         </p>
       ) : (
-        <p className="pt-2">Shared with the following friend (1)</p>
+        <p className="mt-2">Shared with the following friend (1)</p>
       )}
     </>
   );
@@ -32,7 +32,7 @@ export function OneUserQuestionFriend({
 }) {
   return (
     <>
-      <p className="pt-2">
+      <p className="mt-2">
         {userQuestionFriend.user_app_wide_name} /{" "}
         {userQuestionFriend.user_username}
       </p>

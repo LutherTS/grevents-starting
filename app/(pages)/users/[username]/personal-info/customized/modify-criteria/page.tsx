@@ -29,7 +29,7 @@ export default async function ModifyCriteriaCustomizedPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">
+        <p className="mt-2">
           (Custom criteria have their own dynamic modify page directly available
           from the parent Customized criteria page.)
         </p> */}
@@ -44,14 +44,14 @@ export default async function ModifyCriteriaCustomizedPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
           <ManyUserPseudonativeNotIrlCriteria user={user} />
           <ManyUserPseudonativeIrlCriteria user={user} />
         </Suspense>
-        <p className="pt-2">
+        <p className="mt-2">
           (Custom criteria have their own dynamic modify page directly available
           from the parent Customized criteria page.)
         </p>

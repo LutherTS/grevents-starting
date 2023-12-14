@@ -24,9 +24,9 @@ export default async function ModifyAppWideNamePage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">App-wide name *</p>
-        <p className="pt-2">Generate a new friend code</p>
-        <p className="pt-2">You’ll see it change on your Personal info page.</p> */}
+        <p className="mt-2">App-wide name *</p>
+        <p className="mt-2">Generate a new friend code</p>
+        <p className="mt-2">You’ll see it change on your Personal info page.</p> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.
         </h1>
@@ -34,10 +34,10 @@ export default async function ModifyAppWideNamePage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="pt-2">App-wide name *</p>
-        <p className="pt-2">{user.user_app_wide_name}</p>
-        <p className="pt-2">Generate a new friend code</p>
-        <p className="pt-2">You’ll see it change on your Personal info page.</p>
+        <p className="mt-2">App-wide name *</p>
+        <p className="mt-2">{user.user_app_wide_name}</p>
+        <p className="mt-2">Generate a new friend code</p>
+        <p className="mt-2">You’ll see it change on your Personal info page.</p>
         <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
       </div>
     </main>

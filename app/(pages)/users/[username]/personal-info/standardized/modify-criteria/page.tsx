@@ -40,7 +40,7 @@ export default async function ModifyCriteriaStandardizedPage({
         <Suspense
           fallback={
             <>
-              <p className="pt-2">Loading...</p>
+              <p className="mt-2">Loading...</p>
             </>
           }
         >
