@@ -309,8 +309,8 @@ export async function findContactByUserAndSession(
   session: { [K in "user"]: User },
 ) {
   noStore();
-  // console.log(user);
-  // console.log(session);
+  console.log(user);
+  console.log(session);
   try {
     const run = async () => {
       const data = await sql<FoundContact>`
@@ -329,19 +329,18 @@ export async function findContactByUserAndSession(
       AND c1.user_last_id = ${session.user.user_id}
       
       AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
       AND c2.contact_state = 'LIVE'
 
       LIMIT 1;
     `;
-      // console.log(data);
+      console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: 5 });
-    // console.log(data);
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to gather contact.");
+    throw new Error("Failed to find contact.");
   }
 }
