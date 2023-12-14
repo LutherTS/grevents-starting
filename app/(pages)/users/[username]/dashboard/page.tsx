@@ -19,10 +19,6 @@ export default async function DashboardPage({
     notFound();
   }
 
-  // if (user) {
-  //   throw new Error("Testing things out.");
-  // }
-
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
