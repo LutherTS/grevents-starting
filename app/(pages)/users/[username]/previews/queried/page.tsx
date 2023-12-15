@@ -49,41 +49,22 @@ export default async function QueriedPreviewPage({
   const username = params.username;
   const userLast = searchParams?.userlast || "";
   let relCombo = searchParams?.relcombo || "";
+
   const user = await fetchUserByUsername(username);
+
+  if (!user) {
+    notFound();
+  }
+
   const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
 
   if (gatheredContact !== undefined) {
     relCombo = defineGatheredRelCombo(relCombo, gatheredContact);
   }
 
-  if (!user) {
-    notFound();
-  }
-
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        {/* <h1>Welcome to {username}&apos;s Queried Previews.</h1>
-        <PageLink
-          href={`/users/${username}/dashboard`}
-          name={`back to dashboard`}
-        />
-        <p className="mt-2">
-          Select a user you&apos;re acquainted with. (userlast in searchParams.)
-        </p>
-        {userLast !== "" && <p className="mt-2">userlast: {userLast}</p>}
-        <ManyRelationCombinations />
-        {relCombo !== "" && (
-          <>
-            {relationCombinations.includes(relCombo) ? (
-              <p className="mt-2">relcombo: {relCombo}</p>
-            ) : (
-              <p className="mt-2">
-                There is no such relation combinaison defined.
-              </p>
-            )}
-          </>
-        )} */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Queried Previews.
         </h1>

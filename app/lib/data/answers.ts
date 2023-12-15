@@ -24,7 +24,7 @@ console.log(await pRetry(run, {retries: 5}));
 
 export async function fetchUserPinnedAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  console.log(userId);
+  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -70,11 +70,11 @@ export async function fetchUserPinnedAnswers(userId: string) {
 
       LIMIT 10;
     `;
-      console.log(data);
+      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: 5 });
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
