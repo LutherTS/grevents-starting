@@ -27,7 +27,11 @@ export default async function DashboardPage({
           href={`/users/${username}/dashboard/modify-app-wide-name`}
         >
           <p>App-wide name *</p>
-        </PageLinkWithChildren> */}
+        </PageLinkWithChildren>
+        <PageLink
+          href={`/`}
+          name={`Return home`}
+        /> */}
         <h1 className="font-semibold">
           Welcome to {user.user_app_wide_name}&apos;s Dashboard.
         </h1>
@@ -47,6 +51,7 @@ export default async function DashboardPage({
           href={`/users/${username}/notifications`}
           name={`My notifications`}
         />
+        <PageLink href={`/`} name={`Return home`} />
       </div>
     </main>
   );

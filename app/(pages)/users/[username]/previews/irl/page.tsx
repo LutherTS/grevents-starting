@@ -1,7 +1,8 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
-import { ManyRelComboIrlCriteria } from "@/app/components/server/answers";
+// import { ManyRelComboIrlCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+// import { Suspense } from "react";
+import { RelationCombinationIrl } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function IrlPreviewPage({
@@ -35,17 +36,7 @@ export default async function IrlPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyRelComboIrlCriteria user={user} />
-        </Suspense>
-        <p className="mt-2">Downgrade friendship from irl</p>
-        <p className="mt-2">Unfriend</p>
+        <RelationCombinationIrl user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

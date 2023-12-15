@@ -4,7 +4,8 @@ import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
 export async function fetchUserByUsername(username: string) {
-  noStore();
+  // noStore(); // It's always going to be the same user as in the params.
+  // Therefore, there's no need to constantly revalidate.
   // console.log(username);
   try {
     const run = async () => {

@@ -563,6 +563,46 @@ VALUES (
     now()
 ); -- Done. 
 
+INSERT INTO Answers ( -- Alice-chan, Email address
+-- native -- NEW
+    answer_id,
+    userquestion_id,
+    user_id,
+    answer_value,
+    answer_state,
+    answer_created_at,
+    answer_updated_at
+)
+VALUES (
+    '1102217a-0604-4543-b094-0ef65f17dbd6',
+    'd82fc453-990f-4e1c-954a-da48a9929f95',
+    'e17bc7f7-b93f-4915-9f72-83d055c66e77',
+    'a@a.com',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
+INSERT INTO Answers ( -- Alice-chan, Address
+-- native / irl -- NEW
+    answer_id,
+    userquestion_id,
+    user_id,
+    answer_value,
+    answer_state,
+    answer_created_at,
+    answer_updated_at
+)
+VALUES (
+    'fa3bfae7-d001-4815-8264-b686ebacca06',
+    '7fec789b-6ecd-4e28-91a1-944505c49209',
+    'e17bc7f7-b93f-4915-9f72-83d055c66e77',
+    'something something Wonderland',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
 INSERT INTO Answers ( -- LePapier, Birthday
 -- pseudonative
     answer_id,
@@ -744,7 +784,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Answers ( -- LePapier, Favorite anime waifu
--- custom / shared (1) / pinned -- (1 UserQuestionFriend 'DELETED')
+-- custom / shared (2) / pinned -- (1 UserQuestionFriend 'DELETED')
     answer_id,
     userquestion_id,
     user_id,

@@ -3,11 +3,11 @@ import {
   NativeNotIrlQuestion,
   NativeIrlQuestion,
 } from "../definitions/questions";
-import { unstable_noStore as noStore } from "next/cache";
+// import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
 export async function fetchAllNativeNotIrlQuestions() {
-  noStore();
+  // noStore(); // since it pretty much does not change
   try {
     const run = async () => {
       const data = await sql<NativeNotIrlQuestion>`
@@ -36,7 +36,7 @@ export async function fetchAllNativeNotIrlQuestions() {
 }
 
 export async function fetchAllNativeIrlQuestions() {
-  noStore();
+  // noStore(); // since it pretty much does not change
   try {
     const run = async () => {
       const data = await sql<NativeIrlQuestion>`

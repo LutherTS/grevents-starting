@@ -1,7 +1,8 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
-import { ManyRelComboFriendCriteria } from "@/app/components/server/answers";
+// import { ManyRelComboFriendCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+// import { Suspense } from "react";
+import { RelationCombinationFriend } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function FriendPreviewPage({
@@ -35,17 +36,7 @@ export default async function FriendPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyRelComboFriendCriteria user={user} />
-        </Suspense>
-        <p className="mt-2">Upgrade friendship to irl</p>
-        <p className="mt-2">Unfriend</p>
+        <RelationCombinationFriend user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>

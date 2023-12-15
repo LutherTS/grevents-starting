@@ -8,7 +8,7 @@ export async function fetchCustomUserQuestionByIDAndUser(
   userQuestionId: string,
   user: User,
 ) {
-  noStore();
+  // noStore(); // since its for its own page
   // console.log(userQuestionId);
   // console.log(user);
   try {

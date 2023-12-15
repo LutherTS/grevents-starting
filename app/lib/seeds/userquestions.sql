@@ -539,6 +539,42 @@ VALUES (
     now()
 ); -- Done. 
 
+INSERT INTO UserQuestions ( -- Alice-chan, Email address
+-- native -- NEW
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    'd82fc453-990f-4e1c-954a-da48a9929f95',
+    'e17bc7f7-b93f-4915-9f72-83d055c66e77',
+    'b80f6893-f013-4964-b770-6935ef8fc4a4',
+    'LIVE',
+    now(),
+    now()
+); -- Done.
+
+INSERT INTO UserQuestions ( -- Alice-chan, Address
+-- native / irl -- NEW
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '7fec789b-6ecd-4e28-91a1-944505c49209',
+    'e17bc7f7-b93f-4915-9f72-83d055c66e77',
+    '6e451910-5f31-4649-9451-ad135663e71d',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
 INSERT INTO UserQuestions ( -- LePapier, Birthday
 -- pseudonative
 -- for preexisting pseudonative not irl (answer live) 

@@ -1,5 +1,6 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
+import { RelationCombinationHasMeBlocked } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
 export default async function BlockedPreviewPage({
@@ -37,12 +38,7 @@ export default async function BlockedPreviewPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
-        <p className="mt-2 font-semibold">
-          {user.user_username.toUpperCase()} CAN NO LONGER ACCESS ANY OF YOUR
-          INFORMATION ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND
-          FUTURE COMMON EVENTS INCLUDED.
-        </p>
-        <p className="mt-2">Unblock</p>
+        <RelationCombinationHasMeBlocked user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
