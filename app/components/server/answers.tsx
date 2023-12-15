@@ -12,6 +12,8 @@ import {
   fetchUserUnpinnedNativeIrlAnswers,
   fetchUserUnpinnedPseudonativeIrlAnswers,
   fetchUserSharedToContactCustomAnswers,
+  fetchUserPinnedNotIrlAnswersCustom,
+  fetchUserPinnedNotAndIrlAnswersCustom,
 } from "@/app/lib/data/answers";
 // import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends"; // optimized so no longer needed
 import { User } from "@/app/lib/definitions/users";
@@ -378,6 +380,76 @@ export async function ManyUserSharedToContactCustomAnswers({
       <ManyCriteria
         answers={userSharedToContactCustomAnswers}
         label={answersLabels.sharedToContactCustom}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboFriendCriteriaCustom({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact | FoundContact;
+}) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswersCustom(user.user_id, contact.c1_contact_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+  ]);
+
+  return (
+    <>
+      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteriaCustom({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact | FoundContact;
+}) {
+  const [
+    pinnedNotAndIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
+  ] = await Promise.all([
+    fetchUserPinnedNotAndIrlAnswersCustom(user.user_id, contact.c1_contact_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
+  ]);
+
+  return (
+    <>
+      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
+      <ManyUserUnpinnedNativeNotIrlCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+      />
+      <ManyUserUnpinnedNativeIrlCriteria
+        answers={userUnpinnedNativeIrlAnswers}
+      />
+      <ManyUserUnpinnedPseudonativeIrlCriteria
+        answers={userUnpinnedPseudonativeIrlAnswers}
       />
     </>
   );

@@ -2,13 +2,15 @@ import { User } from "@/app/lib/definitions/users";
 import { Suspense } from "react";
 import {
   ManyRelComboFriendCriteria,
+  ManyRelComboFriendCriteriaCustom,
   ManyRelComboIrlCriteria,
+  ManyRelComboIrlCriteriaCustom,
   ManyUserSharedToContactCustomAnswers,
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 
 export function RelationCombinationNone() {
-  // { user }: { user: User }
+  // { user }: { user: User } // currently not required
   return (
     <>
       <p className="mt-2">Send friend request</p>
@@ -110,7 +112,7 @@ export function RelationCombinationFriendCustom({
           </>
         }
       >
-        <ManyRelComboFriendCriteria user={user} />
+        <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
       <p className="mt-2">Upgrade friendship to irl</p>
@@ -135,7 +137,7 @@ export function RelationCombinationIrlCustom({
           </>
         }
       >
-        <ManyRelComboIrlCriteria user={user} />
+        <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
       <p className="mt-2">Downgrade friendship from irl</p>
