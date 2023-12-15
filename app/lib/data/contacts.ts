@@ -306,21 +306,24 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
 
 export async function findContactByUserAndSession(
   user: User,
-  session: { [K in "user"]: User },
+  session: { [K in "user"]: User } | null,
 ) {
   // noStore(); // since changes in relation will revalidate
   // console.log(user);
   // console.log(session);
-  try {
-    const run = async () => {
-      const data = await sql<FoundContact>`
+  if (session !== null) {
+    try {
+      const run = async () => {
+        const data = await sql<FoundContact>`
       SELECT 
-          c1.contact_kind c1_kind, 
-          c1.contact_blocking c1_blocking, 
-          c2.contact_kind c2_kind, 
-          c2.contact_blocking c2_blocking, 
-          c1.contact_id c1_id, 
-          c1.contact_mirror_id c1_mirror_id 
+          c1.contact_kind c1_contact_kind, 
+          c1.contact_blocking c1_contact_blocking, 
+          c2.contact_kind c2_contact_kind, 
+          c2.contact_blocking c2_contact_blocking, 
+          c1.contact_id c1_contact_id, 
+          c1.contact_mirror_id c1_contact_mirror_id,
+          c1.user_first_id c1_user_first_id,
+          c1.user_last_id c1_user_last_id 
       FROM Contacts c1
 
       JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
@@ -333,14 +336,15 @@ export async function findContactByUserAndSession(
 
       LIMIT 1;
     `;
+        // console.log(data);
+        return data.rows[0];
+      };
+      const data = await pRetry(run, { retries: 5 });
       // console.log(data);
-      return data.rows[0];
-    };
-    const data = await pRetry(run, { retries: 5 });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to find contact.");
+      return data;
+    } catch (error) {
+      console.error("Database Error:", error);
+      throw new Error("Failed to find contact.");
+    }
   }
 }

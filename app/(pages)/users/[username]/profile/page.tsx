@@ -23,38 +23,39 @@ export default async function UserPage({
     username: string;
   };
 }) {
-  // const session: { [K in "user"]: User } = { // “me”
-  //   user: {
-  //     user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
-  //     user_state: "LIVE",
-  //     user_status_title: "NONE",
-  //     user_status_dashboard: "NONE",
-  //     user_status_personal_info: "NONE",
-  //     user_username: "LePapier",
-  //     user_app_wide_name: "“me”",
-  //     user_friend_code: "fsa7hyt3g58x",
-  //     user_has_temporary_password: false,
-  //     user_created_at: "2023-12-09T05:59:58.074Z",
-  //     user_updated_at: "2023-12-09T05:59:58.074Z",
-  //   },
-  // };
-
   const session: { [K in "user"]: User } = {
-    // Alice
+    // “me”
     user: {
-      user_id: "e17bc7f7-b93f-4915-9f72-83d055c66e77",
+      user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
       user_state: "LIVE",
       user_status_title: "NONE",
       user_status_dashboard: "NONE",
       user_status_personal_info: "NONE",
-      user_username: "Alice-chan",
-      user_app_wide_name: "Alice",
-      user_friend_code: "k7mdsfwq2e9g",
+      user_username: "LePapier",
+      user_app_wide_name: "“me”",
+      user_friend_code: "fsa7hyt3g58x",
       user_has_temporary_password: false,
-      user_created_at: "2023-12-09T06:00:33.323Z",
-      user_updated_at: "2023-12-09T06:00:33.323Z",
+      user_created_at: "2023-12-09T05:59:58.074Z",
+      user_updated_at: "2023-12-09T05:59:58.074Z",
     },
   };
+
+  // const session: { [K in "user"]: User } = {
+  //   // Alice
+  //   user: {
+  //     user_id: "e17bc7f7-b93f-4915-9f72-83d055c66e77",
+  //     user_state: "LIVE",
+  //     user_status_title: "NONE",
+  //     user_status_dashboard: "NONE",
+  //     user_status_personal_info: "NONE",
+  //     user_username: "Alice-chan",
+  //     user_app_wide_name: "Alice",
+  //     user_friend_code: "k7mdsfwq2e9g",
+  //     user_has_temporary_password: false,
+  //     user_created_at: "2023-12-09T06:00:33.323Z",
+  //     user_updated_at: "2023-12-09T06:00:33.323Z",
+  //   },
+  // };
 
   // const session = null;
 
@@ -69,7 +70,9 @@ export default async function UserPage({
 
   let relCombo: RelationCombination | "" = "";
 
-  relCombo = defineFoundRelCombo(foundContact);
+  if (foundContact) {
+    relCombo = defineFoundRelCombo(foundContact);
+  }
 
   // relCombo = "none";
   // relCombo = "friend";
@@ -89,19 +92,28 @@ export default async function UserPage({
               href={`/users/${session.user.user_username}/dashboard`}
               name={`back to dashboard`}
             />
-
-            {relCombo === "" && (
+            {/* @ts-ignore // for type never during session object testing */}
+            {username === session.user.user_username && (
               <p className="mt-2">
-                You have no contact with {user.user_username}. In the full
-                application, new contacts between you and {user.user_username}{" "}
-                will be made upon this first visit, corresponding the relation
-                combinaison of &quot;none.&quot;
+                This is your profile page, the one where others will be able to
+                see the data you&apos;ve shared with them on a single URL, and
+                eventually on more children paths as the application develops.
+              </p>
+            )}
+            {/* @ts-ignore // for type never during session object testing */}
+            {relCombo === "" && username !== session.user.user_username && (
+              <p className="mt-2">
+                You have no contact with {user.user_app_wide_name}. In the full
+                application, new contacts between you and{" "}
+                {user.user_app_wide_name} will be made upon this first visit,
+                corresponding to the starting relation combinaison of
+                &quot;none.&quot;
               </p>
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "none" && <RelationCombinationNone />}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "friend" && (
+            {relCombo === "friend" && foundContact && (
               <>
                 <RelationCombinationFriendCustom
                   user={user}
@@ -110,7 +122,7 @@ export default async function UserPage({
               </>
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "irl" && (
+            {relCombo === "irl" && foundContact && (
               <>
                 <RelationCombinationIrlCustom
                   user={user}
