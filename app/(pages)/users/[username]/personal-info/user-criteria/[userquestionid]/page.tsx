@@ -18,17 +18,28 @@ export default async function UserQuestionPage({
 }) {
   const username = params.username;
   const userQuestionId = params.userquestionid;
+
   const user = await fetchUserByUsername(username);
+
+  if (!user) {
+    notFound();
+  }
+
   const userQuestion = await fetchCustomUserQuestionByIDAndUser(
     userQuestionId,
     user,
   );
+
+  if (!userQuestion) {
+    notFound();
+  }
+
   const userQuestionAnswer = await findAnswerByUserQuestionAndUser(
     userQuestion,
     user,
   );
 
-  if (!user || !userQuestion || !userQuestionAnswer) {
+  if (!userQuestionAnswer) {
     notFound();
   }
 
