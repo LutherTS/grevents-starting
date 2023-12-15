@@ -8,7 +8,7 @@ import pRetry from "p-retry";
 export async function countUserQuestionFriends(
   userQuestion: UserQuestion, // | Answer , // no longer used this way
 ) {
-  noStore();
+  // noStore(); // since adding and removing will revalidate
   // console.log(userQuestion.question_kind);
   // console.log(userQuestion.userquestion_id);
   if (userQuestion.question_kind === "CUSTOM") {
@@ -35,7 +35,7 @@ export async function countUserQuestionFriends(
 }
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
-  noStore();
+  // noStore(); // since adding and removing will revalidate
   // console.log(userQuestion);
   try {
     const run = async () => {

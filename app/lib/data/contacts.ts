@@ -99,7 +99,7 @@ export async function gatherContactByUserAndUsername(
   user: User,
   username: string,
 ) {
-  noStore();
+  // noStore(); // since juggling between relcombos
   // console.log(user);
   // console.log(username);
   if (username !== "") {
@@ -308,7 +308,7 @@ export async function findContactByUserAndSession(
   user: User,
   session: { [K in "user"]: User },
 ) {
-  noStore();
+  // noStore(); // since changes in relation will revalidate
   // console.log(user);
   // console.log(session);
   try {
