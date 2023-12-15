@@ -8,7 +8,7 @@ export default function PageNotFound() {
             This page doesn&apos;t exist. Or perhaps it doesn&apos;t exist yet.
           </p>
           <p className="mt-2">
-            You'll find a link back home here once the home page is ready.
+            You&apos;ll find a link back home here once the home page is ready.
           </p>
         </div>
       </main>
