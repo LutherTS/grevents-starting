@@ -18,6 +18,22 @@ import {
   RelationCombinationBlockingBlocked,
 } from "@/app/components/agnostic/relcombos";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s Queried Previews`,
+  };
+}
+
 export default async function QueriedPreviewPage({
   params,
   searchParams,

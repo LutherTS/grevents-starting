@@ -5,6 +5,22 @@ import { notFound } from "next/navigation";
 import { RelationCombinationIrl } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s Irl Preview`,
+  };
+}
+
 export default async function IrlPreviewPage({
   params,
 }: {

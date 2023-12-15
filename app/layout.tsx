@@ -4,9 +4,17 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// export const metadata: Metadata = {
+//   title: "Grevents (starting)",
+//   description: "Personal info selects and reads. And now beyond.",
+// };
+
 export const metadata: Metadata = {
-  title: "Grevents (starting)",
-  description: "Personal info selects and reads.",
+  title: {
+    template: "%s | Grevents (starting)",
+    default: "Grevents (starting)",
+  },
+  description: "Personal info selects and reads. And now beyond.",
 };
 
 export default function RootLayout({

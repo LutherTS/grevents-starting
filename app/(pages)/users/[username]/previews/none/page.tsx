@@ -3,6 +3,22 @@ import { notFound } from "next/navigation";
 import { RelationCombinationNone } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s None Preview`,
+  };
+}
+
 export default async function NonePreviewPage({
   params,
 }: {

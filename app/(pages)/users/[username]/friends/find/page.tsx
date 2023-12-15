@@ -5,6 +5,22 @@ import {
 import { notFound } from "next/navigation";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s Find Contacts`,
+  };
+}
+
 export default async function FindContactsPage({
   params,
   searchParams,
