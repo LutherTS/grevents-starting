@@ -8,6 +8,22 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s User Criteria`,
+  };
+}
+
 export default async function UserQuestionPage({
   params,
 }: {
