@@ -63,13 +63,6 @@ export default async function UserQuestionPage({
     <>
       <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
         <div className="max-w-prose text-center">
-          {/* <h1>Welcome to {username}&apos;s User Criteria.</h1>
-          <PageLink
-            href={`/users/${username}/dashboard`}
-            name={`back to dashboard`}
-          />
-          <p className="mt-2">Below is the userQuestionId so far</p>
-          <p className="mt-2">{userQuestionId}</p> */}
           <h1 className="font-semibold">
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
