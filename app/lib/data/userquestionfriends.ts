@@ -5,20 +5,19 @@ import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
-/* No longer in use.
 export async function countUserQuestionFriends(
-  answerOrUserQuestion: Answer | UserQuestion,
+  userQuestion: UserQuestion, // | Answer , // no longer used this way
 ) {
   noStore();
-  // console.log(answerOrUserQuestion.question_kind);
-  // console.log(answerOrUserQuestion.userquestion_id);
-  if (answerOrUserQuestion.question_kind === "CUSTOM") {
+  // console.log(userQuestion.question_kind);
+  // console.log(userQuestion.userquestion_id);
+  if (userQuestion.question_kind === "CUSTOM") {
     try {
       const run = async () => {
         const data = await sql`
       SELECT COUNT(userquestionfriend_id) FROM UserQuestionFriends
   
-      WHERE userquestion_id = ${answerOrUserQuestion.userquestion_id}
+      WHERE userquestion_id = ${userQuestion.userquestion_id}
       
       AND userquestionfriend_state = 'LIVE';
       `;
@@ -34,7 +33,6 @@ export async function countUserQuestionFriends(
     }
   }
 }
-*/
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   noStore();

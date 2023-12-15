@@ -19,7 +19,9 @@ export async function ManyUserQuestionFriendsLabel({
           Shared with the following friends ({userQuestionFriendsCount})
         </p>
       ) : (
-        <p className="mt-2">Shared with the following friend (1)</p>
+        <p className="mt-2">
+          Shared with the following friend ({userQuestionFriendsCount})
+        </p>
       )}
     </>
   );
