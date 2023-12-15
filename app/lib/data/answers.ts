@@ -813,7 +813,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
           )
           OR ( -- NEW
             q.question_kind = 'CUSTOM' AND
-            c1.contact_id = ${contactId} AND
+            c1.contact_id = ${contactId}
         )
     )
 
