@@ -3,6 +3,22 @@ import { notFound } from "next/navigation";
 import { RelationCombinationBlockingBlocked } from "@/app/components/agnostic/relcombos";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s Blocking-Blocked Preview`,
+  };
+}
+
 export default async function BlockingBlockedPreviewPage({
   params,
 }: {
@@ -20,7 +36,7 @@ export default async function BlockingBlockedPreviewPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        {/* <h1>Welcome to {username}&apos;s Blocking Blocked Preview.</h1>
+        {/* <h1>Welcome to {username}&apos;s Blocking-Blocked Preview.</h1>
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
@@ -34,7 +50,7 @@ export default async function BlockingBlockedPreviewPage({
         </p>
         <p className="mt-2">Unblock if that&apos;s OK with you</p> */}
         <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Blocking Blocked Preview.
+          Welcome to {user.user_app_wide_name}&apos;s Blocking-Blocked Preview.
         </h1>
         <PageLink
           href={`/users/${username}/dashboard`}

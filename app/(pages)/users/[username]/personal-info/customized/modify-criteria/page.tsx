@@ -7,6 +7,22 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { PageLink } from "@/app/components/agnostic/links";
 
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    username: string;
+  };
+}): Promise<Metadata> {
+  const username = params.username;
+
+  return {
+    title: `${username}'s Modify Criteria Customized`,
+  };
+}
+
 export default async function ModifyCriteriaCustomizedPage({
   params,
 }: {
