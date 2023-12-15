@@ -86,7 +86,9 @@ export default async function UserPage({
       <div className="max-w-prose text-center">
         {session ? (
           <>
-            <h1>Welcome to {user.user_app_wide_name}&apos;s Page.</h1>
+            <h1 className="font-semibold">
+              Welcome to {user.user_app_wide_name}&apos;s Page.
+            </h1>
             <PageLink
               // @ts-ignore // for type never during session object testing
               href={`/users/${session.user.user_username}/dashboard`}

@@ -109,12 +109,12 @@ export async function gatherContactByUserAndUsername(
       SELECT 
           u.user_app_wide_name, 
           u.user_username, 
-          c1.contact_kind c1_kind, 
-          c1.contact_blocking c1_blocking, 
-          c2.contact_kind c2_kind, 
-          c2.contact_blocking c2_blocking, 
-          c1.contact_id c1_id, 
-          c1.contact_mirror_id c1_mirror_id 
+          c1.contact_kind c1_contact_kind, 
+          c1.contact_blocking c1_contact_blocking, 
+          c2.contact_kind c2_contact_kind, 
+          c2.contact_blocking c2_contact_blocking, 
+          c1.contact_id c1_contact_id, 
+          c1.contact_mirror_id c1_contact_mirror_id 
       FROM Contacts c1
 
       JOIN Users u ON c1.user_last_id = u.user_id

@@ -368,7 +368,10 @@ export async function ManyUserSharedToContactCustomAnswers({
   contact: GatheredContact | FoundContact;
 }) {
   const userSharedToContactCustomAnswers =
-    await fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_id);
+    await fetchUserSharedToContactCustomAnswers(
+      user.user_id,
+      contact.c1_contact_id,
+    );
 
   return (
     <>
