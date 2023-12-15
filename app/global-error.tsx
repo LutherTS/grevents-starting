@@ -20,9 +20,9 @@ export default function ErrorPage({
           <div className="max-w-prose text-center">
             <h1>Something definitely went wrong.</h1>
             <p className="mt-2">
-              You should never see this page. In fact, I didn't bother to see it
-              myself. If you do see it, and if I do see it... then everything
-              failed.
+              You should never see this page. In fact, I didn&apos;t bother to
+              see it myself. If you do see it, and if I do see it... then
+              everything failed.
             </p>
             <PageLink href={`/`} name={`Return home`} />
             <BackButton />
