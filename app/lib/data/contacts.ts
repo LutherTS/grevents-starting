@@ -309,8 +309,8 @@ export async function findContactByUserAndSession(
   session: { [K in "user"]: User },
 ) {
   noStore();
-  console.log(user);
-  console.log(session);
+  // console.log(user);
+  // console.log(session);
   try {
     const run = async () => {
       const data = await sql<FoundContact>`
@@ -333,11 +333,11 @@ export async function findContactByUserAndSession(
 
       LIMIT 1;
     `;
-      console.log(data);
+      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: 5 });
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

@@ -10,4 +10,5 @@ export type Answer = {
   userquestion_kind: string;
   userquestion_id: string;
   user_username: string;
+  userquestionfriends_count?: number;
 };

@@ -13,7 +13,7 @@ import {
   fetchUserUnpinnedPseudonativeIrlAnswers,
   fetchUserSharedToContactCustomAnswers,
 } from "@/app/lib/data/answers";
-import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends";
+// import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends"; // optimized so no longer needed
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
@@ -21,7 +21,7 @@ import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
-  const userQuestionFriendsCount = await countUserQuestionFriends(answer);
+  // const userQuestionFriendsCount = await countUserQuestionFriends(answer);
 
   return (
     <>
@@ -33,12 +33,14 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
         {answer.question_kind === "CUSTOM" && <> / custom</>}
         {(answer.question_kind === "NATIVEIRL" ||
           answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
-        {answer.question_kind === "CUSTOM" && userQuestionFriendsCount < 1 && (
-          <> / not shared</>
-        )}
-        {answer.question_kind === "CUSTOM" && userQuestionFriendsCount >= 1 && (
-          <> / shared ({userQuestionFriendsCount})</>
-        )}
+        {answer.question_kind === "CUSTOM" &&
+          answer.userquestionfriends_count &&
+          answer.userquestionfriends_count < 1 && <> / not shared</>}
+        {answer.question_kind === "CUSTOM" &&
+          answer.userquestionfriends_count &&
+          answer.userquestionfriends_count >= 1 && (
+            <> / shared ({answer.userquestionfriends_count})</>
+          )}
       </p>
     </>
   );

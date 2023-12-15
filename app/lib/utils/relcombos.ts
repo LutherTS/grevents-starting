@@ -1,6 +1,6 @@
 import { GatheredContact, FoundContact } from "../definitions/contacts";
 
-export function defineRelCombo(contact: FoundContact | GatheredContact) {
+export function defineFoundRelCombo(contact: FoundContact) {
   if (
     contact &&
     contact.c1_kind === "NONE" &&

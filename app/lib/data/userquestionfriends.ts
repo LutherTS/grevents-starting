@@ -1,10 +1,11 @@
 import { sql } from "@vercel/postgres";
-import { Answer } from "../definitions/answers";
+// import { Answer } from "../definitions/answers"; // no longer used
 import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
+/* No longer in use.
 export async function countUserQuestionFriends(
   answerOrUserQuestion: Answer | UserQuestion,
 ) {
@@ -33,6 +34,7 @@ export async function countUserQuestionFriends(
     }
   }
 }
+*/
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   noStore();

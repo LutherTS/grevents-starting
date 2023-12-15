@@ -316,12 +316,14 @@ export async function fetchUserCustomAnswers(userId: string) {
           Questions.question_kind,
           UserQuestions.userquestion_kind,
           UserQuestions.userquestion_id,
-          Users.user_username
+          Users.user_username,
+          COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
       FROM Answers
 
       JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
       JOIN Questions ON UserQuestions.question_id = Questions.question_id
       JOIN Users ON Answers.user_id = Users.user_id
+      LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
       
       WHERE UserQuestions.user_id = ${userId}
       AND Answers.user_id = ${userId}
@@ -332,7 +334,18 @@ export async function fetchUserCustomAnswers(userId: string) {
       AND Questions.question_state = 'LIVE'
       AND Users.user_state = 'LIVE'
 
-      ORDER BY Answers.answer_created_at ASC
+      GROUP BY -- NEW
+          Questions.question_name, 
+          Answers.answer_value, 
+          Answers.answer_id,
+          UserQuestions.userquestion_is_pinned,
+          Questions.question_kind,
+          UserQuestions.userquestion_kind,
+          UserQuestions.userquestion_id,
+          Users.user_username
+
+      ORDER BY userquestionfriends_count ASC -- NEW
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -342,7 +355,7 @@ export async function fetchUserCustomAnswers(userId: string) {
     // console.log(data);
     return data;
   } catch (error) {
-    console.error("Database Error:", error);
+    // console.error("Database Error:", error);
     throw new Error("Failed to fetch user custom answers.");
   }
 }
@@ -693,6 +706,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
 
       ORDER BY 
           Questions.question_name ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -725,16 +739,17 @@ export async function fetchUserSharedToContactCustomAnswers(
           q.question_kind,
           uq.userquestion_kind,
           uq.userquestion_id,
-          u.user_username
+          u.user_username,
+          COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
       FROM Answers a
 
       JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
       JOIN Questions q ON uq.question_id = q.question_id
-      JOIN UserQuestionFriends uqf ON a.userquestion_id = uqf.userquestion_id
-      JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
+      JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+      JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
       JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
       JOIN Users u ON a.user_id = u.user_id
-
+      LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
       WHERE a.user_id = ${userId}
       AND uq.user_id = ${userId}
@@ -757,12 +772,23 @@ export async function fetchUserSharedToContactCustomAnswers(
         
       AND a.answer_state = 'LIVE'
       AND uq.userquestion_state = 'LIVE'
-      AND uqf.userquestionfriend_state = 'LIVE'
+      AND uqf1.userquestionfriend_state = 'LIVE'
       AND c1.contact_state = 'LIVE'
       AND c2.contact_state = 'LIVE'
 
+      GROUP BY -- NEW
+          q.question_name, 
+          a.answer_value, 
+          a.answer_id,
+          uq.userquestion_is_pinned,
+          q.question_kind,
+          uq.userquestion_kind,
+          uq.userquestion_id,
+          u.user_username
+
       ORDER BY 
-          q.question_name ASC
+      userquestionfriends_count ASC -- NEW
+
       LIMIT 10;
     `;
       // console.log(data);

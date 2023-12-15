@@ -11,7 +11,10 @@ import {
   RelationCombinationHasMeBlocked,
   RelationCombinationBlockingBlocked,
 } from "@/app/components/agnostic/relcombos";
-import { RelationCombination, defineRelCombo } from "@/app/lib/utils/relcombos";
+import {
+  RelationCombination,
+  defineFoundRelCombo,
+} from "@/app/lib/utils/relcombos";
 
 export default async function UserPage({
   params,
@@ -66,7 +69,7 @@ export default async function UserPage({
 
   let relCombo: RelationCombination | "" = "";
 
-  relCombo = defineRelCombo(foundContact);
+  relCombo = defineFoundRelCombo(foundContact);
 
   // relCombo = "none";
   // relCombo = "friend";
@@ -86,6 +89,15 @@ export default async function UserPage({
               href={`/users/${session.user.user_username}/dashboard`}
               name={`back to dashboard`}
             />
+
+            {relCombo === "" && (
+              <p className="mt-2">
+                You have no contact with {user.user_username}. In the full
+                application, new contacts between you and {user.user_username}{" "}
+                will be made upon this first visit, corresponding the relation
+                combinaison of &quot;none.&quot;
+              </p>
+            )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "none" && <RelationCombinationNone />}
             {/* @ts-ignore // for intentional during relCombo testing */}
