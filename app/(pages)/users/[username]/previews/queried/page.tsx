@@ -49,15 +49,17 @@ export default async function QueriedPreviewPage({
   const username = params.username;
   const userLast = searchParams?.userlast || "";
   let relCombo = searchParams?.relcombo || "";
+
   const user = await fetchUserByUsername(username);
+
+  if (!user) {
+    notFound();
+  }
+
   const gatheredContact = await gatherContactByUserAndUsername(user, userLast);
 
   if (gatheredContact !== undefined) {
     relCombo = defineGatheredRelCombo(relCombo, gatheredContact);
-  }
-
-  if (!user) {
-    notFound();
   }
 
   return (
