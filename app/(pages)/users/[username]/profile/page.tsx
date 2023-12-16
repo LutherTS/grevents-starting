@@ -103,7 +103,7 @@ export default async function UserPage({
       <div className="max-w-prose text-center">
         {session ? (
           <>
-            <H1>Welcome to {user.user_app_wide_name}&apos;s Page.</H1>
+            <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}
             <BackToDashboardLink session={session} />
             {/* @ts-ignore // for type never during session object testing */}
