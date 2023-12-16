@@ -18,8 +18,8 @@ export default async function HomePage() {
             Visibility granted on each{" "}
             <span className="font-semibold">criteria</span> (as they&apos;re
             called in Grevents) is specific to the relation between each user,
-            whether they&apos;re "friends" or have upgraded their friendship to
-            &quot;irl.&quot;
+            whether they&apos;re &quot;friends&quot; or have upgraded their
+            friendship to &quot;irl.&quot;
           </p>
           <p className="mt-4">
             There are five categories of criteria.{" "}
