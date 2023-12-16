@@ -56,7 +56,7 @@ export default async function HomePage() {
             questions you create yourself before answering them as well, just
             like pseudonative and pseudonative irl criteria. They differ in that
             you can manually select which friend to shared them to, or choose to
-            not share them and keep these criteria for yourself if you so
+            not share them and to keep these criteria for yourself if you so
             desire.
           </p>
           <p className="mt-4 font-bold">
