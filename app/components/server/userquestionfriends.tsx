@@ -15,11 +15,11 @@ export async function ManyUserQuestionFriendsLabel({
   return (
     <>
       {userQuestionFriendsCount >= 2 ? (
-        <p className="mt-2">
+        <p className="mt-2 font-semibold text-zinc-500">
           Shared with the following friends ({userQuestionFriendsCount})
         </p>
       ) : (
-        <p className="mt-2">
+        <p className="mt-2 font-semibold text-zinc-500">
           Shared with the following friend ({userQuestionFriendsCount})
         </p>
       )}

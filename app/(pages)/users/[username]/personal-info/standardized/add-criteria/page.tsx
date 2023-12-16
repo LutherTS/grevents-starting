@@ -56,7 +56,9 @@ export default async function AddCriteriaStandardizedPage({
           />
           {allNativeNotIrlQuestions.length > 0 && (
             <>
-              <p className="mt-2">Select a native question below</p>
+              <p className="mt-2 font-semibold text-zinc-500">
+                Select a native question below
+              </p>
               <ol>
                 {allNativeNotIrlQuestions.map((nativeNotIrlQuestion) => {
                   return (
@@ -72,7 +74,9 @@ export default async function AddCriteriaStandardizedPage({
           )}
           {allNativeIrlQuestions.length > 0 && (
             <>
-              <p className="mt-2">Select a native irl question below</p>
+              <p className="mt-2 font-semibold text-zinc-500">
+                Select a native irl question below
+              </p>
               <ol>
                 {allNativeIrlQuestions.map((nativeIrlQuestion) => {
                   return (

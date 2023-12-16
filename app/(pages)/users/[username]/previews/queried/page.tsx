@@ -66,20 +66,19 @@ export default async function QueriedPreviewPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Queried Previews.
-        </h1>
+        <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
         <p className="mt-2">
-          Type the username of a user you are acquainted with.
+          Type the username of a user you are acquainted with. (userlast in
+          searchParams.)
         </p>
         {userLast !== "" && (
           <>
             {gatheredContact ? (
-              <p className="mt-2">userlast: {userLast}</p>
+              <p className="mt-2 font-semibold">userlast: {userLast}</p>
             ) : (
               <p className="mt-2">
                 You aren&apos;t acquainted with any such other user.
@@ -91,7 +90,7 @@ export default async function QueriedPreviewPage({
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (
-              <p className="mt-2">relcombo: {relCombo}</p>
+              <p className="mt-2 font-semibold">relcombo: {relCombo}</p>
             ) : (
               <p className="mt-2">
                 There is no such relation combinaison defined.
@@ -136,6 +135,7 @@ export default async function QueriedPreviewPage({
           )}
         </Suspense>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+        <PageLink href={`/users/${username}/profile`} name={"To Profile"} />
       </div>
     </main>
   );

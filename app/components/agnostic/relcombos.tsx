@@ -8,13 +8,14 @@ import {
   ManyUserSharedToContactCustomAnswers,
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
+import { ActionLink } from "./links";
 
 export function RelationCombinationNone() {
   // { user }: { user: User } // currently not required
   return (
     <>
-      <p className="mt-2">Send friend request</p>
-      <p className="mt-2">Block</p>
+      <ActionLink>Send friend request</ActionLink>
+      <ActionLink>Block</ActionLink>
     </>
   );
 }
@@ -31,8 +32,8 @@ export function RelationCombinationFriend({ user }: { user: User }) {
       >
         <ManyRelComboFriendCriteria user={user} />
       </Suspense>
-      <p className="mt-2">Upgrade friendship to irl</p>
-      <p className="mt-2">Unfriend</p>
+      <ActionLink>Upgrade friendship to irl</ActionLink>
+      <ActionLink>Unfriend</ActionLink>
     </>
   );
 }
@@ -49,8 +50,8 @@ export function RelationCombinationIrl({ user }: { user: User }) {
       >
         <ManyRelComboIrlCriteria user={user} />
       </Suspense>
-      <p className="mt-2">Downgrade friendship from irl</p>
-      <p className="mt-2">Unfriend</p>
+      <ActionLink>Downgrade friendship from irl</ActionLink>
+      <ActionLink>Unfriend</ActionLink>
     </>
   );
 }
@@ -63,7 +64,7 @@ export function RelationCombinationIAmBlocking({ user }: { user: User }) {
         {user.user_username.toUpperCase()} ACROSS THE ENTIRE APPLICATION, FUTURE
         COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <p className="mt-2">Block them back</p>
+      <ActionLink>Block them back</ActionLink>
     </>
   );
 }
@@ -76,7 +77,7 @@ export function RelationCombinationHasMeBlocked({ user }: { user: User }) {
         INFORMATION ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND
         FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <p className="mt-2">Unblock</p>
+      <ActionLink>Unblock</ActionLink>
     </>
   );
 }
@@ -91,7 +92,7 @@ export function RelationCombinationBlockingBlocked({ user }: { user: User }) {
         CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
         APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <p className="mt-2">Unblock if that&apos;s OK with you</p>
+      <ActionLink>Unblock if that&apos;s OK with you</ActionLink>
     </>
   );
 }
@@ -115,8 +116,8 @@ export function RelationCombinationFriendCustom({
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
-      <p className="mt-2">Upgrade friendship to irl</p>
-      <p className="mt-2">Unfriend</p>
+      <ActionLink>Upgrade friendship to irl</ActionLink>
+      <ActionLink>Unfriend</ActionLink>
     </>
   );
 }
@@ -140,8 +141,8 @@ export function RelationCombinationIrlCustom({
         <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
-      <p className="mt-2">Downgrade friendship from irl</p>
-      <p className="mt-2">Unfriend</p>
+      <ActionLink>Downgrade friendship from irl</ActionLink>
+      <ActionLink>Unfriend</ActionLink>
     </>
   );
 }

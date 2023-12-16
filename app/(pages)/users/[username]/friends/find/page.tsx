@@ -48,9 +48,7 @@ export default async function FindContactsPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Find Contacts.
-        </h1>
+        <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
@@ -62,7 +60,7 @@ export default async function FindContactsPage({
         {friendCode !== "" && (
           <>
             {friendCodeUser ? (
-              <p className="mt-2">friendcode: {friendCode}</p>
+              <p className="mt-2 font-semibold">friendcode: {friendCode}</p>
             ) : (
               <p className="mt-2">No other user found with this friend code.</p>
             )}
@@ -71,7 +69,7 @@ export default async function FindContactsPage({
         {friendCodeUser && (
           <>
             <p className="mt-2">Here&apos;s the user you&apos;re looking for</p>
-            <p className="mt-2">
+            <p className="mt-2 font-semibold">
               {friendCodeUser.user_app_wide_name} /{" "}
               {friendCodeUser.user_username} / {friendCodeUser.user_friend_code}
             </p>

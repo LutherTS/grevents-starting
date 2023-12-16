@@ -162,10 +162,11 @@ export default async function UserPage({
           </>
         ) : (
           <>
-            <h1>
+            <p>
               You have no session. You shall eventually be redirected to the
               sign-in page or the home page.
-            </h1>
+            </p>
+            <PageLink href={`/`} name={`Return home`} />
           </>
         )}
       </div>
