@@ -114,6 +114,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
 
       ORDER BY 
           Answers.answer_created_at ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -160,6 +161,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
 
       ORDER BY 
           Answers.answer_created_at ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -207,6 +209,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
 
       ORDER BY 
           Questions.question_name ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -254,6 +257,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
 
       ORDER BY 
           Questions.question_name ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -415,6 +419,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
       ORDER BY 
           UserQuestions.userquestion_pinned_at DESC, 
           Answers.answer_updated_at DESC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -462,6 +467,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
 
       ORDER BY 
           Answers.answer_created_at ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -512,6 +518,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
 
       ORDER BY 
           Questions.question_name ASC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -577,6 +584,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
       ORDER BY 
           UserQuestions.userquestion_pinned_at DESC, 
           Answers.answer_updated_at DESC
+
       LIMIT 10;
     `;
       // console.log(data);
@@ -624,6 +632,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
 
       ORDER BY 
           Answers.answer_created_at ASC
+          
       LIMIT 10;
     `;
       // console.log(data);

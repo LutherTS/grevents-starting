@@ -6,6 +6,7 @@ import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";
+import { RevalidateButton } from "@/app/components/client/buttons";
 
 export async function generateMetadata({
   params,
@@ -60,6 +61,7 @@ export default async function PersonalInfoPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
+        <RevalidateButton />
       </div>
     </main>
   );
