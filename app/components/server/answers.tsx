@@ -28,7 +28,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="mt-2">
-        {answer.question_name}
+        {/* {answer.question_name}
         {(answer.question_kind === "NATIVE" ||
           answer.question_kind === "NATIVEIRL") && <> / native</>}
         {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
@@ -42,7 +42,45 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
           answer.userquestionfriends_count &&
           answer.userquestionfriends_count >= 1 && (
             <> / shared ({answer.userquestionfriends_count})</>
+          )} */}
+        {answer.question_kind === "NATIVE" && (
+          <span className="text-violet-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            native
+          </span>
+        )}
+        {answer.question_kind === "NATIVEIRL" && (
+          <span className="text-purple-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            native / irl
+          </span>
+        )}
+        {answer.question_kind === "PSEUDO" &&
+          answer.userquestion_kind === "PSEUDONATIVE" && (
+            <span className="text-green-500">
+              <span className="font-semibold">{answer.question_name}</span> /
+              pseudonative
+            </span>
           )}
+        {answer.question_kind === "PSEUDO" &&
+          answer.userquestion_kind === "PSEUDONATIVEIRL" && (
+            <span className="text-emerald-500">
+              <span className="font-semibold">{answer.question_name}</span> /
+              pseudonative / irl
+            </span>
+          )}
+        {answer.question_kind === "CUSTOM" && (
+          <span className="text-lime-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            custom{" "}
+            {answer.userquestionfriends_count &&
+            answer.userquestionfriends_count >= 1 ? (
+              <>/ shared ({answer.userquestionfriends_count})</>
+            ) : (
+              <>/ not shared</>
+            )}
+          </span>
+        )}
       </p>
     </>
   );

@@ -1,6 +1,7 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { RelationCombinationHasMeBlocked } from "@/app/components/agnostic/relcombos";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";

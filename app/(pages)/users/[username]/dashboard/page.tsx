@@ -1,5 +1,6 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
+import { H1 } from "@/app/components/agnostic/tags";
 import {
   PageLink,
   PageLinkWithChildren,
@@ -38,9 +39,7 @@ export default async function DashboardPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Dashboard.
-        </h1>
+        <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
         <PageLinkWithChildren
           href={`/users/${username}/dashboard/modify-app-wide-name`}
         >

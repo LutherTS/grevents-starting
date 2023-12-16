@@ -6,6 +6,7 @@ import { ManyFriends } from "@/app/components/server/contacts";
 import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";

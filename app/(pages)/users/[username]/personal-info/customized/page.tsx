@@ -6,6 +6,7 @@ import {
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";

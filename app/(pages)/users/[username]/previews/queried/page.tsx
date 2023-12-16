@@ -8,7 +8,6 @@ import {
   defineGatheredRelCombo,
   relationCombinations,
 } from "@/app/lib/utils/relcombos";
-import { PageLink } from "@/app/components/agnostic/links";
 import {
   RelationCombinationNone,
   RelationCombinationFriendCustom,
@@ -17,6 +16,8 @@ import {
   RelationCombinationHasMeBlocked,
   RelationCombinationBlockingBlocked,
 } from "@/app/components/agnostic/relcombos";
+import { H1 } from "@/app/components/agnostic/tags";
+import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";
 

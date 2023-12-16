@@ -2,6 +2,7 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import { findContactByUserAndSession } from "@/app/lib/data/contacts";
 import { notFound } from "next/navigation";
 import { User } from "@/app/lib/definitions/users";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 import {
   RelationCombinationNone,
@@ -102,9 +103,7 @@ export default async function UserPage({
       <div className="max-w-prose text-center">
         {session ? (
           <>
-            <h1 className="font-semibold">
-              Welcome to {user.user_app_wide_name}&apos;s Page.
-            </h1>
+            <H1>Welcome to {user.user_app_wide_name}&apos;s Page.</H1>
             <PageLink
               // @ts-ignore // for type never during session object testing
               href={`/users/${session.user.user_username}/dashboard`}
