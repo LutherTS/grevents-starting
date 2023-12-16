@@ -64,7 +64,10 @@ export default async function AddCriteriaStandardizedPage({
                   return (
                     <li key={nativeNotIrlQuestion.question_id}>
                       <p className="mt-2">
-                        {nativeNotIrlQuestion.question_name} / native
+                        <span className="font-semibold">
+                          {nativeNotIrlQuestion.question_name}
+                        </span>{" "}
+                        / native
                       </p>
                     </li>
                   );
@@ -82,7 +85,10 @@ export default async function AddCriteriaStandardizedPage({
                   return (
                     <li key={nativeIrlQuestion.question_id}>
                       <p className="mt-2">
-                        {nativeIrlQuestion.question_name} / native / irl
+                        <span className="font-semibold">
+                          {nativeIrlQuestion.question_name}
+                        </span>{" "}
+                        / native / irl
                       </p>
                     </li>
                   );

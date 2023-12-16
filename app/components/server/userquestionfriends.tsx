@@ -35,8 +35,10 @@ export function OneUserQuestionFriend({
   return (
     <>
       <p className="mt-2">
-        {userQuestionFriend.user_app_wide_name} /{" "}
-        {userQuestionFriend.user_username}
+        <span className="font-semibold">
+          {userQuestionFriend.user_app_wide_name}
+        </span>{" "}
+        / {userQuestionFriend.user_username}
       </p>
     </>
   );

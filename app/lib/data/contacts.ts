@@ -15,37 +15,40 @@ export async function fetchAllUserFriends(user: User) {
   try {
     const run = async () => {
       const data = await sql<Friend>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
-      
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND (
-          (
-              c1.contact_kind = 'FRIEND' AND 
-              c2.contact_kind = 'FRIEND' AND
-              c1.contact_blocking = FALSE AND
-              c2.contact_blocking = FALSE
-          )
-          OR (
-              c1.contact_kind = 'IRL' AND 
-              c2.contact_kind = 'IRL' AND
-              c1.contact_blocking = FALSE AND
-              c2.contact_blocking = FALSE
-          )
-      )
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
+        
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        AND (
+            (
+                c1.contact_kind = 'FRIEND' AND 
+                c2.contact_kind = 'FRIEND' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+            OR (
+                c1.contact_kind = 'IRL' AND 
+                c2.contact_kind = 'IRL' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+        )
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            c1.contact_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -80,6 +83,9 @@ export async function fetchAllUserContacts(user: User) {
         AND u.user_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
 
+        ORDER BY 
+            c1.contact_updated_at DESC
+
         LIMIT 10;
       `;
       // console.log(data);
@@ -106,29 +112,29 @@ export async function gatherContactByUserAndUsername(
     try {
       const run = async () => {
         const data = await sql<GatheredContact>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_kind c1_contact_kind, 
-          c1.contact_blocking c1_contact_blocking, 
-          c2.contact_kind c2_contact_kind, 
-          c2.contact_blocking c2_contact_blocking, 
-          c1.contact_id c1_contact_id, 
-          c1.contact_mirror_id c1_contact_mirror_id 
-      FROM Contacts c1
+          SELECT 
+              u.user_app_wide_name, 
+              u.user_username, 
+              c1.contact_kind c1_contact_kind, 
+              c1.contact_blocking c1_contact_blocking, 
+              c2.contact_kind c2_contact_kind, 
+              c2.contact_blocking c2_contact_blocking, 
+              c1.contact_id c1_contact_id, 
+              c1.contact_mirror_id c1_contact_mirror_id 
+          FROM Contacts c1
 
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND u.user_username = ${username}
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+          JOIN Users u ON c1.user_last_id = u.user_id
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          
+          WHERE c1.user_first_id = ${user.user_id}
+          AND u.user_username = ${username}
+          
+          AND c1.contact_state = 'LIVE'
+          AND u.user_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
 
-      LIMIT 1;
-    `;
+          LIMIT 1;
+        `;
         // console.log(data);
         return data.rows[0];
       };
@@ -148,29 +154,32 @@ export async function fetchAllUserNotIrlFriends(user: User) {
   try {
     const run = async () => {
       const data = await sql<Friend>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
-      
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND (
-          c1.contact_kind = 'FRIEND' AND 
-          c2.contact_kind = 'FRIEND' AND
-          c1.contact_blocking = FALSE AND
-          c2.contact_blocking = FALSE
-      )
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
+        
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        AND (
+            c1.contact_kind = 'FRIEND' AND 
+            c2.contact_kind = 'FRIEND' AND
+            c1.contact_blocking = FALSE AND
+            c2.contact_blocking = FALSE
+        )
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            c1.contact_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -189,29 +198,32 @@ export async function fetchAllUserIrlFriends(user: User) {
   try {
     const run = async () => {
       const data = await sql<Friend>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
-      
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND (
-          c1.contact_kind = 'IRL' AND 
-          c2.contact_kind = 'IRL' AND
-          c1.contact_blocking = FALSE AND
-          c2.contact_blocking = FALSE
-      )
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
+        
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        AND (
+            c1.contact_kind = 'IRL' AND 
+            c2.contact_kind = 'IRL' AND
+            c1.contact_blocking = FALSE AND
+            c2.contact_blocking = FALSE
+        )
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            c1.contact_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -230,28 +242,32 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
   try {
     const run = async () => {
       const data = await sql<Block>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
-      
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND (
-          c1.contact_kind = 'NONE' AND 
-          c2.contact_kind = 'NONE' AND
-          c1.contact_blocking = TRUE
-      )
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
+        
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        AND (
+            c1.contact_kind = 'NONE' AND 
+            c2.contact_kind = 'NONE' AND
+            c1.contact_blocking = TRUE
+        )
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            c1.contact_blocked_at DESC,
+            c1.contact_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -270,28 +286,32 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   try {
     const run = async () => {
       const data = await sql<Block>`
-      SELECT 
-          u.user_app_wide_name, 
-          u.user_username, 
-          c1.contact_id 
-      FROM Contacts c1
-      
-      JOIN Users u ON c1.user_last_id = u.user_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND (
-          c1.contact_kind = 'NONE' AND 
-          c2.contact_kind = 'NONE' AND
-          c2.contact_blocking = TRUE
-      )
-      
-      AND c1.contact_state = 'LIVE'
-      AND u.user_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            c1.contact_id 
+        FROM Contacts c1
+        
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE c1.user_first_id = ${user.user_id}
+        AND (
+            c1.contact_kind = 'NONE' AND 
+            c2.contact_kind = 'NONE' AND
+            c2.contact_blocking = TRUE
+        )
+        
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            c2.contact_blocked_at DESC,
+            c1.contact_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -315,27 +335,27 @@ export async function findContactByUserAndSession(
     try {
       const run = async () => {
         const data = await sql<FoundContact>`
-      SELECT 
-          c1.contact_kind c1_contact_kind, 
-          c1.contact_blocking c1_contact_blocking, 
-          c2.contact_kind c2_contact_kind, 
-          c2.contact_blocking c2_contact_blocking, 
-          c1.contact_id c1_contact_id, 
-          c1.contact_mirror_id c1_contact_mirror_id,
-          c1.user_first_id c1_user_first_id,
-          c1.user_last_id c1_user_last_id 
-      FROM Contacts c1
+          SELECT 
+              c1.contact_kind c1_contact_kind, 
+              c1.contact_blocking c1_contact_blocking, 
+              c2.contact_kind c2_contact_kind, 
+              c2.contact_blocking c2_contact_blocking, 
+              c1.contact_id c1_contact_id, 
+              c1.contact_mirror_id c1_contact_mirror_id,
+              c1.user_first_id c1_user_first_id,
+              c1.user_last_id c1_user_last_id 
+          FROM Contacts c1
 
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      
-      WHERE c1.user_first_id = ${user.user_id}
-      AND c1.user_last_id = ${session.user.user_id}
-      
-      AND c1.contact_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          
+          WHERE c1.user_first_id = ${user.user_id}
+          AND c1.user_last_id = ${session.user.user_id}
+          
+          AND c1.contact_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
 
-      LIMIT 1;
-    `;
+          LIMIT 1;
+        `;
         // console.log(data);
         return data.rows[0];
       };
