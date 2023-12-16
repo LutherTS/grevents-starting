@@ -116,13 +116,13 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for type never during session object testing */}
             {relCombo === "" && username !== session.user.user_username && (
-              <p className="mt-2">
-                You have no contact with {user.user_app_wide_name}. In the full
-                application, new contacts between you and{" "}
-                {user.user_app_wide_name} will be made upon this first visit,
-                corresponding to the starting relation combinaison of
-                &quot;none.&quot;
-              </p>
+              <>
+                <p className="mt-2">
+                  You have no contact with {user.user_app_wide_name}. In the
+                  full application, you&apos;ll be required to enter their
+                  friend code to start connecting.
+                </p>
+              </>
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "none" && <RelationCombinationNone />}
