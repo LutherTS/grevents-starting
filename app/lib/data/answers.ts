@@ -28,48 +28,48 @@ export async function fetchUserPinnedAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username,
-          COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
-      FROM Answers 
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers 
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
 
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND UserQuestions.userquestion_is_pinned = TRUE
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND UserQuestions.userquestion_is_pinned = TRUE
 
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      GROUP BY -- NEW
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
+        GROUP BY -- NEW
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
 
-      ORDER BY 
-          UserQuestions.userquestion_pinned_at DESC, 
-          Answers.answer_updated_at DESC
+        ORDER BY 
+            UserQuestions.userquestion_pinned_at DESC, 
+            Answers.answer_updated_at DESC
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -88,34 +88,35 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'NATIVE'
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVE'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Answers.answer_created_at ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Answers.answer_created_at ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -134,34 +135,35 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'NATIVEIRL'
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVEIRL'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Answers.answer_created_at ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Answers.answer_created_at ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -180,35 +182,36 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'PSEUDO'
-      AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Questions.question_name ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Questions.question_name ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -227,35 +230,36 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'PSEUDO'
-      AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Questions.question_name ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Questions.question_name ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -274,46 +278,46 @@ export async function fetchUserCustomAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username,
-          COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'CUSTOM'
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'CUSTOM'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      GROUP BY -- NEW
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
+        GROUP BY -- NEW
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
 
-      ORDER BY userquestionfriends_count ASC -- NEW
+        ORDER BY userquestionfriends_count ASC -- NEW
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -336,31 +340,31 @@ export async function findAnswerByUserQuestionAndUser(
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-        Questions.question_name, 
-        Answers.answer_value, 
-        Answers.answer_id,
-        UserQuestions.userquestion_is_pinned,
-        Questions.question_kind,
-        UserQuestions.userquestion_kind,
-        UserQuestions.userquestion_id,
-        Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      
-      WHERE Answers.userquestion_id = ${userQuestion.userquestion_id}
-      AND Answers.user_id = ${user.user_id}
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        
+        WHERE Answers.userquestion_id = ${userQuestion.userquestion_id}
+        AND Answers.user_id = ${user.user_id}
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
 
-      LIMIT 1;
-    `;
+        LIMIT 1;
+      `;
       // console.log(data);
       return data.rows[0];
     };
@@ -379,44 +383,45 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers 
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers 
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
 
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND UserQuestions.userquestion_is_pinned = TRUE
-      AND (
-          (
-              Questions.question_kind = 'NATIVE'
-          )
-          OR (
-              Questions.question_kind = 'PSEUDO' AND
-              UserQuestions.userquestion_kind = 'PSEUDONATIVE'
-          )
-      )
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND UserQuestions.userquestion_is_pinned = TRUE
+        AND (
+            (
+                Questions.question_kind = 'NATIVE'
+            )
+            OR (
+                Questions.question_kind = 'PSEUDO' AND
+                UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+            )
+        )
 
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          UserQuestions.userquestion_pinned_at DESC, 
-          Answers.answer_updated_at DESC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            UserQuestions.userquestion_pinned_at DESC, 
+            Answers.answer_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -435,35 +440,36 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'NATIVE'
-      AND UserQuestions.userquestion_is_pinned = FALSE
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Answers.answer_created_at ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Answers.answer_created_at ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -484,36 +490,37 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'PSEUDO'
-      AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
-      AND UserQuestions.userquestion_is_pinned = FALSE
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Questions.question_name ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Questions.question_name ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -534,51 +541,52 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers 
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers 
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
 
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND UserQuestions.userquestion_is_pinned = TRUE
-      AND (
-          (
-              Questions.question_kind = 'NATIVE'
-          )
-          OR (
-              Questions.question_kind = 'NATIVEIRL'
-          )
-          OR (
-              Questions.question_kind = 'PSEUDO' AND
-              UserQuestions.userquestion_kind = 'PSEUDONATIVE'
-          )
-          OR (
-              Questions.question_kind = 'PSEUDO' AND
-              UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
-          )
-      )
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND UserQuestions.userquestion_is_pinned = TRUE
+        AND (
+            (
+                Questions.question_kind = 'NATIVE'
+            )
+            OR (
+                Questions.question_kind = 'NATIVEIRL'
+            )
+            OR (
+                Questions.question_kind = 'PSEUDO' AND
+                UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+                Questions.question_kind = 'PSEUDO' AND
+                UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+            )
+        )
 
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          UserQuestions.userquestion_pinned_at DESC, 
-          Answers.answer_updated_at DESC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            UserQuestions.userquestion_pinned_at DESC, 
+            Answers.answer_updated_at DESC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -597,35 +605,36 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'NATIVEIRL'
-      AND UserQuestions.userquestion_is_pinned = FALSE
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Answers.answer_created_at ASC
-      LIMIT 10;
-    `;
+        ORDER BY 
+            Answers.answer_created_at ASC
+            
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -644,37 +653,37 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          Questions.question_name, 
-          Answers.answer_value, 
-          Answers.answer_id,
-          UserQuestions.userquestion_is_pinned,
-          Questions.question_kind,
-          UserQuestions.userquestion_kind,
-          UserQuestions.userquestion_id,
-          Users.user_username
-      FROM Answers
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
+        FROM Answers
 
-      JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
-      JOIN Questions ON UserQuestions.question_id = Questions.question_id
-      JOIN Users ON Answers.user_id = Users.user_id
-      
-      WHERE UserQuestions.user_id = ${userId}
-      AND Answers.user_id = ${userId}
-      AND Questions.question_kind = 'PSEUDO'
-      AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
-      AND UserQuestions.userquestion_is_pinned = FALSE
-      
-      AND Answers.answer_state = 'LIVE'
-      AND UserQuestions.userquestion_state = 'LIVE'
-      AND Questions.question_state = 'LIVE'
-      AND Users.user_state = 'LIVE'
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
 
-      ORDER BY 
-          Questions.question_name ASC
+        ORDER BY 
+            Questions.question_name ASC
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -698,67 +707,67 @@ export async function fetchUserSharedToContactCustomAnswers(
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username,
-          COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
-      FROM Answers a
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers a
 
-      JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
-      JOIN Questions q ON uq.question_id = q.question_id
-      JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
-      JOIN Users u ON a.user_id = u.user_id
-      JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
-      JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        JOIN Users u ON a.user_id = u.user_id
+        JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
-      WHERE uq.user_id = ${userId}
-      AND a.user_id = ${userId}
-      AND q.question_kind = 'CUSTOM'
-      AND c1.contact_id = ${contactId}
-      AND (
-              (
-                  c1.contact_kind = 'FRIEND' AND 
-                  c2.contact_kind = 'FRIEND' AND
-                  c1.contact_blocking = FALSE AND
-                  c2.contact_blocking = FALSE
-              )
-              OR (
-                  c1.contact_kind = 'IRL' AND 
-                  c2.contact_kind = 'IRL' AND
-                  c1.contact_blocking = FALSE AND
-                  c2.contact_blocking = FALSE
-              )
-          )
-      AND uq.userquestion_is_pinned = FALSE
-        
-      AND a.answer_state = 'LIVE'
-      AND uq.userquestion_state = 'LIVE'
-      AND uqf1.userquestionfriend_state = 'LIVE'
-      AND c1.contact_state = 'LIVE'
-      AND c2.contact_state = 'LIVE'
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND q.question_kind = 'CUSTOM'
+        AND c1.contact_id = ${contactId}
+        AND (
+                (
+                    c1.contact_kind = 'FRIEND' AND 
+                    c2.contact_kind = 'FRIEND' AND
+                    c1.contact_blocking = FALSE AND
+                    c2.contact_blocking = FALSE
+                )
+                OR (
+                    c1.contact_kind = 'IRL' AND 
+                    c2.contact_kind = 'IRL' AND
+                    c1.contact_blocking = FALSE AND
+                    c2.contact_blocking = FALSE
+                )
+            )
+        AND uq.userquestion_is_pinned = FALSE
+          
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND uqf1.userquestionfriend_state = 'LIVE'
+        AND c1.contact_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
 
-      GROUP BY -- NEW
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username
+        GROUP BY -- NEW
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username
 
-      ORDER BY 
-      userquestionfriends_count ASC -- NEW
+        ORDER BY 
+        userquestionfriends_count ASC -- NEW
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -780,64 +789,64 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username,
-          COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
-      FROM Answers a
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers a
 
-      JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
-      JOIN Questions q ON uq.question_id = q.question_id
-      JOIN Users u ON a.user_id = u.user_id
-      LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
-      LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
-      LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
-      WHERE uq.user_id = ${userId}
-      AND a.user_id = ${userId}
-      AND uq.userquestion_is_pinned = TRUE
-      AND (
-          (
-              q.question_kind = 'NATIVE'
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uq.userquestion_is_pinned = TRUE
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR ( -- NEW
+              q.question_kind = 'CUSTOM' AND
+              c1.contact_id = ${contactId}
           )
-          OR (
-              q.question_kind = 'PSEUDO' AND
-              uq.userquestion_kind = 'PSEUDONATIVE'
-          )
-          OR ( -- NEW
-            q.question_kind = 'CUSTOM' AND
-            c1.contact_id = ${contactId}
-        )
-    )
+      )
 
-      AND a.answer_state = 'LIVE'
-      AND uq.userquestion_state = 'LIVE'
-      AND q.question_state = 'LIVE'
-      AND u.user_state = 'LIVE'
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
 
-      GROUP BY -- NEW
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username
+        GROUP BY -- NEW
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username
 
-      ORDER BY 
-          uq.userquestion_pinned_at DESC, 
-          a.answer_updated_at DESC
+        ORDER BY 
+            uq.userquestion_pinned_at DESC, 
+            a.answer_updated_at DESC
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -859,71 +868,71 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
   try {
     const run = async () => {
       const data = await sql<Answer>`
-      SELECT 
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username,
-          COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
-      FROM Answers a
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers a
 
-      JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
-      JOIN Questions q ON uq.question_id = q.question_id
-      JOIN Users u ON a.user_id = u.user_id
-      LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
-      LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
-      LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-      LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
-      WHERE uq.user_id = ${userId}
-      AND a.user_id = ${userId}
-      AND uq.userquestion_is_pinned = TRUE
-      AND (
-          (
-              q.question_kind = 'NATIVE'
-          )
-          OR (
-              q.question_kind = 'NATIVEIRL'
-          )
-          OR (
-              q.question_kind = 'PSEUDO' AND
-              uq.userquestion_kind = 'PSEUDONATIVE'
-          )
-          OR (
-              q.question_kind = 'PSEUDO' AND
-              uq.userquestion_kind = 'PSEUDONATIVEIRL'
-          )
-          OR ( -- NEW
-              q.question_kind = 'CUSTOM' AND
-              c1.contact_id = ${contactId}
-          )
-      )
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uq.userquestion_is_pinned = TRUE
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'NATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVEIRL'
+            )
+            OR ( -- NEW
+                q.question_kind = 'CUSTOM' AND
+                c1.contact_id = ${contactId}
+            )
+        )
 
-      AND a.answer_state = 'LIVE'
-      AND uq.userquestion_state = 'LIVE'
-      AND q.question_state = 'LIVE'
-      AND u.user_state = 'LIVE'
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
 
-      GROUP BY -- NEW
-          q.question_name, 
-          a.answer_value, 
-          a.answer_id,
-          uq.userquestion_is_pinned,
-          q.question_kind,
-          uq.userquestion_kind,
-          uq.userquestion_id,
-          u.user_username
+        GROUP BY -- NEW
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username
 
-      ORDER BY 
-          uq.userquestion_pinned_at DESC, 
-          a.answer_updated_at DESC
+        ORDER BY 
+            uq.userquestion_pinned_at DESC, 
+            a.answer_updated_at DESC
 
-      LIMIT 10;
-    `;
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };

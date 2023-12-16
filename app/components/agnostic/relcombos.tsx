@@ -92,7 +92,7 @@ export function RelationCombinationBlockingBlocked({ user }: { user: User }) {
         CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
         APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <ActionLink>Unblock if that&apos;s OK with you</ActionLink>
+      <ActionLink>Unblock if it&apos;s OK with you</ActionLink>
     </>
   );
 }

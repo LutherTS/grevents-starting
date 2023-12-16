@@ -11,18 +11,21 @@ export async function fetchAllNativeNotIrlQuestions() {
   try {
     const run = async () => {
       const data = await sql<NativeNotIrlQuestion>`
-      SELECT 
-          question_name,
-          question_kind,
-          question_id
-      FROM Questions
+        SELECT 
+            question_name,
+            question_kind,
+            question_id
+        FROM Questions
 
-      WHERE question_kind = 'NATIVE'
-      
-      AND question_state = 'LIVE'
+        WHERE question_kind = 'NATIVE'
+        
+        AND question_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            question_name ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };
@@ -40,18 +43,21 @@ export async function fetchAllNativeIrlQuestions() {
   try {
     const run = async () => {
       const data = await sql<NativeIrlQuestion>`
-      SELECT 
-          question_name,
-          question_kind,
-          question_id
-      FROM Questions
+        SELECT 
+            question_name,
+            question_kind,
+            question_id
+        FROM Questions
 
-      WHERE question_kind = 'NATIVEIRL'
-      
-      AND question_state = 'LIVE'
+        WHERE question_kind = 'NATIVEIRL'
+        
+        AND question_state = 'LIVE'
 
-      LIMIT 10;
-    `;
+        ORDER BY 
+            question_name ASC
+
+        LIMIT 10;
+      `;
       // console.log(data);
       return data.rows;
     };

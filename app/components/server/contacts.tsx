@@ -17,7 +17,8 @@ export function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
       <p className="mt-2">
-        {friend.user_app_wide_name} / {friend.user_username}
+        <span className="font-semibold">{friend.user_app_wide_name}</span> /{" "}
+        {friend.user_username}
       </p>
     </>
   );
@@ -140,7 +141,8 @@ export function OneBlock({ block }: { block: Block }) {
   return (
     <>
       <p className="mt-2">
-        {block.user_app_wide_name} / {block.user_username}
+        <span className="font-semibold">{block.user_app_wide_name}</span> /{" "}
+        {block.user_username}
       </p>
     </>
   );

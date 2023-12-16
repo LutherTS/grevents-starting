@@ -37,7 +37,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
         {answer.question_kind === "NATIVEIRL" && (
           <span className="text-purple-500">
             <span className="font-semibold">{answer.question_name}</span> /
-            native / irl
+            native irl
           </span>
         )}
         {answer.question_kind === "PSEUDO" &&
@@ -51,7 +51,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
           answer.userquestion_kind === "PSEUDONATIVEIRL" && (
             <span className="text-emerald-500">
               <span className="font-semibold">{answer.question_name}</span> /
-              pseudonative / irl
+              pseudonative irl
             </span>
           )}
         {answer.question_kind === "CUSTOM" && (
