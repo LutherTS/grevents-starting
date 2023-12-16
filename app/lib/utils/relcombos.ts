@@ -108,8 +108,8 @@ export function defineGatheredRelCombo(
     contact &&
     contact.c1_contact_kind === "NONE" &&
     contact.c2_contact_kind === "NONE" &&
-    contact.c1_contact_blocking === false &&
-    contact.c2_contact_blocking === false
+    contact.c1_contact_blocking === true &&
+    contact.c2_contact_blocking === true
   ) {
     return "blocking-blocked";
   } else {

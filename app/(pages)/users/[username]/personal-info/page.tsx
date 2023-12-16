@@ -44,6 +44,8 @@ export default async function PersonalInfoPage({
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
         />
+        <p className="mt-2">{user.user_username}</p>
+        <p className="mt-2">{user.user_friend_code}</p>
         <Suspense
           fallback={
             <>
