@@ -3,7 +3,7 @@ import { findContactByUserAndSession } from "@/app/lib/data/contacts";
 import { notFound } from "next/navigation";
 import { User } from "@/app/lib/definitions/users";
 import { H1 } from "@/app/components/agnostic/tags";
-import { PageLink } from "@/app/components/agnostic/links";
+import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import {
   RelationCombinationNone,
   RelationCombinationFriendCustom,
@@ -104,11 +104,8 @@ export default async function UserPage({
         {session ? (
           <>
             <H1>Welcome to {user.user_app_wide_name}&apos;s Page.</H1>
-            <PageLink
-              // @ts-ignore // for type never during session object testing
-              href={`/users/${session.user.user_username}/dashboard`}
-              name={`back to dashboard`}
-            />
+            {/* @ts-ignore // for type never during session object testing */}
+            <BackToDashboardLink session={session} />
             {/* @ts-ignore // for type never during session object testing */}
             {username === session.user.user_username && (
               <p className="mt-2">

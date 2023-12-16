@@ -2,7 +2,8 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { RelationCombinationBlockingBlocked } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
-import { PageLink } from "@/app/components/agnostic/links";
+import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
+import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
 
@@ -27,6 +28,23 @@ export default async function BlockingBlockedPreviewPage({
     username: string;
   };
 }) {
+  const session: { [K in "user"]: User } = {
+    // “me”
+    user: {
+      user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
+      user_state: "LIVE",
+      user_status_title: "NONE",
+      user_status_dashboard: "NONE",
+      user_status_personal_info: "NONE",
+      user_username: "LePapier",
+      user_app_wide_name: "“me”",
+      user_friend_code: "fsa7hyt3g58x",
+      user_has_temporary_password: false,
+      user_created_at: "2023-12-09T05:59:58.074Z",
+      user_updated_at: "2023-12-09T05:59:58.074Z",
+    },
+  };
+
   const username = params.username;
   const user = await fetchUserByUsername(username);
 
@@ -40,10 +58,7 @@ export default async function BlockingBlockedPreviewPage({
         <H1>
           Welcome to {user.user_app_wide_name}&apos;s Blocking-Blocked Preview.
         </H1>
-        <PageLink
-          href={`/users/${username}/dashboard`}
-          name={`back to dashboard`}
-        />
+        <BackToDashboardLink session={session} />
         <RelationCombinationBlockingBlocked user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
