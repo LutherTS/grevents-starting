@@ -4,6 +4,7 @@ import {
   fetchAllNativeIrlQuestions,
 } from "@/app/lib/data/questions";
 import { notFound } from "next/navigation";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";
@@ -45,17 +46,19 @@ export default async function AddCriteriaStandardizedPage({
     <>
       <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
         <div className="max-w-prose text-center">
-          <h1 className="font-semibold">
+          <H1>
             Welcome to {user.user_app_wide_name}&apos;s Add Criteria
             Standardized.
-          </h1>
+          </H1>
           <PageLink
             href={`/users/${username}/dashboard`}
             name={`back to dashboard`}
           />
           {allNativeNotIrlQuestions.length > 0 && (
             <>
-              <p className="mt-2">Select a native question below</p>
+              <p className="mt-2 font-semibold text-zinc-500">
+                Select a native question below
+              </p>
               <ol>
                 {allNativeNotIrlQuestions.map((nativeNotIrlQuestion) => {
                   return (
@@ -71,7 +74,9 @@ export default async function AddCriteriaStandardizedPage({
           )}
           {allNativeIrlQuestions.length > 0 && (
             <>
-              <p className="mt-2">Select a native irl question below</p>
+              <p className="mt-2 font-semibold text-zinc-500">
+                Select a native irl question below
+              </p>
               <ol>
                 {allNativeIrlQuestions.map((nativeIrlQuestion) => {
                   return (

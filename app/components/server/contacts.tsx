@@ -30,7 +30,9 @@ export async function ManyFriends({ user }: { user: User }) {
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="mt-2">Find your list of friend(s) below</p>
+          <p className="mt-2 font-semibold text-zinc-500">
+            Find your list of friend(s) below
+          </p>
           <ol>
             {allUserFriends.map((userFriend) => {
               return (
@@ -89,7 +91,9 @@ export async function ManyNotIrlFriends({ user }: { user: User }) {
     <>
       {allUserNotIrlFriends.length > 0 ? (
         <>
-          <p className="mt-2">Friends (not upgraded to irl)</p>
+          <p className="mt-2 font-semibold text-zinc-500">
+            Friends (not upgraded to irl)
+          </p>
           <ol>
             {allUserNotIrlFriends.map((notIrlFriend) => {
               return (
@@ -114,7 +118,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
     <>
       {allUserIrlFriends.length > 0 ? (
         <>
-          <p className="mt-2">Upgraded to irl</p>
+          <p className="mt-2 font-semibold text-zinc-500">Upgraded to irl</p>
           <ol>
             {allUserIrlFriends.map((irlFriend) => {
               return (
@@ -149,7 +153,7 @@ export async function ManyWhoIAmBlocking({ user }: { user: User }) {
     <>
       {allUserWhoIAmBlocking.length > 0 ? (
         <>
-          <p className="mt-2">Blocked users</p>
+          <p className="mt-2 font-semibold text-zinc-500">Blocked users</p>
           <ol>
             {allUserWhoIAmBlocking.map((whoIAmBlocking) => {
               return (
@@ -174,7 +178,9 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
     <>
       {allUserWhoHaveMeBlocked.length > 0 ? (
         <>
-          <p className="mt-2">Users that have me blocked</p>
+          <p className="mt-2 font-semibold text-zinc-500">
+            Users that have me blocked
+          </p>
           <ol>
             {allUserWhoHaveMeBlocked.map((whoHaveMeBlocked) => {
               return (

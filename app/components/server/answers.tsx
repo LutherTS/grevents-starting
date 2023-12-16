@@ -23,26 +23,70 @@ import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
-  // const userQuestionFriendsCount = await countUserQuestionFriends(answer);
+  // const userQuestionFriendsCount = await countUserQuestionFriends(answer); // no longer in use
 
   return (
     <>
       <p className="mt-2">
-        {answer.question_name}
-        {(answer.question_kind === "NATIVE" ||
-          answer.question_kind === "NATIVEIRL") && <> / native</>}
-        {answer.question_kind === "PSEUDO" && <> / pseudonative</>}
-        {answer.question_kind === "CUSTOM" && <> / custom</>}
-        {(answer.question_kind === "NATIVEIRL" ||
-          answer.userquestion_kind === "PSEUDONATIVEIRL") && <> / irl</>}
-        {answer.question_kind === "CUSTOM" &&
-          answer.userquestionfriends_count &&
-          answer.userquestionfriends_count < 1 && <> / not shared</>}
-        {answer.question_kind === "CUSTOM" &&
-          answer.userquestionfriends_count &&
-          answer.userquestionfriends_count >= 1 && (
-            <> / shared ({answer.userquestionfriends_count})</>
+        {answer.question_kind === "NATIVE" && (
+          <span className="text-violet-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            native
+          </span>
+        )}
+        {answer.question_kind === "NATIVEIRL" && (
+          <span className="text-purple-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            native / irl
+          </span>
+        )}
+        {answer.question_kind === "PSEUDO" &&
+          answer.userquestion_kind === "PSEUDONATIVE" && (
+            <span className="text-green-500">
+              <span className="font-semibold">{answer.question_name}</span> /
+              pseudonative
+            </span>
           )}
+        {answer.question_kind === "PSEUDO" &&
+          answer.userquestion_kind === "PSEUDONATIVEIRL" && (
+            <span className="text-emerald-500">
+              <span className="font-semibold">{answer.question_name}</span> /
+              pseudonative / irl
+            </span>
+          )}
+        {answer.question_kind === "CUSTOM" && (
+          <span className="text-lime-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            custom{" "}
+            {answer.userquestionfriends_count &&
+            answer.userquestionfriends_count >= 1 ? (
+              <>/ shared ({answer.userquestionfriends_count})</>
+            ) : (
+              <>/ not shared</>
+            )}
+          </span>
+        )}
+      </p>
+    </>
+  );
+}
+
+export async function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <p className="mt-2">
+        {answer.question_kind === "CUSTOM" && (
+          <span className="text-lime-500 underline hover:text-lime-400 dark:hover:text-lime-600">
+            <span className="font-semibold">{answer.question_name}</span> /
+            custom{" "}
+            {answer.userquestionfriends_count &&
+            answer.userquestionfriends_count >= 1 ? (
+              <>/ shared ({answer.userquestionfriends_count})</>
+            ) : (
+              <>/ not shared</>
+            )}
+          </span>
+        )}
       </p>
     </>
   );
@@ -73,7 +117,7 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
           href={`/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`}
           className="inline-block underline"
         >
-          <OneCriteriaQuestion answer={answer} />
+          <OneLinkCriteriaQuestion answer={answer} />
         </Link>
       </div>
       <OneCriteriaAnswer answer={answer} />
@@ -92,7 +136,7 @@ export async function ManyCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -119,7 +163,7 @@ export async function ManyLinkCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
           <ol>
             {answers.map((answer) => {
               return (

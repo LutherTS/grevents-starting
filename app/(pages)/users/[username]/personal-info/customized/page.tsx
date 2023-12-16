@@ -6,6 +6,7 @@ import {
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { H1 } from "@/app/components/agnostic/tags";
 import { PageLink } from "@/app/components/agnostic/links";
 
 import type { Metadata } from "next";
@@ -41,9 +42,7 @@ export default async function CustomizedPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        <h1 className="font-semibold">
-          Welcome to {user.user_app_wide_name}&apos;s Customized Info.
-        </h1>
+        <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
         <PageLink
           href={`/users/${username}/dashboard`}
           name={`back to dashboard`}
