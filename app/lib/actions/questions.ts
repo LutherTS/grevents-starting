@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-// Commencer avec le schéma zod complet de la table Answers
+// Commencer avec le schéma zod complet de la table Questions
 
 /* Pour inspiration : 
 const InvoiceSchema = z.object({
@@ -25,33 +25,42 @@ const InvoiceSchema = z.object({
 });
 */
 
-// Il sera ensuite adapté pour chaque action avec .omit(), ou plutôt .pick()
+// Il sera ensuite adapté pour chaque action avec .omit()
 /* Aussi pour inspiration :
 const CreateInvoice = InvoiceSchema.omit({ id: true, date: true });
 */
 
-const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
+const QUESTION_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
-const AnswerSchema = z.object({
-  answerId: z.string().length(36),
-  userQuestionId: z.string().length(36).nullable(),
+const QUESTION_KINDS = [
+  "NONE",
+  "NATIVE",
+  "NATIVEIRL",
+  "PSEUDO",
+  "CUSTOM",
+] as const;
+
+const QuestionSchema = z.object({
+  questionId: z.string().length(36),
   userId: z.string().length(36).nullable(),
-  answerState: z.enum(ANSWER_STATES),
-  answerValue: z.string().max(200),
-  answerCreatedAt: z.string().datetime(),
-  answerUpdatedAt: z.string().datetime(),
+  questionState: z.enum(QUESTION_STATES),
+  questionKind: z.enum(QUESTION_KINDS),
+  questionName: z.string().max(200),
+  questionIsSuggested: z.boolean(),
+  questionCreatedAt: z.string().datetime(),
+  questionUpdatedAt: z.string().datetime(),
 });
 
 /* Premières modifications : 
-// Je n'ai pas encore précisé les nullables et non nullables. Sauf qu'en fait... Non, ce n'est pas grave, je reste fidèle au schéma Postgres initial, et après je verrai en cours de développement et d'apprentissage.
-const AnswerSchema = z.object({
-  answerId: z.string().length(36),
-  userQuestionId: z.string().length(36).nullable(),
+const QuestionSchema = z.object({
+  questionId: z.string().length(36),
   userId: z.string().length(36).nullable(),
-  answerState: z.enum(ANSWER_STATES),
-  answerValue: z.string().max(200),
-  answerCreatedAt: z.string().datetime(),
-  answerUpdatedAt: z.string().datetime()
+  questionState: z.enum(QUESTION_STATES),
+  questionKind: z.enum(QUESTION_KINDS),
+  questionName: z.string().max(200),
+  questionIsSuggested: z.boolean(),
+  questionCreatedAt: z.string().datetime(),
+  questionUpdatedAt: z.string().datetime()
   //
   Du coup je préciserai les ({invalid_type_error}) ou (, {invalid_type_error}) au fur et à mesure que j'utiliserai les déclinaisons spécifiques du schéma avec .omit(). Par exemple, je sais qu'il n'y a aucun cas d'usage où je dirai au client ("Please enter a valid UUID" puisque je les créerai toujours par moi-même.)
   //
