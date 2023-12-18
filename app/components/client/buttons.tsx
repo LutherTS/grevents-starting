@@ -34,8 +34,6 @@ export function BackButton() {
   );
 }
 
-// RevalidateButton
-
 export function RevalidateButton() {
   const pathname = usePathname();
 

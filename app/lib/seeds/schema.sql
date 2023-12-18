@@ -51,7 +51,7 @@ CREATE TABLE Users (
     user_status_dashboard user_status_dashboard DEFAULT 'NONE' NOT NULL,
     user_status_personal_info user_status_personal_info DEFAULT 'NONE' NOT NULL,
     user_username varchar(50) UNIQUE NOT NULL,
-    user_email varchar(100) UNIQUE NOT NULL,
+    user_email varchar(100) UNIQUE NOT NULL, -- might have to be more characters since it's the hashed password that will be stored
     user_password varchar(50) NOT NULL,
     user_app_wide_name varchar(50) NOT NULL,
     user_friend_code char(12) UNIQUE NOT NULL,
@@ -217,8 +217,8 @@ CREATE TABLE Answers (
     answer_id char(36) NOT NULL PRIMARY KEY,
     userquestion_id char(36) UNIQUE REFERENCES UserQuestions NULL,
     user_id char(36) REFERENCES Users NULL,
-    answer_value varchar(200) NOT NULL,
-    answer_state answer_state DEFAULT 'NONE' NOT NULL,
+    answer_state answer_state DEFAULT 'NONE' NOT NULL, -- state should have been before value
+    answer_value varchar(200) NOT NULL, -- state should have been before value
     answer_created_at timestamp NOT NULL,
     answer_updated_at timestamp NOT NULL
 ); -- Done.
