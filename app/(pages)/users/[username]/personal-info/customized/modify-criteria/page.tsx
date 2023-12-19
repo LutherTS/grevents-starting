@@ -1,7 +1,7 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import {
-  ManyUserPseudonativeNotIrlCriteria,
-  ManyUserPseudonativeIrlCriteria,
+  ManyUserPseudonativeNotIrlCriteriaModify,
+  ManyUserPseudonativeIrlCriteriaModify,
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -71,8 +71,8 @@ export default async function ModifyCriteriaCustomizedPage({
             </>
           }
         >
-          <ManyUserPseudonativeNotIrlCriteria user={user} />
-          <ManyUserPseudonativeIrlCriteria user={user} />
+          <ManyUserPseudonativeNotIrlCriteriaModify user={user} />
+          <ManyUserPseudonativeIrlCriteriaModify user={user} />
         </Suspense>
         <p className="mt-2">
           (Custom criteria have their own dynamic modify page directly available

@@ -1,7 +1,7 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import {
-  ManyUserNativeNotIrlCriteria,
-  ManyUserNativeIrlCriteria,
+  ManyUserNativeNotIrlCriteriaModify,
+  ManyUserNativeIrlCriteriaModify,
 } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -71,8 +71,8 @@ export default async function ModifyCriteriaStandardizedPage({
             </>
           }
         >
-          <ManyUserNativeNotIrlCriteria user={user} />
-          <ManyUserNativeIrlCriteria user={user} />
+          <ManyUserNativeNotIrlCriteriaModify user={user} />
+          <ManyUserNativeIrlCriteriaModify user={user} />
         </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized`}

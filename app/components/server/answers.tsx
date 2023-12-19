@@ -104,10 +104,11 @@ export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="mt-2"
+        className="mt-2 overflow-x-scroll truncate px-2 text-center"
         type="text"
         id={answer.answer_id}
         name="answervalue"
+        placeholder={answer.answer_value}
       />
     </>
   );
@@ -125,10 +126,12 @@ export async function OneCriteria({ answer }: { answer: Answer }) {
 export async function OneCriteriaModify({ answer }: { answer: Answer }) {
   return (
     <>
-      <label htmlFor="{answer.answer_id}">
-        <OneCriteriaQuestion answer={answer} />
-      </label>
-      <OneCriteriaAnswerModify answer={answer} />
+      <form>
+        <label htmlFor={answer.answer_id}>
+          <OneCriteriaQuestion answer={answer} />
+        </label>
+        <OneCriteriaAnswerModify answer={answer} />
+      </form>
     </>
   );
 }
@@ -324,6 +327,24 @@ export async function ManyUserPseudonativeNotIrlCriteria({
   );
 }
 
+export async function ManyUserPseudonativeNotIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userPseudonativeNotIrlAnswers =
+    await fetchUserPseudonativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      <ManyCriteriaModify
+        answers={userPseudonativeNotIrlAnswers}
+        label={answersLabels.pseudonativeNotIrl}
+      />
+    </>
+  );
+}
+
 export async function ManyUserPseudonativeIrlCriteria({
   user,
 }: {
@@ -336,6 +357,25 @@ export async function ManyUserPseudonativeIrlCriteria({
   return (
     <>
       <ManyCriteria
+        answers={userPseudonativeIrlAnswers}
+        label={answersLabels.pseudonativeIrl}
+      />
+    </>
+  );
+}
+
+export async function ManyUserPseudonativeIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      <ManyCriteriaModify
         answers={userPseudonativeIrlAnswers}
         label={answersLabels.pseudonativeIrl}
       />
