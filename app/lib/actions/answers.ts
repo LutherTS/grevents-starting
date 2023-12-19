@@ -41,6 +41,15 @@ const AnswerSchema = z.object({
   answerCreatedAt: z.string().datetime(),
   answerUpdatedAt: z.string().datetime(),
 });
+const UpdateOrDeleteAnswerValue = AnswerSchema.pick({ answerValue: true });
+// bind user et answer on form client component
+/*
+const initialState = { message: null, errors: {} };
+const UpdateOrDeleteAnswerValueWithUser = UpdateOrDeleteAnswerValue.bind(null, user);
+const [state, dispatch] = useFormState(UpdateOrDeleteAnswerValueWithUser, initialState);
+*/
+
+// Pour les schéma partagés, je ne vais pas chercher midi à 14 heures
 
 /* Premières modifications : 
 // Je n'ai pas encore précisé les nullables et non nullables. Sauf qu'en fait... Non, ce n'est pas grave, je reste fidèle au schéma Postgres initial, et après je verrai en cours de développement et d'apprentissage.

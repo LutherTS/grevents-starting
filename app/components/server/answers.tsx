@@ -100,11 +100,35 @@ export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   );
 }
 
+export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <input
+        className="mt-2"
+        type="text"
+        id={answer.answer_id}
+        name="answervalue"
+      />
+    </>
+  );
+}
+
 export async function OneCriteria({ answer }: { answer: Answer }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} />
       <OneCriteriaAnswer answer={answer} />
+    </>
+  );
+}
+
+export async function OneCriteriaModify({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <label htmlFor="{answer.answer_id}">
+        <OneCriteriaQuestion answer={answer} />
+      </label>
+      <OneCriteriaAnswerModify answer={answer} />
     </>
   );
 }
@@ -125,6 +149,8 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   );
 }
 
+// type Criteria = typeof ManyCriteria
+
 export async function ManyCriteria({
   answers,
   label,
@@ -142,6 +168,33 @@ export async function ManyCriteria({
               return (
                 <li key={answer.answer_id}>
                   <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyCriteriaModify({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaModify answer={answer} />
                 </li>
               );
             })}
@@ -204,12 +257,48 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
   );
 }
 
+export async function ManyUserNativeNotIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      <ManyCriteriaModify
+        answers={userNativeNotIrlAnswers}
+        label={answersLabels.nativeNotIrl}
+      />
+    </>
+  );
+}
+
 export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
   const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
 
   return (
     <>
       <ManyCriteria
+        answers={userNativeIrlAnswers}
+        label={answersLabels.nativeIrl}
+      />
+    </>
+  );
+}
+
+export async function ManyUserNativeIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
+
+  return (
+    <>
+      <ManyCriteriaModify
         answers={userNativeIrlAnswers}
         label={answersLabels.nativeIrl}
       />

@@ -84,6 +84,22 @@ const UserSchema = z.object({
   userUpdatedAt: z.string().datetime(),
 });
 
+const UpdateUserAppWideName = UserSchema.pick({ userAppWideName: true });
+// bind user on form client component
+/*
+const initialState = { message: null, errors: {} };
+const UpdateUserAppWideNameWithUser = UpdateUserAppWideName.bind(null, user);
+const [state, dispatch] = useFormState(UpdateUserAppWideNameWithUser, initialState);
+*/
+
+const UpdateUserFriendCode = UserSchema.pick({});
+// bind user on form client component
+/*
+const initialState = { message: null, errors: {} };
+const UpdateUserAppWideNameWithUser = UpdateUserAppWideName.bind(null, user);
+const [state, dispatch] = useFormState(UpdateUserAppWideNameWithUser, initialState);
+*/
+
 /* Premières modifications : 
 const UserSchema = z.object({
   userId: z.string().length(36),
