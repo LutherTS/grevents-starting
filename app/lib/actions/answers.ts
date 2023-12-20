@@ -61,16 +61,16 @@ export async function updateOrDeleteAnswerValue(
   prevState: UpdateOrDeleteAnswerValueFormState | undefined,
   formData: FormData,
 ) {
-  // console.log(user);
+  console.log(answer);
   console.log(prevState);
-  // console.log(formData);
-  // console.log(formData.get("answervalue"));
+  console.log(formData);
+  console.log(formData.get("answervalue"));
 
   const validatedFields = UpdateOrDeleteAnswerValue.safeParse({
     answerValue: formData.get("userappwidename"),
   });
-  // console.log(UpdateOrDeleteAnswerValue);
-  // console.log(validatedFields);
+  console.log(UpdateOrDeleteAnswerValue);
+  console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -81,8 +81,8 @@ export async function updateOrDeleteAnswerValue(
 
   const { answerValue } = validatedFields.data;
 
-  // console.log(answerValue);
-  // console.log(answer.user_username);
+  console.log(answerValue);
+  console.log(answer.user_username);
 
   if (answerValue === "") {
     noStore();

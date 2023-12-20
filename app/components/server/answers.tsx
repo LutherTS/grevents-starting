@@ -121,12 +121,12 @@ export async function OneCriteria({ answer }: { answer: Answer }) {
 export async function OneCriteriaModify({ answer }: { answer: Answer }) {
   return (
     <>
-      <form>
-        <label htmlFor={answer.answer_id}>
-          <OneCriteriaQuestion answer={answer} />
-        </label>
-        <OneCriteriaAnswerModify answer={answer} />
-      </form>
+      {/* <form>
+        <label htmlFor={answer.answer_id}> */}
+      <OneCriteriaQuestion answer={answer} />
+      {/* </label> */}
+      <OneCriteriaAnswerModify answer={answer} />
+      {/* </form> */}
     </>
   );
 }
