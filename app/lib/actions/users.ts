@@ -2,6 +2,9 @@
 
 import { z } from "zod";
 import { User } from "../definitions/users";
+import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -66,7 +69,7 @@ const UserSchema = z.object({
 
 const UpdateUserAppWideName = UserSchema.pick({ userAppWideName: true });
 
-export type UserFormState = {
+export type UpdateUserAppWideNameFormState = {
   errors?: {
     userAppWideName?: string[] | undefined;
   };
@@ -75,7 +78,7 @@ export type UserFormState = {
 
 export async function updateUserAppWideName(
   user: User,
-  prevState: UserFormState | undefined,
+  prevState: UpdateUserAppWideNameFormState | undefined,
   formData: FormData,
 ) {
   console.log(user);
@@ -95,6 +98,29 @@ export async function updateUserAppWideName(
       message: "Missing Fields. Failed to Update User App-Wide Name.",
     };
   }
+
+  const { userAppWideName } = validatedFields.data;
+
+  console.log(userAppWideName);
+  console.log(user.user_id);
+
+  try {
+    await sql`
+      UPDATE Users
+      SET 
+          user_app_wide_name = ${userAppWideName},
+          user_status_dashboard = 'APPWIDENAMEUPDATED',
+          user_updated_at = now()
+      WHERE user_id = ${user.user_id}
+    `;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User App-Wide Name.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/dashboard`);
+  redirect(`/users/${user.user_username}/dashboard`);
 }
 
 //

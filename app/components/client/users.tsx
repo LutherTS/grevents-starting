@@ -1,11 +1,17 @@
 "use client";
 
-import { UserFormState, updateUserAppWideName } from "@/app/lib/actions/users";
+import {
+  UpdateUserAppWideNameFormState,
+  updateUserAppWideName,
+} from "@/app/lib/actions/users";
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
-  const initialState: UserFormState = { errors: {}, message: null };
+  const initialState: UpdateUserAppWideNameFormState = {
+    errors: {},
+    message: null,
+  };
   const updateUserAppWideNameWithUser = updateUserAppWideName.bind(null, user);
   const [state, formAction] = useFormState(
     updateUserAppWideNameWithUser,
