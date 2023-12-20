@@ -67,7 +67,7 @@ export async function updateOrDeleteAnswerValue(
   console.log(formData.get("answervalue"));
 
   const validatedFields = UpdateOrDeleteAnswerValue.safeParse({
-    answerValue: formData.get("userappwidename"),
+    answerValue: formData.get("answervalue"),
   });
   console.log(UpdateOrDeleteAnswerValue);
   console.log(validatedFields);
@@ -155,8 +155,13 @@ export async function updateOrDeleteAnswerValue(
     }
   }
 
+  // for "First name example first."
   revalidatePath(`/users/${answer.user_username}/personal-info`);
-  redirect(`/users/${answer.user_username}/personal-info`);
+  revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  revalidatePath(
+    `/users/${answer.user_username}/personal-info/standardized/modify`,
+  );
+  redirect(`/users/${answer.user_username}/personal-info/standardized`);
 }
 
 //
