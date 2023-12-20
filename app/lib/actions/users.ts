@@ -81,16 +81,16 @@ export async function updateUserAppWideName(
   prevState: UpdateUserAppWideNameFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
-  console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("userappwidename"));
+  // console.log(user);
+  // console.log(prevState);
+  // console.log(formData);
+  // console.log(formData.get("userappwidename"));
 
   const validatedFields = UpdateUserAppWideName.safeParse({
     userAppWideName: formData.get("userappwidename"),
   });
-  console.log(UpdateUserAppWideName);
-  console.log(validatedFields);
+  // console.log(UpdateUserAppWideName);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -101,8 +101,8 @@ export async function updateUserAppWideName(
 
   const { userAppWideName } = validatedFields.data;
 
-  console.log(userAppWideName);
-  console.log(user.user_id);
+  // console.log(userAppWideName);
+  // console.log(user.user_id);
 
   try {
     await sql`
