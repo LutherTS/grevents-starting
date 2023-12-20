@@ -66,7 +66,7 @@ export default async function ModifyAppWideNamePage({
         {/* <p className="mt-2">App-wide name *</p>
         <p className="mt-2">{user.user_app_wide_name}</p> */}
         <UserAppWideNameModify user={user} />
-        <ActionLink>Confirm</ActionLink>
+        {/* <ActionLink>Confirm</ActionLink> */}
         <ActionLink>Generate a new friend code</ActionLink>
         <p className="mt-2">
           You’ll see it changed on your Personal info page.

@@ -1,34 +1,7 @@
 "use server";
 
 import { z } from "zod";
-
-// Commencer avec le schéma zod complet de la table Users
-
-/* Pour inspiration : 
-const InvoiceSchema = z.object({
-  id: z.string(),
-  customerId: z.string({
-    invalid_type_error: "Please select a customer.",
-  }),
-  amount: z.coerce
-    .number({
-      invalid_type_error: "Please enter a number.",
-    })
-    .gt(0, { message: "Please enter an amount greater than $0." })
-    .multipleOf(0.01, {
-      message: "Please enter an amount that is currency-friendly.",
-    }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status.",
-  }),
-  date: z.string(),
-});
-*/
-
-// Il sera ensuite adapté pour chaque action avec .omit()
-/* Aussi pour inspiration :
-const CreateInvoice = InvoiceSchema.omit({ id: true, date: true });
-*/
+import { User } from "../definitions/users";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -77,7 +50,14 @@ const UserSchema = z.object({
   userUsername: z.string().max(50),
   userEmail: z.string().max(100),
   userPassword: z.string().max(50),
-  userAppWideName: z.string().max(50),
+  userAppWideName: z
+    .string()
+    .min(1, {
+      message: "Your app-wide name needs to be at least a character long.",
+    })
+    .max(50, {
+      message: "Your app-wide name cannot be more than 50 characters long.",
+    }),
   userFriendCode: z.string().length(12),
   userHasTemporaryPassword: z.boolean(),
   userCreatedAt: z.string().datetime(),
@@ -85,12 +65,39 @@ const UserSchema = z.object({
 });
 
 const UpdateUserAppWideName = UserSchema.pick({ userAppWideName: true });
-// bind user on form client component
-/*
-const initialState = { message: null, errors: {} };
-const UpdateUserAppWideNameWithUser = UpdateUserAppWideName.bind(null, user);
-const [state, dispatch] = useFormState(UpdateUserAppWideNameWithUser, initialState);
-*/
+
+export type UserFormState = {
+  errors?: {
+    userAppWideName?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function updateUserAppWideName(
+  user: User,
+  prevState: UserFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("userappwidename"));
+
+  const validatedFields = UpdateUserAppWideName.safeParse({
+    userAppWideName: formData.get("userappwidename"),
+  });
+  console.log(UpdateUserAppWideName);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update User App-Wide Name.",
+    };
+  }
+}
+
+//
 
 const UpdateUserFriendCode = UserSchema.pick({});
 // bind user on form client component
