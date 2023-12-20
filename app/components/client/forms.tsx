@@ -6,6 +6,15 @@ import {
 } from "@/app/lib/actions/users";
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
+import {
+  OneCriteriaAnswerModifyInput,
+  UserAppWideNameModifyInput,
+} from "./inputs";
+import {
+  updateOrDeleteAnswerValue,
+  UpdateOrDeleteAnswerValueFormState,
+} from "@/app/lib/actions/answers";
+import { Answer } from "@/app/lib/definitions/answers";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -24,15 +33,9 @@ export function UserAppWideNameModify({ user }: { user: User }) {
         <label htmlFor="user-app-wide-name">
           <p className="mt-2">App-wide name *</p>
         </label>
-        <input
-          className="mt-2 overflow-x-scroll truncate px-2 text-center text-black"
-          type="text"
-          id="user-app-wide-name"
-          name="userappwidename"
-          placeholder={user.user_app_wide_name}
-        />
+        <UserAppWideNameModifyInput user={user} />
         {state && state.errors?.userAppWideName ? (
-          <div id="status-error" aria-live="polite">
+          <div id="app-wide-name-error" aria-live="polite">
             {state.errors.userAppWideName.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -42,6 +45,46 @@ export function UserAppWideNameModify({ user }: { user: User }) {
         ) : null}
         {state && state.message ? (
           <div id="form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+      </form>
+    </>
+  );
+}
+
+export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
+  const initialState: UpdateOrDeleteAnswerValueFormState = {
+    errors: {},
+    message: null,
+  };
+  const updateOrDeleteAnswerValueWithAnswer = updateOrDeleteAnswerValue.bind(
+    null,
+    answer,
+  );
+  const [state, formAction] = useFormState(
+    updateOrDeleteAnswerValueWithAnswer,
+    initialState,
+  );
+
+  return (
+    <>
+      <form action={formAction}>
+        <label className="sr-only" htmlFor={answer.answer_id}>
+          Modify answer &quot;{answer.answer_value}&quot;
+        </label>
+        <OneCriteriaAnswerModifyInput answer={answer} />
+        {state && state.errors?.answerValue ? (
+          <div id={`answer-value-error-${answer.answer_id}`} aria-live="polite">
+            {state.errors.answerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id={`form-error-${answer.answer_id}`} aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}

@@ -1,3 +1,5 @@
+"use server";
+
 import {
   fetchUserPinnedAnswers,
   fetchUserNativeNotIrlAnswers,
@@ -15,16 +17,15 @@ import {
   fetchUserPinnedNotIrlAnswersCustom,
   fetchUserPinnedNotAndIrlAnswersCustom,
 } from "@/app/lib/data/answers";
-// import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends"; // optimized so no longer needed
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
 import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
+import { OneCriteriaAnswerModifyForm } from "../client/forms";
+// import { useFormStatus } from "react-dom";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
-  // const userQuestionFriendsCount = await countUserQuestionFriends(answer); // no longer in use
-
   return (
     <>
       <p className="mt-2">
@@ -92,7 +93,7 @@ export async function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
   );
 }
 
-export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
+export async function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="mt-2">{answer.answer_value}</p>
@@ -103,13 +104,7 @@ export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
 export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   return (
     <>
-      <input
-        className="mt-2 overflow-x-scroll truncate px-2 text-center"
-        type="text"
-        id={answer.answer_id}
-        name="answervalue"
-        placeholder={answer.answer_value}
-      />
+      <OneCriteriaAnswerModifyForm answer={answer} />
     </>
   );
 }

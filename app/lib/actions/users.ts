@@ -150,8 +150,6 @@ export async function resetUserStatusDashboard(user: User) {
   revalidatePath(`/users/${user.user_username}/dashboard`);
 }
 
-//
-
 export async function updateUserFriendCode(user: User) {
   noStore();
 
@@ -176,6 +174,28 @@ export async function updateUserFriendCode(user: User) {
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
   redirect(`/users/${user.user_username}/dashboard`);
+}
+
+export async function resetUserStatusPersonalInfo(user: User) {
+  noStore();
+
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'NONE',
+          user_updated_at = now()
+      WHERE user_id = ${user.user_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/personal-info`);
 }
 
 //

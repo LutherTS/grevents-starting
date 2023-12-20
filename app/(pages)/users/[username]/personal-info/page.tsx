@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
+import { RevalidateButton } from "@/app/components/client/buttons";
+import { AnswerValueUpdated } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
-import { RevalidateButton } from "@/app/components/client/buttons";
 
 export async function generateMetadata({
   params,
@@ -57,6 +58,9 @@ export default async function PersonalInfoPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
+        {user.user_status_personal_info === "ANSWERUPDATED" && (
+          <AnswerValueUpdated user={user} />
+        )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
         <BackToDashboardLink session={session} />
         <p className="mt-2">{user.user_username}</p>
