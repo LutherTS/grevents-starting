@@ -5,9 +5,14 @@ import {
   PageLink,
   PageLinkWithChildren,
 } from "@/app/components/agnostic/links";
+import { Toast } from "@/app/components/client/buttons";
 /* import { User } from "@/app/lib/definitions/users"; */
 
 import type { Metadata } from "next";
+import {
+  UserAppWideNameUpdated,
+  UserFriendCodeUpdated,
+} from "@/app/components/client/users";
 
 export async function generateMetadata({
   params,
@@ -57,6 +62,12 @@ export default async function DashboardPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
+        {user.user_status_dashboard === "APPWIDENAMEUPDATED" && (
+          <UserAppWideNameUpdated user={user} />
+        )}
+        {user.user_status_dashboard === "FRIENDCODEUPDATED" && (
+          <UserFriendCodeUpdated user={user} />
+        )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
         <PageLinkWithChildren
           href={`/users/${username}/dashboard/modify-app-wide-name`}

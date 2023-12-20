@@ -9,7 +9,10 @@ import {
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
-import { UserAppWideNameModify } from "@/app/components/client/users";
+import {
+  UpdateUserFriendCode,
+  UserAppWideNameModify,
+} from "@/app/components/client/users";
 
 export async function generateMetadata({
   params,
@@ -63,11 +66,8 @@ export default async function ModifyAppWideNamePage({
           Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.
         </H1>
         <BackToDashboardLink session={session} />
-        {/* <p className="mt-2">App-wide name *</p>
-        <p className="mt-2">{user.user_app_wide_name}</p> */}
         <UserAppWideNameModify user={user} />
-        {/* <ActionLink>Confirm</ActionLink> */}
-        <ActionLink>Generate a new friend code</ActionLink>
+        <UpdateUserFriendCode user={user} />
         <p className="mt-2">
           You’ll see it changed on your Personal info page.
         </p>

@@ -6,6 +6,8 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 
+import uid from "uid2";
+
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
 const USER_STATUSES_TITLE = [
@@ -82,7 +84,7 @@ export async function updateUserAppWideName(
   formData: FormData,
 ) {
   // console.log(user);
-  // console.log(prevState);
+  console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("userappwidename"));
 
@@ -105,6 +107,7 @@ export async function updateUserAppWideName(
   // console.log(user.user_id);
 
   noStore();
+
   try {
     const data = await sql`
       UPDATE Users
@@ -115,10 +118,60 @@ export async function updateUserAppWideName(
       WHERE user_id = ${user.user_id}
       RETURNING * -- to make sure
     `;
-    console.log(data);
+    console.log(data.rows);
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User App-Wide Name.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/dashboard`);
+  redirect(`/users/${user.user_username}/dashboard`);
+}
+
+export async function resetUserStatusDashboard(user: User) {
+  noStore();
+
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_dashboard = 'NONE',
+          user_updated_at = now()
+      WHERE user_id = ${user.user_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Dashboard.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/dashboard`);
+}
+
+//
+
+export async function updateUserFriendCode(user: User) {
+  noStore();
+
+  const id = uid(12);
+
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_friend_code = ${id},
+          user_status_dashboard = 'FRIENDCODEUPDATED',
+          user_updated_at = now()
+      WHERE user_id = ${user.user_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Dashboard.",
     };
   }
 
