@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { User } from "../definitions/users";
 import { sql } from "@vercel/postgres";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
@@ -104,15 +104,18 @@ export async function updateUserAppWideName(
   // console.log(userAppWideName);
   // console.log(user.user_id);
 
+  noStore();
   try {
-    await sql`
+    const data = await sql`
       UPDATE Users
       SET 
           user_app_wide_name = ${userAppWideName},
           user_status_dashboard = 'APPWIDENAMEUPDATED',
           user_updated_at = now()
       WHERE user_id = ${user.user_id}
+      RETURNING * -- to make sure
     `;
+    console.log(data);
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User App-Wide Name.",
