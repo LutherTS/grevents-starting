@@ -43,36 +43,3 @@ export function RevalidateButton() {
     </>
   );
 }
-
-export function Toast({
-  action,
-  children,
-}: {
-  action: (...rest: any) => any;
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      <button onClick={action}>{children}</button>
-    </>
-  );
-}
-
-export function LinkButton({
-  action,
-  children,
-}: {
-  action?: (...rest: any) => any;
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      <button
-        className="mt-2 inline-block text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        onClick={action}
-      >
-        {children}
-      </button>
-    </>
-  );
-}

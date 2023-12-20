@@ -5,7 +5,6 @@ import { User } from "../definitions/users";
 import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
-
 import uid from "uid2";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
@@ -156,13 +155,13 @@ export async function resetUserStatusDashboard(user: User) {
 export async function updateUserFriendCode(user: User) {
   noStore();
 
-  const id = uid(12);
+  const generatedFriendCode = uid(12);
 
   try {
     const data = await sql`
       UPDATE Users
       SET 
-          user_friend_code = ${id},
+          user_friend_code = ${generatedFriendCode},
           user_status_dashboard = 'FRIENDCODEUPDATED',
           user_updated_at = now()
       WHERE user_id = ${user.user_id}
@@ -171,7 +170,7 @@ export async function updateUserFriendCode(user: User) {
     console.log(data.rows);
   } catch (error) {
     return {
-      message: "Database Error: Failed to Update User Status Dashboard.",
+      message: "Database Error: Failed to Update User Friend Code.",
     };
   }
 

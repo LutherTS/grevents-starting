@@ -5,14 +5,13 @@ import {
   PageLink,
   PageLinkWithChildren,
 } from "@/app/components/agnostic/links";
-import { Toast } from "@/app/components/client/buttons";
 /* import { User } from "@/app/lib/definitions/users"; */
 
 import type { Metadata } from "next";
 import {
   UserAppWideNameUpdated,
   UserFriendCodeUpdated,
-} from "@/app/components/client/users";
+} from "@/app/components/client/toasts";
 
 export async function generateMetadata({
   params,

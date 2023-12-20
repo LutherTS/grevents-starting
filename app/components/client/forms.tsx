@@ -2,13 +2,10 @@
 
 import {
   updateUserAppWideName,
-  updateUserFriendCode,
-  resetUserStatusDashboard,
   UpdateUserAppWideNameFormState,
 } from "@/app/lib/actions/users";
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
-import { LinkButton, Toast } from "./buttons";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -49,36 +46,6 @@ export function UserAppWideNameModify({ user }: { user: User }) {
           </div>
         ) : null}
       </form>
-    </>
-  );
-}
-
-export function UserAppWideNameUpdated({ user }: { user: User }) {
-  return (
-    <>
-      <Toast action={() => resetUserStatusDashboard(user)}>
-        <p className="mb-2 text-green-500">App-wide name updated</p>
-      </Toast>
-    </>
-  );
-}
-
-export function UpdateUserFriendCode({ user }: { user: User }) {
-  return (
-    <>
-      <LinkButton action={() => updateUserFriendCode(user)}>
-        Generate a new friend code
-      </LinkButton>
-    </>
-  );
-}
-
-export function UserFriendCodeUpdated({ user }: { user: User }) {
-  return (
-    <>
-      <Toast action={() => resetUserStatusDashboard(user)}>
-        <p className="mb-2 text-green-500">Friend code updated</p>
-      </Toast>
     </>
   );
 }
