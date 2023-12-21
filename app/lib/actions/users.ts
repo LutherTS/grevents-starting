@@ -196,6 +196,8 @@ export async function resetUserStatusPersonalInfo(user: User) {
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info`);
+  revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  revalidatePath(`/users/${user.user_username}/personal-info/customized`);
 }
 
 //

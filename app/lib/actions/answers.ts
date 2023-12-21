@@ -122,6 +122,7 @@ export async function updateOrDeleteAnswerValue(
 
   if (answerValue !== "") {
     noStore();
+
     try {
       const data = await sql`
       UPDATE Answers
