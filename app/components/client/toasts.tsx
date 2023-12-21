@@ -59,3 +59,23 @@ export function AnswerValueDeleted({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserQuestionPinned({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Criteria pinned</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserQuestionUnpinned({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Criteria unpinned</p>
+      </Toast>
+    </>
+  );
+}

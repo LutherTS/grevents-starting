@@ -186,3 +186,118 @@ export async function updateOrDeleteAnswerValue(
     redirect(`/users/${answer.user_username}/personal-info/customized`);
   }
 }
+
+export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
+  if (answer.userquestion_is_pinned === false) {
+    noStore();
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_is_pinned = TRUE,
+            userquestion_updated_at = now(),
+            userquestion_pinned_at = now()
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Pin UserQuestion of Answer.",
+      };
+    }
+
+    // When the issue arises, I'm going to have to use data from RETURNING in order to trigger the following code not from answer.user_username, but from the same data that should be obtained from the previous query to make the next one dependent on that result.
+
+    try {
+      const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'CRITERIAPINNED',
+          user_updated_at = now()
+      WHERE user_username = ${answer.user_username}
+      RETURNING * -- to make sure
+    `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (answer.userquestion_is_pinned === true) {
+    noStore();
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_is_pinned = FALSE,
+            userquestion_updated_at = now(),
+            userquestion_pinned_at = NULL
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Unpin UserQuestion of Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'CRITERIAUNPINNED',
+          user_updated_at = now()
+      WHERE user_username = ${answer.user_username}
+      RETURNING * -- to make sure
+    `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  revalidatePath(`/users/${answer.user_username}/personal-info`);
+
+  if (
+    answer.question_kind === "NATIVE" &&
+    answer.userquestion_kind === "NONE"
+  ) {
+    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  }
+
+  if (
+    answer.question_kind === "NATIVEIRL" &&
+    answer.userquestion_kind === "NONE"
+  ) {
+    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  }
+
+  if (
+    answer.question_kind === "PSEUDO" &&
+    answer.userquestion_kind === "PSEUDONATIVE"
+  ) {
+    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  }
+
+  if (
+    answer.question_kind === "PSEUDO" &&
+    answer.userquestion_kind === "PSEUDONATIVEIRL"
+  ) {
+    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  }
+
+  if (
+    answer.question_kind === "CUSTOM" &&
+    answer.userquestion_kind === "NONE"
+  ) {
+    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  }
+
+  redirect(`/users/${answer.user_username}/personal-info`);
+}
