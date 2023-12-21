@@ -54,14 +54,10 @@ export function ButtonPinnable({ answer }: { answer: Answer }) {
   return (
     <>
       <button
-        // onClick={() => pinOrUnpinUserQuestionOfAnswer(answer)}
         disabled={status.pending}
-        // disabled // If I want the pending thing I'm going to need a form above. Meaning I'm going to need to refactor the button so that it's inside a form and that the form takes the place of ButtonPinnable on answers.tsx.
         className={clsx("h-4 w-4 rounded-full", {
-          // "bg-cyan-500 hover:bg-cyan-400 dark:hover:bg-cyan-600":
           "bg-cyan-500 hover:bg-pink-300 disabled:bg-gray-500 dark:hover:bg-pink-700":
             answer.userquestion_is_pinned === true,
-          // "bg-pink-500 hover:bg-pink-400 dark:hover:bg-pink-600":
           "bg-pink-500 hover:bg-cyan-300 disabled:bg-gray-500 dark:hover:bg-cyan-700":
             answer.userquestion_is_pinned === false,
         })}
