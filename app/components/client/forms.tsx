@@ -11,10 +11,12 @@ import {
   UserAppWideNameModifyInput,
 } from "./inputs";
 import {
+  pinOrUnpinUserQuestionOfAnswer,
   updateOrDeleteAnswerValue,
   UpdateOrDeleteAnswerValueFormState,
 } from "@/app/lib/actions/answers";
 import { Answer } from "@/app/lib/definitions/answers";
+import { ButtonPinnable } from "./buttons";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -88,6 +90,16 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
+      </form>
+    </>
+  );
+}
+
+export function ButtonPinnableForm({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <form action={() => pinOrUnpinUserQuestionOfAnswer(answer)}>
+        <ButtonPinnable answer={answer} />
       </form>
     </>
   );

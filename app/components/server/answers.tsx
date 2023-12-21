@@ -22,10 +22,10 @@ import { Answer } from "@/app/lib/definitions/answers";
 import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
 import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
-import { OneCriteriaAnswerModifyForm } from "../client/forms";
-import clsx from "clsx";
-import { ButtonPinnable } from "../client/buttons";
-// import { useFormStatus } from "react-dom";
+import {
+  ButtonPinnableForm,
+  OneCriteriaAnswerModifyForm,
+} from "../client/forms";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   return (
@@ -119,7 +119,7 @@ export async function OneCriteriaAnswerPinnable({
   return (
     <>
       <div className="mt-2 flex items-center justify-center">
-        <ButtonPinnable answer={answer} />
+        <ButtonPinnableForm answer={answer} />
         <p>{answer.answer_value}</p>
       </div>
     </>

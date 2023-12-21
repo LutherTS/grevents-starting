@@ -8,6 +8,8 @@ import { RevalidateButton } from "@/app/components/client/buttons";
 import {
   AnswerValueDeleted,
   AnswerValueUpdated,
+  UserQuestionPinned,
+  UserQuestionUnpinned,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
 
@@ -70,6 +72,12 @@ export default async function PersonalInfoPage({
         )}
         {user.user_status_personal_info === "ANSWERDELETED" && (
           <AnswerValueDeleted user={user} />
+        )}
+        {user.user_status_personal_info === "CRITERIAPINNED" && (
+          <UserQuestionPinned user={user} />
+        )}
+        {user.user_status_personal_info === "CRITERIAUNPINNED" && (
+          <UserQuestionUnpinned user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
         <BackToDashboardLink session={session} />
