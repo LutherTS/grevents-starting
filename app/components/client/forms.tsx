@@ -16,7 +16,13 @@ import {
   UpdateOrDeleteAnswerValueFormState,
 } from "@/app/lib/actions/answers";
 import { Answer } from "@/app/lib/definitions/answers";
-import { ButtonPinnable } from "./buttons";
+import {
+  ButtonPinnable,
+  ButtonAddUserQuestionFriend,
+  ButtonDeleteUserQuestionFriend,
+} from "./buttons";
+import { Friend } from "@/app/lib/definitions/contacts";
+import { UserQuestion } from "@/app/lib/definitions/userquestions";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -103,6 +109,42 @@ export function ButtonPinnableForm({ answer }: { answer: Answer }) {
         action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
       >
         <ButtonPinnable answer={answer} />
+      </form>
+    </>
+  );
+}
+
+export function ButtonAddUserQuestionFriendForm({
+  contact,
+  userQuestion,
+}: {
+  contact: Friend;
+  userQuestion: UserQuestion;
+}) {
+  return (
+    <>
+      <form
+        className="me-2 flex items-center"
+        // action={() => addUserQuestionFriend(contact, userQuestion)}
+      >
+        <ButtonAddUserQuestionFriend />
+      </form>
+    </>
+  );
+}
+
+export function ButtonDeleteUserQuestionFriendForm({
+  contact,
+}: {
+  contact: Friend; // actually UserQuestionFriend
+}) {
+  return (
+    <>
+      <form
+        className="me-2 flex items-center"
+        // action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
+      >
+        <ButtonDeleteUserQuestionFriend />
       </form>
     </>
   );

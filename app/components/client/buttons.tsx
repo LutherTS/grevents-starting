@@ -65,3 +65,29 @@ export function ButtonPinnable({ answer }: { answer: Answer }) {
     </>
   );
 }
+
+export function ButtonAddUserQuestionFriend() {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className="h-4 w-4 rounded-full bg-cyan-500 hover:bg-cyan-300 disabled:bg-gray-500 dark:hover:bg-cyan-700"
+      ></button>
+    </>
+  );
+}
+
+export function ButtonDeleteUserQuestionFriend() {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className="h-4 w-4 rounded-full bg-pink-500 hover:bg-pink-300 disabled:bg-gray-500 dark:hover:bg-pink-700"
+      ></button>
+    </>
+  );
+}
