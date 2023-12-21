@@ -118,7 +118,7 @@ export async function OneCriteriaAnswerPinnable({
 }) {
   return (
     <>
-      <div className="mt-2 flex items-center justify-center">
+      <div className="mt-2 flex justify-center">
         <ButtonPinnableForm answer={answer} />
         <p>{answer.answer_value}</p>
       </div>

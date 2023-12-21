@@ -98,7 +98,10 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
 export function ButtonPinnableForm({ answer }: { answer: Answer }) {
   return (
     <>
-      <form action={() => pinOrUnpinUserQuestionOfAnswer(answer)}>
+      <form
+        className="me-2 flex items-center"
+        action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
+      >
         <ButtonPinnable answer={answer} />
       </form>
     </>
