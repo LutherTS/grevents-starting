@@ -1,3 +1,5 @@
+"use server";
+
 import {
   fetchAllUserFriends,
   // fetchAllUserContacts,
@@ -13,7 +15,7 @@ import {
 } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
 
-export function OneFriend({ friend }: { friend: Friend }) {
+export async function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
       <p className="mt-2">
@@ -137,7 +139,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
   );
 }
 
-export function OneBlock({ block }: { block: Block }) {
+export async function OneBlock({ block }: { block: Block }) {
   return (
     <>
       <p className="mt-2">
