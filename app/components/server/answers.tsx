@@ -24,6 +24,7 @@ import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 import { OneCriteriaAnswerModifyForm } from "../client/forms";
 import clsx from "clsx";
+import { ButtonPinnable } from "../client/buttons";
 // import { useFormStatus } from "react-dom";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
@@ -118,23 +119,8 @@ export async function OneCriteriaAnswerPinnable({
   return (
     <>
       <div className="mt-2 flex items-center justify-center">
-        {/* Faire d'abord un bouton client général RoundButton
-      Faire un bouton client pour le pin à partir de ça PinButton
-      qui du coup prend un answer en paramètre
-      et un action d'abord optionnel
-      Puis l'intégrer ici */}
-        <button
-          className={clsx("me-2 h-4 w-4 rounded-full", {
-            // ça ça peut être un paramètre...
-            // ...mais il est dynamique...
-            // Ce sera beaucoup plus simple de ne faire qu'un seul composant.
-            "bg-teal-500 hover:bg-teal-400 dark:hover:bg-teal-600":
-              answer.userquestion_is_pinned === true,
-            "bg-pink-500 hover:bg-pink-400 dark:hover:bg-pink-600":
-              answer.userquestion_is_pinned === false,
-          })}
-        ></button>
-        <p className="">{answer.answer_value}</p>
+        <ButtonPinnable answer={answer} />
+        <p>{answer.answer_value}</p>
       </div>
     </>
   );
