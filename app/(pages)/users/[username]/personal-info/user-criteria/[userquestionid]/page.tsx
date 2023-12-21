@@ -99,7 +99,7 @@ export default async function UserQuestionPage({
             }
           >
             <OneCriteriaModify answer={userQuestionAnswer} />
-            <ManyFriends user={user} />
+            <ManyFriends user={user} userQuestion={userQuestion} />
             <ManyUserQuestionFriends userQuestion={userQuestion} />
           </Suspense>
           <PageLink

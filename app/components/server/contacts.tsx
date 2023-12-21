@@ -49,10 +49,10 @@ export async function OneFriendAddable({
 
 export async function ManyFriends({
   user,
-  // userQuestion,
+  userQuestion,
 }: {
   user: User;
-  // userQuestion: UserQuestion;
+  userQuestion: UserQuestion;
 }) {
   const allUserFriends = await fetchAllUserFriends(user);
 
@@ -67,7 +67,10 @@ export async function ManyFriends({
             {allUserFriends.map((userFriend) => {
               return (
                 <li key={userFriend.contact_id}>
-                  <OneFriend friend={userFriend} />
+                  <OneFriendAddable
+                    friend={userFriend}
+                    userQuestion={userQuestion}
+                  />
                 </li>
               );
             })}

@@ -6,6 +6,7 @@ import {
 } from "@/app/lib/data/userquestionfriends";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
+import { ButtonDeleteUserQuestionFriendForm } from "../client/forms";
 
 export async function ManyUserQuestionFriendsLabel({
   userQuestion,
@@ -31,17 +32,25 @@ export async function ManyUserQuestionFriendsLabel({
 
 export async function OneUserQuestionFriend({
   userQuestionFriend,
+  userQuestion,
 }: {
   userQuestionFriend: UserQuestionFriend;
+  userQuestion: UserQuestion;
 }) {
   return (
     <>
-      <p className="mt-2">
-        <span className="font-semibold">
-          {userQuestionFriend.user_app_wide_name}
-        </span>{" "}
-        / {userQuestionFriend.user_username}
-      </p>
+      <div className="mt-2 flex justify-center">
+        <ButtonDeleteUserQuestionFriendForm
+          userQuestionFriend={userQuestionFriend}
+          userQuestion={userQuestion}
+        />
+        <p>
+          <span className="font-semibold">
+            {userQuestionFriend.user_app_wide_name}
+          </span>{" "}
+          / {userQuestionFriend.user_username}
+        </p>
+      </div>
     </>
   );
 }
@@ -65,6 +74,7 @@ export async function ManyUserQuestionFriends({
                 <li key={userQuestionFriend.userquestionfriend_id}>
                   <OneUserQuestionFriend
                     userQuestionFriend={userQuestionFriend}
+                    userQuestion={userQuestion}
                   />
                 </li>
               );

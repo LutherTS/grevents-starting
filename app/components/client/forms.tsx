@@ -23,6 +23,7 @@ import {
 } from "./buttons";
 import { Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
+import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -134,15 +135,17 @@ export function ButtonAddUserQuestionFriendForm({
 }
 
 export function ButtonDeleteUserQuestionFriendForm({
-  contact,
+  userQuestionFriend,
+  userQuestion,
 }: {
-  contact: Friend; // actually UserQuestionFriend
+  userQuestionFriend: UserQuestionFriend;
+  userQuestion: UserQuestion;
 }) {
   return (
     <>
       <form
         className="me-2 flex items-center"
-        // action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
+        // action={() => pinOrUnpinUserQuestionOfAnswer(userQuestionFriend, userQuestion)}
       >
         <ButtonDeleteUserQuestionFriend />
       </form>
