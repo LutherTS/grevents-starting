@@ -29,7 +29,7 @@ export default async function FriendPreviewPage({
   };
 }) {
   const session: { [K in "user"]: User } = {
-    // “me”
+    // “me” // default demo behavior
     user: {
       user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
       user_state: "LIVE",
@@ -51,6 +51,10 @@ export default async function FriendPreviewPage({
   if (!user) {
     notFound();
   }
+
+  // updated demo behavior
+  session.user = user;
+  // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
