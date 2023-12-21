@@ -1,3 +1,5 @@
+"use server";
+
 import {
   fetchUserPinnedAnswers,
   fetchUserNativeNotIrlAnswers,
@@ -15,16 +17,15 @@ import {
   fetchUserPinnedNotIrlAnswersCustom,
   fetchUserPinnedNotAndIrlAnswersCustom,
 } from "@/app/lib/data/answers";
-// import { countUserQuestionFriends } from "@/app/lib/data/userquestionfriends"; // optimized so no longer needed
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
 import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
 import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
+import { OneCriteriaAnswerModifyForm } from "../client/forms";
+// import { useFormStatus } from "react-dom";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
-  // const userQuestionFriendsCount = await countUserQuestionFriends(answer); // no longer in use
-
   return (
     <>
       <p className="mt-2">
@@ -92,10 +93,18 @@ export async function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
   );
 }
 
-export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
+export async function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="mt-2">{answer.answer_value}</p>
+    </>
+  );
+}
+
+export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <OneCriteriaAnswerModifyForm answer={answer} />
     </>
   );
 }
@@ -105,6 +114,19 @@ export async function OneCriteria({ answer }: { answer: Answer }) {
     <>
       <OneCriteriaQuestion answer={answer} />
       <OneCriteriaAnswer answer={answer} />
+    </>
+  );
+}
+
+export async function OneCriteriaModify({ answer }: { answer: Answer }) {
+  return (
+    <>
+      {/* <form>
+        <label htmlFor={answer.answer_id}> */}
+      <OneCriteriaQuestion answer={answer} />
+      {/* </label> */}
+      <OneCriteriaAnswerModify answer={answer} />
+      {/* </form> */}
     </>
   );
 }
@@ -125,6 +147,8 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   );
 }
 
+// type Criteria = typeof ManyCriteria
+
 export async function ManyCriteria({
   answers,
   label,
@@ -142,6 +166,33 @@ export async function ManyCriteria({
               return (
                 <li key={answer.answer_id}>
                   <OneCriteria answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyCriteriaModify({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaModify answer={answer} />
                 </li>
               );
             })}
@@ -204,12 +255,48 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
   );
 }
 
+export async function ManyUserNativeNotIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      <ManyCriteriaModify
+        answers={userNativeNotIrlAnswers}
+        label={answersLabels.nativeNotIrl}
+      />
+    </>
+  );
+}
+
 export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
   const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
 
   return (
     <>
       <ManyCriteria
+        answers={userNativeIrlAnswers}
+        label={answersLabels.nativeIrl}
+      />
+    </>
+  );
+}
+
+export async function ManyUserNativeIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
+
+  return (
+    <>
+      <ManyCriteriaModify
         answers={userNativeIrlAnswers}
         label={answersLabels.nativeIrl}
       />
@@ -235,6 +322,24 @@ export async function ManyUserPseudonativeNotIrlCriteria({
   );
 }
 
+export async function ManyUserPseudonativeNotIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userPseudonativeNotIrlAnswers =
+    await fetchUserPseudonativeNotIrlAnswers(user.user_id);
+
+  return (
+    <>
+      <ManyCriteriaModify
+        answers={userPseudonativeNotIrlAnswers}
+        label={answersLabels.pseudonativeNotIrl}
+      />
+    </>
+  );
+}
+
 export async function ManyUserPseudonativeIrlCriteria({
   user,
 }: {
@@ -247,6 +352,25 @@ export async function ManyUserPseudonativeIrlCriteria({
   return (
     <>
       <ManyCriteria
+        answers={userPseudonativeIrlAnswers}
+        label={answersLabels.pseudonativeIrl}
+      />
+    </>
+  );
+}
+
+export async function ManyUserPseudonativeIrlCriteriaModify({
+  user,
+}: {
+  user: User;
+}) {
+  const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
+    user.user_id,
+  );
+
+  return (
+    <>
+      <ManyCriteriaModify
         answers={userPseudonativeIrlAnswers}
         label={answersLabels.pseudonativeIrl}
       />

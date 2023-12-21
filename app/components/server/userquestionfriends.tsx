@@ -1,3 +1,5 @@
+"use server";
+
 import {
   countUserQuestionFriends,
   fetchAllUserQuestionFriends,
@@ -27,7 +29,7 @@ export async function ManyUserQuestionFriendsLabel({
   );
 }
 
-export function OneUserQuestionFriend({
+export async function OneUserQuestionFriend({
   userQuestionFriend,
 }: {
   userQuestionFriend: UserQuestionFriend;

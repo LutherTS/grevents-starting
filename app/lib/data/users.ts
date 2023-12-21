@@ -6,6 +6,9 @@ import pRetry from "p-retry";
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.
   // Therefore, there's no need to constantly revalidate.
+  // Back to no store because now I can modify it with form actions.
+  // It doesn't change anything, they seem to have purposefully limit
+  // the updates on the database by default, even if they show in RETURNING.
   // console.log(username);
   try {
     const run = async () => {
