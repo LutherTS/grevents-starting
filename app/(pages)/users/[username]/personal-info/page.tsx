@@ -5,7 +5,10 @@ import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { RevalidateButton } from "@/app/components/client/buttons";
-import { AnswerValueUpdated } from "@/app/components/client/toasts";
+import {
+  AnswerValueDeleted,
+  AnswerValueUpdated,
+} from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
@@ -60,6 +63,9 @@ export default async function PersonalInfoPage({
       <div className="max-w-prose text-center">
         {user.user_status_personal_info === "ANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
+        )}
+        {user.user_status_personal_info === "ANSWERDELETED" && (
+          <AnswerValueDeleted user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
         <BackToDashboardLink session={session} />

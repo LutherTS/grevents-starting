@@ -49,3 +49,13 @@ export function AnswerValueUpdated({ user }: { user: User }) {
     </>
   );
 }
+
+export function AnswerValueDeleted({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Answer value deleted</p>
+      </Toast>
+    </>
+  );
+}
