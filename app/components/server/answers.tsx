@@ -23,6 +23,7 @@ import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
 import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 import { OneCriteriaAnswerModifyForm } from "../client/forms";
+import clsx from "clsx";
 // import { useFormStatus } from "react-dom";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
@@ -109,6 +110,27 @@ export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   );
 }
 
+export async function OneCriteriaAnswerPinnable({
+  answer,
+}: {
+  answer: Answer;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex items-center justify-center">
+        {/* <button className="me-2 h-4 w-4 rounded-full"></button> */}
+        <button
+          className={clsx("me-2 h-4 w-4 rounded-full", {
+            "bg-teal-500": answer.userquestion_is_pinned === true,
+            "bg-pink-500": answer.userquestion_is_pinned === false,
+          })}
+        ></button>
+        <p className="">{answer.answer_value}</p>
+      </div>
+    </>
+  );
+}
+
 export async function OneCriteria({ answer }: { answer: Answer }) {
   return (
     <>
@@ -121,12 +143,17 @@ export async function OneCriteria({ answer }: { answer: Answer }) {
 export async function OneCriteriaModify({ answer }: { answer: Answer }) {
   return (
     <>
-      {/* <form>
-        <label htmlFor={answer.answer_id}> */}
       <OneCriteriaQuestion answer={answer} />
-      {/* </label> */}
       <OneCriteriaAnswerModify answer={answer} />
-      {/* </form> */}
+    </>
+  );
+}
+
+export async function OneCriteriaPinnable({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaAnswerPinnable answer={answer} />
     </>
   );
 }
@@ -203,6 +230,33 @@ export async function ManyCriteriaModify({
   );
 }
 
+export async function ManyCriteriaPinnable({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaPinnable answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
 export async function ManyLinkCriteria({
   answers,
   label,
@@ -247,7 +301,7 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyCriteria
+      <ManyCriteriaPinnable
         answers={userNativeNotIrlAnswers}
         label={answersLabels.nativeNotIrl}
       />
