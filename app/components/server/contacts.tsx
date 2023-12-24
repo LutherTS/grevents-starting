@@ -2,6 +2,7 @@
 
 import {
   fetchAllUserFriends,
+  fetchAllUserFriendsNotToUserQuestion,
   fetchAllUserIrlFriends,
   fetchAllUserNotIrlFriends,
   fetchAllUserWhoHaveMeBlocked,
@@ -54,7 +55,10 @@ export async function ManyFriends({
   user: User;
   userQuestion: UserQuestion;
 }) {
-  const allUserFriends = await fetchAllUserFriends(user);
+  const allUserFriends = await fetchAllUserFriendsNotToUserQuestion(
+    user,
+    userQuestion,
+  );
 
   return (
     <>
