@@ -2,7 +2,7 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
 import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
 import { OneCriteriaModify } from "@/app/components/server/answers";
-import { ManyFriends } from "@/app/components/server/contacts";
+import { ManyFriendsAddable } from "@/app/components/server/contacts";
 import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -99,7 +99,7 @@ export default async function UserQuestionPage({
             }
           >
             <OneCriteriaModify answer={userQuestionAnswer} />
-            <ManyFriends user={user} userQuestion={userQuestion} />
+            <ManyFriendsAddable user={user} userQuestion={userQuestion} />
             <ManyUserQuestionFriends userQuestion={userQuestion} />
           </Suspense>
           <PageLink

@@ -1,7 +1,6 @@
 "use server";
 
 import {
-  fetchAllUserFriends,
   fetchAllUserFriendsNotToUserQuestion,
   fetchAllUserIrlFriends,
   fetchAllUserNotIrlFriends,
@@ -10,7 +9,6 @@ import {
 } from "@/app/lib/data/contacts";
 import { Block, Friend } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
-import { ButtonAddUserQuestionFriend } from "../client/buttons";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { ButtonAddUserQuestionFriendForm } from "../client/forms";
 
@@ -48,7 +46,7 @@ export async function OneFriendAddable({
   );
 }
 
-export async function ManyFriends({
+export async function ManyFriendsAddable({
   user,
   userQuestion,
 }: {
