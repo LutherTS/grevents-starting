@@ -31,18 +31,18 @@ export async function ManyUserQuestionFriendsLabel({
 }
 
 export async function OneUserQuestionFriend({
-  userQuestionFriend,
   userQuestion,
+  userQuestionFriend,
 }: {
-  userQuestionFriend: UserQuestionFriend;
   userQuestion: UserQuestion;
+  userQuestionFriend: UserQuestionFriend;
 }) {
   return (
     <>
       <div className="mt-2 flex justify-center">
         <ButtonDeleteUserQuestionFriendForm
-          userQuestionFriend={userQuestionFriend}
           userQuestion={userQuestion}
+          userQuestionFriend={userQuestionFriend}
         />
         <p>
           <span className="font-semibold">
@@ -73,8 +73,8 @@ export async function ManyUserQuestionFriends({
               return (
                 <li key={userQuestionFriend.userquestionfriend_id}>
                   <OneUserQuestionFriend
-                    userQuestionFriend={userQuestionFriend}
                     userQuestion={userQuestion}
+                    userQuestionFriend={userQuestionFriend}
                   />
                 </li>
               );

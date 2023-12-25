@@ -24,6 +24,10 @@ import {
 import { Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
+import {
+  createUserQuestionFriend,
+  deleteUserQuestionFriend,
+} from "@/app/lib/actions/userquestionfriends";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -115,18 +119,27 @@ export function ButtonPinnableForm({ answer }: { answer: Answer }) {
   );
 }
 
+// Pour avoir le contact et la userQuestion à fin de créer le userQuestionFriend lié à cette userQuestion, je vais avoir besoin de bien le contact et la userQuestion soit dans un array, soit dans un objet. L'un des deux devra donc au préalable est inscrit dans une variable.
+// Pour garder la nomenclature des .user_id tout ça, je vais privilégier un objet.
 export function ButtonAddUserQuestionFriendForm({
-  contact,
   userQuestion,
+  contact,
 }: {
-  contact: Friend;
   userQuestion: UserQuestion;
+  contact: Friend;
 }) {
+  /* Not actually needed.
+  const boundContactAndUserQuestion = {
+    contact: contact,
+    userQuestion: userQuestion,
+  };
+  */
+
   return (
     <>
       <form
         className="me-2 flex items-center"
-        // action={() => addUserQuestionFriend(contact, userQuestion)}
+        // action={() => createUserQuestionFriend(userQuestion, contact)}
       >
         <ButtonAddUserQuestionFriend />
       </form>
@@ -135,17 +148,19 @@ export function ButtonAddUserQuestionFriendForm({
 }
 
 export function ButtonDeleteUserQuestionFriendForm({
-  userQuestionFriend,
   userQuestion,
+  userQuestionFriend,
 }: {
-  userQuestionFriend: UserQuestionFriend;
   userQuestion: UserQuestion;
+  userQuestionFriend: UserQuestionFriend;
 }) {
   return (
     <>
       <form
         className="me-2 flex items-center"
-        // action={() => pinOrUnpinUserQuestionOfAnswer(userQuestionFriend, userQuestion)}
+        // action={() =>
+        //   deleteUserQuestionFriend(userQuestion, userQuestionFriend)
+        // }
       >
         <ButtonDeleteUserQuestionFriend />
       </form>
