@@ -118,9 +118,6 @@ export function ButtonPinnableForm({ answer }: { answer: Answer }) {
     </>
   );
 }
-
-// Pour avoir le contact et la userQuestion à fin de créer le userQuestionFriend lié à cette userQuestion, je vais avoir besoin de bien le contact et la userQuestion soit dans un array, soit dans un objet. L'un des deux devra donc au préalable est inscrit dans une variable.
-// Pour garder la nomenclature des .user_id tout ça, je vais privilégier un objet.
 export function ButtonAddUserQuestionFriendForm({
   userQuestion,
   contact,
@@ -128,13 +125,6 @@ export function ButtonAddUserQuestionFriendForm({
   userQuestion: UserQuestion;
   contact: Friend;
 }) {
-  /* Not actually needed.
-  const boundContactAndUserQuestion = {
-    contact: contact,
-    userQuestion: userQuestion,
-  };
-  */
-
   return (
     <>
       <form
