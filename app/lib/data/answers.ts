@@ -330,6 +330,7 @@ export async function fetchUserCustomAnswers(userId: string) {
   }
 }
 
+// Missing count.
 export async function findAnswerByUserQuestionAndUser(
   userQuestion: UserQuestion,
   user: User,
@@ -348,12 +349,14 @@ export async function findAnswerByUserQuestionAndUser(
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
         JOIN Users ON Answers.user_id = Users.user_id
         JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
         
         WHERE Answers.userquestion_id = ${userQuestion.userquestion_id}
         AND Answers.user_id = ${user.user_id}
@@ -362,6 +365,16 @@ export async function findAnswerByUserQuestionAndUser(
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Users.user_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
+
+        GROUP BY -- NEW
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username
 
         LIMIT 1;
       `;
