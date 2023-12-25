@@ -85,6 +85,6 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user friends.");
+    throw new Error("Failed to fetch all user question friends.");
   }
 }

@@ -1,34 +1,12 @@
 "use server";
 
 import { z } from "zod";
-
-// Commencer avec le schéma zod complet de la table UserQuestionFriends
-
-/* Pour inspiration : 
-const InvoiceSchema = z.object({
-  id: z.string(),
-  customerId: z.string({
-    invalid_type_error: "Please select a customer.",
-  }),
-  amount: z.coerce
-    .number({
-      invalid_type_error: "Please enter a number.",
-    })
-    .gt(0, { message: "Please enter an amount greater than $0." })
-    .multipleOf(0.01, {
-      message: "Please enter an amount that is currency-friendly.",
-    }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status.",
-  }),
-  date: z.string(),
-});
-*/
-
-// Il sera ensuite adapté pour chaque action avec .omit()
-/* Aussi pour inspiration :
-const CreateInvoice = InvoiceSchema.omit({ id: true, date: true });
-*/
+import { UserQuestion } from "../definitions/userquestions";
+import { Friend } from "../definitions/contacts";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
+import { UserQuestionFriend } from "../definitions/userquestionfriends";
+import { sql } from "@vercel/postgres";
+import { v4 as uuidv4 } from "uuid";
 
 const USERQUESTIONFRIEND_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -42,33 +20,118 @@ const UserQuestionFriendSchema = z.object({
   userQuestionFriendSharedAt: z.string().datetime().nullable(),
 });
 
-/* Premières modifications : 
-const UserQuestionFriendSchema = z.object({
-  userQuestionFriendId: z.string().length(36),
-  userQuestionId: z.string().length(36),
-  contactId: z.string().length(36),
-  userQuestionFriendState: z.enum(USERQUESTIONFRIEND_STATES),
-  questionKind: z.enum(QUESTION_KINDS),
-  userQuestionFriendCreatedAt: z.string().datetime(),
-  userQuestionFriendUpdatedAt: z.string().datetime(),
-  userQuestionFriendSharedAt: z.string().datetime().nullable(),
-  //
-  Du coup je préciserai les ({invalid_type_error}) ou (, {invalid_type_error}) au fur et à mesure que j'utiliserai les déclinaisons spécifiques du schéma avec .omit(). Par exemple, je sais qu'il n'y a aucun cas d'usage où je dirai au client ("Please enter a valid UUID" puisque je les créerai toujours par moi-même.)
-  //
-  customerId: z.string({
-    invalid_type_error: "Please select a customer.",
-  }),
-  amount: z.coerce
-    .number({
-      invalid_type_error: "Please enter a number.",
-    })
-    .gt(0, { message: "Please enter an amount greater than $0." })
-    .multipleOf(0.01, {
-      message: "Please enter an amount that is currency-friendly.",
-    }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status.",
-  }),
-  date: z.string(),
-});
-*/
+export async function createUserQuestionFriend(
+  userQuestion: UserQuestion,
+  contact: Friend,
+) {
+  noStore();
+
+  try {
+    const data = await sql`
+      DELETE FROM UserQuestionFriends
+      WHERE userquestion_id = ${userQuestion.userquestion_id}
+      AND contact_id = ${contact.contact_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Delete User Question Friend.",
+    };
+  }
+
+  const generatedUserQuestionFriendID = uuidv4();
+
+  try {
+    const data = await sql`
+      INSERT INTO UserQuestionFriends (
+          userquestionfriend_id,
+          userquestion_id,
+          contact_id,
+          userquestionfriend_state,
+          userquestionfriend_created_at,
+          userquestionfriend_updated_at,
+          userquestionfriend_shared_at
+      )
+      VALUES (
+          ${generatedUserQuestionFriendID},
+          ${userQuestion.userquestion_id},
+          ${contact.contact_id},
+          'LIVE',
+          now(),
+          now(),
+          now()
+      )
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create User Question Friend.",
+    };
+  }
+
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'USERQUESTIONFRIENDADDED',
+          user_updated_at = now()
+      WHERE user_username = ${userQuestion.user_username}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
+    };
+  }
+
+  revalidatePath(
+    `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
+  );
+}
+
+export async function deleteUserQuestionFriend(
+  userQuestion: UserQuestion,
+  userQuestionFriend: UserQuestionFriend,
+) {
+  noStore();
+
+  try {
+    const data = await sql`
+      UPDATE UserQuestionFriends
+      SET 
+          userquestionfriend_state = 'DELETED', 
+          userquestionfriend_updated_at = now(),
+          userquestionfriend_shared_at = NULL
+      WHERE userquestionfriend_id = ${userQuestionFriend.userquestionfriend_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Question Friend.",
+    };
+  }
+
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'USERQUESTIONFRIENDDELETED',
+          user_updated_at = now()
+      WHERE user_username = ${userQuestion.user_username}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
+    };
+  }
+
+  revalidatePath(
+    `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
+  );
+}

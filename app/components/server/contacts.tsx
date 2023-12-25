@@ -1,19 +1,16 @@
 "use server";
 
 import {
-  fetchAllUserFriends,
-  // fetchAllUserContacts,
+  fetchAllUserFriendsNotToUserQuestion,
   fetchAllUserIrlFriends,
   fetchAllUserNotIrlFriends,
   fetchAllUserWhoHaveMeBlocked,
   fetchAllUserWhoIAmBlocking,
 } from "@/app/lib/data/contacts";
-import {
-  Block,
-  Friend,
-  // Contact
-} from "@/app/lib/definitions/contacts";
+import { Block, Friend } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
+import { UserQuestion } from "@/app/lib/definitions/userquestions";
+import { ButtonAddUserQuestionFriendForm } from "../client/forms";
 
 export async function OneFriend({ friend }: { friend: Friend }) {
   return (
@@ -26,8 +23,40 @@ export async function OneFriend({ friend }: { friend: Friend }) {
   );
 }
 
-export async function ManyFriends({ user }: { user: User }) {
-  const allUserFriends = await fetchAllUserFriends(user);
+export async function OneFriendAddable({
+  friend,
+  userQuestion,
+}: {
+  friend: Friend;
+  userQuestion: UserQuestion;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex justify-center">
+        <ButtonAddUserQuestionFriendForm
+          contact={friend}
+          userQuestion={userQuestion}
+        />
+        <p>
+          <span className="font-semibold">{friend.user_app_wide_name}</span> /{" "}
+          {friend.user_username}
+        </p>
+      </div>
+    </>
+  );
+}
+
+export async function ManyFriendsAddable({
+  user,
+  userQuestion,
+}: {
+  user: User;
+  userQuestion: UserQuestion;
+}) {
+  const allUserFriends = await fetchAllUserFriendsNotToUserQuestion(
+    user,
+    userQuestion,
+  );
 
   return (
     <>
@@ -40,7 +69,10 @@ export async function ManyFriends({ user }: { user: User }) {
             {allUserFriends.map((userFriend) => {
               return (
                 <li key={userFriend.contact_id}>
-                  <OneFriend friend={userFriend} />
+                  <OneFriendAddable
+                    friend={userFriend}
+                    userQuestion={userQuestion}
+                  />
                 </li>
               );
             })}
@@ -50,42 +82,6 @@ export async function ManyFriends({ user }: { user: User }) {
     </>
   );
 }
-
-/* No longer in use.
-export function OneContact({ contact }: { contact: Contact }) {
-  return (
-    <>
-      <p className="mt-2">{contact.user_username}</p>
-    </>
-  );
-}
-
-
-export async function ManyContacts({ user }: { user: User }) {
-  const allUserContacts = await fetchAllUserContacts(user);
-
-  return (
-    <>
-      <p className="mt-2">
-        Select a user you&apos;re acquainted with. (userlast in searchParams.)
-      </p>
-      {allUserContacts.length > 0 ? (
-        <ol>
-          {allUserContacts.map((userContact) => {
-            return (
-              <li key={userContact.contact_id}>
-                <OneContact contact={userContact} />
-              </li>
-            );
-          })}
-        </ol>
-      ) : (
-        <p className="mt-2">You aren&apos;t acquainted with any user.</p>
-      )}
-    </>
-  );
-}
-*/
 
 export async function ManyNotIrlFriends({ user }: { user: User }) {
   const allUserNotIrlFriends = await fetchAllUserNotIrlFriends(user);
