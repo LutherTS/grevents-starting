@@ -79,3 +79,23 @@ export function UserQuestionUnpinned({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserQuestionFriendCreated({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Criteria shared to friend</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserQuestionFriendDeleted({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Criteria unshared to friend</p>
+      </Toast>
+    </>
+  );
+}

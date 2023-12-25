@@ -9,6 +9,10 @@ import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
+import {
+  UserQuestionFriendCreated,
+  UserQuestionFriendDeleted,
+} from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
 
@@ -86,6 +90,12 @@ export default async function UserQuestionPage({
     <>
       <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
         <div className="max-w-prose text-center">
+          {user.user_status_personal_info === "USERQUESTIONFRIENDADDED" && (
+            <UserQuestionFriendCreated user={user} />
+          )}
+          {user.user_status_personal_info === "USERQUESTIONFRIENDDELETED" && (
+            <UserQuestionFriendDeleted user={user} />
+          )}
           <H1>
             Welcome to {user.user_app_wide_name}&apos;s &quot;
             {userQuestion.question_name}&quot; User Criteria.
