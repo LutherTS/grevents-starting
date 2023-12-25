@@ -99,3 +99,27 @@ export function UserQuestionFriendDeleted({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserQuestionUppedToIrl({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">
+          Pseudonative criteria upped to irl
+        </p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserQuestionDownedToIrl({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">
+          Pseudonative criteria downed from irl
+        </p>
+      </Toast>
+    </>
+  );
+}

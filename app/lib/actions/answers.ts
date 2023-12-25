@@ -204,7 +204,7 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
       console.log(data.rows);
     } catch (error) {
       return {
-        message: "Database Error: Failed to Pin UserQuestion of Answer.",
+        message: "Database Error: Failed to Pin User Question of Answer.",
       };
     }
 
@@ -242,7 +242,7 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
       console.log(data.rows);
     } catch (error) {
       return {
-        message: "Database Error: Failed to Unpin UserQuestion of Answer.",
+        message: "Database Error: Failed to Unpin User Question of Answer.",
       };
     }
 
@@ -301,4 +301,94 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
   }
 
   redirect(`/users/${answer.user_username}/personal-info`);
+}
+
+export async function switchUserQuestionKindOfAnswer(answer: Answer) {
+  if (
+    answer.question_kind === "PSEUDO" &&
+    answer.userquestion_kind === "PSEUDONATIVE"
+  ) {
+    noStore();
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVEIRL',
+            userquestion_updated_at = now(),
+            userquestion_up_to_irl_at = now(),
+            userquestion_down_to_irl_at = NULL
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message:
+          "Database Error: Failed to Switch User Question Kind of Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'PSEUDONATIVECRITERIAUPPEDTOIRL',
+          user_updated_at = now()
+      WHERE user_username = ${answer.user_username}
+      RETURNING * -- to make sure
+    `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (
+    answer.question_kind === "PSEUDO" &&
+    answer.userquestion_kind === "PSEUDONATIVEIRL"
+  ) {
+    noStore();
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVE',
+            userquestion_updated_at = now(),
+            userquestion_up_to_irl_at = NULL,
+            userquestion_down_to_irl_at = now()
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message:
+          "Database Error: Failed to Switch User Question Kind of Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'PSEUDONATIVECRITERIADOWNEDFROMIRL',
+          user_updated_at = now()
+      WHERE user_username = ${answer.user_username}
+      RETURNING * -- to make sure
+    `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+
+  if (answer.userquestion_is_pinned === true) {
+    revalidatePath(`/users/${answer.user_username}/personal-info`);
+  }
 }

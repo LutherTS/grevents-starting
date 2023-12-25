@@ -12,6 +12,7 @@ import {
 } from "./inputs";
 import {
   pinOrUnpinUserQuestionOfAnswer,
+  switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
   UpdateOrDeleteAnswerValueFormState,
 } from "@/app/lib/actions/answers";
@@ -20,6 +21,7 @@ import {
   ButtonPinnable,
   ButtonAddUserQuestionFriend,
   ButtonDeleteUserQuestionFriend,
+  ButtonPseudoable,
 } from "./buttons";
 import { Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
@@ -118,6 +120,20 @@ export function ButtonPinnableForm({ answer }: { answer: Answer }) {
     </>
   );
 }
+
+export function ButtonPseudoableForm({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <form
+        className="ms-2 flex items-center"
+        action={() => switchUserQuestionKindOfAnswer(answer)}
+      >
+        <ButtonPseudoable answer={answer} />
+      </form>
+    </>
+  );
+}
+
 export function ButtonAddUserQuestionFriendForm({
   userQuestion,
   contact,
