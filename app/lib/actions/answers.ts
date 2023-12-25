@@ -314,8 +314,9 @@ export async function switchUserQuestionKindOfAnswer(answer: Answer) {
         UPDATE UserQuestions
         SET 
             userquestion_kind = 'PSEUDONATIVEIRL',
-            userquestion_updated_at = now()
-            -- , userquestion_switched_at = now()
+            userquestion_updated_at = now(),
+            userquestion_up_to_irl_at = now(),
+            userquestion_down_to_irl_at = NULL
         WHERE userquestion_id = ${answer.userquestion_id}
         RETURNING * -- to make sure
       `;
@@ -354,8 +355,9 @@ export async function switchUserQuestionKindOfAnswer(answer: Answer) {
         UPDATE UserQuestions
         SET 
             userquestion_kind = 'PSEUDONATIVE',
-            userquestion_updated_at = now()
-            -- , userquestion_switched_at = now()
+            userquestion_updated_at = now(),
+            userquestion_up_to_irl_at = NULL,
+            userquestion_down_to_irl_at = now()
         WHERE userquestion_id = ${answer.userquestion_id}
         RETURNING * -- to make sure
       `;
