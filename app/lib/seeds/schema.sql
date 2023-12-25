@@ -179,6 +179,7 @@ CREATE TABLE UserQuestions (
     userquestion_created_at timestamp NOT NULL,
     userquestion_updated_at timestamp NOT NULL,
     userquestion_pinned_at timestamp NULL,
+    -- userquestion_switched_at timestamp NULL, -- eventually
     userquestion_up_to_irl_at timestamp NULL,
     userquestion_down_to_irl_at timestamp NULL,
     UNIQUE (

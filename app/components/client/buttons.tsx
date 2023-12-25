@@ -59,9 +59,32 @@ export function ButtonPinnable({ answer }: { answer: Answer }) {
           {
             "bg-cyan-500 hover:bg-pink-300 dark:hover:bg-pink-700":
               answer.userquestion_is_pinned === true,
-            "bg-pink-500 hover:bg-cyan-300  dark:hover:bg-cyan-700":
+            "bg-pink-500 hover:bg-cyan-300 dark:hover:bg-cyan-700":
               answer.userquestion_is_pinned === false,
           },
+        )}
+      ></button>
+    </>
+  );
+}
+
+export function ButtonPseudoable({ answer }: { answer: Answer }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className={clsx(
+          "h-4 w-4 rounded-full bg-yellow-500 hover:bg-yellow-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-yellow-700",
+          // {
+          //   "bg-green-500 hover:bg-emerald-100 dark:hover:bg-emerald-900":
+          //     answer.question_kind === "PSEUDO" &&
+          //     answer.userquestion_kind === "PSEUDONATIVE",
+          //   "bg-emerald-500 hover:bg-green-100 dark:hover:bg-green-900":
+          //     answer.question_kind === "PSEUDO" &&
+          //     answer.userquestion_kind === "PSEUDONATIVEIRL",
+          // }, // not requiring conditional styling now
         )}
       ></button>
     </>

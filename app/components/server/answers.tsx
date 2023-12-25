@@ -24,6 +24,7 @@ import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
 import Link from "next/link";
 import {
   ButtonPinnableForm,
+  ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
 } from "../client/forms";
 
@@ -126,6 +127,22 @@ export async function OneCriteriaAnswerPinnable({
   );
 }
 
+export async function OneCriteriaAnswerPinnablePseudoable({
+  answer,
+}: {
+  answer: Answer;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex justify-center">
+        <ButtonPinnableForm answer={answer} />
+        <p>{answer.answer_value}</p>
+        <ButtonPseudoableForm answer={answer} />
+      </div>
+    </>
+  );
+}
+
 export async function OneCriteria({ answer }: { answer: Answer }) {
   return (
     <>
@@ -153,6 +170,19 @@ export async function OneCriteriaPinnable({ answer }: { answer: Answer }) {
   );
 }
 
+export async function OneCriteriaPinnablePseudoable({
+  answer,
+}: {
+  answer: Answer;
+}) {
+  return (
+    <>
+      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaAnswerPinnablePseudoable answer={answer} />
+    </>
+  );
+}
+
 export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   return (
     <>
@@ -168,8 +198,6 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
     </>
   );
 }
-
-// type Criteria = typeof ManyCriteria
 
 export async function ManyCriteria({
   answers,
@@ -242,6 +270,33 @@ export async function ManyCriteriaPinnable({
               return (
                 <li key={answer.answer_id}>
                   <OneCriteriaPinnable answer={answer} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyCriteriaPinnablePseudoable({
+  answers,
+  label,
+}: {
+  answers: Answer[];
+  label: AnswersLabel;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaPinnablePseudoable answer={answer} />
                 </li>
               );
             })}
@@ -363,7 +418,7 @@ export async function ManyUserPseudonativeNotIrlCriteria({
 
   return (
     <>
-      <ManyCriteriaPinnable
+      <ManyCriteriaPinnablePseudoable
         answers={userPseudonativeNotIrlAnswers}
         label={answersLabels.pseudonativeNotIrl}
       />
@@ -400,7 +455,7 @@ export async function ManyUserPseudonativeIrlCriteria({
 
   return (
     <>
-      <ManyCriteriaPinnable
+      <ManyCriteriaPinnablePseudoable
         answers={userPseudonativeIrlAnswers}
         label={answersLabels.pseudonativeIrl}
       />
