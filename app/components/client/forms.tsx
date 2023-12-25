@@ -139,7 +139,7 @@ export function ButtonAddUserQuestionFriendForm({
     <>
       <form
         className="me-2 flex items-center"
-        // action={() => createUserQuestionFriend(userQuestion, contact)}
+        action={() => createUserQuestionFriend(userQuestion, contact)}
       >
         <ButtonAddUserQuestionFriend />
       </form>
@@ -158,9 +158,9 @@ export function ButtonDeleteUserQuestionFriendForm({
     <>
       <form
         className="me-2 flex items-center"
-        // action={() =>
-        //   deleteUserQuestionFriend(userQuestion, userQuestionFriend)
-        // }
+        action={() =>
+          deleteUserQuestionFriend(userQuestion, userQuestionFriend)
+        }
       >
         <ButtonDeleteUserQuestionFriend />
       </form>

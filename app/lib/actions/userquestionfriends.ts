@@ -5,6 +5,8 @@ import { UserQuestion } from "../definitions/userquestions";
 import { Friend } from "../definitions/contacts";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
+import { sql } from "@vercel/postgres";
+import { v4 as uuidv4 } from "uuid";
 
 // Commencer avec le schéma zod complet de la table UserQuestionFriends
 
@@ -70,23 +72,121 @@ export async function createUserQuestionFriend(
 
   // Now the three database queries begin:
   // 1) delete at userQuestionid and contactid
+  try {
+    const data = await sql`
+      DELETE FROM UserQuestionFriends
+      WHERE userquestion_id = ${userQuestion.userquestion_id}
+      AND contact_id = ${contact.contact_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Delete User Question Friend.",
+    };
+  }
+
+  const generatedUserQuestionFriendID = uuidv4();
+
   // 2) create with userQuestionid and contactid
+  try {
+    const data = await sql`
+      INSERT INTO UserQuestionFriends (
+          userquestionfriend_id,
+          userquestion_id,
+          contact_id,
+          userquestionfriend_state,
+          userquestionfriend_created_at,
+          userquestionfriend_updated_at,
+          userquestionfriend_shared_at
+      )
+      VALUES (
+          ${generatedUserQuestionFriendID},
+          ${userQuestion.userquestion_id},
+          ${contact.contact_id},
+          'LIVE',
+          now(),
+          now(),
+          now()
+      )
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create User Question Friend.",
+    };
+  }
+
   // 3) set user to 'USERQUESTIONFRIENDADDED'
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'USERQUESTIONFRIENDADDED',
+          user_updated_at = now()
+      WHERE user_username = ${userQuestion.user_username}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
+    };
+  }
 
   // revalidate path from userQuestion
+  revalidatePath(
+    `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
+  );
 }
 
 export async function deleteUserQuestionFriend(
-  serQuestion: UserQuestion,
+  userQuestion: UserQuestion,
   userQuestionFriend: UserQuestionFriend,
 ) {
   noStore();
 
   // Now two database queries this time:
   // 1) set userQuestionFriend to deleted
-  // 3) set user to 'USERQUESTIONFRIENDDELETED'
+  try {
+    const data = await sql`
+      UPDATE UserQuestionFriends
+      SET 
+          userquestionfriend_state = 'DELETED', 
+          userquestionfriend_updated_at = now(),
+          userquestionfriend_shared_at = NULL
+      WHERE userquestionfriend_id = ${userQuestionFriend.userquestionfriend_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Question Friend.",
+    };
+  }
+
+  // 2) set user to 'USERQUESTIONFRIENDDELETED'
+  try {
+    const data = await sql`
+      UPDATE Users
+      SET 
+          user_status_personal_info = 'USERQUESTIONFRIENDDELETED',
+          user_updated_at = now()
+      WHERE user_username = ${userQuestion.user_username}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
+    };
+  }
 
   // revalidate path from userQuestion
+  revalidatePath(
+    `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
+  );
 }
 
 /* Premières modifications : 
