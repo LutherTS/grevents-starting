@@ -7,8 +7,11 @@ import {
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
 import {
+  FriendCodeInput,
   OneCriteriaAnswerModifyInput,
+  RelComboInput,
   UserAppWideNameModifyInput,
+  UserLastInput,
 } from "./inputs";
 import {
   pinOrUnpinUserQuestionOfAnswer,
@@ -30,6 +33,7 @@ import {
   createUserQuestionFriend,
   deleteUserQuestionFriend,
 } from "@/app/lib/actions/userquestionfriends";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -173,3 +177,81 @@ export function ButtonDeleteUserQuestionFriendForm({
     </>
   );
 }
+
+export function FriendCodeInputForm({ friendCode }: { friendCode: string }) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        // action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
+        // No need for a form action, updating the searchParams is automatic.
+      >
+        <FriendCodeInput friendCode={friendCode} />
+      </form>
+    </>
+  );
+}
+
+export function UserLastInputForm({ userLast }: { userLast: string }) {
+  return (
+    <>
+      <form className="mt-2">
+        <UserLastInput userLast={userLast} />
+      </form>
+    </>
+  );
+}
+
+export function RelComboInputForm({ relCombo }: { relCombo: string }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  function handleSubmit(formData: FormData) {
+    // console.log(formData);
+    const params = new URLSearchParams(searchParams);
+    // console.log(params);
+    const term = formData.get("relcombo")?.toString();
+    // console.log(term);
+
+    if (term) {
+      params.set("relcombo", term);
+    } else {
+      params.delete("relcombo");
+    }
+    // console.log(params);
+
+    replace(`${pathname}?${params.toString()}`);
+  }
+
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={(formData) => handleSubmit(formData)}
+        // Action still needed to be developed, to add to the existing searchParams.
+      >
+        <RelComboInput relCombo={relCombo} />
+      </form>
+    </>
+  );
+}
+
+/* Some explaining.
+Theoritically, I should apply this elongated logic to userlast as well for consistency. But in this case, I specifically want userlast to override relcombo in searchParams. (In order for a queried preview on any user to begin with the current relcombo between userfirst and userlast.) That's why the default behavior turns out to be exactly what I need.
+*/
+
+/* To develop during UI phase.
+export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        // Action doesn't seem automatic with a select.
+      >
+        <RelComboSelect relCombo={relCombo} />
+      </form>
+    </>
+  );
+}
+*/

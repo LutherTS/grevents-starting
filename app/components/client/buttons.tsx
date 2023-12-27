@@ -75,7 +75,18 @@ export function ButtonPseudoable({ answer }: { answer: Answer }) {
     <>
       <button
         disabled={status.pending}
-        className="h-4 w-4 rounded-full bg-yellow-500 hover:bg-yellow-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-yellow-700"
+        // className="h-4 w-4 rounded-full bg-yellow-500 hover:bg-yellow-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-yellow-700"
+        className={clsx(
+          "h-4 w-4 rounded-full bg-yellow-500 disabled:bg-gray-500 disabled:hover:bg-gray-500",
+          {
+            "hover:bg-emerald-300 dark:hover:bg-emerald-700":
+              answer.question_kind === "PSEUDO" &&
+              answer.userquestion_kind === "PSEUDONATIVE",
+            "hover:bg-green-300 dark:hover:bg-green-700":
+              answer.question_kind === "PSEUDO" &&
+              answer.userquestion_kind === "PSEUDONATIVEIRL",
+          },
+        )}
       ></button>
     </>
   );

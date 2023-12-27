@@ -19,6 +19,10 @@ import {
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
+import {
+  RelComboInputForm,
+  UserLastInputForm,
+} from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
 
@@ -94,6 +98,7 @@ export default async function QueriedPreviewPage({
           Type the username of a user you are acquainted with. (userlast in
           searchParams.)
         </p>
+        <UserLastInputForm userLast={userLast} />
         {userLast !== "" && (
           <>
             {gatheredContact ? (
@@ -106,6 +111,7 @@ export default async function QueriedPreviewPage({
           </>
         )}
         <ManyRelationCombinations />
+        <RelComboInputForm relCombo={relCombo} />
         {relCombo !== "" && (
           <>
             {relationCombinations.includes(relCombo) ? (

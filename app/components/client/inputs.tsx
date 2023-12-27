@@ -37,3 +37,79 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
     </>
   );
 }
+
+export function FriendCodeInput({ friendCode }: { friendCode: string }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id="friend-code"
+        name="friendcode"
+        placeholder={friendCode}
+        disabled={status.pending}
+      />
+    </>
+  );
+}
+
+export function UserLastInput({ userLast }: { userLast: string }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id="user-last"
+        name="userlast"
+        placeholder={userLast}
+        disabled={status.pending}
+      />
+    </>
+  );
+}
+
+export function RelComboInput({ relCombo }: { relCombo: string }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id="rel-combo"
+        name="relcombo"
+        placeholder={relCombo}
+        disabled={status.pending}
+      />
+    </>
+  );
+}
+
+/* To develop during UI phase.
+export function RelComboSelect({ relCombo }: { relCombo: string }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <select
+        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        id="rel-combo"
+        name="relcombo"
+        placeholder={relCombo}
+        disabled={status.pending}
+      >
+        <option value="none">none</option>
+        <option value="friend">friend</option>
+        <option value="irl">irl</option>
+        <option value="i-am-blocking">i-am-blocking</option>
+        <option value="has-me-blocked">has-me-blocked</option>
+        <option value="blocking-blocked">blocking-blocked</option>
+      </select>
+    </>
+  );
+}
+*/
