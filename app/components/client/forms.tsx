@@ -268,9 +268,13 @@ export function NativeNotIrlAnswerForm({
 }: {
   allNativeNotIrlQuestions: NativeNotIrlQuestion[];
 }) {
+  function handleSubmit(formData: FormData) {
+    console.log(formData);
+  }
+
   return (
     <>
-      <form className="mt-4">
+      <form className="mt-4" action={(formData) => handleSubmit(formData)}>
         <NativeNotIrlQuestionSelect
           allNativeNotIrlQuestions={allNativeNotIrlQuestions}
         />
@@ -285,9 +289,13 @@ export function NativeIrlAnswerForm({
 }: {
   allNativeIrlQuestions: NativeIrlQuestion[];
 }) {
+  function handleSubmit(formData: FormData) {
+    console.log(formData);
+  }
+
   return (
     <>
-      <form className="mt-4">
+      <form className="mt-4" action={(formData) => handleSubmit(formData)}>
         <NativeIrlQuestionSelect
           allNativeIrlQuestions={allNativeIrlQuestions}
         />
