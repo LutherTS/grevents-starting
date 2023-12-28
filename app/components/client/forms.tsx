@@ -7,7 +7,10 @@ import {
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
 import {
+  AnswerInput,
   FriendCodeInput,
+  NativeIrlQuestionSelect,
+  NativeNotIrlQuestionSelect,
   OneCriteriaAnswerModifyInput,
   RelComboInput,
   UserAppWideNameModifyInput,
@@ -34,6 +37,10 @@ import {
   deleteUserQuestionFriend,
 } from "@/app/lib/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  NativeIrlQuestion,
+  NativeNotIrlQuestion,
+} from "@/app/lib/definitions/questions";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -255,3 +262,37 @@ export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
   );
 }
 */
+
+export function NativeNotIrlAnswerForm({
+  allNativeNotIrlQuestions,
+}: {
+  allNativeNotIrlQuestions: NativeNotIrlQuestion[];
+}) {
+  return (
+    <>
+      <form className="mt-4">
+        <NativeNotIrlQuestionSelect
+          allNativeNotIrlQuestions={allNativeNotIrlQuestions}
+        />
+        <AnswerInput id="native-not-irl-answer" name="nativenotirlanswer" />
+      </form>
+    </>
+  );
+}
+
+export function NativeIrlAnswerForm({
+  allNativeIrlQuestions,
+}: {
+  allNativeIrlQuestions: NativeIrlQuestion[];
+}) {
+  return (
+    <>
+      <form className="mt-4">
+        <NativeIrlQuestionSelect
+          allNativeIrlQuestions={allNativeIrlQuestions}
+        />
+        <AnswerInput id="native-irl-answer" name="nativeirlanswer" />
+      </form>
+    </>
+  );
+}
