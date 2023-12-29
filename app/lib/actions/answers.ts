@@ -6,6 +6,13 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import { User } from "../definitions/users";
+import pRetry from "p-retry";
+import {
+  NativeIrlQuestion,
+  NativeNotIrlQuestion,
+} from "../definitions/questions";
+import { PreExistingUserQuestion } from "../definitions/userquestions";
+import { v4 as uuidv4 } from "uuid";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -77,13 +84,13 @@ export async function updateOrDeleteAnswerValue(
     noStore();
     try {
       const data = await sql`
-      UPDATE Answers
-      SET 
-          answer_state = 'DELETED',
-          answer_updated_at = now()
-      WHERE answer_id = ${answer.answer_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Answers
+        SET 
+            answer_state = 'DELETED',
+            answer_updated_at = now()
+        WHERE answer_id = ${answer.answer_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -93,13 +100,13 @@ export async function updateOrDeleteAnswerValue(
 
     try {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'ANSWERDELETED',
-          user_updated_at = now()
-      WHERE user_username = ${answer.user_username}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERDELETED',
+            user_updated_at = now()
+        WHERE user_username = ${answer.user_username}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -113,13 +120,13 @@ export async function updateOrDeleteAnswerValue(
 
     try {
       const data = await sql`
-      UPDATE Answers
-      SET 
-          answer_value = ${answerValue},
-          answer_updated_at = now()
-      WHERE answer_id = ${answer.answer_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Answers
+        SET 
+            answer_value = ${answerValue},
+            answer_updated_at = now()
+        WHERE answer_id = ${answer.answer_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -129,13 +136,13 @@ export async function updateOrDeleteAnswerValue(
 
     try {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'ANSWERUPDATED',
-          user_updated_at = now()
-      WHERE user_username = ${answer.user_username}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERUPDATED',
+            user_updated_at = now()
+        WHERE user_username = ${answer.user_username}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -228,13 +235,13 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
 
     try {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'CRITERIAPINNED',
-          user_updated_at = now()
-      WHERE user_username = ${answer.user_username}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'CRITERIAPINNED',
+            user_updated_at = now()
+        WHERE user_username = ${answer.user_username}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -264,13 +271,13 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
 
     try {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'CRITERIAUNPINNED',
-          user_updated_at = now()
-      WHERE user_username = ${answer.user_username}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'CRITERIAUNPINNED',
+            user_updated_at = now()
+        WHERE user_username = ${answer.user_username}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -346,13 +353,13 @@ export async function switchUserQuestionKindOfAnswer(answer: Answer) {
 
     try {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'PSEUDONATIVECRITERIAUPPEDTOIRL',
-          user_updated_at = now()
-      WHERE user_username = ${answer.user_username}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'PSEUDONATIVECRITERIAUPPEDTOIRL',
+            user_updated_at = now()
+        WHERE user_username = ${answer.user_username}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     } catch (error) {
       return {
@@ -424,23 +431,102 @@ export type CreateNativeNotIrlAnswerFormState = {
   message?: string | null;
 };
 
+async function findQuestionByQuestionID(questionId: string) {
+  noStore();
+  // console.log(questionId);
+  try {
+    const run = async () => {
+      const data = await sql<NativeNotIrlQuestion>`
+        SELECT 
+            question_name,
+            question_kind,
+            question_id
+        FROM Questions
+
+        WHERE question_id = ${questionId} -- >NativeNotIrlQuestion< -- for 'First name' -- already exists so updated
+        -- WHERE question_id = 'ba3a314a-98a4-419d-a0c7-6d9eab5ac2cf' -- >NativeNotIrlQuestion< -- for 'Other email address' -- already exists but was deleted so SQL DELETE and create new one
+        -- WHERE question_id = '7de346e6-dc73-4d68-b6a3-abb5d09654cc' -- >NativeNotIrlQuestion< -- for 'Work number' -- does not exist yet so create one
+
+        AND Questions.question_state = 'LIVE'; 
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch question by question ID.");
+  }
+}
+
+async function findPreExistingNativeUserQuestion(
+  user: User,
+  question: NativeNotIrlQuestion | NativeIrlQuestion,
+) {
+  noStore();
+  // console.log(questionId);
+  try {
+    const run = async () => {
+      const data = await sql<PreExistingUserQuestion>`
+        SELECT 
+            UserQuestions.userquestion_id, 
+            UserQuestions.userquestion_state,
+            Questions.question_kind,
+            Answers.answer_state
+        FROM UserQuestions
+
+        JOIN Users ON UserQuestions.user_id = Users.user_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Answers ON Answers.userquestion_id = UserQuestions.userquestion_id
+      
+        WHERE Users.user_id = ${user.user_id}
+        AND Questions.question_id = ${question.question_id}
+      
+        AND (
+            UserQuestions.userquestion_state = 'LIVE' -- la jointure entre la question et la personne à laquelle elle a été posée est opérationnelle
+            OR UserQuestions.userquestion_state = 'DELETED' -- car il me faudra lancer la suite dépendamment de si la UserQuestion et/ou la Answer est/sont DELETED
+        )
+        AND (
+            Answers.answer_state = 'LIVE'
+            OR Answers.answer_state = 'DELETED'
+        )
+
+        AND Users.user_state = 'LIVE' -- la personne qui y a répondu est 
+        AND Questions.question_state = 'LIVE'; -- la question posée est opérationnelle
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch pre-existing native not irl user question.",
+    );
+  }
+}
+
 export async function createNativeNotIrlAnswer(
   user: User,
   prevState: CreateNativeNotIrlAnswerFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("nativenotirlquestion"));
-  console.log(formData.get("nativenotirlanswer"));
+  // console.log(formData);
+  // console.log(formData.get("nativenotirlquestion"));
+  // console.log(formData.get("nativenotirlanswer"));
 
   const validatedFields = CreateNativeNotIrlAnswer.safeParse({
     questionId: formData.get("nativenotirlquestion"),
     initialAnswerValue: formData.get("nativenotirlanswer"),
   });
-  console.log(CreateNativeNotIrlAnswer);
-  console.log(validatedFields);
+  // console.log(CreateNativeNotIrlAnswer);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -451,9 +537,270 @@ export async function createNativeNotIrlAnswer(
 
   const { questionId, initialAnswerValue } = validatedFields.data;
 
-  console.log(questionId);
-  console.log(initialAnswerValue);
-  console.log(user.user_id);
+  // console.log(questionId);
+  // console.log(initialAnswerValue);
+  // console.log(user.user_id);
+
+  const question = await findQuestionByQuestionID(questionId);
+  console.log(question);
+
+  const userQuestion = await findPreExistingNativeUserQuestion(user, question);
+  console.log(userQuestion);
+
+  if (userQuestion === undefined) {
+    // effacements inutiles vu que les uuids n'existent pas encore // non
+    // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
+    noStore();
+
+    try {
+      const data = await sql`
+        DELETE FROM UserQuestions
+        WHERE user_id = ${user.user_id}
+        AND question_id = ${question.question_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At User Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${question.question_id},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'NATIVECRITERIANOTIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "NATIVE" &&
+    (userQuestion.userquestion_state === "DELETED" ||
+      userQuestion.answer_state === "DELETED")
+  ) {
+    // effacements aux emplacements de création
+    noStore();
+
+    try {
+      const data = await sql`
+        DELETE FROM Answers
+        WHERE userquestion_id = ${userQuestion.userquestion_id}
+        AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        DELETE FROM UserQuestions
+        WHERE user_id = ${user.user_id}
+        AND question_id = ${question.question_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At User Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${question.question_id},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'NATIVECRITERIANOTIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "NATIVE" &&
+    userQuestion.userquestion_state === "LIVE" &&
+    userQuestion.answer_state === "LIVE"
+  ) {
+    // cas éventuellement impossible agissant en guise de mises à journoStore();
+
+    try {
+      const data = await sql`
+        UPDATE Answers
+        SET 
+            answer_value = ${initialAnswerValue},
+            answer_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+            AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Answer Value.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  redirect(`/users/${user.user_username}/personal-info/standardized`);
 }
 
 // I can make it all work under the function above eventually with conditions. But for now, moreso for training purposes, I would rather remake the entire function and flow.

@@ -32,3 +32,10 @@ export type UserQuestion = {
   question_created_at: string;
   question_updated_at: string;
 };
+
+export type PreExistingUserQuestion = {
+  userquestion_id: string;
+  userquestion_state: string;
+  question_kind: string;
+  answer_state: string;
+};

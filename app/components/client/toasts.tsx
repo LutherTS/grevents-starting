@@ -123,3 +123,23 @@ export function UserQuestionDownedToIrl({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserNativeCriteriaNotIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Native criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserNativeCriteriaIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Native criteria irl added</p>
+      </Toast>
+    </>
+  );
+}
