@@ -5,6 +5,7 @@ import { Answer } from "../definitions/answers";
 import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
+import { User } from "../definitions/users";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -14,10 +15,25 @@ const AnswerSchema = z.object({
   userId: z.string().length(36).nullable(),
   answerState: z.enum(ANSWER_STATES),
   answerValue: z.string().max(200, {
-    message: "Your answer cannot be more than 200 characters long.",
+    message: "Your answer cannot be longer than 200 characters.",
   }),
   answerCreatedAt: z.string().datetime(),
   answerUpdatedAt: z.string().datetime(),
+  questionId: z
+    .string({
+      invalid_type_error: "Please select a question.",
+    })
+    .length(36, {
+      message: "Please select a valid question.",
+    }),
+  initialAnswerValue: z
+    .string()
+    .min(1, {
+      message: "Your answer cannot be shorter than 1 character.",
+    })
+    .max(200, {
+      message: "Your answer cannot be longer than 200 characters.",
+    }),
 });
 
 const UpdateOrDeleteAnswerValue = AnswerSchema.pick({ answerValue: true });
@@ -393,4 +409,96 @@ export async function switchUserQuestionKindOfAnswer(answer: Answer) {
   }
 }
 
-// I'm going to need new, custom schemas combining Question and Answer.
+// I'm going to need new, actually update schemas combining Question and Answer. Done.
+
+const CreateNativeNotIrlAnswer = AnswerSchema.pick({
+  questionId: true,
+  initialAnswerValue: true,
+});
+
+export type CreateNativeNotIrlAnswerFormState = {
+  errors?: {
+    questionId?: string[] | undefined;
+    initialAnswerValue?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createNativeNotIrlAnswer(
+  user: User,
+  prevState: CreateNativeNotIrlAnswerFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("nativenotirlquestion"));
+  console.log(formData.get("nativenotirlanswer"));
+
+  const validatedFields = CreateNativeNotIrlAnswer.safeParse({
+    questionId: formData.get("nativenotirlquestion"),
+    initialAnswerValue: formData.get("nativenotirlanswer"),
+  });
+  console.log(CreateNativeNotIrlAnswer);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Native Not IRL Answer.",
+    };
+  }
+
+  const { questionId, initialAnswerValue } = validatedFields.data;
+
+  console.log(questionId);
+  console.log(initialAnswerValue);
+  console.log(user.user_id);
+}
+
+// I can make it all work under the function above eventually with conditions. But for now, moreso for training purposes, I would rather remake the entire function and flow.
+
+const CreateNativeIrlAnswer = AnswerSchema.pick({
+  questionId: true,
+  initialAnswerValue: true,
+});
+
+export type CreateNativeIrlAnswerFormState = {
+  errors?: {
+    questionId?: string[] | undefined;
+    initialAnswerValue?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createNativeIrlAnswer(
+  user: User,
+  prevState: CreateNativeIrlAnswerFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("nativeirlquestion"));
+  console.log(formData.get("nativeirlanswer"));
+
+  const validatedFields = CreateNativeIrlAnswer.safeParse({
+    questionId: formData.get("nativeirlquestion"),
+    initialAnswerValue: formData.get("nativeirlanswer"),
+  });
+  console.log(CreateNativeIrlAnswer);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Native IRL Answer.",
+    };
+  }
+
+  const { questionId, initialAnswerValue } = validatedFields.data;
+
+  console.log(questionId);
+  console.log(initialAnswerValue);
+  console.log(user.user_id);
+}

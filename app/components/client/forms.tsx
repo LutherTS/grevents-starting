@@ -17,6 +17,10 @@ import {
   UserLastInput,
 } from "./inputs";
 import {
+  createNativeIrlAnswer,
+  CreateNativeIrlAnswerFormState,
+  createNativeNotIrlAnswer,
+  CreateNativeNotIrlAnswerFormState,
   pinOrUnpinUserQuestionOfAnswer,
   switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
@@ -265,20 +269,58 @@ export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
 
 export function NativeNotIrlAnswerForm({
   allNativeNotIrlQuestions,
+  user,
 }: {
   allNativeNotIrlQuestions: NativeNotIrlQuestion[];
+  user: User;
 }) {
+  const initialState: CreateNativeNotIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createNativeNotIrlAnswerWithUser = createNativeNotIrlAnswer.bind(
+    null,
+    user,
+  );
+  const [state, formAction] = useFormState(
+    createNativeNotIrlAnswerWithUser,
+    initialState,
+  );
+
   function handleSubmit(formData: FormData) {
     console.log(formData);
   }
 
   return (
     <>
-      <form className="mt-4" action={(formData) => handleSubmit(formData)}>
+      <form className="mt-4" action={formAction}>
         <NativeNotIrlQuestionSelect
           allNativeNotIrlQuestions={allNativeNotIrlQuestions}
         />
+        {state && state.errors?.questionId ? (
+          <div id="question-id-error" aria-live="polite">
+            {state.errors.questionId.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
         <AnswerInput id="native-not-irl-answer" name="nativenotirlanswer" />
+        {state && state.errors?.initialAnswerValue ? (
+          <div id="initial-answer-value-error" aria-live="polite">
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
       </form>
     </>
   );
@@ -286,20 +328,51 @@ export function NativeNotIrlAnswerForm({
 
 export function NativeIrlAnswerForm({
   allNativeIrlQuestions,
+  user,
 }: {
   allNativeIrlQuestions: NativeIrlQuestion[];
+  user: User;
 }) {
-  function handleSubmit(formData: FormData) {
-    console.log(formData);
-  }
+  const initialState: CreateNativeIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createNativeIrlAnswerWithUser = createNativeIrlAnswer.bind(null, user);
+  const [state, formAction] = useFormState(
+    createNativeIrlAnswerWithUser,
+    initialState,
+  );
 
   return (
     <>
-      <form className="mt-4" action={(formData) => handleSubmit(formData)}>
+      <form className="mt-4" action={formAction}>
         <NativeIrlQuestionSelect
           allNativeIrlQuestions={allNativeIrlQuestions}
         />
+        {state && state.errors?.questionId ? (
+          <div id="question-id-error" aria-live="polite">
+            {state.errors.questionId.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
         <AnswerInput id="native-irl-answer" name="nativeirlanswer" />
+        {state && state.errors?.initialAnswerValue ? (
+          <div id="initial-answer-value-error" aria-live="polite">
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
       </form>
     </>
   );
