@@ -113,6 +113,16 @@ export async function updateOrDeleteAnswerValue(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
+
+    // To update standardized add criteria's select options.
+    if (
+      answer.question_kind === "NATIVE" ||
+      answer.question_kind === "NATIVEIRL"
+    ) {
+      revalidatePath(
+        `/users/${answer.user_username}/personal-info/standardized/add-criteria`,
+      );
+    }
   }
 
   if (answerValue !== "") {
@@ -800,6 +810,9 @@ export async function createNativeNotIrlAnswer(
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/standardized/add-criteria`,
+  );
   redirect(`/users/${user.user_username}/personal-info/standardized`);
 }
 
@@ -1071,7 +1084,8 @@ export async function createNativeIrlAnswer(
     userQuestion.userquestion_state === "LIVE" &&
     userQuestion.answer_state === "LIVE"
   ) {
-    // cas éventuellement impossible agissant en guise de mises à journoStore();
+    // cas normalement impossible agissant en guise de mises à jour de la réponse quand on "crée" un critère déjà créé
+    noStore();
 
     try {
       const data = await sql`
@@ -1108,5 +1122,8 @@ export async function createNativeIrlAnswer(
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/standardized/add-criteria`,
+  );
   redirect(`/users/${user.user_username}/personal-info/standardized`);
 }
