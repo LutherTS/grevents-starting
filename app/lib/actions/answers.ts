@@ -848,4 +848,265 @@ export async function createNativeIrlAnswer(
   console.log(questionId);
   console.log(initialAnswerValue);
   console.log(user.user_id);
+
+  const question = await findQuestionByQuestionID(questionId);
+  console.log(question);
+
+  const userQuestion = await findPreExistingNativeUserQuestion(user, question);
+  console.log(userQuestion);
+
+  if (userQuestion === undefined) {
+    // effacements inutiles vu que les uuids n'existent pas encore // non
+    // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
+    noStore();
+
+    try {
+      const data = await sql`
+        DELETE FROM UserQuestions
+        WHERE user_id = ${user.user_id}
+        AND question_id = ${question.question_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At User Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${question.question_id},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'NATIVECRITERIAIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "NATIVEIRL" &&
+    (userQuestion.userquestion_state === "DELETED" ||
+      userQuestion.answer_state === "DELETED")
+  ) {
+    // effacements aux emplacements de création
+    noStore();
+
+    try {
+      const data = await sql`
+        DELETE FROM Answers
+        WHERE userquestion_id = ${userQuestion.userquestion_id}
+        AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        DELETE FROM UserQuestions
+        WHERE user_id = ${user.user_id}
+        AND question_id = ${question.question_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Delete At User Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${question.question_id},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'NATIVECRITERIAIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "NATIVEIRL" &&
+    userQuestion.userquestion_state === "LIVE" &&
+    userQuestion.answer_state === "LIVE"
+  ) {
+    // cas éventuellement impossible agissant en guise de mises à journoStore();
+
+    try {
+      const data = await sql`
+        UPDATE Answers
+        SET 
+            answer_value = ${initialAnswerValue},
+            answer_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+            AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Answer Value.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+  }
+
+  revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  redirect(`/users/${user.user_username}/personal-info/standardized`);
 }
