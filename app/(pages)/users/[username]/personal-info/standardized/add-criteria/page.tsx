@@ -128,14 +128,14 @@ export default async function AddCriteriaStandardizedPage({
               </ol>
             </>
           )} */}
-          <p className="mt-2 font-semibold text-zinc-500">
+          <p className="mt-4 font-semibold text-zinc-500">
             Select then answer a native question below
           </p>
           <NativeNotIrlAnswerForm
             allNativeNotIrlQuestions={allNativeUnansweredNotIrlQuestions}
             user={user}
           />
-          <p className="mt-2 font-semibold text-zinc-500">
+          <p className="mt-4 font-semibold text-zinc-500">
             Select then answer a native irl question below
           </p>
           <NativeIrlAnswerForm

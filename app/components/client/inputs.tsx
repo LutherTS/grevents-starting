@@ -127,7 +127,7 @@ export function NativeNotIrlQuestionSelect({
 
   return (
     <>
-      <div className="mt-4 flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <select
           className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
           id="native-not-irl-question"
@@ -154,17 +154,26 @@ export function NativeNotIrlQuestionSelect({
   );
 } // functional
 
-export function AnswerInput({ id, name }: { id: string; name: string }) {
+export function AnswerInput({
+  id,
+  name,
+  placeholder,
+}: {
+  id: string;
+  name: string;
+  placeholder: string;
+}) {
   const status = useFormStatus();
 
   return (
     <>
       <input
-        className="mt-4 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-4 w-10/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
         type="text"
         id={id}
         name={name}
         disabled={status.pending}
+        placeholder={placeholder}
       />
     </>
   );
@@ -179,7 +188,7 @@ export function NativeIrlQuestionSelect({
 
   return (
     <>
-      <div className="mt-4 flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <select
           className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
           id="native-irl-question"
@@ -205,3 +214,28 @@ export function NativeIrlQuestionSelect({
     </>
   );
 } // functional
+
+export function CustomizedQuestionInput({
+  id,
+  name,
+  placeholder,
+}: {
+  id: string;
+  name: string;
+  placeholder: string;
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="mt-4 w-11/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id={id}
+        name={name}
+        disabled={status.pending}
+        placeholder={placeholder}
+      />
+    </>
+  );
+}
