@@ -1,7 +1,9 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import {
-  fetchAllNativeNotIrlQuestions,
-  fetchAllNativeIrlQuestions,
+  // fetchAllNativeNotIrlQuestions,
+  // fetchAllNativeIrlQuestions,
+  fetchAllUnansweredNativeNotIrlQuestions,
+  fetchAllUnansweredNativeIrlQuestions,
 } from "@/app/lib/data/questions";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
@@ -55,9 +57,16 @@ export default async function AddCriteriaStandardizedPage({
   const username = params.username;
   const user = await fetchUserByUsername(username);
 
-  const [allNativeNotIrlQuestions, allNativeIrlQuestions] = await Promise.all([
-    fetchAllNativeNotIrlQuestions(),
-    fetchAllNativeIrlQuestions(),
+  const [
+    // allNativeNotIrlQuestions,
+    // allNativeIrlQuestions,
+    allNativeUnansweredNotIrlQuestions,
+    allNativeUnansweredIrlQuestions,
+  ] = await Promise.all([
+    // fetchAllNativeNotIrlQuestions(),
+    // fetchAllNativeIrlQuestions(),
+    fetchAllUnansweredNativeNotIrlQuestions(user),
+    fetchAllUnansweredNativeIrlQuestions(user),
   ]);
 
   if (!user) {
@@ -77,7 +86,7 @@ export default async function AddCriteriaStandardizedPage({
             Standardized.
           </H1>
           <BackToDashboardLink session={session} />
-          {allNativeNotIrlQuestions.length > 0 && (
+          {/* {allNativeNotIrlQuestions.length > 0 && (
             <>
               <p className="mt-2 font-semibold text-zinc-500">
                 Select a native question below
@@ -118,13 +127,19 @@ export default async function AddCriteriaStandardizedPage({
                 })}
               </ol>
             </>
-          )}
+          )} */}
+          <p className="mt-2 font-semibold text-zinc-500">
+            Select then answer a native question below
+          </p>
           <NativeNotIrlAnswerForm
-            allNativeNotIrlQuestions={allNativeNotIrlQuestions}
+            allNativeNotIrlQuestions={allNativeUnansweredNotIrlQuestions}
             user={user}
           />
+          <p className="mt-2 font-semibold text-zinc-500">
+            Select then answer a native irl question below
+          </p>
           <NativeIrlAnswerForm
-            allNativeIrlQuestions={allNativeIrlQuestions}
+            allNativeIrlQuestions={allNativeUnansweredIrlQuestions}
             user={user}
           />
           {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
