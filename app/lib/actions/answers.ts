@@ -65,8 +65,8 @@ export async function updateOrDeleteAnswerValue(
   const validatedFields = UpdateOrDeleteAnswerValue.safeParse({
     answerValue: formData.get("answervalue"),
   });
-  console.log(UpdateOrDeleteAnswerValue);
-  console.log(validatedFields);
+  // console.log(UpdateOrDeleteAnswerValue);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -836,18 +836,18 @@ export async function createNativeIrlAnswer(
   prevState: CreateNativeIrlAnswerFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("nativeirlquestion"));
-  console.log(formData.get("nativeirlanswer"));
+  // console.log(formData);
+  // console.log(formData.get("nativeirlquestion"));
+  // console.log(formData.get("nativeirlanswer"));
 
   const validatedFields = CreateNativeIrlAnswer.safeParse({
     questionId: formData.get("nativeirlquestion"),
     initialAnswerValue: formData.get("nativeirlanswer"),
   });
-  console.log(CreateNativeIrlAnswer);
-  console.log(validatedFields);
+  // console.log(CreateNativeIrlAnswer);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -858,9 +858,9 @@ export async function createNativeIrlAnswer(
 
   const { questionId, initialAnswerValue } = validatedFields.data;
 
-  console.log(questionId);
-  console.log(initialAnswerValue);
-  console.log(user.user_id);
+  // console.log(questionId);
+  // console.log(initialAnswerValue);
+  // console.log(user.user_id);
 
   const question = await findQuestionByQuestionID(questionId);
   console.log(question);
