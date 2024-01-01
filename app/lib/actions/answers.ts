@@ -1268,7 +1268,7 @@ export async function createPseudonativeNotIrlAnswer(
 
     try {
       const data = await sql`
-        INSERT INTO Questions
+        INSERT INTO Questions (
             question_id,
             question_name,
             question_state,
