@@ -1156,18 +1156,18 @@ export async function createPseudonativeNotIrlAnswer(
   prevState: CreatePseudonativeNotIrlAnswerFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("pseudonativenotirlquestion"));
-  console.log(formData.get("pseudonativenotirlanswer"));
+  // console.log(formData);
+  // console.log(formData.get("pseudonativenotirlquestion"));
+  // console.log(formData.get("pseudonativenotirlanswer"));
 
   const validatedFields = CreatePseudonativeNotIrlAnswer.safeParse({
     initialQuestionName: formData.get("pseudonativenotirlquestion"),
     initialAnswerValue: formData.get("pseudonativenotirlanswer"),
   });
-  console.log(CreatePseudonativeNotIrlAnswer);
-  console.log(validatedFields);
+  // console.log(CreatePseudonativeNotIrlAnswer);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -1175,6 +1175,12 @@ export async function createPseudonativeNotIrlAnswer(
       message: "Missing Fields. Failed to Create Pseudonative Not IRL Answer.",
     };
   }
+
+  const { initialQuestionName, initialAnswerValue } = validatedFields.data;
+
+  console.log(initialQuestionName);
+  console.log(initialAnswerValue);
+  console.log(user.user_id);
 }
 
 // createPseudonativeIrlAnswer
@@ -1197,18 +1203,18 @@ export async function createPseudonativeIrlAnswer(
   prevState: CreatePseudonativeIrlAnswerFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("pseudonativeirlquestion"));
-  console.log(formData.get("pseudonativeirlanswer"));
+  // console.log(formData);
+  // console.log(formData.get("pseudonativeirlquestion"));
+  // console.log(formData.get("pseudonativeirlanswer"));
 
   const validatedFields = CreatePseudonativeIrlAnswer.safeParse({
     initialQuestionName: formData.get("pseudonativeirlquestion"),
     initialAnswerValue: formData.get("pseudonativeirlanswer"),
   });
-  console.log(CreatePseudonativeIrlAnswer);
-  console.log(validatedFields);
+  // console.log(CreatePseudonativeIrlAnswer);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -1216,6 +1222,12 @@ export async function createPseudonativeIrlAnswer(
       message: "Missing Fields. Failed to Create Pseudonative IRL Answer.",
     };
   }
+
+  const { initialQuestionName, initialAnswerValue } = validatedFields.data;
+
+  console.log(initialQuestionName);
+  console.log(initialAnswerValue);
+  console.log(user.user_id);
 }
 
 // createCustomAnswer
@@ -1238,18 +1250,18 @@ export async function createCustomAnswer(
   prevState: CreateCustomAnswerFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("customquestion"));
-  console.log(formData.get("customanswer"));
+  // console.log(formData);
+  // console.log(formData.get("customquestion"));
+  // console.log(formData.get("customanswer"));
 
   const validatedFields = CreateCustomAnswer.safeParse({
     initialQuestionName: formData.get("customquestion"),
     initialAnswerValue: formData.get("customanswer"),
   });
-  console.log(CreateCustomAnswer);
-  console.log(validatedFields);
+  // console.log(CreateCustomAnswer);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -1257,4 +1269,10 @@ export async function createCustomAnswer(
       message: "Missing Fields. Failed to Create Custom Answer.",
     };
   }
+
+  const { initialQuestionName, initialAnswerValue } = validatedFields.data;
+
+  console.log(initialQuestionName);
+  console.log(initialAnswerValue);
+  console.log(user.user_id);
 }
