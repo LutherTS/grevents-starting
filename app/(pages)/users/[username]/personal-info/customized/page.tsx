@@ -14,6 +14,7 @@ import {
   UserQuestionUppedToIrl,
   UserQuestionDownedToIrl,
   UserPseudonativeCriteriaNotIrlAdded,
+  UserPseudonativeCriteriaIrlAdded,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
 
@@ -88,6 +89,9 @@ export default async function CustomizedPage({
         {user.user_status_personal_info ===
           "PSEUDONATIVECRITERIANOTIRLADDED" && (
           <UserPseudonativeCriteriaNotIrlAdded user={user} />
+        )}
+        {user.user_status_personal_info === "PSEUDONATIVECRITERIAIRLADDED" && (
+          <UserPseudonativeCriteriaIrlAdded user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
         <BackToDashboardLink session={session} />

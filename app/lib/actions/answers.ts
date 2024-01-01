@@ -1425,6 +1425,123 @@ export async function createPseudonativeIrlAnswer(
 
   const question = await findPseudoQuestionByQuestionName(initialQuestionName);
   console.log(question);
+
+  if (question === undefined) {
+    // effacements inutiles vu que les uuids n'existent pas encore // oui
+    // en effet, la question de pseudo elle-même n'existe pas
+    noStore();
+
+    const generatedQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Questions (
+            question_id,
+            question_name,
+            question_state,
+            question_kind,
+            question_created_at,
+            question_updated_at
+        )
+        VALUES (
+            ${generatedQuestionID},
+            ${initialQuestionName},
+            'LIVE',
+            'PSEUDO',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_kind,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${generatedQuestionID},
+            'LIVE',
+            'PSEUDONATIVEIRL',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'PSEUDONATIVECRITERIAIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+
+    // Pour l'instant dans la condition.
+    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+    redirect(`/users/${user.user_username}/personal-info/customized`);
+  }
 }
 
 // createCustomAnswer
