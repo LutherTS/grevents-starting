@@ -18,10 +18,16 @@ import {
   UserLastInput,
 } from "./inputs";
 import {
+  createCustomAnswer,
+  CreateCustomAnswerFormState,
   createNativeIrlAnswer,
   CreateNativeIrlAnswerFormState,
   createNativeNotIrlAnswer,
   CreateNativeNotIrlAnswerFormState,
+  createPseudonativeIrlAnswer,
+  CreatePseudonativeIrlAnswerFormState,
+  createPseudonativeNotIrlAnswer,
+  CreatePseudonativeNotIrlAnswerFormState,
   pinOrUnpinUserQuestionOfAnswer,
   switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
@@ -295,7 +301,7 @@ export function NativeNotIrlAnswerForm({
           allNativeNotIrlQuestions={allNativeNotIrlQuestions}
         />
         {state && state.errors?.questionId ? (
-          <div id="question-id-error" aria-live="polite">
+          <div id="question-id-native-not-irl-error" aria-live="polite">
             {state.errors.questionId.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -309,7 +315,10 @@ export function NativeNotIrlAnswerForm({
           placeholder="Answer that native question"
         />
         {state && state.errors?.initialAnswerValue ? (
-          <div id="initial-answer-value-error" aria-live="polite">
+          <div
+            id="initial-answer-value-native-not-irl-error"
+            aria-live="polite"
+          >
             {state.errors.initialAnswerValue.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -355,7 +364,7 @@ export function NativeIrlAnswerForm({
           allNativeIrlQuestions={allNativeIrlQuestions}
         />
         {state && state.errors?.questionId ? (
-          <div id="question-id-error" aria-live="polite">
+          <div id="question-id-native-irl-error" aria-live="polite">
             {state.errors.questionId.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -369,7 +378,7 @@ export function NativeIrlAnswerForm({
           placeholder="Answer that native irl question"
         />
         {state && state.errors?.initialAnswerValue ? (
-          <div id="initial-answer-value-error" aria-live="polite">
+          <div id="initial-answer-value-native-irl-error" aria-live="polite">
             {state.errors.initialAnswerValue.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -388,31 +397,44 @@ export function NativeIrlAnswerForm({
 }
 
 export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
-  const initialState: CreateNativeNotIrlAnswerFormState = {
+  const initialState: CreatePseudonativeNotIrlAnswerFormState = {
     errors: {},
     message: null,
   };
-  // DO NOT LAUNCH THE FORM. THESE ARE COPY-PASTE PLACEHOLDER CONTENTS.
-  const createNativeNotIrlAnswerWithUser = createNativeNotIrlAnswer.bind(
-    null,
-    user,
-  );
+  const createPseudonativeNotIrlAnswerWithUser =
+    createPseudonativeNotIrlAnswer.bind(null, user);
   const [state, formAction] = useFormState(
-    createNativeNotIrlAnswerWithUser,
+    createPseudonativeNotIrlAnswerWithUser,
     initialState,
   );
 
+  // function handleSubmit(formData: FormData) {
+  //   console.log(formData);
+  // }
+
+  /* What I need to achieve
+  I need to find a way that pressing Enter on Answer Input submits the entire form, while pressing Enter on question input still does nothing the same way it does right now without an submit button.
+  Something like on keydown. If Enter, trigger somthing that will trigger (currently) handleSubmit. Just need to think this through.
+  */
+
   return (
     <>
-      <form className="flex flex-col items-center" action={formAction}>
+      <form
+        className="flex flex-col items-center"
+        // action={(formData) => handleSubmit(formData)}
+        action={formAction}
+      >
         <CustomizedQuestionInput
           id="pseudonative-not-irl-question"
           name="pseudonativenotirlquestion"
           placeholder="Enter a pseudonative question"
         />
-        {state && state.errors?.questionId ? (
-          <div id="question-id-error" aria-live="polite">
-            {state.errors.questionId.map((error: string) => (
+        {state && state.errors?.initialQuestionName ? (
+          <div
+            id="initial-question-name-pseudonative-not-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialQuestionName.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
               </p>
@@ -425,7 +447,10 @@ export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
           placeholder="Answer that pseudonative question"
         />
         {state && state.errors?.initialAnswerValue ? (
-          <div id="initial-answer-value-error" aria-live="polite">
+          <div
+            id="initial-answer-value-pseudonative-not-irl-error"
+            aria-live="polite"
+          >
             {state.errors.initialAnswerValue.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -438,37 +463,51 @@ export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
       </form>
     </>
   );
 }
 
 export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
-  const initialState: CreateNativeNotIrlAnswerFormState = {
+  const initialState: CreatePseudonativeIrlAnswerFormState = {
     errors: {},
     message: null,
   };
-  // DO NOT LAUNCH THE FORM. THESE ARE COPY-PASTE PLACEHOLDER CONTENTS.
-  const createNativeNotIrlAnswerWithUser = createNativeNotIrlAnswer.bind(
+  const createPseudonativeIrlAnswerWithUser = createPseudonativeIrlAnswer.bind(
     null,
     user,
   );
   const [state, formAction] = useFormState(
-    createNativeNotIrlAnswerWithUser,
+    createPseudonativeIrlAnswerWithUser,
     initialState,
   );
 
+  function handleSubmit(formData: FormData) {
+    console.log(formData);
+  }
+
   return (
     <>
-      <form className="flex flex-col items-center" action={formAction}>
+      <form
+        className="flex flex-col items-center"
+        // action={(formData) => handleSubmit(formData)}
+        action={formAction}
+      >
         <CustomizedQuestionInput
           id="pseudonative-irl-question"
           name="pseudonativeirlquestion"
           placeholder="Enter a pseudonative irl question"
         />
-        {state && state.errors?.questionId ? (
-          <div id="question-id-error" aria-live="polite">
-            {state.errors.questionId.map((error: string) => (
+        {state && state.errors?.initialQuestionName ? (
+          <div
+            id="initial-question-name-pseudonative-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialQuestionName.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
               </p>
@@ -481,7 +520,10 @@ export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
           placeholder="Answer that pseudonative irl question"
         />
         {state && state.errors?.initialAnswerValue ? (
-          <div id="initial-answer-value-error" aria-live="polite">
+          <div
+            id="initial-answer-value-pseudonative-irl-error"
+            aria-live="polite"
+          >
             {state.errors.initialAnswerValue.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -494,38 +536,46 @@ export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
       </form>
     </>
   );
 }
 
 export function CustomAnswerForm({ user }: { user: User }) {
-  const initialState: CreateNativeNotIrlAnswerFormState = {
+  const initialState: CreateCustomAnswerFormState = {
     errors: {},
     message: null,
   };
-  // DO NOT LAUNCH THE FORM. THESE ARE COPY-PASTE PLACEHOLDER CONTENTS.
-  const createNativeNotIrlAnswerWithUser = createNativeNotIrlAnswer.bind(
-    null,
-    user,
-  );
+  const createCustomAnswerWithUser = createCustomAnswer.bind(null, user);
   const [state, formAction] = useFormState(
-    createNativeNotIrlAnswerWithUser,
+    createCustomAnswerWithUser,
     initialState,
   );
+
+  // function handleSubmit(formData: FormData) {
+  //   console.log(formData);
+  // }
 
   return (
     <>
       {/* Has the margin bottom 4. */}
-      <form className="mb-4 flex flex-col items-center" action={formAction}>
+      <form
+        className="mb-4 flex flex-col items-center"
+        // action={(formData) => handleSubmit(formData)}
+        action={formAction}
+      >
         <CustomizedQuestionInput
           id="custom-question"
           name="customquestion"
           placeholder="Enter a custom question"
         />
-        {state && state.errors?.questionId ? (
-          <div id="question-id-error" aria-live="polite">
-            {state.errors.questionId.map((error: string) => (
+        {state && state.errors?.initialQuestionName ? (
+          <div id="initial-question-name-custom-error" aria-live="polite">
+            {state.errors.initialQuestionName.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
               </p>
@@ -538,7 +588,7 @@ export function CustomAnswerForm({ user }: { user: User }) {
           placeholder="Answer that custom question"
         />
         {state && state.errors?.initialAnswerValue ? (
-          <div id="initial-answer-value-error" aria-live="polite">
+          <div id="initial-answer-value-custom-error" aria-live="polite">
             {state.errors.initialAnswerValue.map((error: string) => (
               <p className="mt-2 text-red-500" key={error}>
                 {error}
@@ -551,6 +601,10 @@ export function CustomAnswerForm({ user }: { user: User }) {
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
       </form>
     </>
   );

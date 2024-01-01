@@ -41,6 +41,14 @@ const AnswerSchema = z.object({
     .max(200, {
       message: "Your answer cannot be longer than 200 characters.",
     }),
+  initialQuestionName: z
+    .string()
+    .min(1, {
+      message: "Your question cannot be shorter than 1 character.",
+    })
+    .max(200, {
+      message: "Your question cannot be longer than 200 characters.",
+    }),
 });
 
 const UpdateOrDeleteAnswerValue = AnswerSchema.pick({ answerValue: true });
@@ -1126,4 +1134,127 @@ export async function createNativeIrlAnswer(
     `/users/${user.user_username}/personal-info/standardized/add-criteria`,
   );
   redirect(`/users/${user.user_username}/personal-info/standardized`);
+}
+
+// createPseudonativeNotIrlAnswer
+
+const CreatePseudonativeNotIrlAnswer = AnswerSchema.pick({
+  initialQuestionName: true,
+  initialAnswerValue: true,
+});
+
+export type CreatePseudonativeNotIrlAnswerFormState = {
+  errors?: {
+    initialQuestionName?: string[] | undefined;
+    initialAnswerValue?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createPseudonativeNotIrlAnswer(
+  user: User,
+  prevState: CreatePseudonativeNotIrlAnswerFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("pseudonativenotirlquestion"));
+  console.log(formData.get("pseudonativenotirlanswer"));
+
+  const validatedFields = CreatePseudonativeNotIrlAnswer.safeParse({
+    initialQuestionName: formData.get("pseudonativenotirlquestion"),
+    initialAnswerValue: formData.get("pseudonativenotirlanswer"),
+  });
+  console.log(CreatePseudonativeNotIrlAnswer);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Pseudonative Not IRL Answer.",
+    };
+  }
+}
+
+// createPseudonativeIrlAnswer
+
+const CreatePseudonativeIrlAnswer = AnswerSchema.pick({
+  initialQuestionName: true,
+  initialAnswerValue: true,
+});
+
+export type CreatePseudonativeIrlAnswerFormState = {
+  errors?: {
+    initialQuestionName?: string[] | undefined;
+    initialAnswerValue?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createPseudonativeIrlAnswer(
+  user: User,
+  prevState: CreatePseudonativeIrlAnswerFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("pseudonativeirlquestion"));
+  console.log(formData.get("pseudonativeirlanswer"));
+
+  const validatedFields = CreatePseudonativeIrlAnswer.safeParse({
+    initialQuestionName: formData.get("pseudonativeirlquestion"),
+    initialAnswerValue: formData.get("pseudonativeirlanswer"),
+  });
+  console.log(CreatePseudonativeIrlAnswer);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Pseudonative IRL Answer.",
+    };
+  }
+}
+
+// createCustomAnswer
+
+const CreateCustomAnswer = AnswerSchema.pick({
+  initialQuestionName: true,
+  initialAnswerValue: true,
+});
+
+export type CreateCustomAnswerFormState = {
+  errors?: {
+    initialQuestionName?: string[] | undefined;
+    initialAnswerValue?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createCustomAnswer(
+  user: User,
+  prevState: CreateCustomAnswerFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("customquestion"));
+  console.log(formData.get("customanswer"));
+
+  const validatedFields = CreateCustomAnswer.safeParse({
+    initialQuestionName: formData.get("customquestion"),
+    initialAnswerValue: formData.get("customanswer"),
+  });
+  console.log(CreateCustomAnswer);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Custom Answer.",
+    };
+  }
 }
