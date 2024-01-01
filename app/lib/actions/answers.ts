@@ -8,8 +8,10 @@ import { redirect } from "next/navigation";
 import { User } from "../definitions/users";
 import pRetry from "p-retry";
 import {
+  CustomQuestion,
   NativeIrlQuestion,
   NativeNotIrlQuestion,
+  PseudonativeQuestion,
 } from "../definitions/questions";
 import { PreExistingUserQuestion } from "../definitions/userquestions";
 import { v4 as uuidv4 } from "uuid";
@@ -449,6 +451,8 @@ export type CreateNativeNotIrlAnswerFormState = {
   message?: string | null;
 };
 
+// These are the utility queries for standardized criteria
+
 async function findQuestionByQuestionID(questionId: string) {
   noStore();
   // console.log(questionId);
@@ -475,7 +479,7 @@ async function findQuestionByQuestionID(questionId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch question by question ID.");
+    throw new Error("Failed to find question by question ID.");
   }
 }
 
@@ -523,7 +527,7 @@ async function findPreExistingNativeUserQuestion(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch pre-existing native not irl user question.",
+      "Failed to find pre-existing native not irl user question.",
     );
   }
 }
@@ -1151,6 +1155,76 @@ export type CreatePseudonativeNotIrlAnswerFormState = {
   message?: string | null;
 };
 
+// These are the utility queries for customized criteria
+
+async function findPseudoQuestionByQuestionName(questionName: string) {
+  noStore();
+  // console.log(questionName);
+  try {
+    const run = async () => {
+      const data = await sql<PseudonativeQuestion>`
+        SELECT 
+            question_name,
+            question_kind,
+            question_id
+        FROM Questions
+
+        WHERE question_name = ${questionName} -- cas où la question, du moins en tant que PSEUDO, n'existe pas encore
+        -- WHERE question_name = 'Father’s birthday' -- cas où il n'y a pas encore de réponse et donc on crée les entrées correspondantes
+        -- WHERE question_name = 'Birthday' -- cas où il y a une réponse LIVE et donc on la modifie
+        -- WHERE question_name = 'Mother’s birthday' -- cas où il a déjà une réponse mais elle est DELETED, du coup on efface ses entrées et on en crée des nouvelles
+        -- WHERE question_name = 'Girlfriend’s birthday' -- cas où il y a une réponse LIVE mais elle est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, donc on modifie la UserQuetion à PSEUDONATIVE et on remplace la Answer
+        -- WHERE question_name = 'Crush’s birthday' -- cas où il y a une réponse DELETED qui est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, du coup on efface ses entrées et on en crée des nouvelles
+        AND question_kind = 'PSEUDO' -- la question est en effet pseudo
+
+        AND question_state = 'LIVE';
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find pseudo question by question name.");
+  }
+}
+
+async function findCustomQuestionByQuestionName(questionName: string) {
+  noStore();
+  // console.log(questionName);
+  try {
+    const run = async () => {
+      const data = await sql<CustomQuestion>`
+        SELECT 
+            question_name,
+            question_kind,
+            question_id
+        FROM Questions
+
+        WHERE question_name = ${questionName} -- cas où la question, du moins en tant que PSEUDO, n'existe pas encore
+        -- WHERE question_name = 'Father’s birthday' -- cas où il n'y a pas encore de réponse et donc on crée les entrées correspondantes
+        -- WHERE question_name = 'Birthday' -- cas où il y a une réponse LIVE et donc on la modifie
+        -- WHERE question_name = 'Mother’s birthday' -- cas où il a déjà une réponse mais elle est DELETED, du coup on efface ses entrées et on en crée des nouvelles
+        -- WHERE question_name = 'Girlfriend’s birthday' -- cas où il y a une réponse LIVE mais elle est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, donc on modifie la UserQuetion à PSEUDONATIVE et on remplace la Answer
+        -- WHERE question_name = 'Crush’s birthday' -- cas où il y a une réponse DELETED qui est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, du coup on efface ses entrées et on en crée des nouvelles
+        AND question_kind = 'CUSTOM' -- la question est en effet custom
+
+        AND question_state = 'LIVE';
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find custom question by question name.");
+  }
+}
+
 export async function createPseudonativeNotIrlAnswer(
   user: User,
   prevState: CreatePseudonativeNotIrlAnswerFormState | undefined,
@@ -1181,6 +1255,126 @@ export async function createPseudonativeNotIrlAnswer(
   console.log(initialQuestionName);
   console.log(initialAnswerValue);
   console.log(user.user_id);
+
+  const question = await findPseudoQuestionByQuestionName(initialQuestionName);
+  console.log(question);
+
+  if (question === undefined) {
+    // effacements inutiles vu que les uuids n'existent pas encore // oui
+    // en effet, la question de pseudo elle-même n'existe pas
+    noStore();
+
+    const generatedQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Questions
+            question_id,
+            question_name,
+            question_state,
+            question_kind,
+            question_created_at,
+            question_updated_at
+        )
+        VALUES (
+            ${generatedQuestionID},
+            ${initialQuestionName},
+            'LIVE',
+            'PSEUDO',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Question.",
+      };
+    }
+
+    const generatedUserQuestionID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_kind,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${generatedQuestionID},
+            'LIVE',
+            'PSEUDONATIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create User Question.",
+      };
+    }
+
+    const generatedAnswerID = uuidv4();
+
+    try {
+      const data = await sql`
+        INSERT INTO Answers (
+            answer_id,
+            userquestion_id,
+            user_id,
+            answer_value,
+            answer_state,
+            answer_created_at,
+            answer_updated_at
+        )
+        VALUES (
+            ${generatedAnswerID},
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${initialAnswerValue},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Answer.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'PSEUDONATIVECRITERIANOTIRLADDED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+
+    // Pour l'instant dans la condition.
+    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+    redirect(`/users/${user.user_username}/personal-info/customized`);
+  }
 }
 
 // createPseudonativeIrlAnswer
@@ -1228,6 +1422,9 @@ export async function createPseudonativeIrlAnswer(
   console.log(initialQuestionName);
   console.log(initialAnswerValue);
   console.log(user.user_id);
+
+  const question = await findPseudoQuestionByQuestionName(initialQuestionName);
+  console.log(question);
 }
 
 // createCustomAnswer
@@ -1275,4 +1472,7 @@ export async function createCustomAnswer(
   console.log(initialQuestionName);
   console.log(initialAnswerValue);
   console.log(user.user_id);
+
+  const question = await findCustomQuestionByQuestionName(initialQuestionName);
+  console.log(question);
 }
