@@ -163,3 +163,13 @@ export function UserPseudonativeCriteriaIrlAdded({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserCustomCriteriaAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Custom criteria added</p>
+      </Toast>
+    </>
+  );
+}
