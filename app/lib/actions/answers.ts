@@ -1590,7 +1590,8 @@ export async function createPseudonativeNotIrlAnswer(
   if (
     userQuestion &&
     userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+    // userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+    // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
     (userQuestion.userquestion_state === "DELETED" ||
       userQuestion.answer_state === "DELETED")
   ) {
@@ -1717,6 +1718,72 @@ export async function createPseudonativeNotIrlAnswer(
   ) {
     // cas éventuellement impossible agissant en guise de mises à jour
     noStore();
+
+    try {
+      const data = await sql`
+        UPDATE Answers
+        SET 
+            answer_value = ${initialAnswerValue},
+            answer_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+            AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Answer Value.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+
+    // Pour l'instant dans la condition.
+    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+    redirect(`/users/${user.user_username}/personal-info/customized`);
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "PSEUDO" &&
+    userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+    userQuestion.userquestion_state === "LIVE" &&
+    userQuestion.answer_state === "LIVE"
+  ) {
+    // cas éventuellement impossible agissant en guise de mises à jour
+    noStore();
+
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVE',
+            userquestion_down_to_irl_at = now(),
+            userquestion_up_to_irl_at = NULL,
+            userquestion_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Question.",
+      };
+    }
 
     try {
       const data = await sql`
@@ -2035,7 +2102,8 @@ export async function createPseudonativeIrlAnswer(
   if (
     userQuestion &&
     userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+    // userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+    // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
     (userQuestion.userquestion_state === "DELETED" ||
       userQuestion.answer_state === "DELETED")
   ) {
@@ -2162,6 +2230,72 @@ export async function createPseudonativeIrlAnswer(
   ) {
     // cas éventuellement impossible agissant en guise de mises à jour
     noStore();
+
+    try {
+      const data = await sql`
+        UPDATE Answers
+        SET 
+            answer_value = ${initialAnswerValue},
+            answer_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+            AND user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Answer Value.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'ANSWERUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Personal Info.",
+      };
+    }
+
+    // Pour l'instant dans la condition.
+    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+    redirect(`/users/${user.user_username}/personal-info/customized`);
+  }
+
+  if (
+    userQuestion &&
+    userQuestion.question_kind === "PSEUDO" &&
+    userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+    userQuestion.userquestion_state === "LIVE" &&
+    userQuestion.answer_state === "LIVE"
+  ) {
+    // cas éventuellement impossible agissant en guise de mises à jour
+    noStore();
+
+    try {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVEIRL',
+            userquestion_up_to_irl_at = now(),
+            userquestion_down_to_irl_at = NULL,
+            userquestion_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Question.",
+      };
+    }
 
     try {
       const data = await sql`

@@ -180,7 +180,7 @@ CREATE TABLE UserQuestions (
     userquestion_updated_at timestamp NOT NULL,
     userquestion_pinned_at timestamp NULL,
     userquestion_up_to_irl_at timestamp NULL,
-    userquestion_down_to_irl_at timestamp NULL,
+    userquestion_down_from_irl_at timestamp NULL, -- FROM not TO, mistake in seeding
     UNIQUE (
         user_id, 
         question_id
