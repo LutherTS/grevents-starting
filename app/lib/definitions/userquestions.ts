@@ -33,7 +33,22 @@ export type UserQuestion = {
   question_updated_at: string;
 };
 
-export type PreExistingUserQuestion = {
+export type PreExistingNativeUserQuestion = {
+  userquestion_id: string;
+  userquestion_state: string;
+  question_kind: string;
+  answer_state: string;
+};
+
+export type PreExistingPseudonativeUserQuestion = {
+  userquestion_id: string;
+  userquestion_state: string;
+  question_kind: string;
+  userquestion_kind: string;
+  answer_state: string;
+};
+
+export type PreExistingCustomUserQuestion = {
   userquestion_id: string;
   userquestion_state: string;
   question_kind: string;
