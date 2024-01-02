@@ -123,3 +123,53 @@ export function UserQuestionDownedToIrl({ user }: { user: User }) {
     </>
   );
 }
+
+export function UserNativeCriteriaNotIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Native criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserNativeCriteriaIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Native irl criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserPseudonativeCriteriaNotIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Pseudonative criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserPseudonativeCriteriaIrlAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Pseudonative irl criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function UserCustomCriteriaAdded({ user }: { user: User }) {
+  return (
+    <>
+      <Toast action={() => resetUserStatusPersonalInfo(user)}>
+        <p className="mb-2 text-green-500">Custom criteria added</p>
+      </Toast>
+    </>
+  );
+}

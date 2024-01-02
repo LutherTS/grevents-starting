@@ -12,3 +12,15 @@ export type NativeIrlQuestion = {
   question_kind: "NATIVEIRL";
   question_id: string;
 };
+
+export type PseudonativeQuestion = {
+  question_name: string;
+  question_kind: "PSEUDO";
+  question_id: string;
+};
+
+export type CustomQuestion = {
+  question_name: string;
+  question_kind: "CUSTOM";
+  question_id: string;
+};

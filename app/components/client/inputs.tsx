@@ -3,6 +3,10 @@
 import { useFormStatus } from "react-dom";
 import { User } from "@/app/lib/definitions/users";
 import { Answer } from "@/app/lib/definitions/answers";
+import {
+  NativeIrlQuestion,
+  NativeNotIrlQuestion,
+} from "@/app/lib/definitions/questions";
 
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
@@ -113,3 +117,125 @@ export function RelComboSelect({ relCombo }: { relCombo: string }) {
   );
 }
 */
+
+export function NativeNotIrlQuestionSelect({
+  allNativeNotIrlQuestions,
+}: {
+  allNativeNotIrlQuestions: NativeNotIrlQuestion[];
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <div className="flex w-full justify-center">
+        <select
+          className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+          id="native-not-irl-question"
+          name="nativenotirlquestion"
+          defaultValue=""
+          disabled={status.pending}
+        >
+          <option value="" disabled>
+            Select a native question
+          </option>
+          {allNativeNotIrlQuestions.map((nativeNotIrlQuestion) => {
+            return (
+              <option
+                key={nativeNotIrlQuestion.question_id}
+                value={nativeNotIrlQuestion.question_id}
+              >
+                {nativeNotIrlQuestion.question_name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    </>
+  );
+}
+
+export function AnswerInput({
+  id,
+  name,
+  placeholder,
+}: {
+  id: string;
+  name: string;
+  placeholder: string;
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="mt-4 w-10/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id={id}
+        name={name}
+        disabled={status.pending}
+        placeholder={placeholder}
+      />
+    </>
+  );
+}
+
+export function NativeIrlQuestionSelect({
+  allNativeIrlQuestions,
+}: {
+  allNativeIrlQuestions: NativeIrlQuestion[];
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <div className="flex w-full justify-center">
+        <select
+          className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+          id="native-irl-question"
+          name="nativeirlquestion"
+          defaultValue=""
+          disabled={status.pending}
+        >
+          <option value="" disabled>
+            Select a native irl question
+          </option>
+          {allNativeIrlQuestions.map((nativeIrlQuestion) => {
+            return (
+              <option
+                key={nativeIrlQuestion.question_id}
+                value={nativeIrlQuestion.question_id}
+              >
+                {nativeIrlQuestion.question_name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    </>
+  );
+}
+
+export function CustomizedQuestionInput({
+  id,
+  name,
+  placeholder,
+}: {
+  id: string;
+  name: string;
+  placeholder: string;
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="mt-4 w-11/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id={id}
+        name={name}
+        disabled={status.pending}
+        placeholder={placeholder}
+      />
+    </>
+  );
+}

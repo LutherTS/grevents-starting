@@ -7,13 +7,27 @@ import {
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
 import {
+  AnswerInput,
+  CustomizedQuestionInput,
   FriendCodeInput,
+  NativeIrlQuestionSelect,
+  NativeNotIrlQuestionSelect,
   OneCriteriaAnswerModifyInput,
   RelComboInput,
   UserAppWideNameModifyInput,
   UserLastInput,
 } from "./inputs";
 import {
+  createCustomAnswer,
+  CreateCustomAnswerFormState,
+  createNativeIrlAnswer,
+  CreateNativeIrlAnswerFormState,
+  createNativeNotIrlAnswer,
+  CreateNativeNotIrlAnswerFormState,
+  createPseudonativeIrlAnswer,
+  CreatePseudonativeIrlAnswerFormState,
+  createPseudonativeNotIrlAnswer,
+  CreatePseudonativeNotIrlAnswerFormState,
   pinOrUnpinUserQuestionOfAnswer,
   switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
@@ -34,6 +48,10 @@ import {
   deleteUserQuestionFriend,
 } from "@/app/lib/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  NativeIrlQuestion,
+  NativeNotIrlQuestion,
+} from "@/app/lib/definitions/questions";
 
 export function UserAppWideNameModify({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -63,7 +81,7 @@ export function UserAppWideNameModify({ user }: { user: User }) {
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="app-wide-name-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -255,3 +273,312 @@ export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
   );
 }
 */
+
+// All that is missing below is integrated labels.
+
+export function NativeNotIrlAnswerForm({
+  allNativeNotIrlQuestions,
+  user,
+}: {
+  allNativeNotIrlQuestions: NativeNotIrlQuestion[];
+  user: User;
+}) {
+  const initialState: CreateNativeNotIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createNativeNotIrlAnswerWithUser = createNativeNotIrlAnswer.bind(
+    null,
+    user,
+  );
+  const [state, formAction] = useFormState(
+    createNativeNotIrlAnswerWithUser,
+    initialState,
+  );
+
+  return (
+    <>
+      <form className="mt-4 flex flex-col items-center" action={formAction}>
+        <NativeNotIrlQuestionSelect
+          allNativeNotIrlQuestions={allNativeNotIrlQuestions}
+        />
+        {state && state.errors?.questionId ? (
+          <div id="question-id-native-not-irl-error" aria-live="polite">
+            {state.errors.questionId.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <AnswerInput
+          id="native-not-irl-answer"
+          name="nativenotirlanswer"
+          placeholder="Answer that native question"
+        />
+        {state && state.errors?.initialAnswerValue ? (
+          <div
+            id="initial-answer-value-native-not-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="native-not-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+      </form>
+    </>
+  );
+}
+
+export function NativeIrlAnswerForm({
+  allNativeIrlQuestions,
+  user,
+}: {
+  allNativeIrlQuestions: NativeIrlQuestion[];
+  user: User;
+}) {
+  const initialState: CreateNativeIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createNativeIrlAnswerWithUser = createNativeIrlAnswer.bind(null, user);
+  const [state, formAction] = useFormState(
+    createNativeIrlAnswerWithUser,
+    initialState,
+  );
+
+  return (
+    <>
+      {/* Has the margin bottom 4. */}
+      <form
+        className="mb-4 mt-4 flex flex-col items-center"
+        action={formAction}
+      >
+        <NativeIrlQuestionSelect
+          allNativeIrlQuestions={allNativeIrlQuestions}
+        />
+        {state && state.errors?.questionId ? (
+          <div id="question-id-native-irl-error" aria-live="polite">
+            {state.errors.questionId.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <AnswerInput
+          id="native-irl-answer"
+          name="nativeirlanswer"
+          placeholder="Answer that native irl question"
+        />
+        {state && state.errors?.initialAnswerValue ? (
+          <div id="initial-answer-value-native-irl-error" aria-live="polite">
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="native-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+      </form>
+    </>
+  );
+}
+
+export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
+  const initialState: CreatePseudonativeNotIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createPseudonativeNotIrlAnswerWithUser =
+    createPseudonativeNotIrlAnswer.bind(null, user);
+  const [state, formAction] = useFormState(
+    createPseudonativeNotIrlAnswerWithUser,
+    initialState,
+  );
+
+  return (
+    <>
+      <form className="flex flex-col items-center" action={formAction}>
+        <CustomizedQuestionInput
+          id="pseudonative-not-irl-question"
+          name="pseudonativenotirlquestion"
+          placeholder="Enter a pseudonative question"
+        />
+        {state && state.errors?.initialQuestionName ? (
+          <div
+            id="initial-question-name-pseudonative-not-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialQuestionName.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <AnswerInput
+          id="pseudonative-not-irl-answer"
+          name="pseudonativenotirlanswer"
+          placeholder="Answer that pseudonative question"
+        />
+        {state && state.errors?.initialAnswerValue ? (
+          <div
+            id="initial-answer-value-pseudonative-not-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="pseudonative-not-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
+      </form>
+    </>
+  );
+}
+
+export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
+  const initialState: CreatePseudonativeIrlAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createPseudonativeIrlAnswerWithUser = createPseudonativeIrlAnswer.bind(
+    null,
+    user,
+  );
+  const [state, formAction] = useFormState(
+    createPseudonativeIrlAnswerWithUser,
+    initialState,
+  );
+
+  return (
+    <>
+      <form className="flex flex-col items-center" action={formAction}>
+        <CustomizedQuestionInput
+          id="pseudonative-irl-question"
+          name="pseudonativeirlquestion"
+          placeholder="Enter a pseudonative irl question"
+        />
+        {state && state.errors?.initialQuestionName ? (
+          <div
+            id="initial-question-name-pseudonative-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialQuestionName.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <AnswerInput
+          id="pseudonative-irl-answer"
+          name="pseudonativeirlanswer"
+          placeholder="Answer that pseudonative irl question"
+        />
+        {state && state.errors?.initialAnswerValue ? (
+          <div
+            id="initial-answer-value-pseudonative-irl-error"
+            aria-live="polite"
+          >
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="pseudonative-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
+      </form>
+    </>
+  );
+}
+
+export function CustomAnswerForm({ user }: { user: User }) {
+  const initialState: CreateCustomAnswerFormState = {
+    errors: {},
+    message: null,
+  };
+  const createCustomAnswerWithUser = createCustomAnswer.bind(null, user);
+  const [state, formAction] = useFormState(
+    createCustomAnswerWithUser,
+    initialState,
+  );
+
+  return (
+    <>
+      {/* Has the margin bottom 4. */}
+      <form className="mb-4 flex flex-col items-center" action={formAction}>
+        <CustomizedQuestionInput
+          id="custom-question"
+          name="customquestion"
+          placeholder="Enter a custom question"
+        />
+        {state && state.errors?.initialQuestionName ? (
+          <div id="initial-question-name-custom-error" aria-live="polite">
+            {state.errors.initialQuestionName.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <AnswerInput
+          id="custom-answer"
+          name="customanswer"
+          placeholder="Answer that custom question"
+        />
+        {state && state.errors?.initialAnswerValue ? (
+          <div id="initial-answer-value-custom-error" aria-live="polite">
+            {state.errors.initialAnswerValue.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="custom-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
+      </form>
+    </>
+  );
+}

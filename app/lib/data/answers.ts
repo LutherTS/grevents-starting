@@ -314,7 +314,9 @@ export async function fetchUserCustomAnswers(userId: string) {
             UserQuestions.userquestion_id,
             Users.user_username
 
-        ORDER BY userquestionfriends_count ASC -- NEW
+        ORDER BY 
+            userquestionfriends_count ASC, -- NEW
+            Questions.question_name ASC
 
         LIMIT 10;
       `;

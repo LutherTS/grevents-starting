@@ -10,6 +10,8 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import {
   AnswerValueUpdated,
   AnswerValueDeleted,
+  UserNativeCriteriaNotIrlAdded,
+  UserNativeCriteriaIrlAdded,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
 
@@ -72,6 +74,12 @@ export default async function StardardizedPage({
         )}
         {user.user_status_personal_info === "ANSWERDELETED" && (
           <AnswerValueDeleted user={user} />
+        )}
+        {user.user_status_personal_info === "NATIVECRITERIANOTIRLADDED" && (
+          <UserNativeCriteriaNotIrlAdded user={user} />
+        )}
+        {user.user_status_personal_info === "NATIVECRITERIAIRLADDED" && (
+          <UserNativeCriteriaIrlAdded user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</H1>
         <BackToDashboardLink session={session} />
