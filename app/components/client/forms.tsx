@@ -81,7 +81,7 @@ export function UserAppWideNameModify({ user }: { user: User }) {
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="app-wide-name-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -274,6 +274,8 @@ export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
 }
 */
 
+// All that is missing below is integrated labels.
+
 export function NativeNotIrlAnswerForm({
   allNativeNotIrlQuestions,
   user,
@@ -327,7 +329,7 @@ export function NativeNotIrlAnswerForm({
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="native-not-irl-answer-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -387,7 +389,7 @@ export function NativeIrlAnswerForm({
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="native-irl-answer-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -408,22 +410,9 @@ export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
     initialState,
   );
 
-  // function handleSubmit(formData: FormData) {
-  //   console.log(formData);
-  // }
-
-  /* What I need to achieve
-  I need to find a way that pressing Enter on Answer Input submits the entire form, while pressing Enter on question input still does nothing the same way it does right now without an submit button.
-  Something like on keydown. If Enter, trigger somthing that will trigger (currently) handleSubmit. Just need to think this through.
-  */
-
   return (
     <>
-      <form
-        className="flex flex-col items-center"
-        // action={(formData) => handleSubmit(formData)}
-        action={formAction}
-      >
+      <form className="flex flex-col items-center" action={formAction}>
         <CustomizedQuestionInput
           id="pseudonative-not-irl-question"
           name="pseudonativenotirlquestion"
@@ -459,7 +448,7 @@ export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="pseudonative-not-irl-answer-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -486,17 +475,9 @@ export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
     initialState,
   );
 
-  function handleSubmit(formData: FormData) {
-    console.log(formData);
-  }
-
   return (
     <>
-      <form
-        className="flex flex-col items-center"
-        // action={(formData) => handleSubmit(formData)}
-        action={formAction}
-      >
+      <form className="flex flex-col items-center" action={formAction}>
         <CustomizedQuestionInput
           id="pseudonative-irl-question"
           name="pseudonativeirlquestion"
@@ -532,7 +513,7 @@ export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="pseudonative-irl-answer-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
@@ -556,18 +537,10 @@ export function CustomAnswerForm({ user }: { user: User }) {
     initialState,
   );
 
-  // function handleSubmit(formData: FormData) {
-  //   console.log(formData);
-  // }
-
   return (
     <>
       {/* Has the margin bottom 4. */}
-      <form
-        className="mb-4 flex flex-col items-center"
-        // action={(formData) => handleSubmit(formData)}
-        action={formAction}
-      >
+      <form className="mb-4 flex flex-col items-center" action={formAction}>
         <CustomizedQuestionInput
           id="custom-question"
           name="customquestion"
@@ -597,7 +570,7 @@ export function CustomAnswerForm({ user }: { user: User }) {
           </div>
         ) : null}
         {state && state.message ? (
-          <div id="form-error" aria-live="polite">
+          <div id="custom-answer-form-error" aria-live="polite">
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}

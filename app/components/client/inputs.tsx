@@ -152,7 +152,7 @@ export function NativeNotIrlQuestionSelect({
       </div>
     </>
   );
-} // functional
+}
 
 export function AnswerInput({
   id,
@@ -213,7 +213,7 @@ export function NativeIrlQuestionSelect({
       </div>
     </>
   );
-} // functional
+}
 
 export function CustomizedQuestionInput({
   id,
