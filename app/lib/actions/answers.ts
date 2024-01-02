@@ -1171,12 +1171,18 @@ async function findPseudoQuestionByQuestionName(questionName: string) {
             question_id
         FROM Questions
 
-        WHERE question_name = ${questionName} -- cas où la question, du moins en tant que PSEUDO, n'existe pas encore
+        WHERE question_name = ${questionName} -- cas où la question, du moins en tant que PSEUDO, n'existe pas encore -- 'Looking for'
         -- WHERE question_name = 'Father's birthday' -- cas où il n'y a pas encore de réponse et donc on crée les entrées correspondantes
         -- WHERE question_name = 'Birthday' -- cas où il y a une réponse LIVE et donc on la modifie
         -- WHERE question_name = 'Mother's birthday' -- cas où il a déjà une réponse mais elle est DELETED, du coup on efface ses entrées et on en crée des nouvelles
         -- WHERE question_name = 'Girlfriend's birthday' -- cas où il y a une réponse LIVE mais elle est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, donc on modifie la UserQuetion à PSEUDONATIVE et on remplace la Answer
         -- WHERE question_name = 'Crush's birthday' -- cas où il y a une réponse DELETED qui est actuellement PSEUDONATIVEIRL au lieu de PSEUDONATIVE, du coup on efface ses entrées et on en crée des nouvelles
+        -- WHERE question_name = 'In a relationship' -- cas où la question, du moins en tant que PSEUDO, n'existe pas encore
+        -- WHERE question_name = 'Father’s birthdate' -- cas où il n'y a pas encore de réponse et donc on crée les entrées correspondantes
+        -- WHERE question_name = 'Birthdate' -- cas où il y a une réponse LIVE et donc on la modifie
+        -- WHERE question_name = 'Mother’s birthdate' -- cas où il a déjà une réponse mais elle est DELETED, du coup on efface ses entrées et on en crée des nouvelles
+        -- WHERE question_name = 'Girlfriend’s birthdate' -- cas où il y a une réponse LIVE mais elle est actuellement PSEUDONATIVE au lieu de PSEUDONATIVEIRL, donc on modifie la UserQuetion à PSEUDONATIVEIRL et on remplace la Answer
+        -- WHERE question_name = 'Crush’s birthdate' -- cas où il y a une réponse DELETED qui est actuellement PSEUDONATIVE au lieu de PSEUDONATIVEIRL, du coup on efface ses entrées et on en crée des nouvelles
         AND question_kind = 'PSEUDO' -- la question est en effet pseudo
 
         AND question_state = 'LIVE';
