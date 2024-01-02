@@ -54,6 +54,7 @@ export function FriendCodeInput({ friendCode }: { friendCode: string }) {
         name="friendcode"
         placeholder={friendCode}
         disabled={status.pending}
+        required
       />
     </>
   );
