@@ -2022,10 +2022,6 @@ export async function createCustomAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   const userQuestion = await findPreExistingCustomUserQuestion(user, question);
@@ -2126,10 +2122,6 @@ export async function createCustomAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -2288,4 +2280,7 @@ export async function createCustomAnswer(
       };
     }
   }
+
+  revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  redirect(`/users/${user.user_username}/personal-info/customized`);
 }
