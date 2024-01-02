@@ -1472,10 +1472,6 @@ export async function createPseudonativeNotIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   const userQuestion = await findPreExistingPseudonativeUserQuestion(
@@ -1581,10 +1577,6 @@ export async function createPseudonativeNotIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -1703,10 +1695,6 @@ export async function createPseudonativeNotIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -1751,10 +1739,6 @@ export async function createPseudonativeNotIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -1817,11 +1801,10 @@ export async function createPseudonativeNotIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
+
+  revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  redirect(`/users/${user.user_username}/personal-info/customized`);
 }
 
 // createPseudonativeIrlAnswer
@@ -1984,10 +1967,6 @@ export async function createPseudonativeIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   const userQuestion = await findPreExistingPseudonativeUserQuestion(
@@ -2093,10 +2072,6 @@ export async function createPseudonativeIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -2215,10 +2190,6 @@ export async function createPseudonativeIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -2263,10 +2234,6 @@ export async function createPseudonativeIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
 
   if (
@@ -2329,11 +2296,10 @@ export async function createPseudonativeIrlAnswer(
         message: "Database Error: Failed to Update User Status Personal Info.",
       };
     }
-
-    // Pour l'instant dans la condition.
-    revalidatePath(`/users/${user.user_username}/personal-info/customized`);
-    redirect(`/users/${user.user_username}/personal-info/customized`);
   }
+
+  revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  redirect(`/users/${user.user_username}/personal-info/customized`);
 }
 
 // createCustomAnswer
