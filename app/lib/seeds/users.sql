@@ -142,6 +142,7 @@ VALUES (
 
 INSERT INTO Users ( -- Fiona / FioTriangle
 -- NEW, no contacts, no answers --
+-- contacts created during testing for contact notifications -- 
     user_id,
     user_username,
     user_email,
