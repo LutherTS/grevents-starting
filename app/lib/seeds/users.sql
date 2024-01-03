@@ -142,6 +142,30 @@ VALUES (
 
 -- Fiona here, for creating contact through find. 
 
+INSERT INTO Users ( -- Fiona / FioTriangle
+-- NEW, for creating contact through find. --
+    user_id,
+    user_username,
+    user_email,
+    user_password,
+    user_app_wide_name,
+    user_friend_code,
+    user_state,
+    user_created_at,
+    user_updated_at
+)
+VALUES (
+    'abe67dae-0994-4b2b-9acc-49adda35961f',
+    'FioTriangle',
+    'f@f.com',
+    'password',
+    'Fiona',
+    'ngx7h3tkbu8s',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,
     user_username,

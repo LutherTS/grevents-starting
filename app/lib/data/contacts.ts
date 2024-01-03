@@ -195,6 +195,7 @@ export async function fetchAllUserContacts(user: User) {
 }
 */
 
+// Note: this is from existing contacts only, thus excluding users we have no idea of, as intended.
 export async function gatherContactByUserAndUsername(
   user: User,
   username: string,
