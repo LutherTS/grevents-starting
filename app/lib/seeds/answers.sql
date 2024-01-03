@@ -283,6 +283,46 @@ VALUES (
     now()
 ); -- Done. 
 
+INSERT INTO Answers ( -- Elijah, First name
+-- native / pinned
+    answer_id,
+    userquestion_id,
+    user_id,
+    answer_value,
+    answer_state,
+    answer_created_at,
+    answer_updated_at
+)
+VALUES (
+    '38a63725-c646-4ee0-b758-5b840f35ac0f',
+    '8d482800-32a3-4077-a4a5-fa2d091fa5ad',
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    'Elijah',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
+INSERT INTO Answers ( -- Elijah, Last name
+-- native / irl
+    answer_id,
+    userquestion_id,
+    user_id,
+    answer_value,
+    answer_state,
+    answer_created_at,
+    answer_updated_at
+)
+VALUES (
+    '934aa8d9-b94d-4d34-a614-89fc70969a8c',
+    '8f3de8ff-1b87-4348-8ba5-cffe8addfb40',
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    'Portgas',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
 INSERT INTO Answers ( -- Lucario, First name
 -- native / pinned
     answer_id,
@@ -316,7 +356,7 @@ INSERT INTO Answers ( -- Lucario, Last name
 VALUES (
     'dd229a19-3cd5-484f-bd74-17d2ae62aa49',
     'df9d751b-5c8a-4002-8b29-342775caa468',
-    'd3c9e450-799a-42d9-a011-6d10b52fc4bd',
+    'c023df48-15a8-4d81-a19a-655a6f766655',
     'Earthbound',
     'LIVE',
     now(),

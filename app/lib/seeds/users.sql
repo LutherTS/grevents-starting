@@ -117,7 +117,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Users ( -- Elijah / El-Hadj
--- NEW, NO CONTACTS, NO ANSWERS --
+-- NEW, for creating contact through find. --
     user_id,
     user_username,
     user_email,
@@ -140,10 +140,8 @@ VALUES (
     now()
 ); -- Done. 
 
--- Fiona here, for creating contact through find. 
-
 INSERT INTO Users ( -- Fiona / FioTriangle
--- NEW, for creating contact through find. --
+-- NEW, no contacts, no answers --
     user_id,
     user_username,
     user_email,

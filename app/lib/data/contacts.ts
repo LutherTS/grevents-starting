@@ -10,7 +10,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { UserQuestion } from "../definitions/userquestions";
 
-/* Improved, so no longer is use.
+/* Improved, so no longer is use. Previously:
 // Going to need this improved to exclude current userQuestionFriends on userQuestion. 
 export async function fetchAllUserFriends(user: User) {
   noStore();

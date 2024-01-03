@@ -273,6 +273,44 @@ VALUES (
     now()
 ); -- Done. 
 
+INSERT INTO UserQuestions ( -- Elijah, First name
+-- native / pinned
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_is_pinned,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '8d482800-32a3-4077-a4a5-fa2d091fa5ad',
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    'e118c30f-3a4a-4cb3-bf9a-67d04dc177a4',
+    'LIVE',
+    TRUE,
+    now(),
+    now()
+); -- Done.
+
+INSERT INTO UserQuestions ( -- Elijah, Last name
+-- native / irl
+    userquestion_id,
+    user_id,
+    question_id,
+    userquestion_state,
+    userquestion_created_at,
+    userquestion_updated_at
+)
+VALUES (
+    '8f3de8ff-1b87-4348-8ba5-cffe8addfb40',
+    '5b173d8d-a214-41b4-967c-c1f781c56253',
+    '2a389094-1259-4a3d-8126-8635aeab39fc',
+    'LIVE',
+    now(),
+    now()
+); -- Done.
+
 INSERT INTO UserQuestions ( -- Lucario, First name
 -- native / pinned
     userquestion_id,

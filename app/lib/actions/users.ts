@@ -6,6 +6,9 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import uid from "uid2";
+import { findUserByFriendCode } from "../data/users";
+import { gatherContactByUserAndUsername } from "../data/contacts";
+import { v4 as uuidv4 } from "uuid";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -252,6 +255,120 @@ export async function createOrFindContactsByFriendCode(
   console.log(otherUserFriendCode);
   console.log(user.user_id);
 
-  noStore();
   // Ready to try previous code and then to communicate with the database.
+
+  const otherUser = await findUserByFriendCode(otherUserFriendCode);
+  console.log(otherUser);
+
+  if (otherUser === undefined) {
+    return {
+      message: "Database Error. A User Could Not Be Found.",
+    };
+  }
+
+  if (otherUser.user_friend_code === user.user_friend_code) {
+    return {
+      message: "Database Error. ...That's Your Own Friend Code.",
+    };
+  }
+
+  const userOtherUserContact = await gatherContactByUserAndUsername(
+    user,
+    otherUser.user_username,
+  );
+  console.log(userOtherUserContact);
+
+  if (userOtherUserContact === undefined) {
+    const generatedUserOtherUserContactID = uuidv4();
+    const generatedOtherUserUserContactID = uuidv4();
+
+    noStore();
+
+    try {
+      const data = await sql`
+        INSERT INTO Contacts ( -- user and otherUser
+            contact_id,
+            user_first_id,
+            user_last_id,
+            contact_state,
+            contact_kind,
+            contact_created_at,
+            contact_updated_at
+        )
+        VALUES ( -- from user to otherUser
+            ${generatedUserOtherUserContactID},
+            ${user.user_id},
+            ${otherUser.user_id},
+            'LIVE',
+            'NONE',
+            now(),
+            now()
+        ), ( -- from otherUser to user
+            ${generatedOtherUserUserContactID},
+            ${otherUser.user_id},
+            ${user.user_id},
+            'LIVE',
+            'NONE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Create Contacts.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Contacts -- mirror contact from otherUser to user
+        SET 
+            contact_mirror_id = ${generatedOtherUserUserContactID},
+            contact_updated_at = now()
+        WHERE contact_id = ${generatedUserOtherUserContactID}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Contact.",
+      };
+    }
+
+    try {
+      const data = await sql`
+        UPDATE Contacts -- mirror contact from user to otherUser
+        SET 
+            contact_mirror_id = ${generatedUserOtherUserContactID},
+            contact_updated_at = now()
+        WHERE contact_id = ${generatedOtherUserUserContactID}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Contact.",
+      };
+    }
+
+    // Missing notification on generatedUserOtherUserContactID
+    // to confirm access to otherUser's profile page.
+
+    // Missing notification on generatedOtherUserUserContactID
+    // to confirm access to user has accessed their profile page
+    // on their Notifications page.
+
+    revalidatePath(`/users/${otherUser.user_username}/profile`);
+    redirect(`/users/${otherUser.user_username}/profile`);
+  }
+
+  if (userOtherUserContact) {
+    // Missing notification on generatedUserOtherUserContactID
+    // to confirm return to otherUser's profile page.
+
+    revalidatePath(`/users/${otherUser.user_username}/profile`);
+    redirect(`/users/${otherUser.user_username}/profile`);
+  }
 }
