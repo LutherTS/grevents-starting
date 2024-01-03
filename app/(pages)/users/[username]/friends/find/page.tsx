@@ -1,6 +1,6 @@
 import {
   fetchUserByUsername,
-  findOtherUserByFriendCodeAgainstUser,
+  // findOtherUserByFriendCodeAgainstUser,
 } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
@@ -53,12 +53,12 @@ export default async function FindContactsPage({
   };
 
   const username = params.username;
-  const friendCode = searchParams?.friendcode || "";
+  // const friendCode = searchParams?.friendcode || "";
   const user = await fetchUserByUsername(username);
-  const friendCodeUser = await findOtherUserByFriendCodeAgainstUser(
-    friendCode,
-    user,
-  );
+  // const friendCodeUser = await findOtherUserByFriendCodeAgainstUser(
+  //   friendCode,
+  //   user,
+  // );
 
   if (!user) {
     notFound();
@@ -74,11 +74,11 @@ export default async function FindContactsPage({
         <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
         <BackToDashboardLink session={session} />
         <p className="mt-2">
-          Find a user by their friend code. (Temporarily friendcode in
-          searchParams.)
+          Find a user by their friend code.
+          {/* (Temporarily friendcode in searchParams.) */}
         </p>
-        <FriendCodeInputForm friendCode={friendCode} user={user} />
-        {friendCode !== "" && (
+        <FriendCodeInputForm user={user} />
+        {/* {friendCode !== "" && (
           <>
             {friendCodeUser ? (
               <p className="mt-2 font-semibold">friendcode: {friendCode}</p>
@@ -95,7 +95,7 @@ export default async function FindContactsPage({
               {friendCodeUser.user_username} / {friendCodeUser.user_friend_code}
             </p>
           </>
-        )}
+        )} */}
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
         <PageLink href={`/users/${username}/previews`} name={`See previews`} />
       </div>

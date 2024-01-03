@@ -199,13 +199,12 @@ export function ButtonDeleteUserQuestionFriendForm({
 }
 
 export function FriendCodeInputForm({
-  friendCode,
+  // friendCode,
   user,
 }: {
-  friendCode: string;
+  // friendCode: string;
   user: User;
 }) {
-  /* Initialisation des requierements de l'action de formulaire */
   const initialState: CreateOrFindContactsByFriendCodeFormState = {
     errors: {},
     message: null,
@@ -224,8 +223,7 @@ export function FriendCodeInputForm({
         action={formAction}
         // A form action will be required in order to show error messages.
       >
-        <FriendCodeInput friendCode={friendCode} />
-        Idées de format d'erreurs
+        <FriendCodeInput />
         {state && state.errors?.otherUserFriendCode ? (
           <div id="question-id-native-not-irl-error" aria-live="polite">
             {state.errors.otherUserFriendCode.map((error: string) => (
