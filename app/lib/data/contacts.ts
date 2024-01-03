@@ -215,7 +215,9 @@ export async function gatherContactByUserAndUsername(
               c2.contact_kind c2_contact_kind, 
               c2.contact_blocking c2_contact_blocking, 
               c1.contact_id c1_contact_id, 
-              c1.contact_mirror_id c1_contact_mirror_id 
+              c1.contact_mirror_id c1_contact_mirror_id,
+              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              c2.contact_status_other_profile c2_contact_status_other_profile -- NEW
           FROM Contacts c1
 
           JOIN Users u ON c1.user_last_id = u.user_id
@@ -419,6 +421,7 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   }
 }
 
+// Note: for all single contacts used for validation, the user whose username is in the URL is considered the user_first.
 export async function findContactByUserAndSession(
   user: User,
   session: { [K in "user"]: User } | null,
@@ -438,7 +441,9 @@ export async function findContactByUserAndSession(
               c1.contact_id c1_contact_id, 
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
-              c1.user_last_id c1_user_last_id 
+              c1.user_last_id c1_user_last_id,
+              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              c2.contact_status_other_profile c2_contact_status_other_profile -- NEW
           FROM Contacts c1
 
           JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id

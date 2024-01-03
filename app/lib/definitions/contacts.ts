@@ -16,6 +16,8 @@ export type GatheredContact = {
   c2_contact_blocking: boolean;
   c1_contact_id: string;
   c1_contact_mirror_id: string;
+  c1_contact_status_profile: string;
+  c2_contact_status_other_profile: string;
 };
 
 export type Block = {
@@ -31,4 +33,8 @@ export type FoundContact = {
   c2_contact_blocking: boolean;
   c1_contact_id: string;
   c1_contact_mirror_id: string;
+  c1_user_first_id: string;
+  c1_user_last_id: string;
+  c1_contact_status_profile: string;
+  c2_contact_status_other_profile: string;
 };

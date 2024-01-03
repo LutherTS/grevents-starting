@@ -1,9 +1,11 @@
 "use client";
 
+import { resetContactStatusPersonalInfo } from "@/app/lib/actions/contacts";
 import {
   resetUserStatusDashboard,
   resetUserStatusPersonalInfo,
 } from "@/app/lib/actions/users";
+import { FoundContact } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
 
 export function Toast({
@@ -169,6 +171,42 @@ export function UserCustomCriteriaAdded({ user }: { user: User }) {
     <>
       <Toast action={() => resetUserStatusPersonalInfo(user)}>
         <p className="mb-2 text-green-500">Custom criteria added</p>
+      </Toast>
+    </>
+  );
+}
+
+export function ContactFirstAccessThroughFind({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <Toast action={() => resetContactStatusPersonalInfo(contact, user)}>
+        <p className="mb-2 text-green-500">
+          {user.user_app_wide_name}&apos;s profile found
+        </p>
+      </Toast>
+    </>
+  );
+}
+
+export function ContactReaccessThroughFind({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <Toast action={() => resetContactStatusPersonalInfo(contact, user)}>
+        <p className="mb-2 text-green-500">
+          {user.user_app_wide_name}&apos;s profile found once more
+        </p>
       </Toast>
     </>
   );

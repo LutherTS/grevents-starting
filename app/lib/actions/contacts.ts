@@ -1,6 +1,10 @@
 "use server";
 
 import { z } from "zod";
+import { FoundContact } from "../definitions/contacts";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
+import { sql } from "@vercel/postgres";
+import { User } from "../definitions/users";
 
 // Commencer avec le schéma zod complet de la table Contacts
 
@@ -127,3 +131,28 @@ const ContactSchema = z.object({
 */
 
 // Eventually, update the tables and the z schemas so that _ids are all UUIDs.
+
+export async function resetContactStatusPersonalInfo(
+  contact: FoundContact,
+  user: User,
+) {
+  noStore();
+
+  try {
+    const data = await sql`
+      UPDATE Contacts
+      SET 
+          contact_status_other_profile = 'NONE',
+          contact_updated_at = now()
+      WHERE contact_id = ${contact.c1_contact_mirror_id}
+      RETURNING * -- to make sure
+    `;
+    console.log(data.rows);
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Status Other Profile.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}

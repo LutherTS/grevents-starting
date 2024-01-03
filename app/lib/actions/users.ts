@@ -354,11 +354,13 @@ export async function createOrFindContactsByFriendCode(
     }
 
     // Missing notification on generatedUserOtherUserContactID
-    // to confirm access to otherUser's profile page.
+    // to confirm to user access to otherUser's profile page.
+    // contact_status_other_profile (one)
 
     // Missing notification on generatedOtherUserUserContactID
-    // to confirm access to user has accessed their profile page
+    // to confirm to otherUser user has accessed their profile page
     // on their Notifications page.
+    // contact_status_profile (many)
 
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
@@ -367,6 +369,11 @@ export async function createOrFindContactsByFriendCode(
   if (userOtherUserContact) {
     // Missing notification on generatedUserOtherUserContactID
     // to confirm return to otherUser's profile page.
+    // contact_status_other_profile (one)
+
+    // Other user ABSOLUTELY DO NOT NEED TO KNOW ABOUT REVISITS.
+    // For example, they don't need to know that user came back to
+    // their profile to remember their birthday.
 
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
