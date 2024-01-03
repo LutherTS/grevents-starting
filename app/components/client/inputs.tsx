@@ -72,6 +72,7 @@ export function UserLastInput({ userLast }: { userLast: string }) {
         name="userlast"
         placeholder={userLast}
         disabled={status.pending}
+        required
       />
     </>
   );
@@ -89,6 +90,7 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
         name="relcombo"
         placeholder={relCombo}
         disabled={status.pending}
+        required
       />
     </>
   );

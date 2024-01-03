@@ -140,6 +140,8 @@ VALUES (
     now()
 ); -- Done. 
 
+-- Fiona here, for creating contact through find. 
+
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,
     user_username,
