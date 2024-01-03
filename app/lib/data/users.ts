@@ -3,6 +3,26 @@ import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
+/* Trying to turn oRetry into a function I can reuse.
+export async function fetchWithRetry(data: any | Function) {
+  noStore();
+  // console.log(friendCode);
+  try {
+    const run = async () => {
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch friend code user data.");
+  }
+}
+}
+*/
+
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.
   // Therefore, there's no need to constantly revalidate.
@@ -10,6 +30,9 @@ export async function fetchUserByUsername(username: string) {
   // It doesn't change anything, they seem to have purposefully limit
   // the updates on the database by default, even if they show in RETURNING.
   // console.log(username);
+
+  // /*fetchWithRetry(data)*/
+
   try {
     const run = async () => {
       const data = await sql<User>`
