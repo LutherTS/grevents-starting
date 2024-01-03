@@ -196,15 +196,52 @@ export function ButtonDeleteUserQuestionFriendForm({
   );
 }
 
-export function FriendCodeInputForm({ friendCode }: { friendCode: string }) {
+export function FriendCodeInputForm({
+  friendCode,
+  // user,
+}: {
+  friendCode: string;
+  // user: User
+}) {
+  /* Initialisation des requierements de l'action de formulaire
+  const initialState: CreateOrFindContactsByFriendCodeFormState = {
+    errors: {},
+    message: null,
+  };
+  const createOrFindContactsByFriendCodeWithUser = createOrFindContactsByFriendCode.bind(
+    null,
+    user,
+  );
+  const [state, formAction] = useFormState(
+    createOrFindContactsByFriendCodeWithUser,
+    initialState,
+  );
+   */
+
   return (
     <>
       <form
         className="mt-2"
-        // action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
-        // No need for a form action, updating the searchParams is automatic.
+        // action={formAction}
+        // A form action will be required in order to show error messages.
       >
         <FriendCodeInput friendCode={friendCode} />
+        {/* Idées de format d'erreurs
+        {state && state.errors?.otherUserFriendCode ? (
+          <div id="question-id-native-not-irl-error" aria-live="polite">
+            {state.errors.otherUserFriendCode.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="native-not-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        */}
       </form>
     </>
   );

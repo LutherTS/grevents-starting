@@ -66,6 +66,13 @@ const UserSchema = z.object({
   userHasTemporaryPassword: z.boolean(),
   userCreatedAt: z.string().datetime(),
   userUpdatedAt: z.string().datetime(),
+  otherUserFriendCode: z
+    .string({
+      invalid_type_error: "Please type a friend code.",
+    })
+    .length(12, {
+      message: "A friend code is exactly 12 characters long.",
+    }),
 });
 
 const UpdateUserAppWideName = UserSchema.pick({ userAppWideName: true });
@@ -198,4 +205,53 @@ export async function resetUserStatusPersonalInfo(user: User) {
   revalidatePath(`/users/${user.user_username}/personal-info`);
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
   revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+}
+
+/* Note importante :
+La fonction createOrFindContactsByFriendCode sera placée dans ce fichier users.ts. 
+La convention sur laquelle je vais pour l'instant me baser est que les fonctions doivent être rangées à partir de leurs arguments plutôt que de leurs résultats. Ici, l'argument correspond à la table Users et le résultat correspond à la table Contacts. Il est donc plus simple de partir du schéma Zod présent sur ce fichier users.ts que d'avoir à configurer celui de contacts.ts à cet effet, spécifiquement parce que aucun champ de la table Contacts n'est requis pour ce formulaire.
+*/
+
+const CreateOrFindContactsByFriendCode = UserSchema.pick({
+  otherUserFriendCode: true,
+});
+
+export type CreateOrFindContactsByFriendCodeFormState = {
+  errors?: {
+    otherUserFriendCode?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function createOrFindContactsByFriendCode(
+  user: User,
+  prevState: CreateOrFindContactsByFriendCodeFormState | undefined,
+  formData: FormData,
+) {
+  console.log(user);
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("friendcode"));
+
+  const validatedFields = CreateOrFindContactsByFriendCode.safeParse({
+    otherUserFriendCode: formData.get("friendcode"),
+  });
+  console.log(CreateOrFindContactsByFriendCode);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message:
+        "Missing Fields. Failed to Create or Find Contacts by Friend Code.",
+    };
+  }
+
+  const { otherUserFriendCode } = validatedFields.data;
+
+  console.log(otherUserFriendCode);
+  console.log(user.user_id);
+
+  noStore();
+  // Ready to try previous code and then to communicate with the database.
 }
