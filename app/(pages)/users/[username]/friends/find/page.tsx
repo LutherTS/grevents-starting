@@ -77,7 +77,7 @@ export default async function FindContactsPage({
           Find a user by their friend code. (Temporarily friendcode in
           searchParams.)
         </p>
-        <FriendCodeInputForm friendCode={friendCode} />
+        <FriendCodeInputForm friendCode={friendCode} user={user} />
         {friendCode !== "" && (
           <>
             {friendCodeUser ? (

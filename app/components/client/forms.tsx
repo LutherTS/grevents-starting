@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  createOrFindContactsByFriendCode,
+  CreateOrFindContactsByFriendCodeFormState,
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
 } from "@/app/lib/actions/users";
@@ -198,35 +200,32 @@ export function ButtonDeleteUserQuestionFriendForm({
 
 export function FriendCodeInputForm({
   friendCode,
-  // user,
+  user,
 }: {
   friendCode: string;
-  // user: User
+  user: User;
 }) {
-  /* Initialisation des requierements de l'action de formulaire
+  /* Initialisation des requierements de l'action de formulaire */
   const initialState: CreateOrFindContactsByFriendCodeFormState = {
     errors: {},
     message: null,
   };
-  const createOrFindContactsByFriendCodeWithUser = createOrFindContactsByFriendCode.bind(
-    null,
-    user,
-  );
+  const createOrFindContactsByFriendCodeWithUser =
+    createOrFindContactsByFriendCode.bind(null, user);
   const [state, formAction] = useFormState(
     createOrFindContactsByFriendCodeWithUser,
     initialState,
   );
-   */
 
   return (
     <>
       <form
         className="mt-2"
-        // action={formAction}
+        action={formAction}
         // A form action will be required in order to show error messages.
       >
         <FriendCodeInput friendCode={friendCode} />
-        {/* Idées de format d'erreurs
+        Idées de format d'erreurs
         {state && state.errors?.otherUserFriendCode ? (
           <div id="question-id-native-not-irl-error" aria-live="polite">
             {state.errors.otherUserFriendCode.map((error: string) => (
@@ -241,7 +240,6 @@ export function FriendCodeInputForm({
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
-        */}
       </form>
     </>
   );
