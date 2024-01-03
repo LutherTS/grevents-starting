@@ -356,6 +356,23 @@ export async function createOrFindContactsByFriendCode(
     // Missing notification on generatedUserOtherUserContactID
     // to confirm to user access to otherUser's profile page.
     // contact_status_other_profile (one)
+    // Now below.
+
+    try {
+      const data = await sql`
+        UPDATE Contacts -- mirror contact
+        SET 
+            contact_status_other_profile = 'FIRSTACCESSTHROUGHFIND',
+            contact_updated_at = now()
+        WHERE contact_id = ${generatedUserOtherUserContactID}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Contact.",
+      };
+    }
 
     // Missing notification on generatedOtherUserUserContactID
     // to confirm to otherUser user has accessed their profile page
@@ -370,6 +387,23 @@ export async function createOrFindContactsByFriendCode(
     // Missing notification on generatedUserOtherUserContactID
     // to confirm return to otherUser's profile page.
     // contact_status_other_profile (one)
+    // Now below.
+
+    try {
+      const data = await sql`
+        UPDATE Contacts -- mirror contact
+        SET 
+            contact_status_other_profile = 'REACCESSTHROUGHFIND',
+            contact_updated_at = now()
+        WHERE contact_id = ${userOtherUserContact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update Contact.",
+      };
+    }
 
     // Other user ABSOLUTELY DO NOT NEED TO KNOW ABOUT REVISITS.
     // For example, they don't need to know that user came back to
