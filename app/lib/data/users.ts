@@ -3,32 +3,7 @@ import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
-/* Trying to turn pRetry into a function I can reuse.
-export async function fetchWithRetry(data: any | Function) {
-  noStore();
-  // console.log(friendCode);
-  try {
-    const run = async () => {
-      // console.log(data);
-      return data.rows[0];
-    };
-    const data = await pRetry(run, { retries: 5 });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch friend code user data.");
-  }
-}
-}
-*/
-
-/* I'll keep the way I'm using for now, especially because...
-Some harder queries could use more retries than easier ones.
-async function pRetry2(x: any) {
-  await pRetry(x, { retries: 5 });
-}
-*/
+export const DEFAULT_RETRIES = 5;
 
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.
@@ -66,8 +41,7 @@ export async function fetchUserByUsername(username: string) {
       // console.log(data);
       return data.rows[0];
     };
-    const data = await pRetry(run, { retries: 5 });
-    // /* const data = pRetry2(run); */
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
