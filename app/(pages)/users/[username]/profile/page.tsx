@@ -168,16 +168,25 @@ export default async function UserPage({
               </>
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "i-am-blocking" && (
-              <RelationCombinationIAmBlocking user={user} />
+            {foundContact && relCombo === "i-am-blocking" && (
+              <RelationCombinationIAmBlocking
+                user={user}
+                contact={foundContact}
+              />
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "has-me-blocked" && (
-              <RelationCombinationHasMeBlocked user={user} />
+            {foundContact && relCombo === "has-me-blocked" && (
+              <RelationCombinationHasMeBlocked
+                user={user}
+                contact={foundContact}
+              />
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "blocking-blocked" && (
-              <RelationCombinationBlockingBlocked user={user} />
+            {foundContact && relCombo === "blocking-blocked" && (
+              <RelationCombinationBlockingBlocked
+                user={user}
+                contact={foundContact}
+              />
             )}
           </>
         ) : (

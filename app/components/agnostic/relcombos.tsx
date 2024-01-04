@@ -9,7 +9,16 @@ import {
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 import { ActionLink } from "./links";
-import { SendFriendRequestForm, UnfriendForm } from "../client/forms";
+import {
+  BlockBackForm,
+  BlockForm,
+  DowngradeFriendshipToIrlForm,
+  SendFriendRequestForm,
+  UnblockForm,
+  UnblockIfThatsOKWithYouForm,
+  UnfriendForm,
+  UpgradeFriendshipToIrlForm,
+} from "../client/forms";
 
 export function RelationCombinationNone({
   user,
@@ -20,9 +29,8 @@ export function RelationCombinationNone({
 }) {
   return (
     <>
-      {/* <ActionLink>Send friend request</ActionLink> */}
       <SendFriendRequestForm user={user} contact={contact} />
-      <ActionLink>Block</ActionLink>
+      <BlockForm user={user} contact={contact} />
     </>
   );
 }
@@ -72,7 +80,30 @@ export function RelationCombinationIrl({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationIAmBlocking({ user }: { user: User }) {
+export function RelationCombinationIAmBlocking({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <p className="mt-2 font-semibold text-red-500">
+        YOU CAN NO LONGER ACCESS ANY OF THE INFORMATION OF{" "}
+        {user.user_username.toUpperCase()} ACROSS THE ENTIRE APPLICATION, FUTURE
+        COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
+      </p>
+      <BlockBackForm user={user} contact={contact} />
+    </>
+  );
+}
+
+export function RelationCombinationIAmBlockingQueried({
+  user,
+}: {
+  user: User;
+}) {
   return (
     <>
       <p className="mt-2 font-semibold text-red-500">
@@ -85,7 +116,30 @@ export function RelationCombinationIAmBlocking({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationHasMeBlocked({ user }: { user: User }) {
+export function RelationCombinationHasMeBlocked({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <p className="mt-2 font-semibold">
+        {user.user_username.toUpperCase()} CAN NO LONGER ACCESS ANY OF YOUR
+        INFORMATION ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND
+        FUTURE COMMON EVENTS INCLUDED.
+      </p>
+      <UnblockForm user={user} contact={contact} />
+    </>
+  );
+}
+
+export function RelationCombinationHasMeBlockedQueried({
+  user,
+}: {
+  user: User;
+}) {
   return (
     <>
       <p className="mt-2 font-semibold">
@@ -98,7 +152,32 @@ export function RelationCombinationHasMeBlocked({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationBlockingBlocked({ user }: { user: User }) {
+export function RelationCombinationBlockingBlocked({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <p className="mt-2 font-semibold text-red-500">
+        <span className="text-black dark:text-white">
+          YOU AND {user.user_username.toUpperCase()}
+        </span>{" "}
+        CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
+        APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
+      </p>
+      <UnblockIfThatsOKWithYouForm user={user} contact={contact} />
+    </>
+  );
+}
+
+export function RelationCombinationBlockingBlockedQueried({
+  user,
+}: {
+  user: User;
+}) {
   return (
     <>
       <p className="mt-2 font-semibold text-red-500">
@@ -132,7 +211,7 @@ export function RelationCombinationFriendCustom({
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
-      <ActionLink>Upgrade friendship to irl</ActionLink>
+      <UpgradeFriendshipToIrlForm user={user} contact={contact} />
       <UnfriendForm user={user} contact={contact} />
     </>
   );
@@ -168,7 +247,32 @@ export function RelationCombinationIrlCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
+        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+      </Suspense>
+      <DowngradeFriendshipToIrlForm user={user} contact={contact} />
+      <UnfriendForm user={user} contact={contact} />
+    </>
+  );
+}
+
+export function RelationCombinationIrlCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
 }) {
   return (
     <>

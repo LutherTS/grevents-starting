@@ -59,8 +59,12 @@ import {
 import { LinkButton } from "./buttons";
 import { revalidate } from "@/app/lib/actions/buttons";
 import {
+  block,
+  downgradeFriendshipFromIrl,
   sendFriendRequestButItsAutoFriend,
+  unblock,
   unfriend,
+  upgradeFriendshipToIrlButItsAutoIrl,
 } from "@/app/lib/actions/contacts";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
@@ -163,7 +167,47 @@ export function SendFriendRequestForm({
         className="mt-2"
         action={() => sendFriendRequestButItsAutoFriend(contact, user)}
       >
-        <LinkButton>Send friend request</LinkButton>
+        <LinkButton>Send friend request but it&apos;s auto friend</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UpgradeFriendshipToIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={() => upgradeFriendshipToIrlButItsAutoIrl(contact, user)}
+      >
+        <LinkButton>
+          Upgrade friendship to irl but it&apos;s auto irl
+        </LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function DowngradeFriendshipToIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={() => downgradeFriendshipFromIrl(contact, user)}
+      >
+        <LinkButton>Downgrade friendship from irl</LinkButton>
       </form>
     </>
   );
@@ -180,6 +224,70 @@ export function UnfriendForm({
     <>
       <form className="mt-2" action={() => unfriend(contact, user)}>
         <LinkButton>Unfriend</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function BlockForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => block(contact, user)}>
+        <LinkButton>Block</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UnblockForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => unblock(contact, user)}>
+        <LinkButton>Unblock</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function BlockBackForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => block(contact, user)}>
+        <LinkButton>Block back</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UnblockIfThatsOKWithYouForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => unblock(contact, user)}>
+        <LinkButton>Unblock if that&apos;s OK with you.</LinkButton>
       </form>
     </>
   );
