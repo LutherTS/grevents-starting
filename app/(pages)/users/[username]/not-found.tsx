@@ -1,5 +1,5 @@
 import { PageLink } from "@/app/components/agnostic/links";
-import { BackButton } from "@/app/components/client/buttons";
+import { BackButtonForm } from "@/app/components/client/forms";
 
 export default function UserNotFound() {
   return (
@@ -8,7 +8,7 @@ export default function UserNotFound() {
         <div className="max-w-prose text-center">
           <p className="mt-2">Could not find requested user.</p>
           <PageLink href={`/`} name={`Return home`} />
-          <BackButton />
+          <BackButtonForm />
         </div>
       </main>
     </>

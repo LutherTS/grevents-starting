@@ -42,6 +42,7 @@ import {
   ButtonAddUserQuestionFriend,
   ButtonDeleteUserQuestionFriend,
   ButtonPseudoable,
+  Button,
 } from "./buttons";
 import { Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
@@ -56,6 +57,7 @@ import {
   NativeNotIrlQuestion,
 } from "@/app/lib/definitions/questions";
 import { LinkButton } from "./buttons";
+import { revalidate } from "@/app/lib/actions/buttons";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -139,6 +141,29 @@ export function UserFriendCodeUpdateForm({ user }: { user: User }) {
     <>
       <form className="mt-2" action={() => updateUserFriendCode(user)}>
         <LinkButton>Generate a new friend code</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function RevalidateButtonForm() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <form className="mt-4" action={() => revalidate(pathname)}>
+        <Button>Revalidate the data</Button>
+      </form>
+    </>
+  );
+}
+export function BackButtonForm() {
+  const router = useRouter();
+
+  return (
+    <>
+      <form className="mt-4" action={() => router.back()}>
+        <Button>Or go back to the previous page</Button>
       </form>
     </>
   );

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { RevalidateButton } from "@/app/components/client/buttons";
+import { RevalidateButtonForm } from "@/app/components/client/forms";
 import {
   AnswerValueDeleted,
   AnswerValueUpdated,
@@ -100,7 +100,7 @@ export default async function PersonalInfoPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
-        <RevalidateButton />
+        <RevalidateButtonForm />
       </div>
     </main>
   );

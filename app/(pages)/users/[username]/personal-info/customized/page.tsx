@@ -18,6 +18,7 @@ import {
   UserCustomCriteriaAdded,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
+import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
 
@@ -126,6 +127,7 @@ export default async function CustomizedPage({
           href={`/users/${username}/personal-info/standardized`}
           name={"To Standardized criteria"}
         />
+        <RevalidateButtonForm />
       </div>
     </main>
   );

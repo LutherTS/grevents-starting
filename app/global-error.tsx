@@ -1,7 +1,7 @@
 "use client";
 
 import { PageLink } from "@/app/components/agnostic/links";
-import { BackButton } from "@/app/components/client/buttons";
+import { BackButtonForm } from "@/app/components/client/forms";
 
 export default function ErrorPage({
   error,
@@ -25,7 +25,7 @@ export default function ErrorPage({
               everything failed.
             </p>
             <PageLink href={`/`} name={`Return home`} />
-            <BackButton />
+            <BackButtonForm />
           </div>
         </main>
       </body>
