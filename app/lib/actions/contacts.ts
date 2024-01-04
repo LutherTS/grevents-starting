@@ -103,3 +103,261 @@ export async function resetContactStatusPersonalInfo(
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }
+
+// The following functions are essentially temporary. Send friend request, Upgrade friendship to irl, Downgrade friendship from irl, Unfriend, along with Block, Block them back, Unblock, and Unblock if it's OK with you are meant to be processes, not actions.
+
+export async function updateContactKindToFriend(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'FRIEND',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Kind to Friend.",
+    };
+  }
+}
+
+export async function updateMirrorContactKindToFriend(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'FRIEND',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message:
+        "Database Error: Failed to Update Mirror Contact Kind to Friend.",
+    };
+  }
+}
+
+export async function updateContactKindToIrl(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'IRL',
+            contact_irl_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Kind to IRL.",
+    };
+  }
+}
+
+export async function updateMirrorContactKindToIrl(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'IRL',
+            contact_irl_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Mirror Contact Kind to IRL.",
+    };
+  }
+}
+
+export async function updateContactKindToNone(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Kind to None.",
+    };
+  }
+}
+
+export async function updateMirrorContactKindToNone(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Mirror Contact Kind to None.",
+    };
+  }
+}
+
+export async function updateContactBlocking(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_blocking = TRUE,
+            contact_blocked_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        -- because it's the session that blocks the user
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Blocking to True.",
+    };
+  }
+}
+
+export async function updateContactUnblocking(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_blocking = FALSE,
+            contact_blocked_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        -- because it's the session that blocks the user
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Blocking to False.",
+    };
+  }
+}
+
+// Now the component-called methods
+
+export async function sendFriendRequestButItsAutoFriend(
+  contact: FoundContact,
+  user: User,
+) {
+  await Promise.all([
+    updateContactKindToFriend(contact),
+    updateMirrorContactKindToFriend(contact),
+  ]);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function upgradeFriendshipToIrlButItsAutoIrl(
+  contact: FoundContact,
+  user: User,
+) {
+  await Promise.all([
+    updateContactKindToIrl(contact),
+    updateMirrorContactKindToIrl(contact),
+  ]);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function downgradeFriendshipFromIrl(
+  contact: FoundContact,
+  user: User,
+) {
+  await Promise.all([
+    updateContactKindToFriend(contact),
+    updateMirrorContactKindToFriend(contact),
+  ]);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function unfriend(contact: FoundContact, user: User) {
+  await Promise.all([
+    updateContactKindToNone(contact),
+    updateMirrorContactKindToNone(contact),
+  ]);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function block(contact: FoundContact, user: User) {
+  await updateContactBlocking(contact);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function unblock(contact: FoundContact, user: User) {
+  await updateContactUnblocking(contact);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
