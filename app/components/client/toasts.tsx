@@ -1,6 +1,9 @@
 "use client";
 
-import { resetContactStatusPersonalInfo } from "@/app/lib/actions/contacts";
+import {
+  resetContactStatusOtherProfile,
+  resetContactStatusRelationship,
+} from "@/app/lib/actions/contacts";
 import {
   resetUserStatusDashboard,
   resetUserStatusPersonalInfo,
@@ -199,7 +202,7 @@ export function ContactFirstAccessThroughFind({
 }) {
   return (
     <>
-      <ToastForm action={() => resetContactStatusPersonalInfo(contact, user)}>
+      <ToastForm action={() => resetContactStatusOtherProfile(contact, user)}>
         <ToastChild>{user.user_app_wide_name}&apos;s profile found</ToastChild>
       </ToastForm>
     </>
@@ -215,9 +218,155 @@ export function ContactReaccessThroughFind({
 }) {
   return (
     <>
-      <ToastForm action={() => resetContactStatusPersonalInfo(contact, user)}>
+      <ToastForm action={() => resetContactStatusOtherProfile(contact, user)}>
         <ToastChild>
           {user.user_app_wide_name}&apos;s profile found once more
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+// Penser à mettre en place un label dynamique sur les toasts comme précédemment avec les answers.
+
+export function ContactNowFriends({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You are now friends with {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNowIrls({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You are now irl friends with {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNoLongerFriends({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You are no longer friends with {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNoLongerIrls({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You are no longer irl friends with {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNowBlocking({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just blocked {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNowUnblocking({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just unblocked {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNowBlocked({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just been blocked by {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactNowUnblocked({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just been unblocked by {user.user_app_wide_name}
         </ToastChild>
       </ToastForm>
     </>

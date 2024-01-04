@@ -76,7 +76,7 @@ const ContactSchema = z.object({
 
 // Eventually, update the tables and the z schemas so that _ids are all UUIDs.
 
-export async function resetContactStatusPersonalInfo(
+export async function resetContactStatusOtherProfile(
   contact: FoundContact,
   user: User,
 ) {
@@ -98,6 +98,34 @@ export async function resetContactStatusPersonalInfo(
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Other Profile.",
+    };
+  }
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function resetContactStatusRelationship(
+  contact: FoundContact,
+  user: User,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_status_relationship = 'NONE',
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Status Relationship.",
     };
   }
 
@@ -303,6 +331,78 @@ export async function updateContactUnblocking(contact: FoundContact) {
   }
 }
 
+// Notification method
+
+export type ContactStatusRelationshipWithoutNone =
+  | "SENTFRIEND"
+  | "SENTIRL"
+  | "RECEIVEFRIEND"
+  | "RECEIVEIRL"
+  | "ANNULFRIEND"
+  | "ANNULIRL"
+  | "REFUSEDFRIEND"
+  | "REFUSEDIRL"
+  | "NOWFRIENDS"
+  | "NOWIRLS"
+  | "NOLONGERFRIENDS"
+  | "NOLONGERIRLS"
+  | "NOWBLOCKING"
+  | "NOWUNBLOCKING"
+  | "NOWBLOCKED"
+  | "NOWUNBLOCKED";
+
+export async function setContactStatusRelationship(
+  contact: FoundContact,
+  statusRelationship: ContactStatusRelationshipWithoutNone,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_status_relationship = ${statusRelationship},
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Status Relationship.",
+    };
+  }
+}
+
+export async function setMirrorContactStatusRelationship(
+  contact: FoundContact,
+  statusRelationship: ContactStatusRelationshipWithoutNone,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_status_relationship = ${statusRelationship},
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_kind}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Status Relationship.",
+    };
+  }
+}
+
 // Now the component-called methods
 
 export async function sendFriendRequestButItsAutoFriend(
@@ -313,6 +413,10 @@ export async function sendFriendRequestButItsAutoFriend(
     updateContactKindToFriend(contact),
     updateMirrorContactKindToFriend(contact),
   ]);
+
+  await setContactStatusRelationship(contact, "NOWFRIENDS");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOWFRIENDS");
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }
@@ -326,6 +430,10 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
     updateMirrorContactKindToIrl(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOWIRLS");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOWIRLS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -338,6 +446,10 @@ export async function downgradeFriendshipFromIrl(
     updateMirrorContactKindToFriend(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOLONGERIRLS");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOLONGERIRLS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -347,17 +459,29 @@ export async function unfriend(contact: FoundContact, user: User) {
     updateMirrorContactKindToNone(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOLONGERFRIENDS");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function block(contact: FoundContact, user: User) {
   await updateContactBlocking(contact);
 
+  await setContactStatusRelationship(contact, "NOWBLOCKING");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOWBLOCKED");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function unblock(contact: FoundContact, user: User) {
   await updateContactUnblocking(contact);
+
+  await setContactStatusRelationship(contact, "NOWUNBLOCKING");
+  // uncomment below when available for testing
+  // await setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED");
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }

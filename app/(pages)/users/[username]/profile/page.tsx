@@ -18,6 +18,14 @@ import {
 } from "@/app/lib/utils/relcombos";
 import {
   ContactFirstAccessThroughFind,
+  ContactNoLongerFriends,
+  ContactNoLongerIrls,
+  ContactNowBlocked,
+  ContactNowBlocking,
+  ContactNowFriends,
+  ContactNowIrls,
+  ContactNowUnblocked,
+  ContactNowUnblocking,
   ContactReaccessThroughFind,
 } from "@/app/components/client/toasts";
 
@@ -109,6 +117,7 @@ export default async function UserPage({
           <>
             {/* This is where toasts for accessing the other user profile, creating contacts then accessing the other user profile, and other circumstances, will be called. */}
             {foundContact &&
+              session.user !== user &&
               foundContact.c2_contact_status_other_profile ===
                 "FIRSTACCESSTHROUGHFIND" && (
                 <ContactFirstAccessThroughFind
@@ -117,12 +126,57 @@ export default async function UserPage({
                 />
               )}
             {foundContact &&
+              session.user !== user &&
               foundContact.c2_contact_status_other_profile ===
                 "REACCESSTHROUGHFIND" && (
                 <ContactReaccessThroughFind
                   contact={foundContact}
                   user={user}
                 />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "NOWFRIENDS" && (
+                <ContactNowFriends contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "NOWIRLS" && (
+                <ContactNowIrls contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship ===
+                "NOLONGERFRIENDS" && (
+                <ContactNoLongerFriends contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship ===
+                "NOLONGERIRLS" && (
+                <ContactNoLongerIrls contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "NOWBLOCKING" && (
+                <ContactNowBlocking contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship ===
+                "NOWUNBLOCKING" && (
+                <ContactNowUnblocking contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "NOWBLOCKED" && (
+                <ContactNowBlocked contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship ===
+                "NOWUNBLOCKED" && (
+                <ContactNowUnblocked contact={foundContact} user={user} />
               )}
             <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}
