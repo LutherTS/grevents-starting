@@ -5,6 +5,7 @@ import { FoundContact } from "../definitions/contacts";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
+import pRetry from "p-retry";
 
 // Commencer avec le schéma zod complet de la table Contacts
 
@@ -139,15 +140,18 @@ export async function resetContactStatusPersonalInfo(
   noStore();
 
   try {
-    const data = await sql`
-      UPDATE Contacts
-      SET 
-          contact_status_other_profile = 'NONE',
-          contact_updated_at = now()
-      WHERE contact_id = ${contact.c1_contact_mirror_id}
-      RETURNING * -- to make sure
-    `;
-    console.log(data.rows);
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_status_other_profile = 'NONE',
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Other Profile.",

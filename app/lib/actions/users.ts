@@ -9,6 +9,7 @@ import uid from "uid2";
 import { findUserByFriendCode } from "../data/users";
 import { gatherContactByUserAndUsername } from "../data/contacts";
 import { v4 as uuidv4 } from "uuid";
+import pRetry from "p-retry";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -118,7 +119,8 @@ export async function updateUserAppWideName(
   noStore();
 
   try {
-    const data = await sql`
+    const run = async () => {
+      const data = await sql`
       UPDATE Users
       SET 
           user_app_wide_name = ${userAppWideName},
@@ -127,7 +129,9 @@ export async function updateUserAppWideName(
       WHERE user_id = ${user.user_id}
       RETURNING * -- to make sure
     `;
-    console.log(data.rows);
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User App-Wide Name.",
@@ -142,7 +146,8 @@ export async function resetUserStatusDashboard(user: User) {
   noStore();
 
   try {
-    const data = await sql`
+    const run = async () => {
+      const data = await sql`
       UPDATE Users
       SET 
           user_status_dashboard = 'NONE',
@@ -150,7 +155,9 @@ export async function resetUserStatusDashboard(user: User) {
       WHERE user_id = ${user.user_id}
       RETURNING * -- to make sure
     `;
-    console.log(data.rows);
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Dashboard.",
@@ -166,7 +173,8 @@ export async function updateUserFriendCode(user: User) {
   const generatedFriendCode = uid(12);
 
   try {
-    const data = await sql`
+    const run = async () => {
+      const data = await sql`
       UPDATE Users
       SET 
           user_friend_code = ${generatedFriendCode},
@@ -175,7 +183,9 @@ export async function updateUserFriendCode(user: User) {
       WHERE user_id = ${user.user_id}
       RETURNING * -- to make sure
     `;
-    console.log(data.rows);
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Friend Code.",
@@ -190,7 +200,8 @@ export async function resetUserStatusPersonalInfo(user: User) {
   noStore();
 
   try {
-    const data = await sql`
+    const run = async () => {
+      const data = await sql`
       UPDATE Users
       SET 
           user_status_personal_info = 'NONE',
@@ -198,7 +209,9 @@ export async function resetUserStatusPersonalInfo(user: User) {
       WHERE user_id = ${user.user_id}
       RETURNING * -- to make sure
     `;
-    console.log(data.rows);
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Personal Info.",
@@ -285,7 +298,8 @@ export async function createOrFindContactsByFriendCode(
     noStore();
 
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
         INSERT INTO Contacts ( -- user and otherUser
             contact_id,
             user_first_id,
@@ -314,7 +328,9 @@ export async function createOrFindContactsByFriendCode(
         )
         RETURNING * -- to make sure
       `;
-      console.log(data.rows);
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
         message: "Database Error: Failed to Create Contacts.",
@@ -322,7 +338,8 @@ export async function createOrFindContactsByFriendCode(
     }
 
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
         UPDATE Contacts -- mirror contact from otherUser to user
         SET 
             contact_mirror_id = ${generatedOtherUserUserContactID},
@@ -330,7 +347,9 @@ export async function createOrFindContactsByFriendCode(
         WHERE contact_id = ${generatedUserOtherUserContactID}
         RETURNING * -- to make sure
       `;
-      console.log(data.rows);
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",
@@ -338,7 +357,8 @@ export async function createOrFindContactsByFriendCode(
     }
 
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
         UPDATE Contacts -- mirror contact from user to otherUser
         SET 
             contact_mirror_id = ${generatedUserOtherUserContactID},
@@ -346,7 +366,9 @@ export async function createOrFindContactsByFriendCode(
         WHERE contact_id = ${generatedOtherUserUserContactID}
         RETURNING * -- to make sure
       `;
-      console.log(data.rows);
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",
@@ -359,7 +381,8 @@ export async function createOrFindContactsByFriendCode(
     // Now below.
 
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
         UPDATE Contacts -- mirror contact
         SET 
             contact_status_other_profile = 'FIRSTACCESSTHROUGHFIND',
@@ -367,7 +390,9 @@ export async function createOrFindContactsByFriendCode(
         WHERE contact_id = ${generatedUserOtherUserContactID}
         RETURNING * -- to make sure
       `;
-      console.log(data.rows);
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",
@@ -390,7 +415,8 @@ export async function createOrFindContactsByFriendCode(
     // Now below.
 
     try {
-      const data = await sql`
+      const run = async () => {
+        const data = await sql`
         UPDATE Contacts -- mirror contact
         SET 
             contact_status_other_profile = 'REACCESSTHROUGHFIND',
@@ -398,7 +424,9 @@ export async function createOrFindContactsByFriendCode(
         WHERE contact_id = ${userOtherUserContact.c1_contact_id}
         RETURNING * -- to make sure
       `;
-      console.log(data.rows);
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",

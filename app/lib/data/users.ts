@@ -3,7 +3,7 @@ import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
-/* Trying to turn oRetry into a function I can reuse.
+/* Trying to turn pRetry into a function I can reuse.
 export async function fetchWithRetry(data: any | Function) {
   noStore();
   // console.log(friendCode);
@@ -20,6 +20,13 @@ export async function fetchWithRetry(data: any | Function) {
     throw new Error("Failed to fetch friend code user data.");
   }
 }
+}
+*/
+
+/* I'll keep the way I'm using for now, especially because...
+Some harder queries could use more retries than easier ones.
+async function pRetry2(x: any) {
+  await pRetry(x, { retries: 5 });
 }
 */
 
@@ -60,6 +67,7 @@ export async function fetchUserByUsername(username: string) {
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: 5 });
+    // /* const data = pRetry2(run); */
     // console.log(data);
     return data;
   } catch (error) {
