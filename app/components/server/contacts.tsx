@@ -11,13 +11,19 @@ import { Block, Friend } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { ButtonAddUserQuestionFriendForm } from "../client/forms";
+import Link from "next/link";
 
 export async function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
       <p className="mt-2">
-        <span className="font-semibold">{friend.user_app_wide_name}</span> /{" "}
-        {friend.user_username}
+        <Link
+          href={`/users/${friend.user_username}/profile`}
+          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
+        >
+          {friend.user_app_wide_name}
+        </Link>{" "}
+        / {friend.user_username}
       </p>
     </>
   );
@@ -139,8 +145,13 @@ export async function OneBlock({ block }: { block: Block }) {
   return (
     <>
       <p className="mt-2">
-        <span className="font-semibold">{block.user_app_wide_name}</span> /{" "}
-        {block.user_username}
+        <Link
+          href={`/users/${block.user_username}/profile`}
+          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
+        >
+          {block.user_app_wide_name}
+        </Link>{" "}
+        / {block.user_username}
       </p>
     </>
   );
