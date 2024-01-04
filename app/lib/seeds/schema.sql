@@ -94,15 +94,19 @@ CREATE TYPE contact_status_relationship AS ENUM (
     'NOWIRLS',
     'NOLONGERFRIENDS',
     'NOLONGERIRLS'
+    'NOWBLOCKING', -- added
+    'NOWUNBLOCKING', -- added
+    'NOWBLOCKED', -- added
+    'NOWUNBLOCKED' -- added
 ); -- Done.
 
-CREATE TYPE contact_status_blocking AS ENUM (
-    'NONE',
-    'NOWBLOCKING',
-    'NOWUNBLOCKING',
-    'NOWBLOCKED',
-    'NOWUNBLOCKED'
-); -- Done.
+-- CREATE TYPE contact_status_blocking AS ENUM ( -- to removed
+    -- 'NONE',
+    -- 'NOWBLOCKING', -- to remove
+    -- 'NOWUNBLOCKING', -- to remove
+    -- 'NOWBLOCKED', -- to remove
+    -- 'NOWUNBLOCKED' -- to remove
+-- ); -- Done.
 
 CREATE TYPE contact_status_profile AS ENUM (
     'NONE',
@@ -126,7 +130,7 @@ CREATE TABLE Contacts (
     contact_process_relationship contact_process_relationship DEFAULT 'NONE' NOT NULL,
     contact_status_relationship contact_status_relationship DEFAULT 'NONE' NOT NULL,
     contact_blocking boolean DEFAULT FALSE NOT NULL,
-    contact_status_blocking contact_status_blocking DEFAULT 'NONE' NOT NULL,
+    -- contact_status_blocking contact_status_blocking DEFAULT 'NONE' NOT NULL, -- removed
     contact_status_profile contact_status_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
     contact_status_other_profile contact_status_other_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
     contact_created_at timestamp NOT NULL,
