@@ -9,12 +9,19 @@ import {
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 import { ActionLink } from "./links";
+import { SendFriendRequestForm } from "../client/forms";
 
-export function RelationCombinationNone() {
-  // { user }: { user: User } // currently not required
+export function RelationCombinationNone({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
   return (
     <>
-      <ActionLink>Send friend request</ActionLink>
+      {/* <ActionLink>Send friend request</ActionLink> */}
+      <SendFriendRequestForm user={user} contact={contact} />
       <ActionLink>Block</ActionLink>
     </>
   );

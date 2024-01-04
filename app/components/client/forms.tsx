@@ -44,7 +44,7 @@ import {
   ButtonPseudoable,
   Button,
 } from "./buttons";
-import { Friend } from "@/app/lib/definitions/contacts";
+import { FoundContact, Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
 import {
@@ -58,6 +58,7 @@ import {
 } from "@/app/lib/definitions/questions";
 import { LinkButton } from "./buttons";
 import { revalidate } from "@/app/lib/actions/buttons";
+import { sendFriendRequestButItsAutoFriend } from "@/app/lib/actions/contacts";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -141,6 +142,25 @@ export function UserFriendCodeUpdateForm({ user }: { user: User }) {
     <>
       <form className="mt-2" action={() => updateUserFriendCode(user)}>
         <LinkButton>Generate a new friend code</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function SendFriendRequestForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={() => sendFriendRequestButItsAutoFriend(contact, user)}
+      >
+        <LinkButton>Send friend request</LinkButton>
       </form>
     </>
   );
