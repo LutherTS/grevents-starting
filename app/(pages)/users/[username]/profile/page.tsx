@@ -146,7 +146,9 @@ export default async function UserPage({
               </>
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
-            {relCombo === "none" && <RelationCombinationNone />}
+            {foundContact && relCombo === "none" && (
+              <RelationCombinationNone user={user} contact={foundContact} />
+            )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "friend" && foundContact && (
               <>

@@ -207,10 +207,15 @@ export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
 ) {
-  await Promise.all([
+  console.log(contact);
+  console.log(user);
+
+  const [updatedContact, eupdatedMirrorContact] = await Promise.all([
     updateContactKindToFriend(contact),
     updateMirrorContactKindToFriend(contact),
   ]);
+  console.log(updatedContact);
+  console.log(eupdatedMirrorContact);
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }

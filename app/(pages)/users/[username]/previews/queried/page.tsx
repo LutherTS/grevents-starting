@@ -9,12 +9,12 @@ import {
   relationCombinations,
 } from "@/app/lib/utils/relcombos";
 import {
-  RelationCombinationNone,
   RelationCombinationFriendCustom,
   RelationCombinationIrlCustom,
   RelationCombinationIAmBlocking,
   RelationCombinationHasMeBlocked,
   RelationCombinationBlockingBlocked,
+  RelationCombinationNoneQueried,
 } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
@@ -131,7 +131,7 @@ export default async function QueriedPreviewPage({
           }
         >
           {gatheredContact && relCombo === "none" && (
-            <RelationCombinationNone />
+            <RelationCombinationNoneQueried />
           )}
           {gatheredContact && relCombo === "friend" && (
             <>

@@ -27,6 +27,15 @@ export function RelationCombinationNone({
   );
 }
 
+export function RelationCombinationNoneQueried() {
+  return (
+    <>
+      <ActionLink>Send friend request</ActionLink>
+      <ActionLink>Block</ActionLink>
+    </>
+  );
+}
+
 export function RelationCombinationFriend({ user }: { user: User }) {
   return (
     <>
