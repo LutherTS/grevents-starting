@@ -35,7 +35,7 @@ export function RelationCombinationNone({
   );
 }
 
-export function RelationCombinationNoneQueried() {
+export function RelationCombinationNonePreview() {
   return (
     <>
       <ActionLink>Send friend request</ActionLink>
@@ -44,7 +44,7 @@ export function RelationCombinationNoneQueried() {
   );
 }
 
-export function RelationCombinationFriend({ user }: { user: User }) {
+export function RelationCombinationFriendPreview({ user }: { user: User }) {
   return (
     <>
       <Suspense
@@ -62,7 +62,7 @@ export function RelationCombinationFriend({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationIrl({ user }: { user: User }) {
+export function RelationCombinationIrlPreview({ user }: { user: User }) {
   return (
     <>
       <Suspense
@@ -99,7 +99,7 @@ export function RelationCombinationIAmBlocking({
   );
 }
 
-export function RelationCombinationIAmBlockingQueried({
+export function RelationCombinationIAmBlockingPreview({
   user,
 }: {
   user: User;
@@ -135,7 +135,7 @@ export function RelationCombinationHasMeBlocked({
   );
 }
 
-export function RelationCombinationHasMeBlockedQueried({
+export function RelationCombinationHasMeBlockedPreview({
   user,
 }: {
   user: User;
@@ -173,7 +173,7 @@ export function RelationCombinationBlockingBlocked({
   );
 }
 
-export function RelationCombinationBlockingBlockedQueried({
+export function RelationCombinationBlockingBlockedPreview({
   user,
 }: {
   user: User;

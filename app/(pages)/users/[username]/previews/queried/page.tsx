@@ -9,12 +9,12 @@ import {
   relationCombinations,
 } from "@/app/lib/utils/relcombos";
 import {
-  RelationCombinationNoneQueried,
+  RelationCombinationNonePreview,
   RelationCombinationFriendCustomQueried,
   RelationCombinationIrlCustomQueried,
-  RelationCombinationIAmBlockingQueried,
-  RelationCombinationHasMeBlockedQueried,
-  RelationCombinationBlockingBlockedQueried,
+  RelationCombinationIAmBlockingPreview,
+  RelationCombinationHasMeBlockedPreview,
+  RelationCombinationBlockingBlockedPreview,
 } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
@@ -131,7 +131,7 @@ export default async function QueriedPreviewPage({
           }
         >
           {gatheredContact && relCombo === "none" && (
-            <RelationCombinationNoneQueried />
+            <RelationCombinationNonePreview />
           )}
           {gatheredContact && relCombo === "friend" && (
             <>
@@ -150,13 +150,13 @@ export default async function QueriedPreviewPage({
             </>
           )}
           {gatheredContact && relCombo === "i-am-blocking" && (
-            <RelationCombinationIAmBlockingQueried user={user} />
+            <RelationCombinationIAmBlockingPreview user={user} />
           )}
           {gatheredContact && relCombo === "has-me-blocked" && (
-            <RelationCombinationHasMeBlockedQueried user={user} />
+            <RelationCombinationHasMeBlockedPreview user={user} />
           )}
           {gatheredContact && relCombo === "blocking-blocked" && (
-            <RelationCombinationBlockingBlockedQueried user={user} />
+            <RelationCombinationBlockingBlockedPreview user={user} />
           )}
         </Suspense>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />

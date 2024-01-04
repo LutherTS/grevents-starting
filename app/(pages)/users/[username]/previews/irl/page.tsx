@@ -1,6 +1,6 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
-import { RelationCombinationIrl } from "@/app/components/agnostic/relcombos";
+import { RelationCombinationIrlPreview } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
@@ -61,7 +61,7 @@ export default async function IrlPreviewPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Irl Preview.</H1>
         <BackToDashboardLink session={session} />
-        <RelationCombinationIrl user={user} />
+        <RelationCombinationIrlPreview user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       </div>
     </main>
