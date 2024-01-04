@@ -5,6 +5,7 @@ import {
   CreateOrFindContactsByFriendCodeFormState,
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
+  updateUserFriendCode,
 } from "@/app/lib/actions/users";
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
@@ -54,8 +55,9 @@ import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
 } from "@/app/lib/definitions/questions";
+import { LinkButton } from "./buttons";
 
-export function UserAppWideNameModify({ user }: { user: User }) {
+export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
     errors: {},
     message: null,
@@ -127,6 +129,16 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
             <p className="mt-2 text-red-500">{state.message}</p>
           </div>
         ) : null}
+      </form>
+    </>
+  );
+}
+
+export function UserFriendCodeUpdateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => updateUserFriendCode(user)}>
+        <LinkButton>Generate a new friend code</LinkButton>
       </form>
     </>
   );

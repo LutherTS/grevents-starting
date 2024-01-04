@@ -7,8 +7,9 @@ import {
 } from "@/app/lib/actions/users";
 import { FoundContact } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
+import { useFormStatus } from "react-dom";
 
-export function Toast({
+export function ToastForm({
   action,
   children,
 }: {
@@ -17,7 +18,24 @@ export function Toast({
 }) {
   return (
     <>
-      <button onClick={action}>{children}</button>
+      <form className="mb-2" action={action}>
+        {children}
+      </form>
+    </>
+  );
+}
+
+export function ToastChild({ children }: { children: React.ReactNode }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className="text-green-500 disabled:text-gray-500"
+      >
+        {children}
+      </button>
     </>
   );
 }
@@ -25,9 +43,9 @@ export function Toast({
 export function UserAppWideNameUpdated({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusDashboard(user)}>
-        <p className="mb-2 text-green-500">App-wide name updated</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusDashboard(user)}>
+        <ToastChild>App-wide name updated</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -35,9 +53,9 @@ export function UserAppWideNameUpdated({ user }: { user: User }) {
 export function UserFriendCodeUpdated({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusDashboard(user)}>
-        <p className="mb-2 text-green-500">Friend code updated</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusDashboard(user)}>
+        <ToastChild>Friend code updated</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -45,9 +63,9 @@ export function UserFriendCodeUpdated({ user }: { user: User }) {
 export function AnswerValueUpdated({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Answer value updated</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Answer value updated</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -55,9 +73,9 @@ export function AnswerValueUpdated({ user }: { user: User }) {
 export function AnswerValueDeleted({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Answer value deleted</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Answer value deleted</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -65,9 +83,9 @@ export function AnswerValueDeleted({ user }: { user: User }) {
 export function UserQuestionPinned({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Criteria pinned</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria pinned</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -75,9 +93,9 @@ export function UserQuestionPinned({ user }: { user: User }) {
 export function UserQuestionUnpinned({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Criteria unpinned</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria unpinned</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -85,9 +103,9 @@ export function UserQuestionUnpinned({ user }: { user: User }) {
 export function UserQuestionFriendCreated({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Criteria shared to friend</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria shared to friend</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -95,9 +113,9 @@ export function UserQuestionFriendCreated({ user }: { user: User }) {
 export function UserQuestionFriendDeleted({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Criteria unshared to friend</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria unshared to friend</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -105,11 +123,9 @@ export function UserQuestionFriendDeleted({ user }: { user: User }) {
 export function UserQuestionUppedToIrl({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">
-          Pseudonative criteria upped to irl
-        </p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Pseudonative criteria upped to irl</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -117,11 +133,9 @@ export function UserQuestionUppedToIrl({ user }: { user: User }) {
 export function UserQuestionDownedToIrl({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">
-          Pseudonative criteria downed from irl
-        </p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Pseudonative criteria downed from irl</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -129,9 +143,9 @@ export function UserQuestionDownedToIrl({ user }: { user: User }) {
 export function UserNativeCriteriaNotIrlAdded({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Native criteria added</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Native criteria added</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -139,9 +153,9 @@ export function UserNativeCriteriaNotIrlAdded({ user }: { user: User }) {
 export function UserNativeCriteriaIrlAdded({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Native irl criteria added</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Native irl criteria added</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -149,9 +163,9 @@ export function UserNativeCriteriaIrlAdded({ user }: { user: User }) {
 export function UserPseudonativeCriteriaNotIrlAdded({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Pseudonative criteria added</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Pseudonative criteria added</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -159,9 +173,9 @@ export function UserPseudonativeCriteriaNotIrlAdded({ user }: { user: User }) {
 export function UserPseudonativeCriteriaIrlAdded({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Pseudonative irl criteria added</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Pseudonative irl criteria added</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -169,9 +183,9 @@ export function UserPseudonativeCriteriaIrlAdded({ user }: { user: User }) {
 export function UserCustomCriteriaAdded({ user }: { user: User }) {
   return (
     <>
-      <Toast action={() => resetUserStatusPersonalInfo(user)}>
-        <p className="mb-2 text-green-500">Custom criteria added</p>
-      </Toast>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Custom criteria added</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -185,11 +199,9 @@ export function ContactFirstAccessThroughFind({
 }) {
   return (
     <>
-      <Toast action={() => resetContactStatusPersonalInfo(contact, user)}>
-        <p className="mb-2 text-green-500">
-          {user.user_app_wide_name}&apos;s profile found
-        </p>
-      </Toast>
+      <ToastForm action={() => resetContactStatusPersonalInfo(contact, user)}>
+        <ToastChild>{user.user_app_wide_name}&apos;s profile found</ToastChild>
+      </ToastForm>
     </>
   );
 }
@@ -203,11 +215,11 @@ export function ContactReaccessThroughFind({
 }) {
   return (
     <>
-      <Toast action={() => resetContactStatusPersonalInfo(contact, user)}>
-        <p className="mb-2 text-green-500">
+      <ToastForm action={() => resetContactStatusPersonalInfo(contact, user)}>
+        <ToastChild>
           {user.user_app_wide_name}&apos;s profile found once more
-        </p>
-      </Toast>
+        </ToastChild>
+      </ToastForm>
     </>
   );
 }
