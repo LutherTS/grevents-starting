@@ -59,11 +59,15 @@ import {
 import { LinkButton } from "./buttons";
 import { revalidate } from "@/app/lib/actions/buttons";
 import {
+  annulFriendRequest,
+  annulUpgradeFriendshipToIrl,
   block,
   downgradeFriendshipFromIrl,
+  sendFriendRequest,
   sendFriendRequestButItsAutoFriend,
   unblock,
   unfriend,
+  upgradeFriendshipToIrl,
   upgradeFriendshipToIrlButItsAutoIrl,
 } from "@/app/lib/actions/contacts";
 
@@ -289,7 +293,79 @@ export function UnblockIfThatsOKWithYouForm({
   return (
     <>
       <form className="mt-2" action={() => unblock(contact, user)}>
-        <LinkButton>Unblock if that&apos;s OK with you.</LinkButton>
+        <LinkButton>Unblock if that&apos;s OK with you</LinkButton>
+      </form>
+    </>
+  );
+}
+
+// Reprise
+
+export function SendFriendForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => sendFriendRequest(contact, user)}>
+        <LinkButton>Send friend request</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UpgradeToIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={() => upgradeFriendshipToIrl(contact, user)}
+      >
+        <LinkButton>Upgrade friendship to irl</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function AnnulFriendForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => annulFriendRequest(contact, user)}>
+        <LinkButton>Annul friend request</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function AnnulIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="mt-2"
+        action={() => annulUpgradeFriendshipToIrl(contact, user)}
+      >
+        <LinkButton>Annul irl upgrade request</LinkButton>
       </form>
     </>
   );

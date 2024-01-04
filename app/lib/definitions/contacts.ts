@@ -38,4 +38,6 @@ export type FoundContact = {
   c1_contact_status_profile: string;
   c2_contact_status_other_profile: string;
   c2_contact_status_relationship: string;
+  c2_contact_process_relationship: string;
+  c1_contact_process_relationship: string;
 };

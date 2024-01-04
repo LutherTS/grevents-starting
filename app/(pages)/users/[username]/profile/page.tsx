@@ -17,6 +17,8 @@ import {
   defineFoundRelCombo,
 } from "@/app/lib/utils/relcombos";
 import {
+  ContactAnnulFriend,
+  ContactAnnulIrl,
   ContactFirstAccessThroughFind,
   ContactNoLongerFriends,
   ContactNoLongerIrls,
@@ -27,6 +29,8 @@ import {
   ContactNowUnblocked,
   ContactNowUnblocking,
   ContactReaccessThroughFind,
+  ContactSentFriend,
+  ContactSentIrl,
 } from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
@@ -177,6 +181,26 @@ export default async function UserPage({
               foundContact.c2_contact_status_relationship ===
                 "NOWUNBLOCKED" && (
                 <ContactNowUnblocked contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "SENTFRIEND" && (
+                <ContactSentFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "SENTIRL" && (
+                <ContactSentIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "ANNULFRIEND" && (
+                <ContactAnnulFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user !== user &&
+              foundContact.c2_contact_status_relationship === "ANNULIRL" && (
+                <ContactAnnulIrl contact={foundContact} user={user} />
               )}
             <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}

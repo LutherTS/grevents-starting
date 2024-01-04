@@ -487,6 +487,14 @@ export async function sendFriendRequest(contact: FoundContact, user: User) {
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
+export async function annulFriendRequest(contact: FoundContact, user: User) {
+  await Promise.all([
+    setContactProcessRelationship(contact, "ANNULFRIEND"),
+    setContactStatusRelationship(contact, "ANNULFRIEND"),
+  ]);
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
 export async function upgradeFriendshipToIrlButItsAutoIrl(
   contact: FoundContact,
   user: User,
@@ -508,6 +516,17 @@ export async function upgradeFriendshipToIrl(
   await Promise.all([
     setContactProcessRelationship(contact, "SENTIRL"),
     setContactStatusRelationship(contact, "SENTIRL"),
+  ]);
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function annulUpgradeFriendshipToIrl(
+  contact: FoundContact,
+  user: User,
+) {
+  await Promise.all([
+    setContactProcessRelationship(contact, "ANNULIRL"),
+    setContactStatusRelationship(contact, "ANNULIRL"),
   ]);
   revalidatePath(`/users/${user.user_username}/profile`);
 }

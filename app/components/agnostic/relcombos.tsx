@@ -39,7 +39,16 @@ export function RelationCombinationNone({
     else // even if mirror ANNULFRIEND (user)
     SendFriendRequestForm
      */}
-      <SendFriendRequestForm user={user} contact={contact} />
+      {contact.c2_contact_process_relationship === "SENTFRIEND" && <></>}
+      {contact.c2_contact_process_relationship === "ANNULFRIEND" && <></>}
+      {contact.c1_contact_process_relationship === "SENTFRIEND" && <></>}
+      {contact.c2_contact_process_relationship !== "SENTFRIEND" &&
+        contact.c2_contact_process_relationship !== "ANNULFRIEND" &&
+        contact.c1_contact_process_relationship !== "SENTFRIEND" && (
+          <>
+            <SendFriendRequestForm user={user} contact={contact} />
+          </>
+        )}
       <BlockForm user={user} contact={contact} />
       {/* if SENTFRIEND (session)
     SentFriendDetails
@@ -238,7 +247,16 @@ export function RelationCombinationFriendCustom({
     else // even if mirror ANNULIRL (user)
     SendIrlRequestForm
      */}
-      <UpgradeFriendshipToIrlForm user={user} contact={contact} />
+      {contact.c2_contact_process_relationship === "SENTIRL" && <></>}
+      {contact.c2_contact_process_relationship === "ANNULIRL" && <></>}
+      {contact.c1_contact_process_relationship === "SENTIRL" && <></>}
+      {contact.c2_contact_process_relationship !== "SENTIRL" &&
+        contact.c2_contact_process_relationship !== "ANNULIRL" &&
+        contact.c1_contact_process_relationship !== "SENTIRL" && (
+          <>
+            <UpgradeFriendshipToIrlForm user={user} contact={contact} />
+          </>
+        )}
       <UnfriendForm user={user} contact={contact} />
       {/* if SENTFRIEND (session)
     SentFriendDetails
