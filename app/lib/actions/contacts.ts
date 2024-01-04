@@ -115,7 +115,7 @@ export async function updateContactKindToFriend(contact: FoundContact) {
         UPDATE Contacts
         SET 
             contact_kind = 'FRIEND',
-            contact_friend_at = now()
+            contact_friend_at = now(),
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
@@ -139,7 +139,7 @@ export async function updateMirrorContactKindToFriend(contact: FoundContact) {
         UPDATE Contacts
         SET 
             contact_kind = 'FRIEND',
-            contact_friend_at = now()
+            contact_friend_at = now(),
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_mirror_id}
         RETURNING * -- to make sure
@@ -164,7 +164,7 @@ export async function updateContactKindToIrl(contact: FoundContact) {
         UPDATE Contacts
         SET 
             contact_kind = 'IRL',
-            contact_irl_at = now()
+            contact_irl_at = now(),
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
@@ -188,7 +188,7 @@ export async function updateMirrorContactKindToIrl(contact: FoundContact) {
         UPDATE Contacts
         SET 
             contact_kind = 'IRL',
-            contact_irl_at = now()
+            contact_irl_at = now(),
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_mirror_id}
         RETURNING * -- to make sure
@@ -203,19 +203,62 @@ export async function updateMirrorContactKindToIrl(contact: FoundContact) {
   }
 }
 
+export async function updateContactKindToNone(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Kind to None.",
+    };
+  }
+}
+
+export async function updateMirrorContactKindToNone(contact: FoundContact) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_kind = 'NONE',
+            contact_friend_at = now(),
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Mirror Contact Kind to None.",
+    };
+  }
+}
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
 ) {
-  console.log(contact);
-  console.log(user);
-
-  const [updatedContact, eupdatedMirrorContact] = await Promise.all([
+  await Promise.all([
     updateContactKindToFriend(contact),
     updateMirrorContactKindToFriend(contact),
   ]);
-  console.log(updatedContact);
-  console.log(eupdatedMirrorContact);
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }
@@ -227,6 +270,15 @@ export async function sendIrlRequestButItsAutoIrl(
   await Promise.all([
     updateContactKindToIrl(contact),
     updateMirrorContactKindToIrl(contact),
+  ]);
+
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
+
+export async function unfriend(contact: FoundContact, user: User) {
+  await Promise.all([
+    updateContactKindToNone(contact),
+    updateMirrorContactKindToNone(contact),
   ]);
 
   revalidatePath(`/users/${user.user_username}/profile`);

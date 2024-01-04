@@ -9,7 +9,7 @@ import {
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 import { ActionLink } from "./links";
-import { SendFriendRequestForm } from "../client/forms";
+import { SendFriendRequestForm, UnfriendForm } from "../client/forms";
 
 export function RelationCombinationNone({
   user,
@@ -118,7 +118,32 @@ export function RelationCombinationFriendCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
+        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+      </Suspense>
+      <ActionLink>Upgrade friendship to irl</ActionLink>
+      <UnfriendForm user={user} contact={contact} />
+    </>
+  );
+}
+
+export function RelationCombinationFriendCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
 }) {
   return (
     <>

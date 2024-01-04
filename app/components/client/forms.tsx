@@ -58,7 +58,10 @@ import {
 } from "@/app/lib/definitions/questions";
 import { LinkButton } from "./buttons";
 import { revalidate } from "@/app/lib/actions/buttons";
-import { sendFriendRequestButItsAutoFriend } from "@/app/lib/actions/contacts";
+import {
+  sendFriendRequestButItsAutoFriend,
+  unfriend,
+} from "@/app/lib/actions/contacts";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -161,6 +164,22 @@ export function SendFriendRequestForm({
         action={() => sendFriendRequestButItsAutoFriend(contact, user)}
       >
         <LinkButton>Send friend request</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UnfriendForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="mt-2" action={() => unfriend(contact, user)}>
+        <LinkButton>Unfriend</LinkButton>
       </form>
     </>
   );
