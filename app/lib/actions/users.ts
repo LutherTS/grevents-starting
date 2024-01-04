@@ -61,7 +61,7 @@ const UserSchema = z.object({
   userAppWideName: z
     .string()
     .min(1, {
-      message: "Your app-wide name needs to be at least a character long.",
+      message: "Your app-wide name needs to be at least 1 character long.",
     })
     .max(50, {
       message: "Your app-wide name cannot be more than 50 characters long.",
@@ -121,14 +121,14 @@ export async function updateUserAppWideName(
   try {
     const run = async () => {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_app_wide_name = ${userAppWideName},
-          user_status_dashboard = 'APPWIDENAMEUPDATED',
-          user_updated_at = now()
-      WHERE user_id = ${user.user_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_app_wide_name = ${userAppWideName},
+            user_status_dashboard = 'APPWIDENAMEUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     };
     await pRetry(run, { retries: 5 });
@@ -148,13 +148,13 @@ export async function resetUserStatusDashboard(user: User) {
   try {
     const run = async () => {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_dashboard = 'NONE',
-          user_updated_at = now()
-      WHERE user_id = ${user.user_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_dashboard = 'NONE',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     };
     await pRetry(run, { retries: 5 });
@@ -175,14 +175,14 @@ export async function updateUserFriendCode(user: User) {
   try {
     const run = async () => {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_friend_code = ${generatedFriendCode},
-          user_status_dashboard = 'FRIENDCODEUPDATED',
-          user_updated_at = now()
-      WHERE user_id = ${user.user_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_friend_code = ${generatedFriendCode},
+            user_status_dashboard = 'FRIENDCODEUPDATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     };
     await pRetry(run, { retries: 5 });
@@ -202,13 +202,13 @@ export async function resetUserStatusPersonalInfo(user: User) {
   try {
     const run = async () => {
       const data = await sql`
-      UPDATE Users
-      SET 
-          user_status_personal_info = 'NONE',
-          user_updated_at = now()
-      WHERE user_id = ${user.user_id}
-      RETURNING * -- to make sure
-    `;
+        UPDATE Users
+        SET 
+            user_status_personal_info = 'NONE',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
       console.log(data.rows);
     };
     await pRetry(run, { retries: 5 });
@@ -268,8 +268,6 @@ export async function createOrFindContactsByFriendCode(
   console.log(otherUserFriendCode);
   console.log(user.user_id);
 
-  // Ready to try previous code and then to communicate with the database.
-
   const otherUser = await findUserByFriendCode(otherUserFriendCode);
   console.log(otherUser);
 
@@ -300,34 +298,34 @@ export async function createOrFindContactsByFriendCode(
     try {
       const run = async () => {
         const data = await sql`
-        INSERT INTO Contacts ( -- user and otherUser
-            contact_id,
-            user_first_id,
-            user_last_id,
-            contact_state,
-            contact_kind,
-            contact_created_at,
-            contact_updated_at
-        )
-        VALUES ( -- from user to otherUser
-            ${generatedUserOtherUserContactID},
-            ${user.user_id},
-            ${otherUser.user_id},
-            'LIVE',
-            'NONE',
-            now(),
-            now()
-        ), ( -- from otherUser to user
-            ${generatedOtherUserUserContactID},
-            ${otherUser.user_id},
-            ${user.user_id},
-            'LIVE',
-            'NONE',
-            now(),
-            now()
-        )
-        RETURNING * -- to make sure
-      `;
+          INSERT INTO Contacts ( -- user and otherUser
+              contact_id,
+              user_first_id,
+              user_last_id,
+              contact_state,
+              contact_kind,
+              contact_created_at,
+              contact_updated_at
+          )
+          VALUES ( -- from user to otherUser
+              ${generatedUserOtherUserContactID},
+              ${user.user_id},
+              ${otherUser.user_id},
+              'LIVE',
+              'NONE',
+              now(),
+              now()
+          ), ( -- from otherUser to user
+              ${generatedOtherUserUserContactID},
+              ${otherUser.user_id},
+              ${user.user_id},
+              'LIVE',
+              'NONE',
+              now(),
+              now()
+          )
+          RETURNING * -- to make sure
+        `;
         console.log(data.rows);
       };
       await pRetry(run, { retries: 5 });
@@ -340,13 +338,13 @@ export async function createOrFindContactsByFriendCode(
     try {
       const run = async () => {
         const data = await sql`
-        UPDATE Contacts -- mirror contact from otherUser to user
-        SET 
-            contact_mirror_id = ${generatedOtherUserUserContactID},
-            contact_updated_at = now()
-        WHERE contact_id = ${generatedUserOtherUserContactID}
-        RETURNING * -- to make sure
-      `;
+          UPDATE Contacts -- mirror contact from otherUser to user
+          SET 
+              contact_mirror_id = ${generatedOtherUserUserContactID},
+              contact_updated_at = now()
+          WHERE contact_id = ${generatedUserOtherUserContactID}
+          RETURNING * -- to make sure
+        `;
         console.log(data.rows);
       };
       await pRetry(run, { retries: 5 });
@@ -359,48 +357,44 @@ export async function createOrFindContactsByFriendCode(
     try {
       const run = async () => {
         const data = await sql`
-        UPDATE Contacts -- mirror contact from user to otherUser
-        SET 
-            contact_mirror_id = ${generatedUserOtherUserContactID},
-            contact_updated_at = now()
-        WHERE contact_id = ${generatedOtherUserUserContactID}
-        RETURNING * -- to make sure
-      `;
+          UPDATE Contacts -- mirror contact from user to otherUser
+          SET 
+              contact_mirror_id = ${generatedUserOtherUserContactID},
+              contact_updated_at = now()
+          WHERE contact_id = ${generatedOtherUserUserContactID}
+          RETURNING * -- to make sure
+        `;
         console.log(data.rows);
       };
       await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
-        message: "Database Error: Failed to Update Contact.",
+        message: "Database Error: Failed to Update Mirror Contact.",
       };
     }
-
-    // Missing notification on generatedUserOtherUserContactID
-    // to confirm to user access to otherUser's profile page.
-    // contact_status_other_profile (one)
-    // Now below.
 
     try {
       const run = async () => {
         const data = await sql`
-        UPDATE Contacts -- mirror contact
-        SET 
-            contact_status_other_profile = 'FIRSTACCESSTHROUGHFIND',
-            contact_updated_at = now()
-        WHERE contact_id = ${generatedUserOtherUserContactID}
-        RETURNING * -- to make sure
-      `;
+          UPDATE Contacts -- mirror contact
+          SET 
+              contact_status_other_profile = 'FIRSTACCESSTHROUGHFIND',
+              contact_updated_at = now()
+          WHERE contact_id = ${generatedUserOtherUserContactID}
+          RETURNING * -- to make sure
+        `;
         console.log(data.rows);
       };
       await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
-        message: "Database Error: Failed to Update Contact.",
+        message:
+          "Database Error: Failed to Update Contact Status Other Profile.",
       };
     }
 
     // Missing notification on generatedOtherUserUserContactID
-    // to confirm to otherUser user has accessed their profile page
+    // to confirm to otherUser that user has accessed their profile page
     // on their Notifications page.
     // contact_status_profile (many)
 
@@ -409,27 +403,25 @@ export async function createOrFindContactsByFriendCode(
   }
 
   if (userOtherUserContact) {
-    // Missing notification on generatedUserOtherUserContactID
-    // to confirm return to otherUser's profile page.
-    // contact_status_other_profile (one)
-    // Now below.
+    noStore();
 
     try {
       const run = async () => {
         const data = await sql`
-        UPDATE Contacts -- mirror contact
-        SET 
-            contact_status_other_profile = 'REACCESSTHROUGHFIND',
-            contact_updated_at = now()
-        WHERE contact_id = ${userOtherUserContact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
+          UPDATE Contacts -- mirror contact
+          SET 
+              contact_status_other_profile = 'REACCESSTHROUGHFIND',
+              contact_updated_at = now()
+          WHERE contact_id = ${userOtherUserContact.c1_contact_id}
+          RETURNING * -- to make sure
+        `;
         console.log(data.rows);
       };
       await pRetry(run, { retries: 5 });
     } catch (error) {
       return {
-        message: "Database Error: Failed to Update Contact.",
+        message:
+          "Database Error: Failed to Update Contact Status Other Profile.",
       };
     }
 
