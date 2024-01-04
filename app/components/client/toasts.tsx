@@ -372,3 +372,77 @@ export function ContactNowUnblocked({
     </>
   );
 }
+
+export function ContactSentFriend({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just sent a friend request to {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactSentIrl({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just sent an irl request to {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactAnnulFriend({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just annulled your friend request to{" "}
+          {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactAnnulIrl({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just annulled your irl request to{" "}
+          {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}

@@ -242,6 +242,11 @@ export default async function UserPage({
                 contact={foundContact}
               />
             )}
+
+            <PageLink
+              href={`/users/${session.user.user_username}/friends`}
+              name={`back to your friends`}
+            />
           </>
         ) : (
           <>

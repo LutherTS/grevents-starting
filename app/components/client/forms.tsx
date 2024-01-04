@@ -166,6 +166,7 @@ export function SendFriendRequestForm({
       <form
         className="mt-2"
         action={() => sendFriendRequestButItsAutoFriend(contact, user)}
+        // action={() => sendFriendRequest(contact, user)}
       >
         <LinkButton>Send friend request but it&apos;s auto friend</LinkButton>
       </form>
@@ -185,6 +186,7 @@ export function UpgradeFriendshipToIrlForm({
       <form
         className="mt-2"
         action={() => upgradeFriendshipToIrlButItsAutoIrl(contact, user)}
+        // action={() => upgradeFriendshipToIrl(contact, user)}
       >
         <LinkButton>
           Upgrade friendship to irl but it&apos;s auto irl

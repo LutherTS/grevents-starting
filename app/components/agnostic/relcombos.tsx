@@ -29,8 +29,25 @@ export function RelationCombinationNone({
 }) {
   return (
     <>
+      {/* if SENTFRIEND (session)
+    AnnulFriendRequestForm
+    else if ANNULFRIEND (session)
+    AnnulledFriendCannotSend
+    else if mirror SENTFRIEND (user)
+    DeclineFriendRequestForm
+    AcceptFriendRequestForm
+    else // even if mirror ANNULFRIEND (user)
+    SendFriendRequestForm
+     */}
       <SendFriendRequestForm user={user} contact={contact} />
       <BlockForm user={user} contact={contact} />
+      {/* if SENTFRIEND (session)
+    SentFriendDetails
+    else if ANNULFRIEND (session)
+    AnnulFriendDetails
+    else if mirror SENTFRIEND (user)
+    MirrorSentFriendDetails
+     */}
     </>
   );
 }
@@ -211,8 +228,25 @@ export function RelationCombinationFriendCustom({
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
+      {/* if SENTIRL (session)
+    AnnulIrlRequestForm
+    else if ANNULIRL (session)
+    AnnulledIrlCannotSend 
+    else if mirror SENTIRL (user)
+    DeclineIrlRequestForm
+    AcceptIrlRequestForm
+    else // even if mirror ANNULIRL (user)
+    SendIrlRequestForm
+     */}
       <UpgradeFriendshipToIrlForm user={user} contact={contact} />
       <UnfriendForm user={user} contact={contact} />
+      {/* if SENTFRIEND (session)
+    SentFriendDetails
+    else if ANNULFRIEND (session)
+    AnnulFriendDetails
+    else if mirror SENTFRIEND (user)
+    MirrorSentFriendDetails
+     */}
     </>
   );
 }

@@ -331,7 +331,7 @@ export async function updateContactUnblocking(contact: FoundContact) {
   }
 }
 
-// Notification method
+// Notification methods
 
 export type ContactStatusRelationshipWithoutNone =
   | "SENTFRIEND"
@@ -403,6 +403,66 @@ export async function setMirrorContactStatusRelationship(
   }
 }
 
+// Process methods
+
+export type ContactProcessRelationshipWithoutNone =
+  | "SENTFRIEND"
+  | "SENTIRL"
+  | "ANNULFRIEND"
+  | "ANNULIRL";
+
+export async function setContactProcessRelationship(
+  contact: FoundContact,
+  processRelationship: ContactProcessRelationshipWithoutNone,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact__process_relationship = ${processRelationship},
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_mirror_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Process Relationship.",
+    };
+  }
+}
+
+export async function setMirrorContactProcessRelationship(
+  contact: FoundContact,
+  processRelationship: ContactProcessRelationshipWithoutNone,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact__process_relationship = ${processRelationship},
+            contact_updated_at = now()
+        WHERE contact_id = ${contact.c1_contact_kind}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact Process Relationship.",
+    };
+  }
+}
+
 // Now the component-called methods
 
 export async function sendFriendRequestButItsAutoFriend(
@@ -412,12 +472,18 @@ export async function sendFriendRequestButItsAutoFriend(
   await Promise.all([
     updateContactKindToFriend(contact),
     updateMirrorContactKindToFriend(contact),
+    setContactStatusRelationship(contact, "NOWFRIENDS"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
   ]);
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
 
-  await setContactStatusRelationship(contact, "NOWFRIENDS");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOWFRIENDS");
-
+export async function sendFriendRequest(contact: FoundContact, user: User) {
+  await Promise.all([
+    setContactProcessRelationship(contact, "SENTFRIEND"),
+    setContactStatusRelationship(contact, "SENTFRIEND"),
+  ]);
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -428,12 +494,21 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   await Promise.all([
     updateContactKindToIrl(contact),
     updateMirrorContactKindToIrl(contact),
+    setContactStatusRelationship(contact, "NOWIRLS"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOWIRLS"),
   ]);
+  revalidatePath(`/users/${user.user_username}/profile`);
+}
 
-  await setContactStatusRelationship(contact, "NOWIRLS");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOWIRLS");
-
+export async function upgradeFriendshipToIrl(
+  contact: FoundContact,
+  user: User,
+) {
+  await Promise.all([
+    setContactProcessRelationship(contact, "SENTIRL"),
+    setContactStatusRelationship(contact, "SENTIRL"),
+  ]);
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -444,12 +519,10 @@ export async function downgradeFriendshipFromIrl(
   await Promise.all([
     updateContactKindToFriend(contact),
     updateMirrorContactKindToFriend(contact),
+    setContactStatusRelationship(contact, "NOLONGERIRLS"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
   ]);
-
-  await setContactStatusRelationship(contact, "NOLONGERIRLS");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOLONGERIRLS");
-
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -457,31 +530,29 @@ export async function unfriend(contact: FoundContact, user: User) {
   await Promise.all([
     updateContactKindToNone(contact),
     updateMirrorContactKindToNone(contact),
+    setContactStatusRelationship(contact, "NOLONGERFRIENDS"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
   ]);
-
-  await setContactStatusRelationship(contact, "NOLONGERFRIENDS");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS");
-
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function block(contact: FoundContact, user: User) {
-  await updateContactBlocking(contact);
-
-  await setContactStatusRelationship(contact, "NOWBLOCKING");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOWBLOCKED");
-
+  await Promise.all([
+    updateContactBlocking(contact),
+    setContactStatusRelationship(contact, "NOWBLOCKING"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
+  ]);
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function unblock(contact: FoundContact, user: User) {
-  await updateContactUnblocking(contact);
-
-  await setContactStatusRelationship(contact, "NOWUNBLOCKING");
-  // uncomment below when available for testing
-  // await setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED");
-
+  await Promise.all([
+    updateContactUnblocking(contact),
+    setContactStatusRelationship(contact, "NOWUNBLOCKING"),
+    // uncomment below when available for testing
+    // await setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
+  ]);
   revalidatePath(`/users/${user.user_username}/profile`);
 }
