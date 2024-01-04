@@ -16,6 +16,10 @@ import {
   RelationCombination,
   defineFoundRelCombo,
 } from "@/app/lib/utils/relcombos";
+import {
+  ContactFirstAccessThroughFind,
+  ContactReaccessThroughFind,
+} from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
 
@@ -103,6 +107,23 @@ export default async function UserPage({
       <div className="max-w-prose text-center">
         {session ? (
           <>
+            {/* This is where toasts for accessing the other user profile, creating contacts then accessing the other user profile, and other circumstances, will be called. */}
+            {foundContact &&
+              foundContact.c2_contact_status_other_profile ===
+                "FIRSTACCESSTHROUGHFIND" && (
+                <ContactFirstAccessThroughFind
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              foundContact.c2_contact_status_other_profile ===
+                "REACCESSTHROUGHFIND" && (
+                <ContactReaccessThroughFind
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
             <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}
             <BackToDashboardLink session={session} />

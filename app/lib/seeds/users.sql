@@ -117,7 +117,7 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Users ( -- Elijah / El-Hadj
--- NEW, NO CONTACTS, NO ANSWERS --
+-- NEW, for creating contact through find. --
     user_id,
     user_username,
     user_email,
@@ -140,7 +140,55 @@ VALUES (
     now()
 ); -- Done. 
 
--- Fiona here, for creating contact through find. 
+INSERT INTO Users ( -- Fiona / FioTriangle
+-- NEW, no contacts, no answers --
+-- contacts created during testing for contact notifications -- 
+    user_id,
+    user_username,
+    user_email,
+    user_password,
+    user_app_wide_name,
+    user_friend_code,
+    user_state,
+    user_created_at,
+    user_updated_at
+)
+VALUES (
+    'abe67dae-0994-4b2b-9acc-49adda35961f',
+    'FioTriangle',
+    'f@f.com',
+    'password',
+    'Fiona',
+    'ngx7h3tkbu8s',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
+
+INSERT INTO Users ( -- Grace / Gracie-babie
+-- NEW, no contacts, no answers --
+-- DO NOT FIND ON THE APP VIA FIND -- 
+    user_id,
+    user_username,
+    user_email,
+    user_password,
+    user_app_wide_name,
+    user_friend_code,
+    user_state,
+    user_created_at,
+    user_updated_at
+)
+VALUES (
+    '5060ed54-de00-4f5a-8fa2-c6120acac8e4',
+    'Gracie-babie',
+    'g@g.com',
+    'password',
+    'Grace',
+    'v27WpaHzYRyE',
+    'LIVE',
+    now(),
+    now()
+); -- Done. 
 
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,

@@ -1,8 +1,11 @@
 "use client";
 
 import {
+  createOrFindContactsByFriendCode,
+  CreateOrFindContactsByFriendCodeFormState,
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
+  updateUserFriendCode,
 } from "@/app/lib/actions/users";
 import { User } from "@/app/lib/definitions/users";
 import { useFormState } from "react-dom";
@@ -39,6 +42,7 @@ import {
   ButtonAddUserQuestionFriend,
   ButtonDeleteUserQuestionFriend,
   ButtonPseudoable,
+  Button,
 } from "./buttons";
 import { Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
@@ -52,8 +56,10 @@ import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
 } from "@/app/lib/definitions/questions";
+import { LinkButton } from "./buttons";
+import { revalidate } from "@/app/lib/actions/buttons";
 
-export function UserAppWideNameModify({ user }: { user: User }) {
+export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
     errors: {},
     message: null,
@@ -130,6 +136,39 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
   );
 }
 
+export function UserFriendCodeUpdateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => updateUserFriendCode(user)}>
+        <LinkButton>Generate a new friend code</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function RevalidateButtonForm() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <form className="mt-4" action={() => revalidate(pathname)}>
+        <Button>Revalidate the data</Button>
+      </form>
+    </>
+  );
+}
+export function BackButtonForm() {
+  const router = useRouter();
+
+  return (
+    <>
+      <form className="mt-4" action={() => router.back()}>
+        <Button>Or go back to the previous page</Button>
+      </form>
+    </>
+  );
+}
+
 export function ButtonPinnableForm({ answer }: { answer: Answer }) {
   return (
     <>
@@ -196,15 +235,46 @@ export function ButtonDeleteUserQuestionFriendForm({
   );
 }
 
-export function FriendCodeInputForm({ friendCode }: { friendCode: string }) {
+export function FriendCodeInputForm({
+  // friendCode,
+  user,
+}: {
+  // friendCode: string;
+  user: User;
+}) {
+  const initialState: CreateOrFindContactsByFriendCodeFormState = {
+    errors: {},
+    message: null,
+  };
+  const createOrFindContactsByFriendCodeWithUser =
+    createOrFindContactsByFriendCode.bind(null, user);
+  const [state, formAction] = useFormState(
+    createOrFindContactsByFriendCodeWithUser,
+    initialState,
+  );
+
   return (
     <>
       <form
         className="mt-2"
-        // action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
-        // No need for a form action, updating the searchParams is automatic.
+        action={formAction}
+        // A form action will be required in order to show error messages.
       >
-        <FriendCodeInput friendCode={friendCode} />
+        <FriendCodeInput />
+        {state && state.errors?.otherUserFriendCode ? (
+          <div id="question-id-native-not-irl-error" aria-live="polite">
+            {state.errors.otherUserFriendCode.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="native-not-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
       </form>
     </>
   );

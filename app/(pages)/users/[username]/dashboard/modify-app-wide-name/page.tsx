@@ -2,8 +2,10 @@ import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { UserAppWideNameModify } from "@/app/components/client/forms";
-import { UserFriendCodeUpdate } from "@/app/components/client/linkbuttons";
+import {
+  UserAppWideNameModifyForm,
+  UserFriendCodeUpdateForm,
+} from "@/app/components/client/forms";
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
@@ -64,8 +66,8 @@ export default async function ModifyAppWideNamePage({
           Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.
         </H1>
         <BackToDashboardLink session={session} />
-        <UserAppWideNameModify user={user} />
-        <UserFriendCodeUpdate user={user} />
+        <UserAppWideNameModifyForm user={user} />
+        <UserFriendCodeUpdateForm user={user} />
         <p className="mt-2">
           You’ll see it changed on your Personal info page.
         </p>

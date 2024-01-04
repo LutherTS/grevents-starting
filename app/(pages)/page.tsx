@@ -55,7 +55,7 @@ export default async function HomePage() {
             <span className="text-lime-500">Custom criteria</span> are based on
             questions you create yourself before answering them as well, just
             like pseudonative and pseudonative irl criteria. They differ in that
-            you can manually select which friend to shared them to, or choose to
+            you can manually select which friend to share them to, or choose to
             not share them and to keep these criteria for yourself if you so
             desire.
           </p>

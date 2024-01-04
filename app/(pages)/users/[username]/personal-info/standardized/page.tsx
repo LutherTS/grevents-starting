@@ -14,6 +14,7 @@ import {
   UserNativeCriteriaIrlAdded,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/lib/definitions/users";
+import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
 
@@ -109,6 +110,7 @@ export default async function StardardizedPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
+        <RevalidateButtonForm />
       </div>
     </main>
   );

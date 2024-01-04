@@ -42,7 +42,8 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   );
 }
 
-export function FriendCodeInput({ friendCode }: { friendCode: string }) {
+export function FriendCodeInput() {
+  // { friendCode }: { friendCode: string }
   const status = useFormStatus();
 
   return (
@@ -52,9 +53,9 @@ export function FriendCodeInput({ friendCode }: { friendCode: string }) {
         type="text"
         id="friend-code"
         name="friendcode"
-        placeholder={friendCode}
+        placeholder="Enter a user's friend code"
         disabled={status.pending}
-        required
+        // required // validation now gone server-side
       />
     </>
   );
