@@ -402,6 +402,8 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
     updateMirrorContactKindToIrl(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOWIRLS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -414,6 +416,8 @@ export async function downgradeFriendshipFromIrl(
     updateMirrorContactKindToFriend(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOLONGERIRLS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
@@ -423,17 +427,23 @@ export async function unfriend(contact: FoundContact, user: User) {
     updateMirrorContactKindToNone(contact),
   ]);
 
+  await setContactStatusRelationship(contact, "NOLONGERFRIENDS");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function block(contact: FoundContact, user: User) {
   await updateContactBlocking(contact);
 
+  await setContactStatusRelationship(contact, "NOWBLOCKING");
+
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 export async function unblock(contact: FoundContact, user: User) {
   await updateContactUnblocking(contact);
+
+  await setContactStatusRelationship(contact, "NOWUNBLOCKING");
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }

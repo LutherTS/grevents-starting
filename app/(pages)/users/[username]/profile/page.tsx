@@ -21,6 +21,7 @@ import {
   ContactNoLongerFriends,
   ContactNoLongerIrls,
   ContactNowBlocked,
+  ContactNowBlocking,
   ContactNowFriends,
   ContactNowIrls,
   ContactNowUnblocked,
@@ -158,7 +159,7 @@ export default async function UserPage({
             {foundContact &&
               session.user !== user &&
               foundContact.c2_contact_status_relationship === "NOWBLOCKING" && (
-                <ContactNowBlocked contact={foundContact} user={user} />
+                <ContactNowBlocking contact={foundContact} user={user} />
               )}
             {foundContact &&
               session.user !== user &&
