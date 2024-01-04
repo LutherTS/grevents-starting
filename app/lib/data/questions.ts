@@ -23,7 +23,7 @@ export async function fetchAllNativeNotIrlQuestions() {
         AND question_state = 'LIVE'
 
         ORDER BY 
-            question_name ASC
+            lower(question_name) ASC
 
         LIMIT 10;
       `;
@@ -55,7 +55,7 @@ export async function fetchAllNativeIrlQuestions() {
         AND question_state = 'LIVE'
 
         ORDER BY 
-            question_name ASC
+            lower(question_name) ASC
 
         LIMIT 10;
       `;
@@ -102,7 +102,7 @@ export async function fetchAllUnansweredNativeNotIrlQuestions(user: User) {
         AND question_state = 'LIVE'
 
         ORDER BY 
-            question_name ASC
+            lower(question_name) ASC
 
         LIMIT 10;
       `;
@@ -149,7 +149,7 @@ export async function fetchAllUnansweredNativeIrlQuestions(user: User) {
         AND question_state = 'LIVE'
 
         ORDER BY 
-            question_name ASC
+            lower(question_name) ASC
 
         LIMIT 10;
       `;

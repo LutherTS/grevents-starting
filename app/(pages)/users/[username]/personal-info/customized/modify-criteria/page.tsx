@@ -10,6 +10,7 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
+import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 export async function generateMetadata({
   params,
@@ -86,6 +87,7 @@ export default async function ModifyCriteriaCustomizedPage({
           href={`/users/${username}/personal-info/customized`}
           name={"Cancel"}
         />
+        <RevalidateButtonForm />
       </div>
     </main>
   );

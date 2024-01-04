@@ -37,6 +37,7 @@ export function PageLinkWithChildren({
   );
 }
 
+// Temporary until actual working links are done.
 export function ActionLink({ children }: { children: React.ReactNode }) {
   return (
     <>

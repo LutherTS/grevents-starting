@@ -895,6 +895,9 @@ export async function createNativeNotIrlAnswer(
 
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
   revalidatePath(
+    `/users/${user.user_username}/personal-info/standardized/modify`,
+  );
+  revalidatePath(
     `/users/${user.user_username}/personal-info/standardized/add-criteria`,
   );
   redirect(`/users/${user.user_username}/personal-info/standardized`);
@@ -1239,6 +1242,9 @@ export async function createNativeIrlAnswer(
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/standardized/modify`,
+  );
   revalidatePath(
     `/users/${user.user_username}/personal-info/standardized/add-criteria`,
   );
@@ -1588,40 +1594,41 @@ export async function createPseudonativeNotIrlAnswer(
     }
   }
 
-  const userQuestion = await findPreExistingPseudonativeUserQuestion(
-    user,
-    question,
-  );
-  console.log(userQuestion);
+  if (question) {
+    const userQuestion = await findPreExistingPseudonativeUserQuestion(
+      user,
+      question,
+    );
+    console.log(userQuestion);
 
-  /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVE. */
-  if (userQuestion === undefined) {
-    // effacements inutiles vu que les uuids n'existent pas encore // non
-    // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
-    noStore();
+    /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVE. */
+    if (userQuestion === undefined) {
+      // effacements inutiles vu que les uuids n'existent pas encore // non
+      // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -1642,20 +1649,20 @@ export async function createPseudonativeNotIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -1676,18 +1683,18 @@ export async function createPseudonativeNotIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'PSEUDONATIVECRITERIANOTIRLADDED',
@@ -1695,66 +1702,67 @@ export async function createPseudonativeNotIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    // userQuestion.userquestion_kind === "PSEUDONATIVE" &&
-    // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
-    (userQuestion.userquestion_state === "DELETED" ||
-      userQuestion.answer_state === "DELETED")
-  ) {
-    // effacements aux emplacements de création
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      // userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+      // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
+      (userQuestion.userquestion_state === "DELETED" ||
+        userQuestion.answer_state === "DELETED")
+    ) {
+      // effacements aux emplacements de création
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM Answers
           WHERE userquestion_id = ${userQuestion.userquestion_id}
           AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -1775,20 +1783,20 @@ export async function createPseudonativeNotIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -1809,18 +1817,18 @@ export async function createPseudonativeNotIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'PSEUDONATIVECRITERIANOTIRLADDED',
@@ -1828,29 +1836,30 @@ export async function createPseudonativeNotIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVE" &&
-    userQuestion.userquestion_state === "LIVE" &&
-    userQuestion.answer_state === "LIVE"
-  ) {
-    // cas éventuellement impossible agissant en guise de mises à jour
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+      userQuestion.userquestion_state === "LIVE" &&
+      userQuestion.answer_state === "LIVE"
+    ) {
+      // cas éventuellement impossible agissant en guise de mises à jour
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Answers
           SET 
               answer_value = ${initialAnswerValue},
@@ -1859,18 +1868,18 @@ export async function createPseudonativeNotIrlAnswer(
               AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Answer Value.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update Answer Value.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'ANSWERUPDATED',
@@ -1878,29 +1887,30 @@ export async function createPseudonativeNotIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
-    userQuestion.userquestion_state === "LIVE" &&
-    userQuestion.answer_state === "LIVE"
-  ) {
-    // cas éventuellement impossible agissant en guise de mises à jour
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+      userQuestion.userquestion_state === "LIVE" &&
+      userQuestion.answer_state === "LIVE"
+    ) {
+      // cas éventuellement impossible agissant en guise de mises à jour
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE UserQuestions
           SET 
               userquestion_kind = 'PSEUDONATIVE',
@@ -1910,18 +1920,18 @@ export async function createPseudonativeNotIrlAnswer(
               WHERE userquestion_id = ${userQuestion.userquestion_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update User Question.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Answers
           SET 
               answer_value = ${initialAnswerValue},
@@ -1930,18 +1940,18 @@ export async function createPseudonativeNotIrlAnswer(
               AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Answer Value.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update Answer Value.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'ANSWERUPDATED',
@@ -1949,17 +1959,22 @@ export async function createPseudonativeNotIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/customized/modify`,
+  );
   redirect(`/users/${user.user_username}/personal-info/customized`);
 }
 
@@ -2137,40 +2152,41 @@ export async function createPseudonativeIrlAnswer(
     }
   }
 
-  const userQuestion = await findPreExistingPseudonativeUserQuestion(
-    user,
-    question,
-  );
-  console.log(userQuestion);
+  if (question) {
+    const userQuestion = await findPreExistingPseudonativeUserQuestion(
+      user,
+      question,
+    );
+    console.log(userQuestion);
 
-  /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVEIRL. */
-  if (userQuestion === undefined) {
-    // effacements inutiles vu que les uuids n'existent pas encore // non
-    // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
-    noStore();
+    /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVEIRL. */
+    if (userQuestion === undefined) {
+      // effacements inutiles vu que les uuids n'existent pas encore // non
+      // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -2191,20 +2207,20 @@ export async function createPseudonativeIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -2225,18 +2241,18 @@ export async function createPseudonativeIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'PSEUDONATIVECRITERIAIRLADDED',
@@ -2244,66 +2260,67 @@ export async function createPseudonativeIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    // userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
-    // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
-    (userQuestion.userquestion_state === "DELETED" ||
-      userQuestion.answer_state === "DELETED")
-  ) {
-    // effacements aux emplacements de création
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      // userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+      // C'est pareil. Irl ou pas, j'efface, et je recrée comme convenu.
+      (userQuestion.userquestion_state === "DELETED" ||
+        userQuestion.answer_state === "DELETED")
+    ) {
+      // effacements aux emplacements de création
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM Answers
           WHERE userquestion_id = ${userQuestion.userquestion_id}
           AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -2324,20 +2341,20 @@ export async function createPseudonativeIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -2358,18 +2375,18 @@ export async function createPseudonativeIrlAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'PSEUDONATIVECRITERIAIRLADDED',
@@ -2377,29 +2394,30 @@ export async function createPseudonativeIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
-    userQuestion.userquestion_state === "LIVE" &&
-    userQuestion.answer_state === "LIVE"
-  ) {
-    // cas éventuellement impossible agissant en guise de mises à jour
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      userQuestion.userquestion_kind === "PSEUDONATIVEIRL" &&
+      userQuestion.userquestion_state === "LIVE" &&
+      userQuestion.answer_state === "LIVE"
+    ) {
+      // cas éventuellement impossible agissant en guise de mises à jour
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Answers
           SET 
               answer_value = ${initialAnswerValue},
@@ -2408,18 +2426,18 @@ export async function createPseudonativeIrlAnswer(
               AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Answer Value.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update Answer Value.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'ANSWERUPDATED',
@@ -2427,29 +2445,30 @@ export async function createPseudonativeIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "PSEUDO" &&
-    userQuestion.userquestion_kind === "PSEUDONATIVE" &&
-    userQuestion.userquestion_state === "LIVE" &&
-    userQuestion.answer_state === "LIVE"
-  ) {
-    // cas éventuellement impossible agissant en guise de mises à jour
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "PSEUDO" &&
+      userQuestion.userquestion_kind === "PSEUDONATIVE" &&
+      userQuestion.userquestion_state === "LIVE" &&
+      userQuestion.answer_state === "LIVE"
+    ) {
+      // cas éventuellement impossible agissant en guise de mises à jour
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE UserQuestions
           SET 
               userquestion_kind = 'PSEUDONATIVEIRL',
@@ -2459,18 +2478,18 @@ export async function createPseudonativeIrlAnswer(
               WHERE userquestion_id = ${userQuestion.userquestion_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update User Question.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Answers
           SET 
               answer_value = ${initialAnswerValue},
@@ -2479,18 +2498,18 @@ export async function createPseudonativeIrlAnswer(
               AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Answer Value.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update Answer Value.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'ANSWERUPDATED',
@@ -2498,17 +2517,22 @@ export async function createPseudonativeIrlAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/customized/modify`,
+  );
   redirect(`/users/${user.user_username}/personal-info/customized`);
 }
 
@@ -2684,37 +2708,41 @@ export async function createCustomAnswer(
     }
   }
 
-  const userQuestion = await findPreExistingCustomUserQuestion(user, question);
-  console.log(userQuestion);
+  if (question) {
+    const userQuestion = await findPreExistingCustomUserQuestion(
+      user,
+      question,
+    );
+    console.log(userQuestion);
 
-  /* EXACTEMENT LE MÊME CODE, sauf la notification CUSTOM. */
-  if (userQuestion === undefined) {
-    // effacements inutiles vu que les uuids n'existent pas encore // non
-    // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
-    noStore();
+    /* EXACTEMENT LE MÊME CODE, sauf la notification CUSTOM. */
+    if (userQuestion === undefined) {
+      // effacements inutiles vu que les uuids n'existent pas encore // non
+      // effacement à la UserQuestion, mais pas à la Answer // on ne sait jamais
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -2733,20 +2761,20 @@ export async function createCustomAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -2767,18 +2795,18 @@ export async function createCustomAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'CUSTOMCRITERIAADDED',
@@ -2786,64 +2814,65 @@ export async function createCustomAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "CUSTOM" &&
-    (userQuestion.userquestion_state === "DELETED" ||
-      userQuestion.answer_state === "DELETED")
-  ) {
-    // effacements aux emplacements de création
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "CUSTOM" &&
+      (userQuestion.userquestion_state === "DELETED" ||
+        userQuestion.answer_state === "DELETED")
+    ) {
+      // effacements aux emplacements de création
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM Answers
           WHERE userquestion_id = ${userQuestion.userquestion_id}
           AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           DELETE FROM UserQuestions
           WHERE user_id = ${user.user_id}
           AND question_id = ${question.question_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Delete At User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Delete At User Question.",
+        };
+      }
 
-    const generatedUserQuestionID = uuidv4();
+      const generatedUserQuestionID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO UserQuestions (
               userquestion_id,
               user_id,
@@ -2862,20 +2891,20 @@ export async function createCustomAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create User Question.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create User Question.",
+        };
+      }
 
-    const generatedAnswerID = uuidv4();
+      const generatedAnswerID = uuidv4();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           INSERT INTO Answers (
               answer_id,
               userquestion_id,
@@ -2896,18 +2925,18 @@ export async function createCustomAnswer(
           )
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Answer.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Create Answer.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'CUSTOMCRITERIAADDED',
@@ -2915,28 +2944,29 @@ export async function createCustomAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
-  }
 
-  if (
-    userQuestion &&
-    userQuestion.question_kind === "CUSTOM" &&
-    userQuestion.userquestion_state === "LIVE" &&
-    userQuestion.answer_state === "LIVE"
-  ) {
-    // cas éventuellement impossible agissant en guise de mises à jour
-    noStore();
+    if (
+      userQuestion &&
+      userQuestion.question_kind === "CUSTOM" &&
+      userQuestion.userquestion_state === "LIVE" &&
+      userQuestion.answer_state === "LIVE"
+    ) {
+      // cas éventuellement impossible agissant en guise de mises à jour
+      noStore();
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Answers
           SET 
               answer_value = ${initialAnswerValue},
@@ -2945,18 +2975,18 @@ export async function createCustomAnswer(
           AND user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Answer Value.",
-      };
-    }
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message: "Database Error: Failed to Update Answer Value.",
+        };
+      }
 
-    try {
-      const run = async () => {
-        const data = await sql`
+      try {
+        const run = async () => {
+          const data = await sql`
           UPDATE Users
           SET 
               user_status_personal_info = 'ANSWERUPDATED',
@@ -2964,16 +2994,21 @@ export async function createCustomAnswer(
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
         `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: 5 });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: 5 });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
   }
 
   revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+  revalidatePath(
+    `/users/${user.user_username}/personal-info/customized/modify`,
+  );
   redirect(`/users/${user.user_username}/personal-info/customized`);
 }

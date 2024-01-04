@@ -208,7 +208,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Questions.question_name ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -256,7 +256,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Questions.question_name ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -316,7 +316,7 @@ export async function fetchUserCustomAnswers(userId: string) {
 
         ORDER BY 
             userquestionfriends_count ASC, -- NEW
-            Questions.question_name ASC
+            lower(Questions.question_name) ASC -- lower for case sensitiveness
 
         LIMIT 10;
       `;
@@ -532,7 +532,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Questions.question_name ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -695,7 +695,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Questions.question_name ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -779,7 +779,8 @@ export async function fetchUserSharedToContactCustomAnswers(
             u.user_username
 
         ORDER BY 
-        userquestionfriends_count ASC -- NEW
+            userquestionfriends_count ASC, -- NEW
+            lower(q.question_name) ASC
 
         LIMIT 10;
       `;

@@ -193,6 +193,7 @@ export async function updateUserFriendCode(user: User) {
   }
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
+  revalidatePath(`/users/${user.user_username}/personal-info`);
   redirect(`/users/${user.user_username}/dashboard`);
 }
 
