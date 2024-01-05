@@ -499,6 +499,7 @@ export async function sendFriendRequestButItsAutoFriend(
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
+// No idea why this doesn't revalidate in production.
 export async function acceptFriendRequest(contact: FoundContact, user: User) {
   await Promise.all([
     updateContactKindToFriend(contact),
