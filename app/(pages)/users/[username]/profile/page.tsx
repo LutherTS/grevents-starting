@@ -252,7 +252,11 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {foundContact && relCombo === "none" && (
-              <RelationCombinationNone user={user} contact={foundContact} />
+              <RelationCombinationNone
+                user={user}
+                contact={foundContact}
+                session={session}
+              />
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "friend" && foundContact && (
@@ -260,6 +264,7 @@ export default async function UserPage({
                 <RelationCombinationFriendCustom
                   user={user}
                   contact={foundContact}
+                  session={session}
                 />
               </>
             )}
@@ -269,6 +274,7 @@ export default async function UserPage({
                 <RelationCombinationIrlCustom
                   user={user}
                   contact={foundContact}
+                  session={session}
                 />
               </>
             )}
@@ -277,6 +283,7 @@ export default async function UserPage({
               <RelationCombinationIAmBlocking
                 user={user}
                 contact={foundContact}
+                session={session}
               />
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
@@ -284,6 +291,7 @@ export default async function UserPage({
               <RelationCombinationHasMeBlocked
                 user={user}
                 contact={foundContact}
+                session={session}
               />
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
@@ -291,6 +299,7 @@ export default async function UserPage({
               <RelationCombinationBlockingBlocked
                 user={user}
                 contact={foundContact}
+                session={session}
               />
             )}
 

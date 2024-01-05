@@ -6,6 +6,8 @@ import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import pRetry from "p-retry";
+import { findContactByUserAndSession } from "../data/contacts";
+import _ from "lodash";
 
 const CONTACT_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -483,62 +485,105 @@ export async function setMirrorContactProcessRelationship(
 
 // Blocks and unblocks work. Let's go.
 
+// It all works, real slow today though, with only revalidations on acceptFriendRequest and acceptIrlRequest being issues in production.
+
+// So what's needed now is making sure that... What's going to be first would be deactivating Accept when Decline is active and vice versa. Je peux ou pourrais faire ça dans le même composant. Mieux encore, je pourrais, voir devrais mettre toutes les boutons dans le même composant pour qu'ils désactivent respectivement tous les autres à l'activation d'un des leurs.
+// Ça c'est ce qu'il faut réaliser. ainsi il y aurait acceptStatus, declineStatus, etc. Et ça empêcherait de cliquer sur un autre bouton quand l'un des leurs est en status.pending.
+// Demain. ...En vrai, c'est aussi pour ça que useFormStatus est expérimental. Je me poserai donc la question après qu'il soit sorti de canary.
+
+// Ce qu'il reste par contre, c'est bel et bien de vérifier dans les fonctions l'état foundContact. En pseudo-code : verifyContact = = await findContactByUserAndSession(user, session)
+// if contact === verifyContact // faire tout le code.
+// if contact !== verifyContact // ne pas faire les modifications
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    updateContactKindToFriend(contact),
-    updateMirrorContactKindToFriend(contact),
-    setContactStatusRelationship(contact, "NOWFRIENDS"),
-    // uncomment below when available for testing
-    // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToFriend(contact),
+      updateMirrorContactKindToFriend(contact),
+      setContactStatusRelationship(contact, "NOWFRIENDS"),
+      // uncomment below when available for testing
+      // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function acceptFriendRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    updateContactKindToFriend(contact),
-    updateMirrorContactKindToFriend(contact),
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "NOWFRIENDS"),
-    setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
-  ]);
+// No idea why this doesn't revalidate in production.
+export async function acceptFriendRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToFriend(contact),
+      updateMirrorContactKindToFriend(contact),
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "NOWFRIENDS"),
+      setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function sendFriendRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    setContactProcessRelationship(contact, "SENTFRIEND"),
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "SENTFRIEND"),
-    setMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
-  ]);
+export async function sendFriendRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setContactProcessRelationship(contact, "SENTFRIEND"),
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "SENTFRIEND"),
+      setMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function annulFriendRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    setContactProcessRelationship(contact, "ANNULFRIEND"),
-    setContactStatusRelationship(contact, "ANNULFRIEND"),
-  ]);
+export async function annulFriendRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setContactProcessRelationship(contact, "ANNULFRIEND"),
+      setContactStatusRelationship(contact, "ANNULFRIEND"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function declineFriendRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "REFUSEDFRIEND"),
-  ]);
+export async function declineFriendRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "REFUSEDFRIEND"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
@@ -547,27 +592,39 @@ export async function declineFriendRequest(contact: FoundContact, user: User) {
 export async function upgradeFriendshipToIrlButItsAutoIrl(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    updateContactKindToIrl(contact),
-    updateMirrorContactKindToIrl(contact),
-    setContactStatusRelationship(contact, "NOWIRLS"),
-    // uncomment below when available for testing
-    // setMirrorContactStatusRelationship(contact, "NOWIRLS"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToIrl(contact),
+      updateMirrorContactKindToIrl(contact),
+      setContactStatusRelationship(contact, "NOWIRLS"),
+      // uncomment below when available for testing
+      // setMirrorContactStatusRelationship(contact, "NOWIRLS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function acceptIrlRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    updateContactKindToIrl(contact),
-    updateMirrorContactKindToIrl(contact),
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "NOWIRLS"),
-    setMirrorContactStatusRelationship(contact, "NOWIRLS"),
-  ]);
+// No idea why this doesn't revalidate in production.
+export async function acceptIrlRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToIrl(contact),
+      updateMirrorContactKindToIrl(contact),
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "NOWIRLS"),
+      setMirrorContactStatusRelationship(contact, "NOWIRLS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
@@ -576,13 +633,17 @@ export async function acceptIrlRequest(contact: FoundContact, user: User) {
 export async function upgradeFriendshipToIrl(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    setContactProcessRelationship(contact, "SENTIRL"),
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "SENTIRL"),
-    setMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setContactProcessRelationship(contact, "SENTIRL"),
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "SENTIRL"),
+      setMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
@@ -591,21 +652,32 @@ export async function upgradeFriendshipToIrl(
 export async function annulUpgradeFriendshipToIrl(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    setContactProcessRelationship(contact, "ANNULIRL"),
-    setContactStatusRelationship(contact, "ANNULIRL"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setContactProcessRelationship(contact, "ANNULIRL"),
+      setContactStatusRelationship(contact, "ANNULIRL"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function declineIrlRequest(contact: FoundContact, user: User) {
-  await Promise.all([
-    setMirrorContactProcessRelationship(contact, "NONE"),
-    setContactStatusRelationship(contact, "REFUSEDIRL"),
-  ]);
+export async function declineIrlRequest(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      setMirrorContactProcessRelationship(contact, "NONE"),
+      setContactStatusRelationship(contact, "REFUSEDIRL"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
@@ -614,47 +686,72 @@ export async function declineIrlRequest(contact: FoundContact, user: User) {
 export async function downgradeFriendshipFromIrl(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    updateContactKindToFriend(contact),
-    updateMirrorContactKindToFriend(contact),
-    setContactStatusRelationship(contact, "NOLONGERIRLS"),
-    setMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToFriend(contact),
+      updateMirrorContactKindToFriend(contact),
+      setContactStatusRelationship(contact, "NOLONGERIRLS"),
+      setMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function unfriend(contact: FoundContact, user: User) {
-  await Promise.all([
-    updateContactKindToNone(contact),
-    updateMirrorContactKindToNone(contact),
-    setContactStatusRelationship(contact, "NOLONGERFRIENDS"),
-    setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
-  ]);
+export async function unfriend(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactKindToNone(contact),
+      updateMirrorContactKindToNone(contact),
+      setContactStatusRelationship(contact, "NOLONGERFRIENDS"),
+      setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function block(contact: FoundContact, user: User) {
-  await Promise.all([
-    updateContactBlocking(contact),
-    setContactStatusRelationship(contact, "NOWBLOCKING"),
-    setMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
-  ]);
+export async function block(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactBlocking(contact),
+      setContactStatusRelationship(contact, "NOWBLOCKING"),
+      setMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
-export async function unblock(contact: FoundContact, user: User) {
-  await Promise.all([
-    updateContactUnblocking(contact),
-    setContactStatusRelationship(contact, "NOWUNBLOCKING"),
-    setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
-  ]);
+export async function unblock(
+  contact: FoundContact,
+  user: User,
+  session: { [K in "user"]: User },
+) {
+  const verifyContact = await findContactByUserAndSession(user, session);
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
+    await Promise.all([
+      updateContactUnblocking(contact),
+      setContactStatusRelationship(contact, "NOWUNBLOCKING"),
+      setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
