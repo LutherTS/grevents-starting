@@ -6,6 +6,7 @@ import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import pRetry from "p-retry";
+import { findContactByUserAndSession } from "../data/contacts";
 
 const CONTACT_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -483,17 +484,32 @@ export async function setMirrorContactProcessRelationship(
 
 // Blocks and unblocks work. Let's go.
 
+// It all works, real slow today though, with only revalidations on acceptFriendRequest and acceptIrlRequest being issues in production.
+
+// So what's needed now is making sure that... What's going to be first would be deactivating Accept when Decline is active and vice versa. Je peux ou pourrais faire ça dans le même composant. Mieux encore, je pourrais, voir devrais mettre toutes les boutons dans le même composant pour qu'ils désactivent respectivement tous les autres à l'activation d'un des leurs.
+// Ça c'est ce qu'il faut réaliser. ainsi il y aurait acceptStatus, declineStatus, etc. Et ça empêcherait de cliquer sur un autre bouton quand l'un des leurs est en status.pending.
+// Demain. ...En vrai, c'est aussi pour ça que useFormStatus est expérimental. Je me poserai donc la question après qu'il soit sorti de canary.
+
+// Ce qu'il reste par contre, c'est bel et bien de vérifier dans les fonctions l'état foundContact. En pseudo-code : verifyContact = = await findContactByUserAndSession(user, session)
+// if contact === verifyContact // faire tout le code.
+// if contact !== verifyContact // ne pas faire les modifications
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
+  session: { [K in "user"]: User },
 ) {
-  await Promise.all([
-    updateContactKindToFriend(contact),
-    updateMirrorContactKindToFriend(contact),
-    setContactStatusRelationship(contact, "NOWFRIENDS"),
-    // uncomment below when available for testing
-    // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
-  ]);
+  const verifyContact = await findContactByUserAndSession(user, session);
+
+  if (contact === verifyContact) {
+    await Promise.all([
+      updateContactKindToFriend(contact),
+      updateMirrorContactKindToFriend(contact),
+      setContactStatusRelationship(contact, "NOWFRIENDS"),
+      // uncomment below when available for testing
+      // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
+    ]);
+  }
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
@@ -561,6 +577,7 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
+// No idea why this doesn't revalidate in production.
 export async function acceptIrlRequest(contact: FoundContact, user: User) {
   await Promise.all([
     updateContactKindToIrl(contact),

@@ -20,11 +20,9 @@ import {
   DeclineIrlForm,
   DowngradeFriendshipToIrlForm,
   SendFriendForm,
-  SendFriendRequestForm,
   UnblockForm,
   UnblockIfThatsOKWithYouForm,
   UnfriendForm,
-  UpgradeFriendshipToIrlForm,
   UpgradeToIrlForm,
 } from "../client/forms";
 

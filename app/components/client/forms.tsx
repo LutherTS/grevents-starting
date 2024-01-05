@@ -162,6 +162,7 @@ export function UserFriendCodeUpdateForm({ user }: { user: User }) {
   );
 }
 
+/* No longer in use
 export function SendFriendRequestForm({
   user,
   contact,
@@ -203,6 +204,7 @@ export function UpgradeFriendshipToIrlForm({
     </>
   );
 }
+*/
 
 export function DowngradeFriendshipToIrlForm({
   user,
