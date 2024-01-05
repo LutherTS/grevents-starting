@@ -31,6 +31,8 @@ import {
   ContactReaccessThroughFind,
   ContactReceiveFriend,
   ContactReceiveIrl,
+  ContactRefusedFriend,
+  ContactRefusedIrl,
   ContactSentFriend,
   ContactSentIrl,
 } from "@/app/components/client/toasts";
@@ -215,6 +217,17 @@ export default async function UserPage({
               session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship === "RECEIVEIRL" && (
                 <ContactReceiveIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "REFUSEDFRIEND" && (
+                <ContactRefusedFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "REFUSEDIRL" && (
+                <ContactRefusedIrl contact={foundContact} user={user} />
               )}
             <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}

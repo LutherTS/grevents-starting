@@ -482,3 +482,41 @@ export function ContactReceiveIrl({
     </>
   );
 }
+
+export function ContactRefusedFriend({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just refused {user.user_app_wide_name}&apos; friend
+          request
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactRefusedIrl({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just refused {user.user_app_wide_name}&apos; irl upgrade
+          request
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
