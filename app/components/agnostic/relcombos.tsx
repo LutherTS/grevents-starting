@@ -29,9 +29,11 @@ import {
 export function RelationCombinationNone({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -47,7 +49,7 @@ export function RelationCombinationNone({
     */}
       {contact.c2_contact_process_relationship === "SENTFRIEND" && (
         <>
-          <AnnulFriendForm user={user} contact={contact} />
+          <AnnulFriendForm session={session} user={user} contact={contact} />
         </>
       )}
       {contact.c2_contact_process_relationship === "ANNULFRIEND" && (
@@ -58,9 +60,13 @@ export function RelationCombinationNone({
       {contact.c1_contact_process_relationship === "SENTFRIEND" && (
         <>
           <p className="mt-2">
-            <AcceptFriendForm user={user} contact={contact} />
+            <AcceptFriendForm session={session} user={user} contact={contact} />
             &nbsp;/&nbsp;
-            <DeclineFriendForm user={user} contact={contact} />
+            <DeclineFriendForm
+              session={session}
+              user={user}
+              contact={contact}
+            />
           </p>
         </>
       )}
@@ -69,12 +75,12 @@ export function RelationCombinationNone({
         contact.c1_contact_process_relationship !== "SENTFRIEND" && (
           <>
             {/* <SendFriendRequestForm user={user} contact={contact} /> */}
-            <SendFriendForm user={user} contact={contact} />
+            <SendFriendForm session={session} user={user} contact={contact} />
           </>
         )}
       {contact.c2_contact_process_relationship !== "SENTFRIEND" && (
         <>
-          <BlockForm user={user} contact={contact} />
+          <BlockForm session={session} user={user} contact={contact} />
         </>
       )}
       {/* <BlockForm user={user} contact={contact} /> */}
@@ -182,9 +188,11 @@ export function RelationCombinationIrlPreview({ user }: { user: User }) {
 export function RelationCombinationIAmBlocking({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -193,7 +201,7 @@ export function RelationCombinationIAmBlocking({
         {user.user_username.toUpperCase()} ACROSS THE ENTIRE APPLICATION, FUTURE
         COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <BlockBackForm user={user} contact={contact} />
+      <BlockBackForm session={session} user={user} contact={contact} />
     </>
   );
 }
@@ -218,9 +226,11 @@ export function RelationCombinationIAmBlockingPreview({
 export function RelationCombinationHasMeBlocked({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -229,7 +239,7 @@ export function RelationCombinationHasMeBlocked({
         INFORMATION ACROSS THE ENTIRE APPLICATION, FUTURE COMMON GROUPS AND
         FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <UnblockForm user={user} contact={contact} />
+      <UnblockForm session={session} user={user} contact={contact} />
     </>
   );
 }
@@ -254,9 +264,11 @@ export function RelationCombinationHasMeBlockedPreview({
 export function RelationCombinationBlockingBlocked({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -267,7 +279,11 @@ export function RelationCombinationBlockingBlocked({
         CAN NO LONGER ACCESS EACH OTHER&apos;S INFORMATION ACROSS THE ENTIRE
         APPLICATION, FUTURE COMMON GROUPS AND FUTURE COMMON EVENTS INCLUDED.
       </p>
-      <UnblockIfThatsOKWithYouForm user={user} contact={contact} />
+      <UnblockIfThatsOKWithYouForm
+        session={session}
+        user={user}
+        contact={contact}
+      />
     </>
   );
 }
@@ -294,9 +310,11 @@ export function RelationCombinationBlockingBlockedPreview({
 export function RelationCombinationFriendCustom({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -322,7 +340,7 @@ export function RelationCombinationFriendCustom({
     */}
       {contact.c2_contact_process_relationship === "SENTIRL" && (
         <>
-          <AnnulIrlForm user={user} contact={contact} />
+          <AnnulIrlForm session={session} user={user} contact={contact} />
         </>
       )}
       {contact.c2_contact_process_relationship === "ANNULIRL" && (
@@ -335,9 +353,9 @@ export function RelationCombinationFriendCustom({
       {contact.c1_contact_process_relationship === "SENTIRL" && (
         <>
           <p className="mt-2">
-            <DeclineIrlForm user={user} contact={contact} />
+            <DeclineIrlForm session={session} user={user} contact={contact} />
             &nbsp;/&nbsp;
-            <AcceptIrlForm user={user} contact={contact} />
+            <AcceptIrlForm session={session} user={user} contact={contact} />
           </p>
         </>
       )}
@@ -346,12 +364,12 @@ export function RelationCombinationFriendCustom({
         contact.c1_contact_process_relationship !== "SENTIRL" && (
           <>
             {/* <UpgradeFriendshipToIrlForm user={user} contact={contact} /> */}
-            <UpgradeToIrlForm user={user} contact={contact} />
+            <UpgradeToIrlForm session={session} user={user} contact={contact} />
           </>
         )}
       {contact.c2_contact_process_relationship !== "SENTIRL" && (
         <>
-          <UnfriendForm user={user} contact={contact} />
+          <UnfriendForm session={session} user={user} contact={contact} />
         </>
       )}
       {/* <UnfriendForm user={user} contact={contact} /> */}
@@ -443,9 +461,11 @@ export function RelationCombinationFriendCustomQueried({
 export function RelationCombinationIrlCustom({
   user,
   contact,
+  session,
 }: {
   user: User;
   contact: FoundContact;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
@@ -459,8 +479,12 @@ export function RelationCombinationIrlCustom({
         <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
         <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
-      <DowngradeFriendshipToIrlForm user={user} contact={contact} />
-      <UnfriendForm user={user} contact={contact} />
+      <DowngradeFriendshipToIrlForm
+        session={session}
+        user={user}
+        contact={contact}
+      />
+      <UnfriendForm session={session} user={user} contact={contact} />
     </>
   );
 }

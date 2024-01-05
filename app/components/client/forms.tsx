@@ -68,11 +68,9 @@ import {
   declineIrlRequest,
   downgradeFriendshipFromIrl,
   sendFriendRequest,
-  sendFriendRequestButItsAutoFriend,
   unblock,
   unfriend,
   upgradeFriendshipToIrl,
-  upgradeFriendshipToIrlButItsAutoIrl,
 } from "@/app/lib/actions/contacts";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
@@ -207,17 +205,19 @@ export function UpgradeFriendshipToIrlForm({
 */
 
 export function DowngradeFriendshipToIrlForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
       <form
         className="mt-2"
-        action={() => downgradeFriendshipFromIrl(contact, user)}
+        action={() => downgradeFriendshipFromIrl(contact, user, session)}
       >
         <LinkButton>Downgrade friendship from irl</LinkButton>
       </form>
@@ -226,15 +226,17 @@ export function DowngradeFriendshipToIrlForm({
 }
 
 export function UnfriendForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => unfriend(contact, user)}>
+      <form className="mt-2" action={() => unfriend(contact, user, session)}>
         <LinkButton>Unfriend</LinkButton>
       </form>
     </>
@@ -242,15 +244,17 @@ export function UnfriendForm({
 }
 
 export function BlockForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => block(contact, user)}>
+      <form className="mt-2" action={() => block(contact, user, session)}>
         <LinkButton>Block</LinkButton>
       </form>
     </>
@@ -258,15 +262,17 @@ export function BlockForm({
 }
 
 export function UnblockForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => unblock(contact, user)}>
+      <form className="mt-2" action={() => unblock(contact, user, session)}>
         <LinkButton>Unblock</LinkButton>
       </form>
     </>
@@ -274,15 +280,17 @@ export function UnblockForm({
 }
 
 export function BlockBackForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => block(contact, user)}>
+      <form className="mt-2" action={() => block(contact, user, session)}>
         <LinkButton>Block back</LinkButton>
       </form>
     </>
@@ -290,33 +298,40 @@ export function BlockBackForm({
 }
 
 export function UnblockIfThatsOKWithYouForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => unblock(contact, user)}>
+      <form className="mt-2" action={() => unblock(contact, user, session)}>
         <LinkButton>Unblock if that&apos;s OK with you</LinkButton>
       </form>
     </>
   );
 }
 
-// Reprise
+// Continues
 
 export function SendFriendForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => sendFriendRequest(contact, user)}>
+      <form
+        className="mt-2"
+        action={() => sendFriendRequest(contact, user, session)}
+      >
         <LinkButton>Send friend request</LinkButton>
       </form>
     </>
@@ -324,17 +339,19 @@ export function SendFriendForm({
 }
 
 export function DeclineFriendForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
       <form
         className="inline-block"
-        action={() => declineFriendRequest(contact, user)}
+        action={() => declineFriendRequest(contact, user, session)}
       >
         <LinkButton>Decline</LinkButton>
       </form>
@@ -343,17 +360,19 @@ export function DeclineFriendForm({
 }
 
 export function AcceptFriendForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
       <form
         className="inline-block"
-        action={() => acceptFriendRequest(contact, user)}
+        action={() => acceptFriendRequest(contact, user, session)}
       >
         <LinkButton>Accept</LinkButton>
       </form>
@@ -362,17 +381,19 @@ export function AcceptFriendForm({
 }
 
 export function UpgradeToIrlForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
       <form
         className="mt-2"
-        action={() => upgradeFriendshipToIrl(contact, user)}
+        action={() => upgradeFriendshipToIrl(contact, user, session)}
       >
         <LinkButton>Upgrade friendship to irl</LinkButton>
       </form>
@@ -381,15 +402,20 @@ export function UpgradeToIrlForm({
 }
 
 export function DeclineIrlForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="inline" action={() => declineIrlRequest(contact, user)}>
+      <form
+        className="inline"
+        action={() => declineIrlRequest(contact, user, session)}
+      >
         <LinkButton>Decline</LinkButton>
       </form>
     </>
@@ -397,15 +423,20 @@ export function DeclineIrlForm({
 }
 
 export function AcceptIrlForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="inline" action={() => acceptIrlRequest(contact, user)}>
+      <form
+        className="inline"
+        action={() => acceptIrlRequest(contact, user, session)}
+      >
         <LinkButton>Accept</LinkButton>
       </form>
     </>
@@ -413,15 +444,20 @@ export function AcceptIrlForm({
 }
 
 export function AnnulFriendForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
-      <form className="mt-2" action={() => annulFriendRequest(contact, user)}>
+      <form
+        className="mt-2"
+        action={() => annulFriendRequest(contact, user, session)}
+      >
         <LinkButton>Annul friend request</LinkButton>
       </form>
     </>
@@ -429,17 +465,19 @@ export function AnnulFriendForm({
 }
 
 export function AnnulIrlForm({
-  user,
   contact,
+  user,
+  session,
 }: {
-  user: User;
   contact: FoundContact;
+  user: User;
+  session: { [K in "user"]: User };
 }) {
   return (
     <>
       <form
         className="mt-2"
-        action={() => annulUpgradeFriendshipToIrl(contact, user)}
+        action={() => annulUpgradeFriendshipToIrl(contact, user, session)}
       >
         <LinkButton>Annul irl upgrade request</LinkButton>
       </form>
