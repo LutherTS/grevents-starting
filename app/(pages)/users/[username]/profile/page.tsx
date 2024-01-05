@@ -34,6 +34,7 @@ import {
 } from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
+import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 export async function generateMetadata({
   params,
@@ -271,6 +272,7 @@ export default async function UserPage({
               href={`/users/${session.user.user_username}/friends`}
               name={`back to your friends`}
             />
+            <RevalidateButtonForm />
           </>
         ) : (
           <>

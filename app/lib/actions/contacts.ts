@@ -391,7 +391,7 @@ export async function setMirrorContactStatusRelationship(
         SET 
             contact_status_relationship = ${statusRelationship},
             contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_kind}
+        WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
       `;
       console.log(data.rows);
@@ -452,7 +452,7 @@ export async function setMirrorContactProcessRelationship(
         SET 
             contact_process_relationship = ${processRelationship},
             contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_kind}
+        WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
       `;
       console.log(data.rows);
@@ -478,6 +478,8 @@ export async function setMirrorContactProcessRelationship(
 // And this is why I don't like Promise.all, because I only get the last RETURNING and not all of them.
 
 // Il y avait un typo....
+
+// Another typo. And revalidatePath only works for your own client. This doesn't revalidate simultaneously for everyone from the server.
 
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
