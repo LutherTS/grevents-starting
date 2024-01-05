@@ -426,7 +426,8 @@ export async function findContactByUserAndSession(
   user: User,
   session: { [K in "user"]: User } | null,
 ) {
-  // noStore(); // since changes in relation will revalidate
+  noStore(); // since changes in relation will revalidate // no
+  // revalidate all the tyme now that I know revalidate isn't general
   // console.log(user);
   // console.log(session);
   if (session !== null) {

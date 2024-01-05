@@ -479,6 +479,8 @@ export async function setMirrorContactProcessRelationship(
 
 // Il y avait un typo....
 
+// Another typo. And revalidatePath only works for your own client. This doesn't revalidate simultaneously for everyone from the server.
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
