@@ -60,9 +60,9 @@ export function RelationCombinationNone({
       {contact.c1_contact_process_relationship === "SENTFRIEND" && (
         <>
           <p className="mt-2">
-            <DeclineFriendForm user={user} contact={contact} />
-            &nbsp;/&nbsp;
             <AcceptFriendForm user={user} contact={contact} />
+            &nbsp;/&nbsp;
+            <DeclineFriendForm user={user} contact={contact} />
           </p>
         </>
       )}
@@ -109,17 +109,17 @@ export function RelationCombinationNone({
       {contact.c1_contact_process_relationship === "SENTFRIEND" && (
         <>
           <p className="mt-2 text-orange-500">
-            {contact.u2_user_app_wide_name} has sent you a friend request. By
-            accepting this request, {contact.u2_user_app_wide_name} will have
+            {contact.u1_user_app_wide_name} has sent you a friend request. By
+            accepting this request, {contact.u1_user_app_wide_name} will have
             access to all of your native criteria, present and future, and you
             will have access to all the native criteria of{" "}
-            {contact.u2_user_app_wide_name}, present and future all the same.
+            {contact.u1_user_app_wide_name}, present and future all the same.
             Irl native criteria, however, will require upgrading your friendship
             for shared access between the two of you.
           </p>
           <PageLink
-            href={`/users/${contact.u1_user_username}/previews/queried?userlast=${contact.u2_user_username}&relcombo=friend`}
-            name={`Preview the criteria you'll give access to ${contact.u2_user_app_wide_name}`}
+            href={`/users/${contact.u2_user_username}/previews/queried?userlast=${contact.u1_user_username}&relcombo=friend`}
+            name={`Preview the criteria you'll give access to ${contact.u1_user_app_wide_name}`}
           />
         </>
       )}
@@ -387,20 +387,20 @@ export function RelationCombinationFriendCustom({
       {contact.c1_contact_process_relationship === "SENTIRL" && (
         <>
           <p className="mt-2 text-orange-500">
-            {contact.u2_user_app_wide_name} has sent you an irl upgrade request.
-            By accepting this request, {contact.u2_user_app_wide_name} will have
+            {contact.u1_user_app_wide_name} has sent you an irl upgrade request.
+            By accepting this request, {contact.u1_user_app_wide_name} will have
             additional access to all of your irl native criteria (such as Last
             name and Address), present and future, and you will have access to
-            all the irl native criteria of {contact.u2_user_app_wide_name},
+            all the irl native criteria of {contact.u1_user_app_wide_name},
             present and future all the same. Once this friendship is upgraded,
             you can downgrade this friendship from irl with a click at your own
             discretion without requiring the consent of{" "}
-            {contact.u2_user_app_wide_name}, so accepting this irl upgrade
+            {contact.u1_user_app_wide_name}, so accepting this irl upgrade
             request is easily reversible.
           </p>
           <PageLink
-            href={`/users/${contact.u1_user_username}/previews/queried?userlast=${contact.u2_user_username}&relcombo=irl`}
-            name={`Preview the criteria you'll give access to ${contact.u2_user_app_wide_name}`}
+            href={`/users/${contact.u2_user_username}/previews/queried?userlast=${contact.u1_user_username}&relcombo=irl`}
+            name={`Preview the criteria you'll give access to ${contact.u1_user_app_wide_name}`}
           />
         </>
       )}

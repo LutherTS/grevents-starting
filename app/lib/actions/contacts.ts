@@ -481,6 +481,8 @@ export async function setMirrorContactProcessRelationship(
 
 // Another typo. And revalidatePath only works for your own client. This doesn't revalidate simultaneously for everyone from the server.
 
+// Blocks and unblocks work. Let's go.
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
@@ -514,10 +516,8 @@ export async function sendFriendRequest(contact: FoundContact, user: User) {
   await Promise.all([
     setContactProcessRelationship(contact, "SENTFRIEND"),
     setMirrorContactProcessRelationship(contact, "NONE"),
-    // I believe should be reversed like this. // Nope, twas a typo.
-    // setMirrorContactProcessRelationship(contact, "SENTFRIEND"),
-    // setContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTFRIEND"),
+    setMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
   ]);
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
@@ -581,6 +581,7 @@ export async function upgradeFriendshipToIrl(
     setContactProcessRelationship(contact, "SENTIRL"),
     setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTIRL"),
+    setMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
   ]);
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
