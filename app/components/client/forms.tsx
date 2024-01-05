@@ -59,9 +59,13 @@ import {
 import { LinkButton } from "./buttons";
 import { revalidate } from "@/app/lib/actions/buttons";
 import {
+  acceptFriendRequest,
+  acceptIrlRequest,
   annulFriendRequest,
   annulUpgradeFriendshipToIrl,
   block,
+  declineFriendRequest,
+  declineIrlRequest,
   downgradeFriendshipFromIrl,
   sendFriendRequest,
   sendFriendRequestButItsAutoFriend,
@@ -317,6 +321,38 @@ export function SendFriendForm({
   );
 }
 
+export function DeclineFriendForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form action={() => declineFriendRequest(contact, user)}>
+        <LinkButton>Decline</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function AcceptFriendForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form action={() => acceptFriendRequest(contact, user)}>
+        <LinkButton>Accept</LinkButton>
+      </form>
+    </>
+  );
+}
+
 export function UpgradeToIrlForm({
   user,
   contact,
@@ -331,6 +367,38 @@ export function UpgradeToIrlForm({
         action={() => upgradeFriendshipToIrl(contact, user)}
       >
         <LinkButton>Upgrade friendship to irl</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function DeclineIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="inline" action={() => declineIrlRequest(contact, user)}>
+        <LinkButton>Decline</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function AcceptIrlForm({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form className="inline" action={() => acceptIrlRequest(contact, user)}>
+        <LinkButton>Accept</LinkButton>
       </form>
     </>
   );

@@ -10,8 +10,14 @@ import {
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
 import { ActionLink } from "./links";
 import {
+  AcceptFriendForm,
+  AcceptIrlForm,
+  AnnulFriendForm,
+  AnnulIrlForm,
   BlockBackForm,
   BlockForm,
+  DeclineFriendForm,
+  DeclineIrlForm,
   DowngradeFriendshipToIrlForm,
   SendFriendRequestForm,
   UnblockForm,
@@ -39,9 +45,25 @@ export function RelationCombinationNone({
     else // even if mirror ANNULFRIEND (user)
     SendFriendRequestForm
      */}
-      {contact.c2_contact_process_relationship === "SENTFRIEND" && <></>}
-      {contact.c2_contact_process_relationship === "ANNULFRIEND" && <></>}
-      {contact.c1_contact_process_relationship === "SENTFRIEND" && <></>}
+      {contact.c2_contact_process_relationship === "SENTFRIEND" && (
+        <>
+          <AnnulFriendForm user={user} contact={contact} />
+        </>
+      )}
+      {contact.c2_contact_process_relationship === "ANNULFRIEND" && (
+        <>
+          <p className="mt-2 text-gray-500 line-through">Send friend request</p>
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "SENTFRIEND" && (
+        <>
+          <p className="mt-2">
+            <DeclineFriendForm user={user} contact={contact} />
+            &nbsp;/&nbsp;
+            <AcceptFriendForm user={user} contact={contact} />
+          </p>
+        </>
+      )}
       {contact.c2_contact_process_relationship !== "SENTFRIEND" &&
         contact.c2_contact_process_relationship !== "ANNULFRIEND" &&
         contact.c1_contact_process_relationship !== "SENTFRIEND" && (
@@ -247,9 +269,27 @@ export function RelationCombinationFriendCustom({
     else // even if mirror ANNULIRL (user)
     SendIrlRequestForm
      */}
-      {contact.c2_contact_process_relationship === "SENTIRL" && <></>}
-      {contact.c2_contact_process_relationship === "ANNULIRL" && <></>}
-      {contact.c1_contact_process_relationship === "SENTIRL" && <></>}
+      {contact.c2_contact_process_relationship === "SENTIRL" && (
+        <>
+          <AnnulIrlForm user={user} contact={contact} />
+        </>
+      )}
+      {contact.c2_contact_process_relationship === "ANNULIRL" && (
+        <>
+          <p className="mt-2 text-gray-500 line-through">
+            Upgrade friendship to irl
+          </p>
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "SENTIRL" && (
+        <>
+          <p className="mt-2">
+            <DeclineIrlForm user={user} contact={contact} />
+            &nbsp;/&nbsp;
+            <AcceptIrlForm user={user} contact={contact} />
+          </p>
+        </>
+      )}
       {contact.c2_contact_process_relationship !== "SENTIRL" &&
         contact.c2_contact_process_relationship !== "ANNULIRL" &&
         contact.c1_contact_process_relationship !== "SENTIRL" && (
