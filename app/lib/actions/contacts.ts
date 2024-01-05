@@ -471,6 +471,8 @@ export async function setMirrorContactProcessRelationship(
 
 // Also, by convention no matter the method I will always revalidate the profiles of both users on the contact. (Which is what shows how I do not actually need now to have the user as a prop and an argument.)
 
+// Entirely shifted to using exclusively contact for revalidatePath.
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
@@ -482,7 +484,8 @@ export async function sendFriendRequestButItsAutoFriend(
     // uncomment below when available for testing
     // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -494,7 +497,8 @@ export async function acceptFriendRequest(contact: FoundContact, user: User) {
     setContactStatusRelationship(contact, "NOWFRIENDS"),
     setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -504,7 +508,8 @@ export async function sendFriendRequest(contact: FoundContact, user: User) {
     setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTFRIEND"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -513,7 +518,8 @@ export async function annulFriendRequest(contact: FoundContact, user: User) {
     setContactProcessRelationship(contact, "ANNULFRIEND"),
     setContactStatusRelationship(contact, "ANNULFRIEND"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -522,7 +528,8 @@ export async function declineFriendRequest(contact: FoundContact, user: User) {
     setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "REFUSEDFRIEND"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -537,7 +544,8 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
     // uncomment below when available for testing
     // setMirrorContactStatusRelationship(contact, "NOWIRLS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -549,7 +557,8 @@ export async function acceptIrlRequest(contact: FoundContact, user: User) {
     setContactStatusRelationship(contact, "NOWIRLS"),
     setMirrorContactStatusRelationship(contact, "NOWIRLS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -562,7 +571,8 @@ export async function upgradeFriendshipToIrl(
     setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTIRL"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -574,7 +584,8 @@ export async function annulUpgradeFriendshipToIrl(
     setContactProcessRelationship(contact, "ANNULIRL"),
     setContactStatusRelationship(contact, "ANNULIRL"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -583,7 +594,8 @@ export async function declineIrlRequest(contact: FoundContact, user: User) {
     setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "REFUSEDIRL"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -597,7 +609,8 @@ export async function downgradeFriendshipFromIrl(
     setContactStatusRelationship(contact, "NOLONGERIRLS"),
     setMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -608,7 +621,8 @@ export async function unfriend(contact: FoundContact, user: User) {
     setContactStatusRelationship(contact, "NOLONGERFRIENDS"),
     setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -618,7 +632,8 @@ export async function block(contact: FoundContact, user: User) {
     setContactStatusRelationship(contact, "NOWBLOCKING"),
     setMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
 
@@ -628,6 +643,7 @@ export async function unblock(contact: FoundContact, user: User) {
     setContactStatusRelationship(contact, "NOWUNBLOCKING"),
     setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
   ]);
-  revalidatePath(`/users/${user.user_username}/profile`);
+  // revalidatePath(`/users/${user.user_username}/profile`);
+  revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
 }
