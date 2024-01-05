@@ -391,7 +391,7 @@ export async function setMirrorContactStatusRelationship(
         SET 
             contact_status_relationship = ${statusRelationship},
             contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_kind}
+        WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
       `;
       console.log(data.rows);
@@ -452,7 +452,7 @@ export async function setMirrorContactProcessRelationship(
         SET 
             contact_process_relationship = ${processRelationship},
             contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_kind}
+        WHERE contact_id = ${contact.c1_contact_id}
         RETURNING * -- to make sure
       `;
       console.log(data.rows);
