@@ -158,9 +158,20 @@ export default async function QueriedPreviewPage({
           {gatheredContact && relCombo === "blocking-blocked" && (
             <RelationCombinationBlockingBlockedPreview user={user} />
           )}
+          {gatheredContact && relationCombinations.includes(relCombo) && (
+            <>
+              <PageLink
+                href={`/users/${gatheredContact.user_username}/profile`}
+                name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
+              />
+            </>
+          )}
         </Suspense>
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-        <PageLink href={`/users/${username}/profile`} name={"To Profile"} />
+        <PageLink
+          href={`/users/${username}/profile`}
+          name={"To Your Profile"}
+        />
       </div>
     </main>
   );

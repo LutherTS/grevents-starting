@@ -17,6 +17,8 @@ import {
   defineFoundRelCombo,
 } from "@/app/lib/utils/relcombos";
 import {
+  ContactAnnulFriend,
+  ContactAnnulIrl,
   ContactFirstAccessThroughFind,
   ContactNoLongerFriends,
   ContactNoLongerIrls,
@@ -27,6 +29,8 @@ import {
   ContactNowUnblocked,
   ContactNowUnblocking,
   ContactReaccessThroughFind,
+  ContactSentFriend,
+  ContactSentIrl,
 } from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
@@ -117,7 +121,7 @@ export default async function UserPage({
           <>
             {/* This is where toasts for accessing the other user profile, creating contacts then accessing the other user profile, and other circumstances, will be called. */}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_other_profile ===
                 "FIRSTACCESSTHROUGHFIND" && (
                 <ContactFirstAccessThroughFind
@@ -126,7 +130,7 @@ export default async function UserPage({
                 />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_other_profile ===
                 "REACCESSTHROUGHFIND" && (
                 <ContactReaccessThroughFind
@@ -135,48 +139,68 @@ export default async function UserPage({
                 />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship === "NOWFRIENDS" && (
                 <ContactNowFriends contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship === "NOWIRLS" && (
                 <ContactNowIrls contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship ===
                 "NOLONGERFRIENDS" && (
                 <ContactNoLongerFriends contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship ===
                 "NOLONGERIRLS" && (
                 <ContactNoLongerIrls contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship === "NOWBLOCKING" && (
                 <ContactNowBlocking contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship ===
                 "NOWUNBLOCKING" && (
                 <ContactNowUnblocking contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship === "NOWBLOCKED" && (
                 <ContactNowBlocked contact={foundContact} user={user} />
               )}
             {foundContact &&
-              session.user !== user &&
+              session.user.user_id !== user.user_id &&
               foundContact.c2_contact_status_relationship ===
                 "NOWUNBLOCKED" && (
                 <ContactNowUnblocked contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "SENTFRIEND" && (
+                <ContactSentFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "SENTIRL" && (
+                <ContactSentIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "ANNULFRIEND" && (
+                <ContactAnnulFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "ANNULIRL" && (
+                <ContactAnnulIrl contact={foundContact} user={user} />
               )}
             <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
             {/* @ts-ignore // for type never during session object testing */}
@@ -242,6 +266,11 @@ export default async function UserPage({
                 contact={foundContact}
               />
             )}
+
+            <PageLink
+              href={`/users/${session.user.user_username}/friends`}
+              name={`back to your friends`}
+            />
           </>
         ) : (
           <>
