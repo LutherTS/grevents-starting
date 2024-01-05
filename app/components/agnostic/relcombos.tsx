@@ -8,7 +8,7 @@ import {
   ManyUserSharedToContactCustomAnswers,
 } from "../server/answers";
 import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
-import { ActionLink } from "./links";
+import { ActionLink, PageLink } from "./links";
 import {
   AcceptFriendForm,
   AcceptIrlForm,
@@ -19,11 +19,13 @@ import {
   DeclineFriendForm,
   DeclineIrlForm,
   DowngradeFriendshipToIrlForm,
+  SendFriendForm,
   SendFriendRequestForm,
   UnblockForm,
   UnblockIfThatsOKWithYouForm,
   UnfriendForm,
   UpgradeFriendshipToIrlForm,
+  UpgradeToIrlForm,
 } from "../client/forms";
 
 export function RelationCombinationNone({
@@ -44,7 +46,7 @@ export function RelationCombinationNone({
     AcceptFriendRequestForm
     else // even if mirror ANNULFRIEND (user)
     SendFriendRequestForm
-     */}
+    */}
       {contact.c2_contact_process_relationship === "SENTFRIEND" && (
         <>
           <AnnulFriendForm user={user} contact={contact} />
@@ -68,7 +70,8 @@ export function RelationCombinationNone({
         contact.c2_contact_process_relationship !== "ANNULFRIEND" &&
         contact.c1_contact_process_relationship !== "SENTFRIEND" && (
           <>
-            <SendFriendRequestForm user={user} contact={contact} />
+            {/* <SendFriendRequestForm user={user} contact={contact} /> */}
+            <SendFriendForm user={user} contact={contact} />
           </>
         )}
       <BlockForm user={user} contact={contact} />
@@ -78,7 +81,52 @@ export function RelationCombinationNone({
     AnnulFriendDetails
     else if mirror SENTFRIEND (user)
     MirrorSentFriendDetails
-     */}
+    */}
+      {contact.c2_contact_process_relationship === "SENTFRIEND" && (
+        <>
+          <p className="mt-2 text-orange-500">
+            Friend request sent and pending. However, do take into consideration
+            that canceling your friend request to {user.user_app_wide_name} will
+            prevent you from sending {user.user_app_wide_name} another friend
+            request at this time.
+          </p>
+        </>
+      )}
+      {contact.c2_contact_process_relationship === "ANNULFRIEND" && (
+        <>
+          <p className="mt-2 text-red-500">
+            As a consequence of you annulling your friend request sent to{" "}
+            {user.user_app_wide_name}, to prevent mass requesting you cannot
+            send {user.user_app_wide_name} another friend request at this time.
+          </p>
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "SENTFRIEND" && (
+        <>
+          <p className="mt-2 text-orange-500">
+            {contact.u2_user_app_wide_name} has sent you a friend request. By
+            accepting this request, {contact.u2_user_app_wide_name} will have
+            access to all of your native criteria, present and future, and you
+            will have access to all the native criteria of{" "}
+            {contact.u2_user_app_wide_name}, present and future all the same.
+            Irl native criteria, however, will require upgrading your friendship
+            for shared access between the two of you.
+          </p>
+          <PageLink
+            href={`/users/${contact.u1_user_username}/previews/queried?userlast=${contact.u2_user_username}&relcombo=friend`}
+            name={`Preview the criteria you'll give access to ${contact.u2_user_app_wide_name}`}
+          />
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "ANNULFRIEND" && (
+        <>
+          <p className="mt-2 text-neutral-500">
+            (Just letting you know that {user.user_app_wide_name} has annulled a
+            friend request, so you&apos;re the only one between the two of you
+            who can initiate a friend request at this time.)
+          </p>
+        </>
+      )}
     </>
   );
 }
@@ -268,7 +316,7 @@ export function RelationCombinationFriendCustom({
     AcceptIrlRequestForm
     else // even if mirror ANNULIRL (user)
     SendIrlRequestForm
-     */}
+    */}
       {contact.c2_contact_process_relationship === "SENTIRL" && (
         <>
           <AnnulIrlForm user={user} contact={contact} />
@@ -294,7 +342,8 @@ export function RelationCombinationFriendCustom({
         contact.c2_contact_process_relationship !== "ANNULIRL" &&
         contact.c1_contact_process_relationship !== "SENTIRL" && (
           <>
-            <UpgradeFriendshipToIrlForm user={user} contact={contact} />
+            {/* <UpgradeFriendshipToIrlForm user={user} contact={contact} /> */}
+            <UpgradeToIrlForm user={user} contact={contact} />
           </>
         )}
       <UnfriendForm user={user} contact={contact} />
@@ -304,7 +353,56 @@ export function RelationCombinationFriendCustom({
     AnnulFriendDetails
     else if mirror SENTFRIEND (user)
     MirrorSentFriendDetails
-     */}
+    */}
+      {contact.c2_contact_process_relationship === "SENTIRL" && (
+        <>
+          <p className="mt-2 text-orange-500">
+            Irl upgrade request sent and pending. However, do take into
+            consideration that canceling your irl upgrade request to{" "}
+            {user.user_app_wide_name} will prevent you from sending{" "}
+            {user.user_app_wide_name} another irl upgrade request at this time.
+          </p>
+        </>
+      )}
+      {contact.c2_contact_process_relationship === "ANNULIRL" && (
+        <>
+          <p className="mt-2 text-red-500">
+            As a consequence of you annulling your irl upgrade request sent to{" "}
+            {user.user_app_wide_name}, to prevent mass requesting you cannot
+            send {user.user_app_wide_name} another irl upgrade request at this
+            time.
+          </p>
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "SENTIRL" && (
+        <>
+          <p className="mt-2 text-orange-500">
+            {contact.u2_user_app_wide_name} has sent you an irl upgrade request.
+            By accepting this request, {contact.u2_user_app_wide_name} will have
+            additional access to all of your irl native criteria (such as Last
+            name and Address), present and future, and you will have access to
+            all the irl native criteria of {contact.u2_user_app_wide_name},
+            present and future all the same. Once this friendship is upgraded,
+            you can downgrade this friendship from irl with a click at your own
+            discretion without requiring the consent of{" "}
+            {contact.u2_user_app_wide_name}, so accepting this irl upgrade
+            request is easily reversible.
+          </p>
+          <PageLink
+            href={`/users/${contact.u1_user_username}/previews/queried?userlast=${contact.u2_user_username}&relcombo=irl`}
+            name={`Preview the criteria you'll give access to ${contact.u2_user_app_wide_name}`}
+          />
+        </>
+      )}
+      {contact.c1_contact_process_relationship === "ANNULIRL" && (
+        <>
+          <p className="mt-2 text-neutral-500">
+            (Just letting you know that {user.user_app_wide_name} has annulled
+            an irl upgrade request, so you&apos;re the only one between the two
+            of you who can initiate an irl upgrade request at this time.)
+          </p>
+        </>
+      )}
     </>
   );
 }

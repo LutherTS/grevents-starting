@@ -501,6 +501,7 @@ export async function acceptFriendRequest(contact: FoundContact, user: User) {
 export async function sendFriendRequest(contact: FoundContact, user: User) {
   await Promise.all([
     setContactProcessRelationship(contact, "SENTFRIEND"),
+    setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTFRIEND"),
   ]);
   revalidatePath(`/users/${user.user_username}/profile`);
@@ -558,6 +559,7 @@ export async function upgradeFriendshipToIrl(
 ) {
   await Promise.all([
     setContactProcessRelationship(contact, "SENTIRL"),
+    setMirrorContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTIRL"),
   ]);
   revalidatePath(`/users/${user.user_username}/profile`);

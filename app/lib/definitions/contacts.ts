@@ -42,4 +42,6 @@ export type FoundContact = {
   c1_contact_process_relationship: string;
   u1_user_username: string;
   u2_user_username: string;
+  u1_user_app_wide_name: string;
+  u2_user_app_wide_name: string;
 };

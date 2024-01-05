@@ -448,7 +448,9 @@ export async function findContactByUserAndSession(
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
               c1.contact_process_relationship c1_contact_process_relationship, -- NEW
               u1.user_username u1_user_username, -- NEW
-              u2.user_username u2_user_username -- NEW
+              u2.user_username u2_user_username, -- NEW
+              u1.user_app_wide_name u1_user_app_wide_name, -- NEW
+              u2.user_app_wide_name u2_user_app_wide_name -- NEW
           FROM Contacts c1
 
           JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
