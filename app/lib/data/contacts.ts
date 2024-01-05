@@ -446,16 +446,22 @@ export async function findContactByUserAndSession(
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
-              c1.contact_process_relationship c1_contact_process_relationship -- NEW
+              c1.contact_process_relationship c1_contact_process_relationship, -- NEW
+              u1.user_username u1_user_username, -- NEW
+              u2.user_username u2_user_username -- NEW
           FROM Contacts c1
 
           JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          JOIN Users u1 ON c1.user_first_id = u1.user_id -- NEW
+          JOIN Users u2 ON c1.user_last_id = u2.user_id -- NEW
           
           WHERE c1.user_first_id = ${user.user_id}
           AND c1.user_last_id = ${session.user.user_id}
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
+          AND u1.user_state = 'LIVE' -- NEW
+          AND u2.user_state = 'LIVE' -- NEW
 
           LIMIT 1;
         `;
