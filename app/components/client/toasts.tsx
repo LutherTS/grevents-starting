@@ -494,7 +494,7 @@ export function ContactRefusedFriend({
     <>
       <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
         <ToastChild>
-          You&apos;ve just refused {user.user_app_wide_name}&apos; friend
+          You&apos;ve just refused {user.user_app_wide_name}&apos;s friend
           request
         </ToastChild>
       </ToastForm>
@@ -513,7 +513,7 @@ export function ContactRefusedIrl({
     <>
       <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
         <ToastChild>
-          You&apos;ve just refused {user.user_app_wide_name}&apos; irl upgrade
+          You&apos;ve just refused {user.user_app_wide_name}&apos;s irl upgrade
           request
         </ToastChild>
       </ToastForm>
