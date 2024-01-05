@@ -446,3 +446,22 @@ export function ContactAnnulIrl({
     </>
   );
 }
+
+export function ContactReceiveFriend({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          You&apos;ve just annulled your irl request to{" "}
+          {user.user_app_wide_name}
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
