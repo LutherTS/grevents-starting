@@ -353,9 +353,9 @@ export function RelationCombinationFriendCustom({
       {contact.c1_contact_process_relationship === "SENTIRL" && (
         <>
           <p className="mt-2">
-            <DeclineIrlForm session={session} user={user} contact={contact} />
-            &nbsp;/&nbsp;
             <AcceptIrlForm session={session} user={user} contact={contact} />
+            &nbsp;/&nbsp;
+            <DeclineIrlForm session={session} user={user} contact={contact} />
           </p>
         </>
       )}
