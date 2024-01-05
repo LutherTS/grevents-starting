@@ -7,6 +7,7 @@ import { sql } from "@vercel/postgres";
 import { User } from "../definitions/users";
 import pRetry from "p-retry";
 import { findContactByUserAndSession } from "../data/contacts";
+import _ from "lodash";
 
 const CONTACT_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -500,7 +501,7 @@ export async function sendFriendRequestButItsAutoFriend(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToFriend(contact),
       updateMirrorContactKindToFriend(contact),
@@ -521,7 +522,7 @@ export async function acceptFriendRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToFriend(contact),
       updateMirrorContactKindToFriend(contact),
@@ -541,7 +542,7 @@ export async function sendFriendRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setContactProcessRelationship(contact, "SENTFRIEND"),
       setMirrorContactProcessRelationship(contact, "NONE"),
@@ -560,7 +561,7 @@ export async function annulFriendRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setContactProcessRelationship(contact, "ANNULFRIEND"),
       setContactStatusRelationship(contact, "ANNULFRIEND"),
@@ -577,7 +578,7 @@ export async function declineFriendRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setMirrorContactProcessRelationship(contact, "NONE"),
       setContactStatusRelationship(contact, "REFUSEDFRIEND"),
@@ -594,7 +595,7 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToIrl(contact),
       updateMirrorContactKindToIrl(contact),
@@ -615,7 +616,7 @@ export async function acceptIrlRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToIrl(contact),
       updateMirrorContactKindToIrl(contact),
@@ -635,7 +636,7 @@ export async function upgradeFriendshipToIrl(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setContactProcessRelationship(contact, "SENTIRL"),
       setMirrorContactProcessRelationship(contact, "NONE"),
@@ -654,7 +655,7 @@ export async function annulUpgradeFriendshipToIrl(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setContactProcessRelationship(contact, "ANNULIRL"),
       setContactStatusRelationship(contact, "ANNULIRL"),
@@ -671,7 +672,7 @@ export async function declineIrlRequest(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       setMirrorContactProcessRelationship(contact, "NONE"),
       setContactStatusRelationship(contact, "REFUSEDIRL"),
@@ -688,7 +689,7 @@ export async function downgradeFriendshipFromIrl(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToFriend(contact),
       updateMirrorContactKindToFriend(contact),
@@ -707,7 +708,7 @@ export async function unfriend(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactKindToNone(contact),
       updateMirrorContactKindToNone(contact),
@@ -726,7 +727,7 @@ export async function block(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactBlocking(contact),
       setContactStatusRelationship(contact, "NOWBLOCKING"),
@@ -744,7 +745,7 @@ export async function unblock(
   session: { [K in "user"]: User },
 ) {
   const verifyContact = await findContactByUserAndSession(user, session);
-  if (contact === verifyContact) {
+  if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
       updateContactUnblocking(contact),
       setContactStatusRelationship(contact, "NOWUNBLOCKING"),
