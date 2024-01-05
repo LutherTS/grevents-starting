@@ -5,6 +5,10 @@ import { BackToDashboardLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
 
 import type { Metadata } from "next";
+import {
+  findSentFriendFromContactsByUser,
+  findSentIrlFromContactsByUser,
+} from "@/app/lib/data/contacts";
 
 export async function generateMetadata({
   params,
@@ -54,6 +58,11 @@ export default async function NotificationsPage({
   // updated demo behavior
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
+
+  const sentFriendFromContacts = await findSentFriendFromContactsByUser(user);
+  console.log(sentFriendFromContacts);
+  const sentIrlFromContacts = await findSentIrlFromContactsByUser(user);
+  console.log(sentIrlFromContacts);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">

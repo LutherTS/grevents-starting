@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
+import {
+  findSentFriendToContactsByUser,
+  findSentIrlToContactsByUser,
+} from "@/app/lib/data/contacts";
 
 import type { Metadata } from "next";
 
@@ -54,6 +58,11 @@ export default async function RequestsPage({
   // updated demo behavior
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
+
+  const sentFriendToContacts = await findSentFriendToContactsByUser(user);
+  console.log(sentFriendToContacts);
+  const sentIrlToContacts = await findSentIrlToContactsByUser(user);
+  console.log(sentIrlToContacts);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
