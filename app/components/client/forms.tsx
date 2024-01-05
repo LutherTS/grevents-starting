@@ -330,7 +330,10 @@ export function DeclineFriendForm({
 }) {
   return (
     <>
-      <form action={() => declineFriendRequest(contact, user)}>
+      <form
+        className="inline-block"
+        action={() => declineFriendRequest(contact, user)}
+      >
         <LinkButton>Decline</LinkButton>
       </form>
     </>
@@ -346,7 +349,10 @@ export function AcceptFriendForm({
 }) {
   return (
     <>
-      <form action={() => acceptFriendRequest(contact, user)}>
+      <form
+        className="inline-block"
+        action={() => acceptFriendRequest(contact, user)}
+      >
         <LinkButton>Accept</LinkButton>
       </form>
     </>

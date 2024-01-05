@@ -60,9 +60,9 @@ export function RelationCombinationNone({
       {contact.c1_contact_process_relationship === "SENTFRIEND" && (
         <>
           <p className="mt-2">
-            <DeclineFriendForm user={user} contact={contact} />
-            &nbsp;/&nbsp;
             <AcceptFriendForm user={user} contact={contact} />
+            &nbsp;/&nbsp;
+            <DeclineFriendForm user={user} contact={contact} />
           </p>
         </>
       )}
