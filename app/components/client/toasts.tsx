@@ -458,8 +458,25 @@ export function ContactReceiveFriend({
     <>
       <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
         <ToastChild>
-          You&apos;ve just annulled your irl request to{" "}
-          {user.user_app_wide_name}
+          {user.user_app_wide_name} has just sent you a friend request
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactReceiveIrl({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusRelationship(contact, user)}>
+        <ToastChild>
+          {user.user_app_wide_name} has just sent you an irl upgrade request
         </ToastChild>
       </ToastForm>
     </>
