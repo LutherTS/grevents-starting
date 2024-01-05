@@ -74,7 +74,12 @@ export function RelationCombinationNone({
             <SendFriendForm user={user} contact={contact} />
           </>
         )}
-      <BlockForm user={user} contact={contact} />
+      {contact.c2_contact_process_relationship !== "SENTFRIEND" && (
+        <>
+          <BlockForm user={user} contact={contact} />
+        </>
+      )}
+      {/* <BlockForm user={user} contact={contact} /> */}
       {/* if SENTFRIEND (session)
     SentFriendDetails
     else if ANNULFRIEND (session)
@@ -346,7 +351,12 @@ export function RelationCombinationFriendCustom({
             <UpgradeToIrlForm user={user} contact={contact} />
           </>
         )}
-      <UnfriendForm user={user} contact={contact} />
+      {contact.c2_contact_process_relationship !== "SENTIRL" && (
+        <>
+          <UnfriendForm user={user} contact={contact} />
+        </>
+      )}
+      {/* <UnfriendForm user={user} contact={contact} /> */}
       {/* if SENTFRIEND (session)
     SentFriendDetails
     else if ANNULFRIEND (session)

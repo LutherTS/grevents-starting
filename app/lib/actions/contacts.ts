@@ -424,7 +424,7 @@ export async function setContactProcessRelationship(
       const data = await sql`
         UPDATE Contacts
         SET 
-            contact__process_relationship = ${processRelationship},
+            contact_process_relationship = ${processRelationship},
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_mirror_id}
         RETURNING * -- to make sure
@@ -450,7 +450,7 @@ export async function setMirrorContactProcessRelationship(
       const data = await sql`
         UPDATE Contacts
         SET 
-            contact__process_relationship = ${processRelationship},
+            contact_process_relationship = ${processRelationship},
             contact_updated_at = now()
         WHERE contact_id = ${contact.c1_contact_kind}
         RETURNING * -- to make sure
@@ -471,7 +471,13 @@ export async function setMirrorContactProcessRelationship(
 
 // Also, by convention no matter the method I will always revalidate the profiles of both users on the contact. (Which is what shows how I do not actually need now to have the user as a prop and an argument.)
 
+/* NOTES FROM TESTING */
+
 // Entirely shifted to using exclusively contact for revalidatePath.
+
+// And this is why I don't like Promise.all, because I only get the last RETURNING and not all of them.
+
+// Il y avait un typo....
 
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
@@ -506,6 +512,9 @@ export async function sendFriendRequest(contact: FoundContact, user: User) {
   await Promise.all([
     setContactProcessRelationship(contact, "SENTFRIEND"),
     setMirrorContactProcessRelationship(contact, "NONE"),
+    // I believe should be reversed like this. // Nope, twas a typo.
+    // setMirrorContactProcessRelationship(contact, "SENTFRIEND"),
+    // setContactProcessRelationship(contact, "NONE"),
     setContactStatusRelationship(contact, "SENTFRIEND"),
   ]);
   // revalidatePath(`/users/${user.user_username}/profile`);
