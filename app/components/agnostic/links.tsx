@@ -1,4 +1,5 @@
 import { User } from "@/app/lib/definitions/users";
+import clsx from "clsx";
 import Link from "next/link";
 
 export function PageLink({ href, name }: { href: string; name: string }) {
@@ -19,16 +20,22 @@ export function PageLink({ href, name }: { href: string; name: string }) {
 export function PageLinkWithChildren({
   href,
   children,
+  specifiedClassName,
 }: {
   href: string;
   children: React.ReactNode;
+  specifiedClassName?: string;
 }) {
   return (
     <>
       <div>
         <Link
           href={href}
-          className="mt-2 inline-block text-blue-500 underline hover:text-blue-400 dark:hover:text-blue-600"
+          className={
+            specifiedClassName
+              ? specifiedClassName
+              : "mt-2 inline-block text-blue-500 underline hover:text-blue-400 dark:hover:text-blue-600"
+          }
         >
           {children}
         </Link>

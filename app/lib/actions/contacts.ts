@@ -495,6 +495,10 @@ export async function setMirrorContactProcessRelationship(
 // if contact === verifyContact // faire tout le code.
 // if contact !== verifyContact // ne pas faire les modifications
 
+// ALL OF THESE SHOULD REVALIDATE DASHBOARD.
+// AND REVALIDATE REQUESTS OR NOTIFICATIONS ACCORDINGLY.
+// Objectively it's not impactful, for revalidate only affect the tab, not the full browser, and for sure not the server itself. (Meaning all the clients on all devices currently on that URL. Someday hopefully.)
+
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
@@ -513,6 +517,7 @@ export async function sendFriendRequestButItsAutoFriend(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 // No idea why this doesn't revalidate in production.
@@ -534,6 +539,7 @@ export async function acceptFriendRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function sendFriendRequest(
@@ -553,6 +559,7 @@ export async function sendFriendRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function annulFriendRequest(
@@ -570,6 +577,7 @@ export async function annulFriendRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function declineFriendRequest(
@@ -587,6 +595,7 @@ export async function declineFriendRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function upgradeFriendshipToIrlButItsAutoIrl(
@@ -607,6 +616,7 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 // No idea why this doesn't revalidate in production.
@@ -628,6 +638,7 @@ export async function acceptIrlRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function upgradeFriendshipToIrl(
@@ -647,6 +658,7 @@ export async function upgradeFriendshipToIrl(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function annulUpgradeFriendshipToIrl(
@@ -664,6 +676,7 @@ export async function annulUpgradeFriendshipToIrl(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function declineIrlRequest(
@@ -681,6 +694,7 @@ export async function declineIrlRequest(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function downgradeFriendshipFromIrl(
@@ -700,6 +714,7 @@ export async function downgradeFriendshipFromIrl(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function unfriend(
@@ -719,6 +734,7 @@ export async function unfriend(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function block(
@@ -737,6 +753,7 @@ export async function block(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
 export async function unblock(
@@ -755,4 +772,5 @@ export async function unblock(
   // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
+  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
