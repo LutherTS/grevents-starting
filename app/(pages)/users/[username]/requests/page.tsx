@@ -60,9 +60,9 @@ export default async function RequestsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   const sentFriendToContacts = await findSentFriendToContactsByUser(user);
-  console.log(sentFriendToContacts);
+  // console.log(sentFriendToContacts);
   const sentIrlToContacts = await findSentIrlToContactsByUser(user);
-  console.log(sentIrlToContacts);
+  // console.log(sentIrlToContacts);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">

@@ -5,13 +5,19 @@ import {
   PageLink,
   PageLinkWithChildren,
 } from "@/app/components/agnostic/links";
-/* import { User } from "@/app/lib/definitions/users"; */
-
-import type { Metadata } from "next";
 import {
   UserAppWideNameUpdated,
   UserFriendCodeUpdated,
 } from "@/app/components/client/toasts";
+import {
+  countSentFriendToContactsByUser,
+  countSentIrlToContactsByUser,
+  countSentFriendFromContactsByUser,
+  countSentIrlFromContactsByUser,
+} from "@/app/lib/data/contacts";
+/* import { User } from "@/app/lib/definitions/users"; */
+
+import type { Metadata } from "next";
 
 export async function generateMetadata({
   params,
@@ -58,6 +64,26 @@ export default async function DashboardPage({
     notFound();
   }
 
+  /* Aborting. Numbers on dashboard are too stressful.
+  BUT. I could replace this by colors. And I did. */
+  const sentFriendToContactsCount = Number(
+    await countSentFriendToContactsByUser(user),
+  );
+  const sentIrlToContactsCount = Number(
+    await countSentIrlToContactsByUser(user),
+  );
+  const sentToContactsCount =
+    sentFriendToContactsCount + sentIrlToContactsCount;
+
+  const sentFriendFromContactsCount = Number(
+    await countSentFriendFromContactsByUser(user),
+  );
+  const sentIrlFromContactsCount = Number(
+    await countSentIrlFromContactsByUser(user),
+  );
+  const sentFromContactsCount =
+    sentFriendFromContactsCount + sentIrlFromContactsCount;
+
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
@@ -78,12 +104,44 @@ export default async function DashboardPage({
           href={`/users/${username}/personal-info`}
           name={`More personal info`}
         />
-        <PageLink href={`/users/${username}/friends`} name={`My friends`} />
+        {/* <PageLink href={`/users/${username}/friends`} name={`My friends`} />
         <PageLink href={`/users/${username}/requests`} name={`My requests`} />
         <PageLink
           href={`/users/${username}/notifications`}
           name={`My notifications`}
-        />
+        /> */}
+        {/* <PageLinkWithChildren href={`/users/${username}/requests`}>
+          <p>
+            My requests
+            {sentToContactsCount > 0 && <> ({sentToContactsCount})</>}
+          </p>
+        </PageLinkWithChildren>
+        <PageLinkWithChildren href={`/users/${username}/notifications`}>
+          <p>
+            My notifications
+            {sentFromContactsCount > 0 && <> ({sentFromContactsCount})</>}
+          </p>
+        </PageLinkWithChildren> */}
+        <PageLinkWithChildren
+          href={`/users/${username}/requests`}
+          specifiedClassName={
+            sentToContactsCount > 0
+              ? "mt-2 inline-block text-teal-500 underline hover:text-teal-400 dark:hover:text-teal-600"
+              : undefined
+          }
+        >
+          <p>My requests</p>
+        </PageLinkWithChildren>
+        <PageLinkWithChildren
+          href={`/users/${username}/notifications`}
+          specifiedClassName={
+            sentFromContactsCount > 0
+              ? "mt-2 inline-block text-cyan-500 underline hover:text-cyan-400 dark:hover:text-cyan-600"
+              : undefined
+          }
+        >
+          <p>My notifications</p>
+        </PageLinkWithChildren>
         <PageLink href={`/`} name={`Return home`} />
       </div>
     </main>

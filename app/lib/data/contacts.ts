@@ -642,7 +642,7 @@ export async function findSentFriendFromContactsByUser(user: User) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to find sent friend to contacts.");
+    throw new Error("Failed to find sent friend from contacts.");
   }
 }
 
@@ -697,6 +697,138 @@ export async function findSentIrlFromContactsByUser(user: User) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
+    throw new Error("Failed to find sent irl from contacts.");
+  }
+}
+
+export async function countSentFriendToContactsByUser(user: User) {
+  noStore(); // since always changing
+  try {
+    const run = async () => {
+      const data = await sql`
+          SELECT 
+              COUNT(*)
+          FROM Contacts c1
+
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          JOIN Users u1 ON c1.user_first_id = u1.user_id -- NEW
+          JOIN Users u2 ON c1.user_last_id = u2.user_id -- NEW
+          
+          WHERE c1.user_first_id = ${user.user_id}
+          AND c1.contact_process_relationship = 'SENTFRIEND'
+          
+          AND c1.contact_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
+          AND u1.user_state = 'LIVE' -- NEW
+          AND u2.user_state = 'LIVE' -- NEW
+        `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find sent friend to contacts.");
+  }
+}
+
+export async function countSentIrlToContactsByUser(user: User) {
+  noStore(); // since always changing
+  try {
+    const run = async () => {
+      const data = await sql`
+          SELECT 
+              COUNT(*)
+          FROM Contacts c1
+
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          JOIN Users u1 ON c1.user_first_id = u1.user_id -- NEW
+          JOIN Users u2 ON c1.user_last_id = u2.user_id -- NEW
+          
+          WHERE c1.user_first_id = ${user.user_id}
+          AND c1.contact_process_relationship = 'SENTIRL'
+          
+          AND c1.contact_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
+          AND u1.user_state = 'LIVE' -- NEW
+          AND u2.user_state = 'LIVE' -- NEW
+        `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
     throw new Error("Failed to find sent irl to contacts.");
+  }
+}
+
+export async function countSentFriendFromContactsByUser(user: User) {
+  noStore(); // since always changing
+  try {
+    const run = async () => {
+      const data = await sql`
+          SELECT 
+              COUNT(*)
+          FROM Contacts c1
+
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          JOIN Users u1 ON c1.user_first_id = u1.user_id -- NEW
+          JOIN Users u2 ON c1.user_last_id = u2.user_id -- NEW
+          
+          WHERE c2.user_first_id = ${user.user_id} -- only change versus To
+          AND c1.contact_process_relationship = 'SENTFRIEND'
+          
+          AND c1.contact_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
+          AND u1.user_state = 'LIVE' -- NEW
+          AND u2.user_state = 'LIVE' -- NEW
+        `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find sent friend from contacts.");
+  }
+}
+
+export async function countSentIrlFromContactsByUser(user: User) {
+  noStore(); // since always changing
+  try {
+    const run = async () => {
+      const data = await sql`
+          SELECT 
+              COUNT(*)
+          FROM Contacts c1
+
+          JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+          JOIN Users u1 ON c1.user_first_id = u1.user_id -- NEW
+          JOIN Users u2 ON c1.user_last_id = u2.user_id -- NEW
+          
+          WHERE c2.user_first_id = ${user.user_id} -- only change versus To
+          AND c1.contact_process_relationship = 'SENTIRL'
+          
+          AND c1.contact_state = 'LIVE'
+          AND c2.contact_state = 'LIVE'
+          AND u1.user_state = 'LIVE' -- NEW
+          AND u2.user_state = 'LIVE' -- NEW
+        `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: 5 });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find sent irl from contacts.");
   }
 }

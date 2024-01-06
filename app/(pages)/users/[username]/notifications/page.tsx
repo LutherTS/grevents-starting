@@ -60,9 +60,9 @@ export default async function NotificationsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   const sentFriendFromContacts = await findSentFriendFromContactsByUser(user);
-  console.log(sentFriendFromContacts);
+  // console.log(sentFriendFromContacts);
   const sentIrlFromContacts = await findSentIrlFromContactsByUser(user);
-  console.log(sentIrlFromContacts);
+  // console.log(sentIrlFromContacts);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
