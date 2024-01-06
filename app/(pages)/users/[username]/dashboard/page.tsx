@@ -104,8 +104,8 @@ export default async function DashboardPage({
           href={`/users/${username}/personal-info`}
           name={`More personal info`}
         />
-        {/* <PageLink href={`/users/${username}/friends`} name={`My friends`} />
-        <PageLink href={`/users/${username}/requests`} name={`My requests`} />
+        <PageLink href={`/users/${username}/friends`} name={`My friends`} />
+        {/* <PageLink href={`/users/${username}/requests`} name={`My requests`} />
         <PageLink
           href={`/users/${username}/notifications`}
           name={`My notifications`}

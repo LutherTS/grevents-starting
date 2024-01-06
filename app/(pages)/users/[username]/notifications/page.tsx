@@ -1,16 +1,15 @@
 import { fetchUserByUsername } from "@/app/lib/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
-import { BackToDashboardLink } from "@/app/components/agnostic/links";
+import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/lib/definitions/users";
+import { Suspense } from "react";
 
 import type { Metadata } from "next";
 import {
-  countSentFriendFromContactsByUser,
-  countSentIrlFromContactsByUser,
-  findSentFriendFromContactsByUser,
-  findSentIrlFromContactsByUser,
-} from "@/app/lib/data/contacts";
+  ManySentFriendFromContacts,
+  ManySentIrlFromContacts,
+} from "@/app/components/server/contacts";
 
 export async function generateMetadata({
   params,
@@ -61,32 +60,22 @@ export default async function NotificationsPage({
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
-  // const sentFriendFromContacts = await findSentFriendFromContactsByUser(user);
-  // // console.log(sentFriendFromContacts);
-  // const sentIrlFromContacts = await findSentIrlFromContactsByUser(user);
-  // // console.log(sentIrlFromContacts);
-
-  const [
-    sentFriendFromContacts,
-    sentIrlFromContacts,
-    sentFriendFromContactsCount,
-    sentIrlFromContactsCount,
-  ] = await Promise.all([
-    findSentFriendFromContactsByUser(user),
-    findSentIrlFromContactsByUser(user),
-    countSentFriendFromContactsByUser(user),
-    countSentIrlFromContactsByUser(user),
-  ]);
-  console.log(sentFriendFromContacts);
-  console.log(sentIrlFromContacts);
-  console.log(sentFriendFromContactsCount);
-  console.log(sentIrlFromContactsCount);
-
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Notifications.</H1>
         <BackToDashboardLink session={session} />
+        <Suspense
+          fallback={
+            <>
+              <p className="mt-2">Loading...</p>
+            </>
+          }
+        >
+          <ManySentFriendFromContacts user={user} />
+          <ManySentIrlFromContacts user={user} />
+        </Suspense>
+        <PageLink href={`/users/${username}/requests`} name={`To requests`} />
       </div>
     </main>
   );
