@@ -116,23 +116,54 @@ export async function updateOrDeleteAnswerValue(
       };
     }
 
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Users
-          SET 
-              user_status_personal_info = 'ANSWERDELETED',
-              user_updated_at = now()
-          WHERE user_username = ${answer.user_username}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+    if (
+      answer.question_kind === "NATIVE" ||
+      answer.question_kind === "NATIVEIRL"
+    ) {
+      try {
+        const run = async () => {
+          const data = await sql`
+            UPDATE Users
+            SET 
+                user_status_personal_info = 'STANDARDIZEDANSWERDELETED',
+                user_updated_at = now()
+            WHERE user_username = ${answer.user_username}
+            RETURNING * -- to make sure
+          `;
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: DEFAULT_RETRIES });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
+    }
+
+    if (
+      answer.question_kind === "PSEUDO" ||
+      answer.question_kind === "CUSTOM"
+    ) {
+      try {
+        const run = async () => {
+          const data = await sql`
+            UPDATE Users
+            SET 
+                user_status_personal_info = 'CUSTOMIZEDANSWERDELETED',
+                user_updated_at = now()
+            WHERE user_username = ${answer.user_username}
+            RETURNING * -- to make sure
+          `;
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: DEFAULT_RETRIES });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
 
     // To update standardized add criteria's select options.
@@ -168,23 +199,54 @@ export async function updateOrDeleteAnswerValue(
       };
     }
 
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Users
-          SET 
-              user_status_personal_info = 'ANSWERUPDATED',
-              user_updated_at = now()
-          WHERE user_username = ${answer.user_username}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Personal Info.",
-      };
+    if (
+      answer.question_kind === "NATIVE" ||
+      answer.question_kind === "NATIVEIRL"
+    ) {
+      try {
+        const run = async () => {
+          const data = await sql`
+            UPDATE Users
+            SET 
+                user_status_personal_info = 'STANDARDIZEDANSWERUPDATED',
+                user_updated_at = now()
+            WHERE user_username = ${answer.user_username}
+            RETURNING * -- to make sure
+          `;
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: DEFAULT_RETRIES });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
+    }
+
+    if (
+      answer.question_kind === "PSEUDO" ||
+      answer.question_kind === "CUSTOM"
+    ) {
+      try {
+        const run = async () => {
+          const data = await sql`
+            UPDATE Users
+            SET 
+                user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
+                user_updated_at = now()
+            WHERE user_username = ${answer.user_username}
+            RETURNING * -- to make sure
+          `;
+          console.log(data.rows);
+        };
+        await pRetry(run, { retries: DEFAULT_RETRIES });
+      } catch (error) {
+        return {
+          message:
+            "Database Error: Failed to Update User Status Personal Info.",
+        };
+      }
     }
   }
 
@@ -879,7 +941,7 @@ export async function createNativeNotIrlAnswer(
         const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'STANDARDIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -1227,7 +1289,7 @@ export async function createNativeIrlAnswer(
         const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'STANDARDIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -1883,7 +1945,7 @@ export async function createPseudonativeNotIrlAnswer(
           const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -1955,7 +2017,7 @@ export async function createPseudonativeNotIrlAnswer(
           const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -2441,7 +2503,7 @@ export async function createPseudonativeIrlAnswer(
           const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -2513,7 +2575,7 @@ export async function createPseudonativeIrlAnswer(
           const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
@@ -2990,7 +3052,7 @@ export async function createCustomAnswer(
           const data = await sql`
           UPDATE Users
           SET 
-              user_status_personal_info = 'ANSWERUPDATED',
+              user_status_personal_info = 'CUSTOMIZEDANSWERUPDATED',
               user_updated_at = now()
           WHERE user_id = ${user.user_id}
           RETURNING * -- to make sure
