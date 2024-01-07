@@ -73,7 +73,7 @@ export async function ManyFriendsAddable({
       {allUserFriends.length > 0 && (
         <>
           <p className="mt-2 font-semibold text-zinc-500">
-            Find your list of friend(s) below
+            Find your list of friend(s) to share to below
           </p>
           <ol>
             {allUserFriends.map((userFriend) => {
@@ -87,6 +87,14 @@ export async function ManyFriendsAddable({
               );
             })}
           </ol>
+        </>
+      )}
+      {allUserFriends.length === 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">
+            Find your list of friend(s) to share to below
+          </p>
+          <p className="mt-2">No friends yet.</p>
         </>
       )}
     </>
