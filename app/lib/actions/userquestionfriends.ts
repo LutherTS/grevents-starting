@@ -8,6 +8,7 @@ import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { sql } from "@vercel/postgres";
 import { v4 as uuidv4 } from "uuid";
 import pRetry from "p-retry";
+import { DEFAULT_RETRIES } from "../data/users";
 
 const USERQUESTIONFRIEND_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -38,7 +39,7 @@ export async function createUserQuestionFriend(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Delete User Question Friend.",
@@ -72,7 +73,7 @@ export async function createUserQuestionFriend(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Create User Question Friend.",
@@ -91,7 +92,7 @@ export async function createUserQuestionFriend(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Personal Info.",
@@ -122,7 +123,7 @@ export async function deleteUserQuestionFriend(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Question Friend.",
@@ -141,7 +142,7 @@ export async function deleteUserQuestionFriend(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Personal Info.",

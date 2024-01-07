@@ -6,6 +6,7 @@ import {
 // import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { User } from "../definitions/users";
+import { DEFAULT_RETRIES } from "./users";
 
 export async function fetchAllNativeNotIrlQuestions() {
   // noStore(); // since it pretty much does not change
@@ -30,7 +31,7 @@ export async function fetchAllNativeNotIrlQuestions() {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -62,7 +63,7 @@ export async function fetchAllNativeIrlQuestions() {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -109,7 +110,7 @@ export async function fetchAllUnansweredNativeNotIrlQuestions(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -156,7 +157,7 @@ export async function fetchAllUnansweredNativeIrlQuestions(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

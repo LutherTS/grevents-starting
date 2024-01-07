@@ -27,6 +27,10 @@ import {
   ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
 } from "../client/forms";
+import {
+  NoAnswersLabel,
+  noAnswersLabels,
+} from "@/app/lib/utils/noanswerslabels";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   return (
@@ -201,16 +205,18 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
 
 export async function ManyCriteria({
   answers,
-  label,
+  answersLabel,
+  noAnswersLabel,
 }: {
   answers: Answer[];
-  label: AnswersLabel;
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
 }) {
   return (
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -222,22 +228,30 @@ export async function ManyCriteria({
           </ol>
         </>
       )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
     </>
   );
 }
 
 export async function ManyCriteriaModify({
   answers,
-  label,
+  answersLabel,
+  noAnswersLabel,
 }: {
   answers: Answer[];
-  label: AnswersLabel;
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
 }) {
   return (
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -249,22 +263,30 @@ export async function ManyCriteriaModify({
           </ol>
         </>
       )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
     </>
   );
 }
 
 export async function ManyCriteriaPinnable({
   answers,
-  label,
+  answersLabel,
+  noAnswersLabel,
 }: {
   answers: Answer[];
-  label: AnswersLabel;
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
 }) {
   return (
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -276,22 +298,30 @@ export async function ManyCriteriaPinnable({
           </ol>
         </>
       )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
     </>
   );
 }
 
 export async function ManyCriteriaPinnablePseudoable({
   answers,
-  label,
+  answersLabel,
+  noAnswersLabel,
 }: {
   answers: Answer[];
-  label: AnswersLabel;
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
 }) {
   return (
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -303,22 +333,30 @@ export async function ManyCriteriaPinnablePseudoable({
           </ol>
         </>
       )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
     </>
   );
 }
 
 export async function ManyLinkCriteria({
   answers,
-  label,
+  answersLabel,
+  noAnswersLabel,
 }: {
   answers: Answer[];
-  label: AnswersLabel;
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
 }) {
   return (
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{label}</p>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
           <ol>
             {answers.map((answer) => {
               return (
@@ -330,6 +368,12 @@ export async function ManyLinkCriteria({
           </ol>
         </>
       )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
     </>
   );
 }
@@ -339,7 +383,11 @@ export async function ManyUserPinnedCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyCriteria answers={pinnedAnswers} label={answersLabels.pinned} />
+      <ManyCriteria
+        answers={pinnedAnswers}
+        answersLabel={answersLabels.pinned}
+        noAnswersLabel={noAnswersLabels.pinned}
+      />
     </>
   );
 }
@@ -353,7 +401,8 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
     <>
       <ManyCriteriaPinnable
         answers={userNativeNotIrlAnswers}
-        label={answersLabels.nativeNotIrl}
+        answersLabel={answersLabels.nativeNotIrl}
+        noAnswersLabel={noAnswersLabels.nativeNotIrl}
       />
     </>
   );
@@ -372,7 +421,8 @@ export async function ManyUserNativeNotIrlCriteriaModify({
     <>
       <ManyCriteriaModify
         answers={userNativeNotIrlAnswers}
-        label={answersLabels.nativeNotIrl}
+        answersLabel={answersLabels.nativeNotIrl}
+        noAnswersLabel={noAnswersLabels.nativeNotIrl}
       />
     </>
   );
@@ -385,7 +435,8 @@ export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
     <>
       <ManyCriteriaPinnable
         answers={userNativeIrlAnswers}
-        label={answersLabels.nativeIrl}
+        answersLabel={answersLabels.nativeIrl}
+        noAnswersLabel={noAnswersLabels.nativeIrl}
       />
     </>
   );
@@ -402,7 +453,8 @@ export async function ManyUserNativeIrlCriteriaModify({
     <>
       <ManyCriteriaModify
         answers={userNativeIrlAnswers}
-        label={answersLabels.nativeIrl}
+        answersLabel={answersLabels.nativeIrl}
+        noAnswersLabel={noAnswersLabels.nativeIrl}
       />
     </>
   );
@@ -420,7 +472,8 @@ export async function ManyUserPseudonativeNotIrlCriteria({
     <>
       <ManyCriteriaPinnablePseudoable
         answers={userPseudonativeNotIrlAnswers}
-        label={answersLabels.pseudonativeNotIrl}
+        answersLabel={answersLabels.pseudonativeNotIrl}
+        noAnswersLabel={noAnswersLabels.pseudonativeNotIrl}
       />
     </>
   );
@@ -438,7 +491,8 @@ export async function ManyUserPseudonativeNotIrlCriteriaModify({
     <>
       <ManyCriteriaModify
         answers={userPseudonativeNotIrlAnswers}
-        label={answersLabels.pseudonativeNotIrl}
+        answersLabel={answersLabels.pseudonativeNotIrl}
+        noAnswersLabel={noAnswersLabels.pseudonativeNotIrl}
       />
     </>
   );
@@ -457,7 +511,8 @@ export async function ManyUserPseudonativeIrlCriteria({
     <>
       <ManyCriteriaPinnablePseudoable
         answers={userPseudonativeIrlAnswers}
-        label={answersLabels.pseudonativeIrl}
+        answersLabel={answersLabels.pseudonativeIrl}
+        noAnswersLabel={noAnswersLabels.pseudonativeIrl}
       />
     </>
   );
@@ -476,7 +531,8 @@ export async function ManyUserPseudonativeIrlCriteriaModify({
     <>
       <ManyCriteriaModify
         answers={userPseudonativeIrlAnswers}
-        label={answersLabels.pseudonativeIrl}
+        answersLabel={answersLabels.pseudonativeIrl}
+        noAnswersLabel={noAnswersLabels.pseudonativeIrl}
       />
     </>
   );
@@ -489,7 +545,8 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
     <>
       <ManyLinkCriteria
         answers={userCustomAnswers}
-        label={answersLabels.custom}
+        answersLabel={answersLabels.custom}
+        noAnswersLabel={noAnswersLabels.custom}
       />
     </>
   );
@@ -560,7 +617,10 @@ export async function ManyUserPinnedNotIrlCriteria({
 }) {
   return (
     <>
-      <ManyCriteria answers={answers} label={answersLabels.pinnedNotIrl} />
+      <ManyCriteria
+        answers={answers}
+        answersLabel={answersLabels.pinnedNotIrl}
+      />
     </>
   );
 }
@@ -572,7 +632,10 @@ export async function ManyUserPinnedNotAndIrlCriteria({
 }) {
   return (
     <>
-      <ManyCriteria answers={answers} label={answersLabels.pinnedNotAndIrl} />
+      <ManyCriteria
+        answers={answers}
+        answersLabel={answersLabels.pinnedNotAndIrl}
+      />
     </>
   );
 }
@@ -586,7 +649,7 @@ export async function ManyUserUnpinnedNativeNotIrlCriteria({
     <>
       <ManyCriteria
         answers={answers}
-        label={answersLabels.unpinnedNativeNotIrl}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
       />
     </>
   );
@@ -601,7 +664,7 @@ export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
     <>
       <ManyCriteria
         answers={answers}
-        label={answersLabels.unpinnedPseudonativeNotIrl}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
     </>
   );
@@ -614,7 +677,10 @@ export async function ManyUserUnpinnedNativeIrlCriteria({
 }) {
   return (
     <>
-      <ManyCriteria answers={answers} label={answersLabels.unpinnedNativeIrl} />
+      <ManyCriteria
+        answers={answers}
+        answersLabel={answersLabels.unpinnedNativeIrl}
+      />
     </>
   );
 }
@@ -628,7 +694,7 @@ export async function ManyUserUnpinnedPseudonativeIrlCriteria({
     <>
       <ManyCriteria
         answers={answers}
-        label={answersLabels.unpinnedPseudonativeIrl}
+        answersLabel={answersLabels.unpinnedPseudonativeIrl}
       />
     </>
   );
@@ -651,7 +717,7 @@ export async function ManyUserSharedToContactCustomAnswers({
     <>
       <ManyCriteria
         answers={userSharedToContactCustomAnswers}
-        label={answersLabels.sharedToContactCustom}
+        answersLabel={answersLabels.sharedToContactCustom}
       />
     </>
   );

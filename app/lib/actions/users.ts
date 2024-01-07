@@ -7,6 +7,7 @@ import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import uid from "uid2";
 import {
+  DEFAULT_RETRIES,
   fetchUserByEmail,
   fetchUserByUserNameOrEmail,
   fetchUserByUsername,
@@ -198,7 +199,7 @@ export async function updateUserAppWideName(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User App-Wide Name.",
@@ -224,7 +225,7 @@ export async function resetUserStatusDashboard(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Dashboard.",
@@ -252,7 +253,7 @@ export async function updateUserFriendCode(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Friend Code.",
@@ -279,7 +280,7 @@ export async function resetUserStatusPersonalInfo(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Personal Info.",
@@ -312,16 +313,16 @@ export async function createOrFindContactsByFriendCode(
   prevState: CreateOrFindContactsByFriendCodeFormState | undefined,
   formData: FormData,
 ) {
-  console.log(user);
+  // console.log(user);
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("friendcode"));
+  // console.log(formData);
+  // console.log(formData.get("friendcode"));
 
   const validatedFields = CreateOrFindContactsByFriendCode.safeParse({
     otherUserFriendCode: formData.get("friendcode"),
   });
-  console.log(CreateOrFindContactsByFriendCode);
-  console.log(validatedFields);
+  // console.log(CreateOrFindContactsByFriendCode);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -333,11 +334,11 @@ export async function createOrFindContactsByFriendCode(
 
   const { otherUserFriendCode } = validatedFields.data;
 
-  console.log(otherUserFriendCode);
-  console.log(user.user_id);
+  // console.log(otherUserFriendCode);
+  // console.log(user.user_id);
 
   const otherUser = await findUserByFriendCode(otherUserFriendCode);
-  console.log(otherUser);
+  // console.log(otherUser);
 
   if (otherUser === undefined) {
     return {
@@ -355,7 +356,7 @@ export async function createOrFindContactsByFriendCode(
     user,
     otherUser.user_username,
   );
-  console.log(userOtherUserContact);
+  // console.log(userOtherUserContact);
 
   if (userOtherUserContact === undefined) {
     const generatedUserOtherUserContactID = uuidv4();
@@ -396,7 +397,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Create Contacts.",
@@ -415,7 +416,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",
@@ -434,7 +435,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Mirror Contact.",
@@ -453,7 +454,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message:
@@ -485,7 +486,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message:
@@ -526,12 +527,12 @@ export async function signUpUser(
   formData: FormData,
 ) {
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("username"));
-  console.log(formData.get("appwidename"));
-  console.log(formData.get("email"));
-  console.log(formData.get("password"));
-  console.log(formData.get("confirmpassword"));
+  // console.log(formData);
+  // console.log(formData.get("username"));
+  // console.log(formData.get("appwidename"));
+  // console.log(formData.get("email"));
+  // console.log(formData.get("password"));
+  // console.log(formData.get("confirmpassword"));
 
   const validatedFields = SignUpUser.safeParse({
     userUsername: formData.get("username"),
@@ -540,8 +541,8 @@ export async function signUpUser(
     userPassword: formData.get("password"),
     userConfirmPassword: formData.get("confirmpassword"),
   });
-  console.log(SignUpUser);
-  console.log(validatedFields);
+  // console.log(SignUpUser);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -557,11 +558,11 @@ export async function signUpUser(
     userPassword,
     userConfirmPassword,
   } = validatedFields.data;
-  console.log(userUsername);
-  console.log(userAppWideName);
-  console.log(userEmail);
-  console.log(userPassword);
-  console.log(userConfirmPassword);
+  // console.log(userUsername);
+  // console.log(userAppWideName);
+  // console.log(userEmail);
+  // console.log(userPassword);
+  // console.log(userConfirmPassword);
 
   if (userPassword !== userConfirmPassword) {
     return {
@@ -571,7 +572,7 @@ export async function signUpUser(
   }
 
   const preExistingUserByUsername = await fetchUserByUsername(userUsername);
-  console.log(preExistingUserByUsername);
+  // console.log(preExistingUserByUsername);
 
   if (preExistingUserByUsername) {
     return {
@@ -580,7 +581,7 @@ export async function signUpUser(
   }
 
   const preExistingUserByEmail = await fetchUserByEmail(userEmail);
-  console.log(preExistingUserByEmail);
+  // console.log(preExistingUserByEmail);
 
   if (preExistingUserByEmail) {
     return {
@@ -626,7 +627,7 @@ export async function signUpUser(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Create User.",
@@ -652,7 +653,7 @@ export async function resetUserStatusTitle(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Title.",
@@ -680,16 +681,16 @@ export async function signInUser(
   formData: FormData,
 ) {
   console.log(prevState);
-  console.log(formData);
-  console.log(formData.get("usernameoremail"));
-  console.log(formData.get("loginpassword"));
+  // console.log(formData);
+  // console.log(formData.get("usernameoremail"));
+  // console.log(formData.get("loginpassword"));
 
   const validatedFields = SignInUser.safeParse({
     userUsernameOrEmail: formData.get("usernameoremail"),
     userLoginPassword: formData.get("loginpassword"),
   });
-  console.log(SignInUser);
-  console.log(validatedFields);
+  // console.log(SignInUser);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -699,12 +700,12 @@ export async function signInUser(
   }
 
   const { userUsernameOrEmail, userLoginPassword } = validatedFields.data;
-  console.log(userUsernameOrEmail);
+  // console.log(userUsernameOrEmail);
   console.log(userLoginPassword);
 
   const userByUsernameOrEmail =
     await fetchUserByUserNameOrEmail(userUsernameOrEmail);
-  console.log(userByUsernameOrEmail);
+  // console.log(userByUsernameOrEmail);
 
   if (!userByUsernameOrEmail) {
     return {
@@ -725,7 +726,7 @@ export async function signInUser(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update User Status Title.",
