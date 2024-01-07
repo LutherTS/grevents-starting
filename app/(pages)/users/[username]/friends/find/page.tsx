@@ -98,6 +98,7 @@ export default async function FindContactsPage({
         )} */}
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
         <PageLink href={`/users/${username}/previews`} name={`See previews`} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

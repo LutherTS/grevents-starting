@@ -110,6 +110,7 @@ export default async function StardardizedPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>

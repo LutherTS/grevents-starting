@@ -172,6 +172,7 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/profile`}
           name={"To Your Profile"}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

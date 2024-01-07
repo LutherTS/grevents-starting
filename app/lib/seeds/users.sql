@@ -190,6 +190,8 @@ VALUES (
     now()
 ); -- Done. 
 
+-- Hector, créé manuellement sur la page Sign-In.
+
 INSERT INTO Users ( -- Lucas / Lucario
     user_id,
     user_username,

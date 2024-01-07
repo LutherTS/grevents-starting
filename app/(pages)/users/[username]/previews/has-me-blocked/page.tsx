@@ -65,6 +65,7 @@ export default async function BlockedPreviewPage({
         <BackToDashboardLink session={session} />
         <RelationCombinationHasMeBlockedPreview user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

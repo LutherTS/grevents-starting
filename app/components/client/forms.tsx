@@ -3,6 +3,10 @@
 import {
   createOrFindContactsByFriendCode,
   CreateOrFindContactsByFriendCodeFormState,
+  signInUser,
+  SignInUserFormState,
+  signUpUser,
+  SignUpUserFormState,
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
   updateUserFriendCode,
@@ -17,6 +21,7 @@ import {
   NativeNotIrlQuestionSelect,
   OneCriteriaAnswerModifyInput,
   RelComboInput,
+  SignInput,
   UserAppWideNameModifyInput,
   UserLastInput,
 } from "./inputs";
@@ -43,6 +48,7 @@ import {
   ButtonDeleteUserQuestionFriend,
   ButtonPseudoable,
   Button,
+  FormButton,
 } from "./buttons";
 import { FoundContact, Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
@@ -88,6 +94,7 @@ export function UserAppWideNameModifyForm({ user }: { user: User }) {
     <>
       <form action={formAction}>
         <label htmlFor="user-app-wide-name">
+          {/* This and similar shouldn't have the mt-2, the form rather */}
           <p className="mt-2">App-wide name *</p>
         </label>
         <UserAppWideNameModifyInput user={user} />
@@ -987,6 +994,170 @@ export function CustomAnswerForm({ user }: { user: User }) {
         <button type="submit" className="hidden">
           Submit
         </button>
+      </form>
+    </>
+  );
+}
+
+export function SignInForm() {
+  const initialState: SignInUserFormState = {
+    errors: {},
+    message: null,
+  };
+  const [state, formAction] = useFormState(signInUser, initialState);
+
+  return (
+    <>
+      {/* Has the margin bottom 4. */}
+      <form className="mb-4 flex flex-col items-center" action={formAction}>
+        <label htmlFor="username-or-email">
+          <p className="mt-4">Username or email *</p>
+        </label>
+        <SignInput
+          id="username-or-email"
+          name="usernameoremail"
+          placeholder="Enter your username or your email"
+        />
+        {state && state.errors?.userUsernameOrEmail ? (
+          <div id="username-or-email-error" aria-live="polite">
+            {state.errors.userUsernameOrEmail.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="login-password">
+          <p className="mt-4">Password *</p>
+        </label>
+        <SignInput
+          id="login-password"
+          name="loginpassword"
+          placeholder="Enter your password"
+          type="password"
+        />
+        {state && state.errors?.userLoginPassword ? (
+          <div id="password-error" aria-live="polite">
+            {state.errors.userLoginPassword.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="sign-in-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <FormButton>Sign in</FormButton>
+      </form>
+    </>
+  );
+}
+
+export function SignUpForm() {
+  const initialState: SignUpUserFormState = {
+    errors: {},
+    message: null,
+  };
+  const [state, formAction] = useFormState(signUpUser, initialState);
+
+  return (
+    <>
+      {/* Has the margin bottom 4. */}
+      <form className="mb-4 flex flex-col items-center" action={formAction}>
+        <label htmlFor="username">
+          <p className="mt-4">Username *</p>
+        </label>
+        <SignInput
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+        />
+        {state && state.errors?.userUsername ? (
+          <div id="username-error" aria-live="polite">
+            {state.errors.userUsername.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="app-wide-name">
+          <p className="mt-4">App-wide name *</p>
+        </label>
+        <SignInput
+          id="app-wide-name"
+          name="appwidename"
+          placeholder="Enter your app-wide name"
+        />
+        {state && state.errors?.userAppWideName ? (
+          <div id="app-wide-name-error" aria-live="polite">
+            {state.errors.userAppWideName.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="email">
+          <p className="mt-4">Email *</p>
+        </label>
+        <SignInput id="email" name="email" placeholder="Enter your email" />
+        {state && state.errors?.userEmail ? (
+          <div id="email-error" aria-live="polite">
+            {state.errors.userEmail.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="password">
+          <p className="mt-4">Password *</p>
+        </label>
+        <SignInput
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          type="password"
+        />
+        {state && state.errors?.userPassword ? (
+          <div id="password-error" aria-live="polite">
+            {state.errors.userPassword.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="confirm-password">
+          <p className="mt-4">Confirm password *</p>
+        </label>
+        <SignInput
+          id="confirm-password"
+          name="confirmpassword"
+          placeholder="Confirm your password"
+          type="password"
+        />
+        {state && state.errors?.userConfirmPassword ? (
+          <div id="confirm-password-error" aria-live="polite">
+            {state.errors.userConfirmPassword.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="sign-up-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <FormButton>Sign up</FormButton>
       </form>
     </>
   );
