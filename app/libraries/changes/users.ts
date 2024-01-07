@@ -1,5 +1,10 @@
 import { unstable_noStore as noStore } from "next/cache";
-import { FriendCodeUser, User, UserStatusTitle } from "../definitions/users";
+import {
+  FriendCodeUser,
+  User,
+  UserStatusPersonalInfo,
+  UserStatusTitle,
+} from "../definitions/users";
 import pRetry from "p-retry";
 import { sql } from "@vercel/postgres";
 import { DEFAULT_RETRIES } from "../data/users";
@@ -272,6 +277,32 @@ export async function changeSetUserStatusTitle(
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Title.",
+    };
+  }
+}
+
+export async function changeSetUserStatusPersonalInfo(
+  userId: string,
+  statusPersonalInfo: UserStatusPersonalInfo,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_personal_info = ${statusPersonalInfo},
+            user_updated_at = now()
+        WHERE user_id = ${userId}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Personal Info.",
     };
   }
 }
