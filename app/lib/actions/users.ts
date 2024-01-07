@@ -134,6 +134,16 @@ const UserSchema = z.object({
       message:
         "Your username or email could not be more than 50 characters long.",
     }),
+  userLoginPassword: z
+    .string({
+      invalid_type_error: "Please type a password.",
+    })
+    .min(1, {
+      message: "Your password has to be at least 1 character long.",
+    })
+    .max(50, {
+      message: "Your password could not be more than 50 characters long.",
+    }),
 });
 
 const UpdateUserAppWideName = UserSchema.pick({ userAppWideName: true });
@@ -506,7 +516,7 @@ export type SignUpUserFormState = {
     userAppWideName?: string[] | undefined;
     userEmail?: string[] | undefined;
     userPassword?: string[] | undefined;
-    userConfirmPassword: string[] | undefined;
+    userConfirmPassword?: string[] | undefined;
   };
   message?: string | null;
 };
@@ -569,7 +579,7 @@ export async function signUpUser(
     };
   }
 
-  const preExistingUserByEmail = await fetchUserByEmail(userUsername);
+  const preExistingUserByEmail = await fetchUserByEmail(userEmail);
   console.log(preExistingUserByEmail);
 
   if (preExistingUserByEmail) {
@@ -654,13 +664,13 @@ export async function resetUserStatusTitle(user: User) {
 
 const SignInUser = UserSchema.pick({
   userUsernameOrEmail: true,
-  userPassword: true,
+  userLoginPassword: true,
 });
 
 export type SignInUserFormState = {
   errors?: {
     userUsernameOrEmail?: string[] | undefined;
-    userPassword?: string[] | undefined;
+    userLoginPassword?: string[] | undefined;
   };
   message?: string | null;
 };
@@ -672,11 +682,11 @@ export async function signInUser(
   console.log(prevState);
   console.log(formData);
   console.log(formData.get("usernameoremail"));
-  console.log(formData.get("password"));
+  console.log(formData.get("loginpassword"));
 
   const validatedFields = SignInUser.safeParse({
     userUsernameOrEmail: formData.get("usernameoremail"),
-    userPassword: formData.get("password"),
+    userLoginPassword: formData.get("loginpassword"),
   });
   console.log(SignInUser);
   console.log(validatedFields);
@@ -688,9 +698,9 @@ export async function signInUser(
     };
   }
 
-  const { userUsernameOrEmail, userPassword } = validatedFields.data;
+  const { userUsernameOrEmail, userLoginPassword } = validatedFields.data;
   console.log(userUsernameOrEmail);
-  console.log(userPassword);
+  console.log(userLoginPassword);
 
   const userByUsernameOrEmail =
     await fetchUserByUserNameOrEmail(userUsernameOrEmail);
