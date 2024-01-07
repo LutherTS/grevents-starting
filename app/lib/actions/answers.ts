@@ -602,10 +602,10 @@ export async function createNativeNotIrlAnswer(
   // console.log(user.user_id);
 
   const question = await findQuestionByQuestionID(questionId);
-  console.log(question);
+  // console.log(question);
 
   const userQuestion = await findPreExistingNativeUserQuestion(user, question);
-  console.log(userQuestion);
+  // console.log(userQuestion);
 
   if (userQuestion === undefined) {
     // effacements inutiles vu que les uuids n'existent pas encore // non
@@ -950,10 +950,10 @@ export async function createNativeIrlAnswer(
   // console.log(user.user_id);
 
   const question = await findQuestionByQuestionID(questionId);
-  console.log(question);
+  // console.log(question);
 
   const userQuestion = await findPreExistingNativeUserQuestion(user, question);
-  console.log(userQuestion);
+  // console.log(userQuestion);
 
   if (userQuestion === undefined) {
     // effacements inutiles vu que les uuids n'existent pas encore // non
@@ -1467,7 +1467,7 @@ export async function createPseudonativeNotIrlAnswer(
   // console.log(user.user_id);
 
   const question = await findPseudoQuestionByQuestionName(initialQuestionName);
-  console.log(question);
+  // console.log(question);
 
   if (question === undefined) {
     // effacements inutiles vu que les uuids n'existent pas encore // oui
@@ -1599,7 +1599,7 @@ export async function createPseudonativeNotIrlAnswer(
       user,
       question,
     );
-    console.log(userQuestion);
+    // console.log(userQuestion);
 
     /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVE. */
     if (userQuestion === undefined) {
@@ -2025,7 +2025,7 @@ export async function createPseudonativeIrlAnswer(
   // console.log(user.user_id);
 
   const question = await findPseudoQuestionByQuestionName(initialQuestionName);
-  console.log(question);
+  // console.log(question);
 
   if (question === undefined) {
     // effacements inutiles vu que les uuids n'existent pas encore // oui
@@ -2157,7 +2157,7 @@ export async function createPseudonativeIrlAnswer(
       user,
       question,
     );
-    console.log(userQuestion);
+    // console.log(userQuestion);
 
     /* EXACTEMENT LE MÊME CODE, sauf le côté PSEUDONATIVEIRL. */
     if (userQuestion === undefined) {
@@ -2583,7 +2583,7 @@ export async function createCustomAnswer(
   // console.log(user.user_id);
 
   const question = await findCustomQuestionByQuestionName(initialQuestionName);
-  console.log(question);
+  // console.log(question);
 
   if (question === undefined) {
     // effacements inutiles vu que les uuids n'existent pas encore // oui
@@ -2713,7 +2713,7 @@ export async function createCustomAnswer(
       user,
       question,
     );
-    console.log(userQuestion);
+    // console.log(userQuestion);
 
     /* EXACTEMENT LE MÊME CODE, sauf la notification CUSTOM. */
     if (userQuestion === undefined) {
