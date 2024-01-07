@@ -4,6 +4,7 @@ import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
+import { DEFAULT_RETRIES } from "./users";
 
 /* Trying out p-retry.
 import pRetry, { AbortError } from "p-retry";
@@ -19,7 +20,7 @@ const run = async () => {
 	return response.blob();
 };
 
-console.log(await pRetry(run, {retries: 5}));
+console.log(await pRetry(run, {retries: DEFAULT_RETRIES}));
 */
 
 export async function fetchUserPinnedAnswers(userId: string) {
@@ -73,7 +74,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -120,7 +121,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -167,7 +168,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -215,7 +216,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -263,7 +264,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -323,7 +324,7 @@ export async function fetchUserCustomAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -383,7 +384,7 @@ export async function findAnswerByUserQuestionAndUser(
       // console.log(data);
       return data.rows[0];
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -440,7 +441,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -488,7 +489,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -539,7 +540,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -605,7 +606,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -653,7 +654,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -702,7 +703,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -787,7 +788,7 @@ export async function fetchUserSharedToContactCustomAnswers(
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -866,7 +867,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -952,7 +953,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

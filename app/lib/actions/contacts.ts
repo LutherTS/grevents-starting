@@ -8,6 +8,7 @@ import { User } from "../definitions/users";
 import pRetry from "p-retry";
 import { findContactByUserAndSession } from "../data/contacts";
 import _ from "lodash";
+import { DEFAULT_RETRIES } from "../data/users";
 
 const CONTACT_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -96,7 +97,7 @@ export async function resetContactStatusOtherProfile(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Other Profile.",
@@ -124,7 +125,7 @@ export async function resetContactStatusRelationship(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Relationship.",
@@ -152,7 +153,7 @@ export async function updateContactKindToFriend(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Kind to Friend.",
@@ -176,7 +177,7 @@ export async function updateMirrorContactKindToFriend(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message:
@@ -201,7 +202,7 @@ export async function updateContactKindToIrl(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Kind to IRL.",
@@ -225,7 +226,7 @@ export async function updateMirrorContactKindToIrl(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Mirror Contact Kind to IRL.",
@@ -249,7 +250,7 @@ export async function updateContactKindToNone(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Kind to None.",
@@ -273,7 +274,7 @@ export async function updateMirrorContactKindToNone(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Mirror Contact Kind to None.",
@@ -299,7 +300,7 @@ export async function updateContactBlocking(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Blocking to True.",
@@ -325,7 +326,7 @@ export async function updateContactUnblocking(contact: FoundContact) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Blocking to False.",
@@ -372,7 +373,7 @@ export async function setContactStatusRelationship(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Relationship.",
@@ -398,7 +399,7 @@ export async function setMirrorContactStatusRelationship(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Status Relationship.",
@@ -433,7 +434,7 @@ export async function setContactProcessRelationship(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Process Relationship.",
@@ -459,7 +460,7 @@ export async function setMirrorContactProcessRelationship(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update Contact Process Relationship.",

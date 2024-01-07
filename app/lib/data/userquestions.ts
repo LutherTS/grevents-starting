@@ -3,6 +3,7 @@ import { User } from "../definitions/users";
 import { UserQuestion } from "../definitions/userquestions";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
+import { DEFAULT_RETRIES } from "./users";
 
 export async function fetchCustomUserQuestionByIDAndUser(
   userQuestionId: string,
@@ -60,7 +61,7 @@ export async function fetchCustomUserQuestionByIDAndUser(
       // console.log(data);
       return data.rows[0];
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

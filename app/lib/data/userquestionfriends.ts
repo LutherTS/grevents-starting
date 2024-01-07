@@ -4,6 +4,7 @@ import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
+import { DEFAULT_RETRIES } from "./users";
 
 export async function countUserQuestionFriends(
   userQuestion: UserQuestion, // | Answer , // no longer used this way
@@ -24,7 +25,7 @@ export async function countUserQuestionFriends(
         // console.log(data);
         return data.rows[0].count;
       };
-      const data = await pRetry(run, { retries: 5 });
+      const data = await pRetry(run, { retries: DEFAULT_RETRIES });
       // console.log(data);
       return data;
     } catch (error) {
@@ -80,7 +81,7 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

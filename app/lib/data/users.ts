@@ -77,7 +77,7 @@ export async function findOtherUserByFriendCodeAgainstUser(
       // console.log(data);
       return data.rows[0];
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -109,7 +109,7 @@ export async function findUserByFriendCode(friendCode: string) {
       // console.log(data);
       return data.rows[0];
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

@@ -9,6 +9,7 @@ import {
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { UserQuestion } from "../definitions/userquestions";
+import { DEFAULT_RETRIES } from "./users";
 
 /* Improved, so no longer is use. Previously:
 // Going to need this improved to exclude current userQuestionFriends on userQuestion. 
@@ -55,7 +56,7 @@ export async function fetchAllUserFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -144,7 +145,7 @@ export async function fetchAllUserFriendsNotToUserQuestion(
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -185,7 +186,7 @@ export async function fetchAllUserContacts(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -235,7 +236,7 @@ export async function gatherContactByUserAndUsername(
         // console.log(data);
         return data.rows[0];
       };
-      const data = await pRetry(run, { retries: 5 });
+      const data = await pRetry(run, { retries: DEFAULT_RETRIES });
       // console.log(data);
       return data;
     } catch (error) {
@@ -280,7 +281,7 @@ export async function fetchAllUserNotIrlFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -324,7 +325,7 @@ export async function fetchAllUserIrlFriends(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -368,7 +369,7 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -412,7 +413,7 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -471,7 +472,7 @@ export async function findContactByUserAndSession(
         // console.log(data);
         return data.rows[0];
       };
-      const data = await pRetry(run, { retries: 5 });
+      const data = await pRetry(run, { retries: DEFAULT_RETRIES });
       // console.log(data);
       return data;
     } catch (error) {
@@ -527,7 +528,7 @@ export async function findSentFriendToContactsByUser(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -582,7 +583,7 @@ export async function findSentIrlToContactsByUser(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -637,7 +638,7 @@ export async function findSentFriendFromContactsByUser(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -692,7 +693,7 @@ export async function findSentIrlFromContactsByUser(user: User) {
       // console.log(data);
       return data.rows;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -725,7 +726,7 @@ export async function countSentFriendToContactsByUser(user: User) {
       // console.log(data);
       return data.rows[0].count;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -758,7 +759,7 @@ export async function countSentIrlToContactsByUser(user: User) {
       // console.log(data);
       return data.rows[0].count;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -791,7 +792,7 @@ export async function countSentFriendFromContactsByUser(user: User) {
       // console.log(data);
       return data.rows[0].count;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {
@@ -824,7 +825,7 @@ export async function countSentIrlFromContactsByUser(user: User) {
       // console.log(data);
       return data.rows[0].count;
     };
-    const data = await pRetry(run, { retries: 5 });
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
     // console.log(data);
     return data;
   } catch (error) {

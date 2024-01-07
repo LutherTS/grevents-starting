@@ -7,6 +7,7 @@ import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import uid from "uid2";
 import {
+  DEFAULT_RETRIES,
   fetchUserByEmail,
   fetchUserByUserNameOrEmail,
   fetchUserByUsername,
@@ -198,7 +199,7 @@ export async function updateUserAppWideName(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User App-Wide Name.",
@@ -224,7 +225,7 @@ export async function resetUserStatusDashboard(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Dashboard.",
@@ -252,7 +253,7 @@ export async function updateUserFriendCode(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Friend Code.",
@@ -279,7 +280,7 @@ export async function resetUserStatusPersonalInfo(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Personal Info.",
@@ -396,7 +397,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Create Contacts.",
@@ -415,7 +416,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Contact.",
@@ -434,7 +435,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update Mirror Contact.",
@@ -453,7 +454,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message:
@@ -485,7 +486,7 @@ export async function createOrFindContactsByFriendCode(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message:
@@ -626,7 +627,7 @@ export async function signUpUser(
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Create User.",
@@ -652,7 +653,7 @@ export async function resetUserStatusTitle(user: User) {
       `;
       console.log(data.rows);
     };
-    await pRetry(run, { retries: 5 });
+    await pRetry(run, { retries: DEFAULT_RETRIES });
   } catch (error) {
     return {
       message: "Database Error: Failed to Update User Status Title.",
@@ -725,7 +726,7 @@ export async function signInUser(
         `;
         console.log(data.rows);
       };
-      await pRetry(run, { retries: 5 });
+      await pRetry(run, { retries: DEFAULT_RETRIES });
     } catch (error) {
       return {
         message: "Database Error: Failed to Update User Status Title.",
