@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import uid from "uid2";
 import {
   fetchUserByEmail,
+  fetchUserByUserNameOrEmail,
   fetchUserByUsername,
   findUserByFriendCode,
 } from "../data/users";
@@ -78,8 +79,8 @@ const UserSchema = z.object({
     .min(1, {
       message: "Your e-mail needs to be at least 1 character long.",
     })
-    .max(100, {
-      message: "Your e-mail cannot be more than 100 characters long.",
+    .max(50, {
+      message: "Your e-mail cannot be more than 50 characters long.",
     }),
   userPassword: z
     .string({
@@ -121,6 +122,17 @@ const UserSchema = z.object({
     })
     .max(50, {
       message: "Your password cannot be more than 50 characters long.",
+    }),
+  userUsernameOrEmail: z
+    .string({
+      invalid_type_error: "Please type a username or an email.",
+    })
+    .min(1, {
+      message: "Your username or email has to be at least 1 character long.",
+    })
+    .max(50, {
+      message:
+        "Your username or email could not be more than 50 characters long.",
     }),
 });
 
@@ -637,3 +649,80 @@ export async function resetUserStatusTitle(user: User) {
     };
   }
 }
+
+const SignInUser = UserSchema.pick({
+  userUsernameOrEmail: true,
+  userPassword: true,
+});
+
+export type SignInUserFormState = {
+  errors?: {
+    userUsernameOrEmail?: string[] | undefined;
+    userPassword?: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function signInUser(
+  prevState: SignInUserFormState | undefined,
+  formData: FormData,
+) {
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("usernameoremail"));
+  console.log(formData.get("password"));
+
+  const validatedFields = SignInUser.safeParse({
+    userUsernameOrEmail: formData.get("usernameoremail"),
+    userPassword: formData.get("password"),
+  });
+  console.log(SignInUser);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Sign Up User.",
+    };
+  }
+
+  const { userUsernameOrEmail, userPassword } = validatedFields.data;
+  console.log(userUsernameOrEmail);
+  console.log(userPassword);
+
+  const userByUsernameOrEmail =
+    await fetchUserByUserNameOrEmail(userUsernameOrEmail);
+  console.log(userByUsernameOrEmail);
+
+  if (!userByUsernameOrEmail) {
+    return {
+      message: "Database Error: Sign in failed. Please check your credentials.",
+    };
+  }
+
+  if (userByUsernameOrEmail) {
+    try {
+      const run = async () => {
+        const data = await sql`
+          UPDATE Users
+          SET 
+              user_status_title = 'WELCOMEBACKTOGREVENTS',
+              user_updated_at = now()
+          WHERE user_id = ${userByUsernameOrEmail.user_id}
+          RETURNING * -- to make sure
+        `;
+        console.log(data.rows);
+      };
+      await pRetry(run, { retries: 5 });
+    } catch (error) {
+      return {
+        message: "Database Error: Failed to Update User Status Title.",
+      };
+    }
+  }
+
+  revalidatePath(`/users/${userByUsernameOrEmail.user_username}/dashboard`);
+  redirect(`/users/${userByUsernameOrEmail.user_username}/dashboard`);
+}
+
+// No signOutUser function since that's entirely auth. In the meantime, it will simply be a PageLink to the Sign In Page.

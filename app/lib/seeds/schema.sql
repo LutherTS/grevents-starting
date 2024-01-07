@@ -51,8 +51,8 @@ CREATE TABLE Users (
     user_status_dashboard user_status_dashboard DEFAULT 'NONE' NOT NULL,
     user_status_personal_info user_status_personal_info DEFAULT 'NONE' NOT NULL,
     user_username varchar(50) UNIQUE NOT NULL,
-    user_email varchar(100) UNIQUE NOT NULL, -- might have to be more characters since it's the hashed password that will be stored
-    user_password varchar(50) NOT NULL,
+    user_email varchar(50) UNIQUE NOT NULL, -- to be changed from 100 to 50 to match username length for validations
+    user_password varchar(50) NOT NULL, -- might have to be more characters since it's the hashed password that will be stored
     user_app_wide_name varchar(50) NOT NULL,
     user_friend_code char(12) UNIQUE NOT NULL,
     user_has_temporary_password boolean DEFAULT FALSE NOT NULL,
