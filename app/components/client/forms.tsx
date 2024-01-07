@@ -3,6 +3,8 @@
 import {
   createOrFindContactsByFriendCode,
   CreateOrFindContactsByFriendCodeFormState,
+  signInUser,
+  SignInUserFormState,
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
   updateUserFriendCode,
@@ -17,6 +19,7 @@ import {
   NativeNotIrlQuestionSelect,
   OneCriteriaAnswerModifyInput,
   RelComboInput,
+  SignInput,
   UserAppWideNameModifyInput,
   UserLastInput,
 } from "./inputs";
@@ -43,6 +46,7 @@ import {
   ButtonDeleteUserQuestionFriend,
   ButtonPseudoable,
   Button,
+  FormButton,
 } from "./buttons";
 import { FoundContact, Friend } from "@/app/lib/definitions/contacts";
 import { UserQuestion } from "@/app/lib/definitions/userquestions";
@@ -88,6 +92,7 @@ export function UserAppWideNameModifyForm({ user }: { user: User }) {
     <>
       <form action={formAction}>
         <label htmlFor="user-app-wide-name">
+          {/* This and similar shouldn't have the mt-2, the form rather */}
           <p className="mt-2">App-wide name *</p>
         </label>
         <UserAppWideNameModifyInput user={user} />
@@ -987,6 +992,63 @@ export function CustomAnswerForm({ user }: { user: User }) {
         <button type="submit" className="hidden">
           Submit
         </button>
+      </form>
+    </>
+  );
+}
+
+export function SignInForm() {
+  const initialState: SignInUserFormState = {
+    errors: {},
+    message: null,
+  };
+  const [state, formAction] = useFormState(signInUser, initialState);
+
+  return (
+    <>
+      {/* Has the margin bottom 4. */}
+      <form className="mb-4 flex flex-col items-center" action={formAction}>
+        <label htmlFor="username-or-email">
+          <p className="mt-4">Username or email *</p>
+        </label>
+        <SignInput
+          id="username-or-email"
+          name="usernameoremail"
+          placeholder="Enter your username or your email"
+        />
+        {state && state.errors?.userUsernameOrEmail ? (
+          <div id="username-or-email-error" aria-live="polite">
+            {state.errors.userUsernameOrEmail.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        <label htmlFor="password">
+          <p className="mt-4">Password *</p>
+        </label>
+        <SignInput
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+        />
+        {state && state.errors?.userPassword ? (
+          <div id="password-error" aria-live="polite">
+            {state.errors.userPassword.map((error: string) => (
+              <p className="mt-2 text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        ) : null}
+        {state && state.message ? (
+          <div id="sign-in-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null}
+        {/* Currently necessary to send the full form via Enter */}
+        <FormButton>Submit</FormButton>
       </form>
     </>
   );

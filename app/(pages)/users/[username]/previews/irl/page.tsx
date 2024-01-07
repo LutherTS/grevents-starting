@@ -63,6 +63,7 @@ export default async function IrlPreviewPage({
         <BackToDashboardLink session={session} />
         <RelationCombinationIrlPreview user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

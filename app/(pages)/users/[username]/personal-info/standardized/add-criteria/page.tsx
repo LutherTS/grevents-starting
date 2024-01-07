@@ -148,6 +148,7 @@ export default async function AddCriteriaStandardizedPage({
             href={`/users/${username}/personal-info/standardized`}
             name={"Cancel"}
           />
+          <PageLink href={`/sign-in`} name={`sign out`} />
         </div>
       </main>
     </>

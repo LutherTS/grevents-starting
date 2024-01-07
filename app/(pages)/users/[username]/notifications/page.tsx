@@ -76,6 +76,7 @@ export default async function NotificationsPage({
           <ManySentIrlFromContacts user={user} />
         </Suspense>
         <PageLink href={`/users/${username}/requests`} name={`To requests`} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

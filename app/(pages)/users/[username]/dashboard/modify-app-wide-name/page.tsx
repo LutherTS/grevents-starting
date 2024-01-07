@@ -72,6 +72,7 @@ export default async function ModifyAppWideNamePage({
           You’ll see it changed on your Personal info page.
         </p>
         <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

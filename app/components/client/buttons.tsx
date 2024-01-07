@@ -34,6 +34,21 @@ export function LinkButton({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function FormButton({ children }: { children: React.ReactNode }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className="mt-6 w-full rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-blue-600 disabled:dark:hover:bg-gray-500"
+      >
+        {children}
+      </button>
+    </>
+  );
+}
+
 export function ButtonPinnable({ answer }: { answer: Answer }) {
   const status = useFormStatus();
 

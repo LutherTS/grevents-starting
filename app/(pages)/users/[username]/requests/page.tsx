@@ -79,6 +79,7 @@ export default async function RequestsPage({
           href={`/users/${username}/notifications`}
           name={`To notifications`}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

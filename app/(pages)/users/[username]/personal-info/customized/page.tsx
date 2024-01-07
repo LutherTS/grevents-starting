@@ -127,6 +127,7 @@ export default async function CustomizedPage({
           href={`/users/${username}/personal-info/standardized`}
           name={"To Standardized criteria"}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>

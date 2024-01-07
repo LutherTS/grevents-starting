@@ -83,6 +83,7 @@ export default async function FriendsPage({
           href={`/users/${username}/friends/find`}
           name={`Search for contacts`}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

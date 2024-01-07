@@ -150,6 +150,7 @@ export default async function DashboardPage({
         >
           <p>My notifications</p>
         </PageLinkWithChildren>
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <PageLink href={`/`} name={`Return home`} />
       </div>
     </main>

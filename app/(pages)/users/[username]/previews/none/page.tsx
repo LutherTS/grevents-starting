@@ -63,6 +63,7 @@ export default async function NonePreviewPage({
         <BackToDashboardLink session={session} />
         <RelationCombinationNonePreview />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

@@ -307,6 +307,7 @@ export default async function UserPage({
               href={`/users/${session.user.user_username}/friends`}
               name={`back to your friends`}
             />
+            <PageLink href={`/sign-in`} name={`sign out`} />
             <RevalidateButtonForm />
           </>
         ) : (

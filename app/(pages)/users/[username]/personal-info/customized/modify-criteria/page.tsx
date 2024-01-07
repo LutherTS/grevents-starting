@@ -87,6 +87,7 @@ export default async function ModifyCriteriaCustomizedPage({
           href={`/users/${username}/personal-info/customized`}
           name={"Cancel"}
         />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>

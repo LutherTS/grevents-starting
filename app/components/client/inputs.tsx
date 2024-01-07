@@ -243,3 +243,28 @@ export function CustomizedQuestionInput({
     </>
   );
 }
+
+export function SignInput({
+  id,
+  name,
+  placeholder,
+}: {
+  id: string;
+  name: string;
+  placeholder: string;
+}) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <input
+        className="mt-2 w-full truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        type="text"
+        id={id}
+        name={name}
+        disabled={status.pending}
+        placeholder={placeholder}
+      />
+    </>
+  );
+}

@@ -80,6 +80,7 @@ export default async function BlocksPage({
           Blocked users and Users that have me blocked.
         </p>
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

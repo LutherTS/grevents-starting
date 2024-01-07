@@ -120,6 +120,7 @@ export default async function UserQuestionPage({
             href={`/users/${username}/personal-info`}
             name={"To Personal Info"}
           />
+          <PageLink href={`/sign-in`} name={`sign out`} />
         </div>
       </main>
     </>
