@@ -11,6 +11,8 @@ export default async function HomePage() {
           href={`/users/LePapier/dashboard`}
           name={`Go to my dashboard`}
         />
+        <PageLink href={`/sign-in`} name={`Sign in`} />
+        <PageLink href={`/sign-up`} name={`Sign up`} />
         <div className="mt-8">
           <p>
             <span className="font-bold">Grevents</span> is a web application
