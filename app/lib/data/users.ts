@@ -46,7 +46,7 @@ export async function fetchUserByUsername(username: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user data.");
+    throw new Error("Failed to fetch username user data.");
   }
 }
 
@@ -115,5 +115,50 @@ export async function findUserByFriendCode(friendCode: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch friend code user data.");
+  }
+}
+
+export async function fetchUserByEmail(email: string) {
+  // noStore(); // It's always going to be the same user as in the params.
+  // Therefore, there's no need to constantly revalidate.
+  // Back to no store because now I can modify it with form actions.
+  // It doesn't change anything, they seem to have purposefully limit
+  // the updates on the database by default, even if they show in RETURNING.
+  // console.log(username);
+
+  // /*fetchWithRetry(data)*/
+
+  try {
+    const run = async () => {
+      const data = await sql<User>`
+        SELECT
+            user_id,
+            user_state,
+            user_status_title,
+            user_status_dashboard,
+            user_status_personal_info,
+            user_username,
+            user_app_wide_name,
+            user_friend_code,
+            user_has_temporary_password,
+            user_created_at,
+            user_updated_at
+        FROM Users
+
+        WHERE user_email = ${email}
+
+        AND user_state = 'LIVE'
+        
+        LIMIT 1;
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch email user data.");
   }
 }

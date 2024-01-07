@@ -6,7 +6,11 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import uid from "uid2";
-import { findUserByFriendCode } from "../data/users";
+import {
+  fetchUserByEmail,
+  fetchUserByUsername,
+  findUserByFriendCode,
+} from "../data/users";
 import { gatherContactByUserAndUsername } from "../data/contacts";
 import { v4 as uuidv4 } from "uuid";
 import pRetry from "p-retry";
@@ -50,16 +54,47 @@ const USER_STATUSES_PERSONAL_INFO = [
 ] as const;
 
 const UserSchema = z.object({
+  // for now I voluntarily don't use .uuid()
   userId: z.string().length(36),
   userState: z.enum(USER_STATES),
   userStatusTitle: z.enum(USER_STATUSES_TITLE),
   userStatusDashboard: z.enum(USER_STATUSES_DASHBOARD),
   userStatusPersonalInfo: z.enum(USER_STATUSES_PERSONAL_INFO),
-  userUsername: z.string().max(50),
-  userEmail: z.string().max(100),
-  userPassword: z.string().max(50),
+  userUsername: z
+    .string({
+      invalid_type_error: "Please type a username.",
+    })
+    .min(1, {
+      message: "Your username needs to be at least 1 character long.",
+    })
+    .max(50, {
+      message: "Your username cannot be more than 50 characters long.",
+    }),
+  // for now I voluntarily don't use .email()
+  userEmail: z
+    .string({
+      invalid_type_error: "Please type an e-mail.",
+    })
+    .min(1, {
+      message: "Your e-mail needs to be at least 1 character long.",
+    })
+    .max(100, {
+      message: "Your e-mail cannot be more than 100 characters long.",
+    }),
+  userPassword: z
+    .string({
+      invalid_type_error: "Please type a password.",
+    })
+    .min(1, {
+      message: "Your password needs to be at least 1 character long.",
+    })
+    .max(50, {
+      message: "Your password cannot be more than 50 characters long.",
+    }),
   userAppWideName: z
-    .string()
+    .string({
+      invalid_type_error: "Please type an app-wide name.",
+    })
     .min(1, {
       message: "Your app-wide name needs to be at least 1 character long.",
     })
@@ -76,6 +111,16 @@ const UserSchema = z.object({
     })
     .length(12, {
       message: "A friend code is exactly 12 characters long.",
+    }),
+  userConfirmPassword: z
+    .string({
+      invalid_type_error: "Please type a password.",
+    })
+    .min(1, {
+      message: "Your password needs to be at least 1 character long.",
+    })
+    .max(50, {
+      message: "Your password cannot be more than 50 characters long.",
     }),
 });
 
@@ -432,5 +477,163 @@ export async function createOrFindContactsByFriendCode(
 
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
+  }
+}
+
+const SignUpUser = UserSchema.pick({
+  userUsername: true,
+  userAppWideName: true,
+  userEmail: true,
+  userPassword: true,
+  userConfirmPassword: true,
+});
+
+export type SignUpUserFormState = {
+  errors?: {
+    userUsername?: string[] | undefined;
+    userAppWideName?: string[] | undefined;
+    userEmail?: string[] | undefined;
+    userPassword?: string[] | undefined;
+    userConfirmPassword: string[] | undefined;
+  };
+  message?: string | null;
+};
+
+export async function signUpUser(
+  prevState: SignUpUserFormState | undefined,
+  formData: FormData,
+) {
+  console.log(prevState);
+  console.log(formData);
+  console.log(formData.get("username"));
+  console.log(formData.get("appwidename"));
+  console.log(formData.get("email"));
+  console.log(formData.get("password"));
+  console.log(formData.get("confirmpassword"));
+
+  const validatedFields = SignUpUser.safeParse({
+    userUsername: formData.get("username"),
+    userAppWideName: formData.get("appwidename"),
+    userEmail: formData.get("email"),
+    userPassword: formData.get("password"),
+    userConfirmPassword: formData.get("confirmpassword"),
+  });
+  console.log(SignUpUser);
+  console.log(validatedFields);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Sign Up User.",
+    };
+  }
+
+  const {
+    userUsername,
+    userAppWideName,
+    userEmail,
+    userPassword,
+    userConfirmPassword,
+  } = validatedFields.data;
+  console.log(userUsername);
+  console.log(userAppWideName);
+  console.log(userEmail);
+  console.log(userPassword);
+  console.log(userConfirmPassword);
+
+  if (userPassword !== userConfirmPassword) {
+    return {
+      message:
+        "Input Error: The password and the confirm password are not the same.",
+    };
+  }
+
+  const preExistingUserByUsername = await fetchUserByUsername(userUsername);
+  console.log(preExistingUserByUsername);
+
+  if (preExistingUserByUsername) {
+    return {
+      message: "Database Error: This username has already been selected.",
+    };
+  }
+
+  const preExistingUserByEmail = await fetchUserByEmail(userUsername);
+  console.log(preExistingUserByEmail);
+
+  if (preExistingUserByEmail) {
+    return {
+      message: "Database Error: This email has already been selected.",
+    };
+  }
+
+  const generatedUserID = uuidv4();
+  const generatedFriendCode = uid(12);
+
+  /* IMPORTANT
+  This is a demo function to simulate an actual authentication. Therefore, even though I am verifying the password with zod, at this point I won't go any further with a library like bcrypt (which I'll do when I'll code the actual entire authentication/authorization logic). This is why for all new entries, password will just be password.
+  */
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        INSERT INTO Users (
+            user_id,
+            user_username,
+            user_email,
+            user_password,
+            user_app_wide_name,
+            user_friend_code,
+            user_state,
+            user_created_at,
+            user_updated_at,
+            user_status_title
+        )
+        VALUES (
+            ${generatedUserID},
+            ${userUsername},
+            ${userEmail},
+            'password', -- should be userPassword eventually
+            ${userAppWideName},
+            ${generatedFriendCode},
+            'LIVE',
+            now(),
+            now(),
+            'WELCOMETOGREVENTS'
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create User.",
+    };
+  }
+
+  revalidatePath(`/users/${userUsername}/dashboard`);
+  redirect(`/users/${userUsername}/dashboard`);
+}
+
+export async function resetUserStatusTitle(user: User) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_status_title = 'NONE',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: 5 });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Status Title.",
+    };
   }
 }

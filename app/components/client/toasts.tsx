@@ -7,6 +7,7 @@ import {
 import {
   resetUserStatusDashboard,
   resetUserStatusPersonalInfo,
+  resetUserStatusTitle,
 } from "@/app/lib/actions/users";
 import { FoundContact } from "@/app/lib/definitions/contacts";
 import { User } from "@/app/lib/definitions/users";
@@ -517,6 +518,57 @@ export function ContactRefusedIrl({
           request
         </ToastChild>
       </ToastForm>
+    </>
+  );
+}
+
+export function WelcomeForm({
+  action,
+  children,
+}: {
+  action: (...rest: any) => any;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <form className="mb-2" action={action}>
+        {children}
+      </form>
+    </>
+  );
+}
+
+export function WelcomeChild({ children }: { children: React.ReactNode }) {
+  const status = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={status.pending}
+        className="text-yellow-500 disabled:text-gray-500"
+      >
+        {children}
+      </button>
+    </>
+  );
+}
+
+export function UserWelcomeToGrevents({ user }: { user: User }) {
+  return (
+    <>
+      <WelcomeForm action={() => resetUserStatusTitle(user)}>
+        <WelcomeChild>Welcome to Grevents</WelcomeChild>
+      </WelcomeForm>
+    </>
+  );
+}
+
+export function UserWelcomeBackToGrevents({ user }: { user: User }) {
+  return (
+    <>
+      <WelcomeForm action={() => resetUserStatusTitle(user)}>
+        <WelcomeChild>Welcome back to Grevents</WelcomeChild>
+      </WelcomeForm>
     </>
   );
 }

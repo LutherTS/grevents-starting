@@ -8,6 +8,8 @@ import {
 import {
   UserAppWideNameUpdated,
   UserFriendCodeUpdated,
+  UserWelcomeBackToGrevents,
+  UserWelcomeToGrevents,
 } from "@/app/components/client/toasts";
 import {
   countSentFriendToContactsByUser,
@@ -87,6 +89,12 @@ export default async function DashboardPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
+        {user.user_status_title === "WELCOMETOGREVENTS" && (
+          <UserWelcomeToGrevents user={user} />
+        )}
+        {user.user_status_title === "WELCOMEBACKTOGREVENTS" && (
+          <UserWelcomeBackToGrevents user={user} />
+        )}
         {user.user_status_dashboard === "APPWIDENAMEUPDATED" && (
           <UserAppWideNameUpdated user={user} />
         )}
