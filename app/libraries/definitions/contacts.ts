@@ -45,3 +45,8 @@ export type FoundContact = {
   u1_user_app_wide_name: string;
   u2_user_app_wide_name: string;
 };
+
+export type ContactStatusOtherProfile =
+  | "NONE"
+  | "FIRSTACCESSTHROUGHFIND"
+  | "REACCESSTHROUGHFIND";

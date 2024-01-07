@@ -23,3 +23,8 @@ export type FriendCodeUser = {
   user_app_wide_name: string;
   user_friend_code: string;
 };
+
+export type UserStatusTitle =
+  | "NONE"
+  | "WELCOMETOGREVENTS"
+  | "WELCOMEBACKTOGREVENTS";
