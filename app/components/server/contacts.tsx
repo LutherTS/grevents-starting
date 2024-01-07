@@ -10,10 +10,14 @@ import {
   findSentFriendToContactsByUser,
   findSentIrlFromContactsByUser,
   findSentIrlToContactsByUser,
-} from "@/app/lib/data/contacts";
-import { Block, FoundContact, Friend } from "@/app/lib/definitions/contacts";
-import { User } from "@/app/lib/definitions/users";
-import { UserQuestion } from "@/app/lib/definitions/userquestions";
+} from "@/app/libraries/data/contacts";
+import {
+  Block,
+  FoundContact,
+  Friend,
+} from "@/app/libraries/definitions/contacts";
+import { User } from "@/app/libraries/definitions/users";
+import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { ButtonAddUserQuestionFriendForm } from "../client/forms";
 import Link from "next/link";
 

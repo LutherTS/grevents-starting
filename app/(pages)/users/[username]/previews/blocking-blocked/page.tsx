@@ -1,9 +1,9 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
 import { RelationCombinationBlockingBlockedPreview } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
 

@@ -1,4 +1,4 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { ManyUserPinnedCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -11,7 +11,7 @@ import {
   UserQuestionPinned,
   UserQuestionUnpinned,
 } from "@/app/components/client/toasts";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
 

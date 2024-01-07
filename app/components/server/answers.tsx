@@ -16,11 +16,17 @@ import {
   fetchUserSharedToContactCustomAnswers,
   fetchUserPinnedNotIrlAnswersCustom,
   fetchUserPinnedNotAndIrlAnswersCustom,
-} from "@/app/lib/data/answers";
-import { User } from "@/app/lib/definitions/users";
-import { Answer } from "@/app/lib/definitions/answers";
-import { GatheredContact, FoundContact } from "@/app/lib/definitions/contacts";
-import { AnswersLabel, answersLabels } from "@/app/lib/utils/answerslabels";
+} from "@/app/libraries/data/answers";
+import { User } from "@/app/libraries/definitions/users";
+import { Answer } from "@/app/libraries/definitions/answers";
+import {
+  GatheredContact,
+  FoundContact,
+} from "@/app/libraries/definitions/contacts";
+import {
+  AnswersLabel,
+  answersLabels,
+} from "@/app/libraries/utilities/answerslabels";
 import Link from "next/link";
 import {
   ButtonPinnableForm,
@@ -30,7 +36,7 @@ import {
 import {
   NoAnswersLabel,
   noAnswersLabels,
-} from "@/app/lib/utils/noanswerslabels";
+} from "@/app/libraries/utilities/noanswerslabels";
 
 export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
   return (

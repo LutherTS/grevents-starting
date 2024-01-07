@@ -1,11 +1,11 @@
 import {
   fetchUserByUsername,
   // findOtherUserByFriendCodeAgainstUser,
-} from "@/app/lib/data/users";
+} from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import { FriendCodeInputForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";

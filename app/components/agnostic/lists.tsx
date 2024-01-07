@@ -1,4 +1,4 @@
-import { relationCombinations } from "@/app/lib/utils/relcombos";
+import { relationCombinations } from "@/app/libraries/utilities/relcombos";
 
 export function ManyRelationCombinations() {
   relationCombinations;

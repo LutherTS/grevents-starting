@@ -1,5 +1,5 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import { gatherContactByUserAndUsername } from "@/app/lib/data/contacts";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
+import { gatherContactByUserAndUsername } from "@/app/libraries/data/contacts";
 import { notFound } from "next/navigation";
 // import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
 import { Suspense } from "react";
@@ -7,7 +7,7 @@ import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
 import {
   defineGatheredRelCombo,
   relationCombinations,
-} from "@/app/lib/utils/relcombos";
+} from "@/app/libraries/utilities/relcombos";
 import {
   RelationCombinationNonePreview,
   RelationCombinationFriendCustomQueried,
@@ -18,7 +18,7 @@ import {
 } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import {
   RelComboInputForm,
   UserLastInputForm,

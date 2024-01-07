@@ -3,9 +3,9 @@
 import {
   countUserQuestionFriends,
   fetchAllUserQuestionFriends,
-} from "@/app/lib/data/userquestionfriends";
-import { UserQuestion } from "@/app/lib/definitions/userquestions";
-import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
+} from "@/app/libraries/data/userquestionfriends";
+import { UserQuestion } from "@/app/libraries/definitions/userquestions";
+import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import { ButtonDeleteUserQuestionFriendForm } from "../client/forms";
 
 export async function ManyUserQuestionFriendsLabel({
