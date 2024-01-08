@@ -89,7 +89,7 @@ export async function changeCancelShareUserQuestionFriend(
 
             userquestionfriend_shared_to_friend = FALSE,
             userquestionfriend_updated_at = now(),
-            userquestionfriend_shared_at = NULL,
+            userquestionfriend_shared_at = NULL
         WHERE userquestionfriend_id = ${userQuestionFriend.userquestionfriend_id}
         RETURNING * -- to make sure
       `;
