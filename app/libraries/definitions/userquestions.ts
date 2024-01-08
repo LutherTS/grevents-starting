@@ -12,7 +12,7 @@ export type UserQuestion = {
   userquestion_updated_at: string;
   userquestion_pinned_at: string;
   userquestion_up_to_irl_at: string;
-  userquestion_down_to_irl_at: string;
+  userquestion_down_from_irl_at: string;
   user_state: string;
   user_status_title: string;
   user_status_dashboard: string;
