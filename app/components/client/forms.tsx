@@ -44,8 +44,8 @@ import {
 import { Answer } from "@/app/libraries/definitions/answers";
 import {
   ButtonPinnable,
-  ButtonAddUserQuestionFriend,
-  ButtonDeleteUserQuestionFriend,
+  ButtonShareUserQuestionFriend,
+  ButtonCancelShareUserQuestionFriend,
   ButtonPseudoable,
   Button,
   FormButton,
@@ -54,8 +54,8 @@ import { FoundContact, Friend } from "@/app/libraries/definitions/contacts";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import {
-  createUserQuestionFriend,
-  deleteUserQuestionFriend,
+  shareUserQuestionFriend,
+  cancelShareUserQuestionFriend,
 } from "@/app/libraries/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -542,7 +542,7 @@ export function ButtonPseudoableForm({ answer }: { answer: Answer }) {
   );
 }
 
-export function ButtonAddUserQuestionFriendForm({
+export function ButtonShareUserQuestionFriendForm({
   userQuestion,
   contact,
 }: {
@@ -553,15 +553,15 @@ export function ButtonAddUserQuestionFriendForm({
     <>
       <form
         className="me-2 flex items-center"
-        action={() => createUserQuestionFriend(userQuestion, contact)}
+        action={() => shareUserQuestionFriend(userQuestion, contact)}
       >
-        <ButtonAddUserQuestionFriend />
+        <ButtonShareUserQuestionFriend />
       </form>
     </>
   );
 }
 
-export function ButtonDeleteUserQuestionFriendForm({
+export function ButtonCancelShareUserQuestionFriendForm({
   userQuestion,
   userQuestionFriend,
 }: {
@@ -573,10 +573,10 @@ export function ButtonDeleteUserQuestionFriendForm({
       <form
         className="me-2 flex items-center"
         action={() =>
-          deleteUserQuestionFriend(userQuestion, userQuestionFriend)
+          cancelShareUserQuestionFriend(userQuestion, userQuestionFriend)
         }
       >
-        <ButtonDeleteUserQuestionFriend />
+        <ButtonCancelShareUserQuestionFriend />
       </form>
     </>
   );

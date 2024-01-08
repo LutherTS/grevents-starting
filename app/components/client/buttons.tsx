@@ -93,7 +93,7 @@ export function ButtonPseudoable({ answer }: { answer: Answer }) {
   );
 }
 
-export function ButtonAddUserQuestionFriend() {
+export function ButtonShareUserQuestionFriend() {
   const status = useFormStatus();
 
   return (
@@ -106,7 +106,7 @@ export function ButtonAddUserQuestionFriend() {
   );
 }
 
-export function ButtonDeleteUserQuestionFriend() {
+export function ButtonCancelShareUserQuestionFriend() {
   const status = useFormStatus();
 
   return (

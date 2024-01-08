@@ -18,7 +18,7 @@ import {
 } from "@/app/libraries/definitions/contacts";
 import { User } from "@/app/libraries/definitions/users";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
-import { ButtonAddUserQuestionFriendForm } from "../client/forms";
+import { ButtonShareUserQuestionFriendForm } from "../client/forms";
 import Link from "next/link";
 
 export async function OneFriend({ friend }: { friend: Friend }) {
@@ -47,7 +47,7 @@ export async function OneFriendAddable({
   return (
     <>
       <div className="mt-2 flex justify-center">
-        <ButtonAddUserQuestionFriendForm
+        <ButtonShareUserQuestionFriendForm
           contact={friend}
           userQuestion={userQuestion}
         />

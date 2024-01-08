@@ -7,11 +7,13 @@ import { revalidatePath } from "next/cache";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { v4 as uuidv4 } from "uuid";
 import {
-  changeCreatetUserQuestionFriend,
+  changeCreateShareUserQuestionFriend,
   changeDeleteAtUserQuestionFriend,
-  changeUpdateDeleteUserQuestionFriend,
+  changeCancelShareUserQuestionFriend,
+  changeShareUserQuestionFriend,
 } from "../changes/userquestionfriends";
 import { changeSetUserStatusPersonalInfo } from "../changes/users";
+import { findUserQuestionFriend } from "../data/userquestionfriends";
 
 const USERQUESTIONFRIEND_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -26,35 +28,51 @@ const UserQuestionFriendSchema = z.object({
   userQuestionFriendSharedAt: z.string().datetime().nullable(),
 });
 
-export async function createUserQuestionFriend(
+export async function shareUserQuestionFriend(
   userQuestion: UserQuestion,
   contact: Friend,
 ) {
-  await changeDeleteAtUserQuestionFriend(userQuestion, contact);
-
-  const generatedUserQuestionFriendID = uuidv4();
-
-  await changeCreatetUserQuestionFriend(
+  const userQuestionFriend = await findUserQuestionFriend(
     userQuestion,
     contact,
-    generatedUserQuestionFriendID,
   );
 
-  await changeSetUserStatusPersonalInfo(
-    userQuestion.user_id,
-    "USERQUESTIONFRIENDADDED",
-  );
+  if (userQuestionFriend === undefined) {
+    await changeDeleteAtUserQuestionFriend(userQuestion, contact);
+
+    const generatedUserQuestionFriendID = uuidv4();
+
+    await changeCreateShareUserQuestionFriend(
+      userQuestion,
+      contact,
+      generatedUserQuestionFriendID,
+    );
+
+    await changeSetUserStatusPersonalInfo(
+      userQuestion.user_id,
+      "USERQUESTIONFRIENDADDED",
+    );
+  }
+
+  if (userQuestionFriend) {
+    await changeShareUserQuestionFriend(userQuestionFriend);
+
+    await changeSetUserStatusPersonalInfo(
+      userQuestion.user_id,
+      "USERQUESTIONFRIENDADDED",
+    );
+  }
 
   revalidatePath(
     `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
   );
 }
 
-export async function deleteUserQuestionFriend(
+export async function cancelShareUserQuestionFriend(
   userQuestion: UserQuestion,
   userQuestionFriend: UserQuestionFriend,
 ) {
-  await changeUpdateDeleteUserQuestionFriend(userQuestionFriend);
+  await changeCancelShareUserQuestionFriend(userQuestionFriend);
 
   await changeSetUserStatusPersonalInfo(
     userQuestion.user_id,

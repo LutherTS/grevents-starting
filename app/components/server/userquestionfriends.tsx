@@ -1,29 +1,31 @@
 "use server";
 
 import {
-  countUserQuestionFriends,
+  // countUserQuestionFriends,
   fetchAllUserQuestionFriends,
 } from "@/app/libraries/data/userquestionfriends";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
-import { ButtonDeleteUserQuestionFriendForm } from "../client/forms";
+import { ButtonCancelShareUserQuestionFriendForm } from "../client/forms";
 
 export async function ManyUserQuestionFriendsLabel({
-  userQuestion,
+  // userQuestion,
+  userQuestionFriends,
 }: {
-  userQuestion: UserQuestion;
+  // userQuestion: UserQuestion;
+  userQuestionFriends: UserQuestionFriend[];
 }) {
-  const userQuestionFriendsCount = await countUserQuestionFriends(userQuestion);
+  // const userQuestionFriendsCount = await countUserQuestionFriends(userQuestion);
 
   return (
     <>
-      {userQuestionFriendsCount >= 2 ? (
+      {userQuestionFriends.length >= 2 ? (
         <p className="mt-2 font-semibold text-zinc-500">
-          Shared with the following friends ({userQuestionFriendsCount})
+          Shared with the following friends ({userQuestionFriends.length})
         </p>
       ) : (
         <p className="mt-2 font-semibold text-zinc-500">
-          Shared with the following friend ({userQuestionFriendsCount})
+          Shared with the following friend ({userQuestionFriends.length})
         </p>
       )}
     </>
@@ -40,7 +42,7 @@ export async function OneUserQuestionFriend({
   return (
     <>
       <div className="mt-2 flex justify-center">
-        <ButtonDeleteUserQuestionFriendForm
+        <ButtonCancelShareUserQuestionFriendForm
           userQuestion={userQuestion}
           userQuestionFriend={userQuestionFriend}
         />
@@ -67,7 +69,9 @@ export async function ManyUserQuestionFriends({
     <>
       {allUserQuestionFriends.length > 0 && (
         <>
-          <ManyUserQuestionFriendsLabel userQuestion={userQuestion} />
+          <ManyUserQuestionFriendsLabel
+            userQuestionFriends={allUserQuestionFriends}
+          />
           <ol>
             {allUserQuestionFriends.map((userQuestionFriend) => {
               return (
