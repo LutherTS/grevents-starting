@@ -18,7 +18,7 @@ import {
 } from "@/app/libraries/definitions/contacts";
 import { User } from "@/app/libraries/definitions/users";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
-import { ButtonAddUserQuestionFriendForm } from "../client/forms";
+import { ButtonShareUserQuestionFriendForm } from "../client/forms";
 import Link from "next/link";
 
 export async function OneFriend({ friend }: { friend: Friend }) {
@@ -47,7 +47,7 @@ export async function OneFriendAddable({
   return (
     <>
       <div className="mt-2 flex justify-center">
-        <ButtonAddUserQuestionFriendForm
+        <ButtonShareUserQuestionFriendForm
           contact={friend}
           userQuestion={userQuestion}
         />
@@ -76,7 +76,7 @@ export async function ManyFriendsAddable({
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">
+          <p className="mt-4 font-semibold text-zinc-500">
             Find your list of friend(s) to share to below
           </p>
           <ol>
@@ -95,10 +95,10 @@ export async function ManyFriendsAddable({
       )}
       {allUserFriends.length === 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">
+          <p className="mt-4 font-semibold text-zinc-500">
             Find your list of friend(s) to share to below
           </p>
-          <p className="mt-2">No friends yet.</p>
+          <p className="mt-2">No remaining friends yet.</p>
         </>
       )}
     </>

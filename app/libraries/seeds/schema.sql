@@ -222,9 +222,13 @@ CREATE TABLE UserQuestionFriends (
     userquestion_id char(36) REFERENCES UserQuestions NOT NULL,
     contact_id char(36) REFERENCES Contacts NOT NULL,
     userquestionfriend_state userquestionfriend_state DEFAULT 'NONE' NOT NULL,
+    userquestionfriend_shared_to_friend boolean DEFAULT FALSE NOT NULL, -- added
+    userquestionfriend_pinned_by_friend boolean DEFAULT FALSE NOT NULL, -- added
     userquestionfriend_created_at timestamp NOT NULL,
     userquestionfriend_updated_at timestamp NOT NULL,
     userquestionfriend_shared_at timestamp NULL,
+    userquestionfriend_pinned_at timestamp NULL -- added
+
     UNIQUE (
         userquestion_id, 
         contact_id

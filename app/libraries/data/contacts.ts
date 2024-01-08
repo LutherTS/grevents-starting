@@ -111,6 +111,8 @@ export async function fetchAllUserFriendsNotToUserQuestion(
             JOIN Contacts c4 ON c3.contact_mirror_id = c4.contact_id
             
             WHERE uqf.userquestion_id = ${userQuestion.userquestion_id}
+            AND uqf.userquestionfriend_shared_to_friend = TRUE -- NEW
+            
             AND (
                 (
                     c3.contact_kind = 'FRIEND' AND 

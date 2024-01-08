@@ -5,7 +5,9 @@ import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { DEFAULT_RETRIES } from "./users";
+import { Friend } from "../definitions/contacts";
 
+/* No longer in use
 export async function countUserQuestionFriends(
   userQuestion: UserQuestion, // | Answer , // no longer used this way
 ) {
@@ -34,6 +36,7 @@ export async function countUserQuestionFriends(
     }
   }
 }
+*/
 
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   // noStore(); // since adding and removing will revalidate
@@ -52,6 +55,8 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
         JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
         
         WHERE uqf.userquestion_id = ${userQuestion.userquestion_id}
+        AND uqf.userquestionfriend_shared_to_friend = TRUE -- NEW
+        
         AND (
             (
                 c1.contact_kind = 'FRIEND' AND 
@@ -87,5 +92,47 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch all user question friends.");
+  }
+}
+
+export async function findUserQuestionFriend(
+  userQuestion: UserQuestion,
+  contact: Friend,
+) {
+  noStore(); // just in case
+  // console.log(userQuestion);
+  // console.log(contact);
+  try {
+    const run = async () => {
+      const data = await sql<UserQuestionFriend>`
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            uqf.userquestionfriend_id 
+        FROM UserQuestionFriends uqf
+        
+        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE uqf.userquestion_id = ${userQuestion.userquestion_id}
+        AND uqf.contact_id = ${contact.contact_id}
+        
+        AND uqf.userquestionfriend_state = 'LIVE'
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
+
+        LIMIT 1;
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to find user question friend.");
   }
 }

@@ -39,7 +39,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
             UserQuestions.userquestion_id,
             Users.user_username,
             Users.user_id,
-            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE UserQuestionFriends.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers 
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -295,7 +295,7 @@ export async function fetchUserCustomAnswers(userId: string) {
             UserQuestions.userquestion_id,
             Users.user_username,
             Users.user_id,
-            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE UserQuestionFriends.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -362,7 +362,7 @@ export async function findAnswerByUserQuestionAndUser(
             UserQuestions.userquestion_id,
             Users.user_username,
             Users.user_id,
-            COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE UserQuestionFriends.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -749,7 +749,7 @@ export async function fetchUserSharedToContactCustomAnswers(
             uq.userquestion_id,
             u.user_username,
             u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -834,7 +834,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             uq.userquestion_id,
             u.user_username,
             u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -915,7 +915,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             uq.userquestion_id,
             u.user_username,
             u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
