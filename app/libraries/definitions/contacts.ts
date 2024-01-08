@@ -10,14 +10,14 @@ export type Friend = {
 export type GatheredContact = {
   user_app_wide_name: string;
   user_username: string;
-  c1_contact_kind: string;
+  c1_contact_kind: ContactKind;
   c1_contact_blocking: boolean;
-  c2_contact_kind: string;
+  c2_contact_kind: ContactKind;
   c2_contact_blocking: boolean;
   c1_contact_id: string;
   c1_contact_mirror_id: string;
-  c1_contact_status_profile: string;
-  c2_contact_status_other_profile: string;
+  c1_contact_status_profile: ContactStatusProfile;
+  c2_contact_status_other_profile: ContactStatusOtherProfile;
 };
 
 export type Block = {
@@ -27,19 +27,19 @@ export type Block = {
 };
 
 export type FoundContact = {
-  c1_contact_kind: string;
+  c1_contact_kind: ContactKind;
   c1_contact_blocking: boolean;
-  c2_contact_kind: string;
+  c2_contact_kind: ContactKind;
   c2_contact_blocking: boolean;
   c1_contact_id: string;
   c1_contact_mirror_id: string;
   c1_user_first_id: string;
   c1_user_last_id: string;
-  c1_contact_status_profile: string;
-  c2_contact_status_other_profile: string;
-  c2_contact_status_relationship: string;
-  c2_contact_process_relationship: string;
-  c1_contact_process_relationship: string;
+  c1_contact_status_profile: ContactStatusProfile;
+  c2_contact_status_other_profile: ContactStatusOtherProfile;
+  c2_contact_status_relationship: ContactStatusRelationship;
+  c2_contact_process_relationship: ContactProcessRelationship;
+  c1_contact_process_relationship: ContactProcessRelationship;
   u1_user_username: string;
   u2_user_username: string;
   u1_user_app_wide_name: string;
@@ -76,3 +76,7 @@ export type ContactProcessRelationship =
   | "SENTIRL"
   | "ANNULFRIEND"
   | "ANNULIRL";
+
+export type ContactKind = "NONE" | "FRIEND" | "IRL";
+
+export type ContactStatusProfile = "NONE" | "FIRSTACCESSEDTHROUGHFIND";

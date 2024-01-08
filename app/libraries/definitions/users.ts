@@ -3,10 +3,10 @@
 
 export type User = {
   user_id: string;
-  user_state: string;
-  user_status_title: string;
-  user_status_dashboard: string;
-  user_status_personal_info: string;
+  user_state: UserState;
+  user_status_title: UserStatusTitle;
+  user_status_dashboard: UserStatusDashboard;
+  user_status_personal_info: UserStatusPersonalInfo;
   user_username: string;
   // user_email: string;
   // user_password: string;
@@ -48,3 +48,11 @@ export type UserStatusPersonalInfo =
   | "USERQUESTIONFRIENDADDED"
   | "USERQUESTIONFRIENDDELETED"
   | "REDIRECTEDTOPERSONALINFO";
+
+export type UserState = "LIVE" | "DELETED" | "DEACTIVATED";
+
+export type UserStatusDashboard =
+  | "NONE"
+  | "APPWIDENAMEUPDATED"
+  | "FRIENDCODEUPDATED"
+  | "REDIRECTEDTODASHBOARD";
