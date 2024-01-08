@@ -68,17 +68,8 @@ export default async function AddCriteriaCustomizedPage({
             Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
           </H1>
           <BackToDashboardLink session={session} />
-          <p className="mt-4 font-semibold text-zinc-500">
-            Create then answer a pseudonative question below
-          </p>
           <PseudoNativeNotIrlAnswerForm user={user} />
-          <p className="mt-4 font-semibold text-zinc-500">
-            Create then answer a pseudonative irl question below
-          </p>
           <PseudoNativeIrlAnswerForm user={user} />
-          <p className="mt-4 font-semibold text-zinc-500">
-            Create then answer a custom question below
-          </p>
           <CustomAnswerForm user={user} />
           <PageLink
             href={`/users/${username}/personal-info/customized`}

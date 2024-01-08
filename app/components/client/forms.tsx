@@ -78,6 +78,7 @@ import {
   unfriend,
   upgradeFriendshipToIrl,
 } from "@/app/libraries/actions/contacts";
+import { ManyRelationCombinations } from "../agnostic/lists";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -606,6 +607,9 @@ export function FriendCodeInputForm({
         action={formAction}
         // A form action will be required in order to show error messages.
       >
+        <label htmlFor="friend-code">
+          <p>Find a user by their friend code.</p>
+        </label>
         <FriendCodeInput />
         {state && state.errors?.otherUserFriendCode ? (
           <div id="question-id-native-not-irl-error" aria-live="polite">
@@ -630,6 +634,12 @@ export function UserLastInputForm({ userLast }: { userLast: string }) {
   return (
     <>
       <form className="mt-2">
+        <label htmlFor="user-last">
+          <p>
+            Type the username of a user you are acquainted with. (userlast in
+            searchParams.)
+          </p>
+        </label>
         <UserLastInput userLast={userLast} />
       </form>
     </>
@@ -665,6 +675,7 @@ export function RelComboInputForm({ relCombo }: { relCombo: string }) {
         action={(formData) => handleSubmit(formData)}
         // Action still needed to be developed, to add to the existing searchParams.
       >
+        <ManyRelationCombinations />
         <RelComboInput relCombo={relCombo} />
       </form>
     </>
@@ -714,7 +725,15 @@ export function NativeNotIrlAnswerForm({
 
   return (
     <>
-      <form className="mt-4 flex flex-col items-center" action={formAction}>
+      <form className="mt-2 flex flex-col items-center" action={formAction}>
+        <label htmlFor="native-not-irl-question" className="sr-only">
+          Select a native question below
+        </label>
+        <label htmlFor="native-not-irl-answer">
+          <p className="mt-2 font-semibold text-zinc-500">
+            Select then answer a native question below
+          </p>
+        </label>
         <NativeNotIrlQuestionSelect
           allNativeNotIrlQuestions={allNativeNotIrlQuestions}
         />
@@ -775,9 +794,17 @@ export function NativeIrlAnswerForm({
     <>
       {/* Has the margin bottom 4. */}
       <form
-        className="mb-4 mt-4 flex flex-col items-center"
+        className="mb-4 mt-2 flex flex-col items-center"
         action={formAction}
       >
+        <label htmlFor="native-irl-question" className="sr-only">
+          Select a native irl question below
+        </label>
+        <label htmlFor="native-irl-answer">
+          <p className="mt-2 font-semibold text-zinc-500">
+            Select then answer a native irl question below
+          </p>
+        </label>
         <NativeIrlQuestionSelect
           allNativeIrlQuestions={allNativeIrlQuestions}
         />
@@ -828,7 +855,15 @@ export function PseudoNativeNotIrlAnswerForm({ user }: { user: User }) {
 
   return (
     <>
-      <form className="flex flex-col items-center" action={formAction}>
+      <form className="mt-2 flex flex-col items-center" action={formAction}>
+        <label htmlFor="pseudonative-not-irl-question">
+          <p className="mt-2 font-semibold text-zinc-500">
+            Create then answer a pseudonative question below
+          </p>
+        </label>
+        <label htmlFor="pseudonative-not-irl-answer" className="sr-only">
+          Answer a pseudonative question below
+        </label>
         <CustomizedQuestionInput
           id="pseudonative-not-irl-question"
           name="pseudonativenotirlquestion"
@@ -893,7 +928,15 @@ export function PseudoNativeIrlAnswerForm({ user }: { user: User }) {
 
   return (
     <>
-      <form className="flex flex-col items-center" action={formAction}>
+      <form className="mt-2 flex flex-col items-center" action={formAction}>
+        <label htmlFor="pseudonative-irl-question">
+          <p className="mt-2 font-semibold text-zinc-500">
+            Create then answer a pseudonative irl question below
+          </p>
+        </label>
+        <label htmlFor="pseudonative-irl-answer" className="sr-only">
+          Answer a pseudonative irl question below
+        </label>
         <CustomizedQuestionInput
           id="pseudonative-irl-question"
           name="pseudonativeirlquestion"
@@ -956,7 +999,18 @@ export function CustomAnswerForm({ user }: { user: User }) {
   return (
     <>
       {/* Has the margin bottom 4. */}
-      <form className="mb-4 flex flex-col items-center" action={formAction}>
+      <form
+        className="mb-4 mt-2 flex flex-col items-center"
+        action={formAction}
+      >
+        <label htmlFor="custom-question">
+          <p className="mt-2 font-semibold text-zinc-500">
+            Create then answer a custom question below
+          </p>
+        </label>
+        <label htmlFor="custom-answer" className="sr-only">
+          Answer a custom question below
+        </label>
         <CustomizedQuestionInput
           id="custom-question"
           name="customquestion"

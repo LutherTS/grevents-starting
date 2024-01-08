@@ -73,10 +73,6 @@ export default async function FindContactsPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
         <BackToDashboardLink session={session} />
-        <p className="mt-2">
-          Find a user by their friend code.
-          {/* (Temporarily friendcode in searchParams.) */}
-        </p>
         <FriendCodeInputForm user={user} />
         {/* {friendCode !== "" && (
           <>
