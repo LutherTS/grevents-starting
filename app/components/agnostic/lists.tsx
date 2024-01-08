@@ -6,7 +6,7 @@ export function ManyRelationCombinations() {
     <>
       {relationCombinations.length > 0 && (
         <>
-          <label htmlFor="rel-combo">
+          <label className="mt-2" htmlFor="rel-combo">
             <p>
               Type a relation combination between you and this user you&apos;ve
               selected. (relcombo in searchParams.)

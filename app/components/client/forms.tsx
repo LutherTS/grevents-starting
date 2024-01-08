@@ -93,7 +93,7 @@ export function UserAppWideNameModifyForm({ user }: { user: User }) {
 
   return (
     <>
-      <form action={formAction}>
+      <form className="mt-2" action={formAction}>
         <label htmlFor="user-app-wide-name">
           {/* This and similar shouldn't have the mt-2, the form rather */}
           <p className="mt-2">App-wide name *</p>
@@ -134,7 +134,7 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
 
   return (
     <>
-      <form action={formAction}>
+      <form className="mt-2" action={formAction}>
         <label className="sr-only" htmlFor={answer.answer_id}>
           Modify answer &quot;{answer.answer_value}&quot;
         </label>
@@ -358,7 +358,7 @@ export function DeclineFriendForm({
   return (
     <>
       <form
-        className="inline-block"
+        className="inline"
         action={() => declineFriendRequest(contact, user, session)}
       >
         <LinkButton>Decline</LinkButton>
@@ -379,7 +379,7 @@ export function AcceptFriendForm({
   return (
     <>
       <form
-        className="inline-block"
+        className="inline"
         action={() => acceptFriendRequest(contact, user, session)}
       >
         <LinkButton>Accept</LinkButton>
