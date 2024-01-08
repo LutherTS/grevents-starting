@@ -4,7 +4,11 @@ import { sql } from "@vercel/postgres";
 import { DEFAULT_RETRIES } from "../data/users";
 import { Answer } from "../definitions/answers";
 import { User } from "../definitions/users";
-import { PreExistingNativeUserQuestion } from "../definitions/userquestions";
+import {
+  PreExistingCustomUserQuestion,
+  PreExistingNativeUserQuestion,
+  PreExistingPseudonativeUserQuestion,
+} from "../definitions/userquestions";
 
 export async function changeUpdateDeleteAnswer(answer: Answer) {
   noStore();
@@ -97,7 +101,10 @@ export async function changeCreateAnswer(
 }
 
 export async function changeDeleteAtAnswer(
-  userQuestion: PreExistingNativeUserQuestion,
+  userQuestion:
+    | PreExistingNativeUserQuestion
+    | PreExistingPseudonativeUserQuestion
+    | PreExistingCustomUserQuestion,
   user: User,
 ) {
   noStore();
@@ -121,7 +128,10 @@ export async function changeDeleteAtAnswer(
 }
 
 export async function changeUpdateAnswerValueByUserQuestionAndUser(
-  userQuestion: PreExistingNativeUserQuestion,
+  userQuestion:
+    | PreExistingNativeUserQuestion
+    | PreExistingPseudonativeUserQuestion
+    | PreExistingCustomUserQuestion,
   user: User,
   initialAnswerValue: string,
 ) {
