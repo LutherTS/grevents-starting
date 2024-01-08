@@ -14,17 +14,19 @@ import {
 import { gatherContactByUserAndUsername } from "../data/contacts";
 import { v4 as uuidv4 } from "uuid";
 import {
-  changeCreateContactAndMirrorContact,
   changeCreateUser,
   changeResetUserStatusDashboard,
   changeResetUserStatusPersonalInfo,
   changeResetUserStatusTitle,
-  changeSetContactMirrorContact,
   changeSetUserStatusTitle,
   changeUpdateUserAppWideName,
   changeUpdateUserFriendCode,
 } from "../changes/users";
-import { changeSetContactStatusOtherProfile } from "../changes/contacts";
+import {
+  changeCreateContactAndMirrorContact,
+  changeSetContactMirrorContact,
+  changeSetContactStatusOtherProfile,
+} from "../changes/contacts";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 

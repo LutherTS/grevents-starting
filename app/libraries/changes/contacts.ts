@@ -8,6 +8,82 @@ import {
   ContactStatusRelationship,
   FoundContact,
 } from "../definitions/contacts";
+import { FriendCodeUser, User } from "../definitions/users";
+
+export async function changeCreateContactAndMirrorContact(
+  user: User,
+  otherUser: FriendCodeUser,
+  generatedUserOtherUserContactID: string,
+  generatedOtherUserUserContactID: string,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        INSERT INTO Contacts ( -- user and otherUser
+            contact_id,
+            user_first_id,
+            user_last_id,
+            contact_state,
+            contact_kind,
+            contact_created_at,
+            contact_updated_at
+        )
+        VALUES ( -- from user to otherUser
+            ${generatedUserOtherUserContactID},
+            ${user.user_id},
+            ${otherUser.user_id},
+            'LIVE',
+            'NONE',
+            now(),
+            now()
+        ), ( -- from otherUser to user
+            ${generatedOtherUserUserContactID},
+            ${otherUser.user_id},
+            ${user.user_id},
+            'LIVE',
+            'NONE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Contacts.",
+    };
+  }
+}
+
+export async function changeSetContactMirrorContact(
+  contactId: string,
+  mirrorContactId: string,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Contacts
+        SET 
+            contact_mirror_id = ${contactId},
+            contact_updated_at = now()
+        WHERE contact_id = ${mirrorContactId}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Contact.",
+    };
+  }
+}
 
 export async function changeSetContactStatusOtherProfile(
   contactId: string,

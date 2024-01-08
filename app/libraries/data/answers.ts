@@ -38,6 +38,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
             Users.user_username,
+            Users.user_id,
             COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers 
 
@@ -63,7 +64,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
 
         ORDER BY 
             UserQuestions.userquestion_pinned_at DESC, 
@@ -97,7 +99,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -144,7 +147,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -191,7 +195,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -239,7 +244,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -288,6 +294,7 @@ export async function fetchUserCustomAnswers(userId: string) {
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
             Users.user_username,
+            Users.user_id,
             COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers
 
@@ -313,7 +320,8 @@ export async function fetchUserCustomAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
 
         ORDER BY 
             userquestionfriends_count ASC, -- NEW
@@ -353,6 +361,7 @@ export async function findAnswerByUserQuestionAndUser(
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
             Users.user_username,
+            Users.user_id,
             COUNT(CASE UserQuestionFriends.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers
 
@@ -377,7 +386,8 @@ export async function findAnswerByUserQuestionAndUser(
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
 
         LIMIT 1;
       `;
@@ -407,7 +417,8 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers 
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -464,7 +475,8 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -514,7 +526,8 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -565,7 +578,8 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers 
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -629,7 +643,8 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -677,7 +692,8 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
-            Users.user_username
+            Users.user_username,
+            Users.user_id
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
@@ -732,6 +748,7 @@ export async function fetchUserSharedToContactCustomAnswers(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
+            u.user_id,
             COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
@@ -777,7 +794,8 @@ export async function fetchUserSharedToContactCustomAnswers(
             q.question_kind,
             uq.userquestion_kind,
             uq.userquestion_id,
-            u.user_username
+            u.user_username,
+            u.user_id
 
         ORDER BY 
             userquestionfriends_count ASC, -- NEW
@@ -815,6 +833,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
+            u.user_id,
             COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
@@ -856,7 +875,8 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             q.question_kind,
             uq.userquestion_kind,
             uq.userquestion_id,
-            u.user_username
+            u.user_username,
+            u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -894,6 +914,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
+            u.user_id,
             COUNT(CASE uqf2.userquestionfriend_state WHEN 'LIVE' THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
@@ -942,7 +963,8 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             q.question_kind,
             uq.userquestion_kind,
             uq.userquestion_id,
-            u.user_username
+            u.user_username,
+            u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 

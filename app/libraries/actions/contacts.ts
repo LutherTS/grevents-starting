@@ -2,13 +2,10 @@
 
 import { z } from "zod";
 import { FoundContact } from "../definitions/contacts";
-import { revalidatePath, unstable_noStore as noStore } from "next/cache";
-import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 import { User } from "../definitions/users";
-import pRetry from "p-retry";
 import { findContactByUserAndSession } from "../data/contacts";
 import _ from "lodash";
-import { DEFAULT_RETRIES } from "../data/users";
 import {
   changeResetContactStatusOtherProfile,
   changeResetContactStatusRelationship,
