@@ -3,17 +3,11 @@ import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
-export const DEFAULT_RETRIES = 5;
+export const DEFAULT_RETRIES = 6;
 
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.
   // Therefore, there's no need to constantly revalidate.
-  // Back to no store because now I can modify it with form actions.
-  // It doesn't change anything, they seem to have purposefully limit
-  // the updates on the database by default, even if they show in RETURNING.
-  // console.log(username);
-
-  // /*fetchWithRetry(data)*/
 
   try {
     const run = async () => {
@@ -119,12 +113,7 @@ export async function findUserByFriendCode(friendCode: string) {
 }
 
 export async function fetchUserByEmail(email: string) {
-  // noStore(); // It's always going to be the same user as in the params.
-  // Therefore, there's no need to constantly revalidate.
-  // Back to no store because now I can modify it with form actions.
-  // It doesn't change anything, they seem to have purposefully limit
-  // the updates on the database by default, even if they show in RETURNING.
-  // console.log(username);
+  noStore();
 
   try {
     const run = async () => {
@@ -163,12 +152,7 @@ export async function fetchUserByEmail(email: string) {
 
 // Incomplete yet.
 export async function fetchUserByUserNameOrEmail(usernameOrEmail: string) {
-  // noStore(); // It's always going to be the same user as in the params.
-  // Therefore, there's no need to constantly revalidate.
-  // Back to no store because now I can modify it with form actions.
-  // It doesn't change anything, they seem to have purposefully limit
-  // the updates on the database by default, even if they show in RETURNING.
-  // console.log(username);
+  noStore();
 
   try {
     const run = async () => {

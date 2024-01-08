@@ -5,9 +5,12 @@ import { DEFAULT_RETRIES } from "../data/users";
 import { Answer } from "../definitions/answers";
 import { User } from "../definitions/users";
 import {
+  CustomQuestion,
   NativeIrlQuestion,
   NativeNotIrlQuestion,
+  PseudonativeQuestion,
 } from "../definitions/questions";
+import { PreExistingPseudonativeUserQuestion } from "../definitions/userquestions";
 
 export async function changePinUserQuestionOfAnswer(answer: Answer) {
   noStore();
@@ -115,7 +118,11 @@ export async function changeSetUserQuestionPseudonativeOfAnswer(
 
 export async function changeDeleteAtUserQuestion(
   user: User,
-  question: NativeNotIrlQuestion | NativeIrlQuestion,
+  question:
+    | NativeNotIrlQuestion
+    | NativeIrlQuestion
+    | PseudonativeQuestion
+    | CustomQuestion,
 ) {
   noStore();
 
@@ -137,7 +144,7 @@ export async function changeDeleteAtUserQuestion(
   }
 }
 
-export async function changeCreateUserQuestion(
+export async function changeCreateNativeUserQuestion(
   user: User,
   question: NativeNotIrlQuestion | NativeIrlQuestion,
   generatedUserQuestionID: string,
@@ -171,6 +178,182 @@ export async function changeCreateUserQuestion(
   } catch (error) {
     return {
       message: "Database Error: Failed to Create User Question.",
+    };
+  }
+}
+
+export async function changeCreatePseudonativeNotIrlUserQuestion(
+  user: User,
+  questionID: string,
+  generatedUserQuestionID: string,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_kind,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${questionID},
+            'LIVE',
+            'PSEUDONATIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message:
+        "Database Error: Failed to Create Pseudonative Not IRL User Question.",
+    };
+  }
+}
+
+export async function changeSwitchUserQuestionToPseudonative(
+  userQuestion: PreExistingPseudonativeUserQuestion,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVE',
+            userquestion_down_from_irl_at = now(),
+            userquestion_up_to_irl_at = NULL,
+            userquestion_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message:
+        "Database Error: Failed to Switch User Question Kind to Pseudonative.",
+    };
+  }
+}
+
+export async function changeCreatePseudonativeIrlUserQuestion(
+  user: User,
+  questionID: string,
+  generatedUserQuestionID: string,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_kind,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${questionID},
+            'LIVE',
+            'PSEUDONATIVEIRL',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message:
+        "Database Error: Failed to Create Pseudonative IRL User Question.",
+    };
+  }
+}
+
+export async function changeSwitchUserQuestionToPseudonativeIrl(
+  userQuestion: PreExistingPseudonativeUserQuestion,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_kind = 'PSEUDONATIVEIRL',
+            userquestion_up_to_irl_at = now(),
+            userquestion_down_from_irl_at = NULL,
+            userquestion_updated_at = now()
+            WHERE userquestion_id = ${userQuestion.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message:
+        "Database Error: Failed to Switch User Question Kind to Pseudonative IRL.",
+    };
+  }
+}
+
+export async function changeCreateCustomUserQuestion(
+  user: User,
+  questionID: string,
+  generatedUserQuestionID: string,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        INSERT INTO UserQuestions (
+            userquestion_id,
+            user_id,
+            question_id,
+            userquestion_state,
+            userquestion_created_at,
+            userquestion_updated_at
+        )
+        VALUES (
+            ${generatedUserQuestionID},
+            ${user.user_id},
+            ${questionID},
+            'LIVE',
+            now(),
+            now()
+        )
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Custom User Question.",
     };
   }
 }
