@@ -1,7 +1,7 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import { findContactByUserAndSession } from "@/app/lib/data/contacts";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
+import { findContactByUserAndSession } from "@/app/libraries/data/contacts";
 import { notFound } from "next/navigation";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import {
@@ -15,7 +15,7 @@ import {
 import {
   RelationCombination,
   defineFoundRelCombo,
-} from "@/app/lib/utils/relcombos";
+} from "@/app/libraries/utilities/relcombos";
 import {
   ContactAnnulFriend,
   ContactAnnulIrl,

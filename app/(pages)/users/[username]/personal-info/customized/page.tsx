@@ -1,4 +1,4 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import {
   ManyUserPseudonativeNotIrlCriteria,
   ManyUserPseudonativeIrlCriteria,
@@ -17,7 +17,7 @@ import {
   UserPseudonativeCriteriaIrlAdded,
   UserCustomCriteriaAdded,
 } from "@/app/components/client/toasts";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";

@@ -1,4 +1,4 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { ManyUserPinnedCriteria } from "@/app/components/server/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -11,7 +11,7 @@ import {
   UserQuestionPinned,
   UserQuestionUnpinned,
 } from "@/app/components/client/toasts";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
 
@@ -67,10 +67,12 @@ export default async function PersonalInfoPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        {user.user_status_personal_info === "ANSWERUPDATED" && (
+        {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
+          user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
           <AnswerValueUpdated user={user} />
         )}
-        {user.user_status_personal_info === "ANSWERDELETED" && (
+        {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
+          user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
           <AnswerValueDeleted user={user} />
         )}
         {user.user_status_personal_info === "CRITERIAPINNED" && (

@@ -1,4 +1,4 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import {
@@ -16,7 +16,7 @@ import {
   countSentIrlToContactsByUser,
   countSentFriendFromContactsByUser,
   countSentIrlFromContactsByUser,
-} from "@/app/lib/data/contacts";
+} from "@/app/libraries/data/contacts";
 /* import { User } from "@/app/lib/definitions/users"; */
 
 import type { Metadata } from "next";

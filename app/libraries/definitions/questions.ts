@@ -24,3 +24,7 @@ export type CustomQuestion = {
   question_kind: "CUSTOM";
   question_id: string;
 };
+
+export type QuestionKind = "NATIVE" | "NATIVEIRL" | "PSEUDO" | "CUSTOM";
+
+export type QuestionState = "LIVE" | "DELETED";

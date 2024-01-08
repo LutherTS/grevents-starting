@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { Answer } from "@/app/lib/definitions/answers";
+import { Answer } from "@/app/libraries/definitions/answers";
 import { useFormStatus } from "react-dom";
 
 export function Button({ children }: { children: React.ReactNode }) {

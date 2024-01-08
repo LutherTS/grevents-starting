@@ -1,12 +1,12 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { User } from "@/app/lib/definitions/users";
-import { Answer } from "@/app/lib/definitions/answers";
+import { User } from "@/app/libraries/definitions/users";
+import { Answer } from "@/app/libraries/definitions/answers";
 import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
-} from "@/app/lib/definitions/questions";
+} from "@/app/libraries/definitions/questions";
 
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();

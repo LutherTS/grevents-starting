@@ -1,4 +1,4 @@
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import clsx from "clsx";
 import Link from "next/link";
 

@@ -1,14 +1,14 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import {
   // fetchAllNativeNotIrlQuestions,
   // fetchAllNativeIrlQuestions,
   fetchAllUnansweredNativeNotIrlQuestions,
   fetchAllUnansweredNativeIrlQuestions,
-} from "@/app/lib/data/questions";
+} from "@/app/libraries/data/questions";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import {
   NativeIrlAnswerForm,
   NativeNotIrlAnswerForm,

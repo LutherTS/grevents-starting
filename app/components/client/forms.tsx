@@ -10,8 +10,8 @@ import {
   updateUserAppWideName,
   UpdateUserAppWideNameFormState,
   updateUserFriendCode,
-} from "@/app/lib/actions/users";
-import { User } from "@/app/lib/definitions/users";
+} from "@/app/libraries/actions/users";
+import { User } from "@/app/libraries/definitions/users";
 import { useFormState } from "react-dom";
 import {
   AnswerInput,
@@ -40,8 +40,8 @@ import {
   switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
   UpdateOrDeleteAnswerValueFormState,
-} from "@/app/lib/actions/answers";
-import { Answer } from "@/app/lib/definitions/answers";
+} from "@/app/libraries/actions/answers";
+import { Answer } from "@/app/libraries/definitions/answers";
 import {
   ButtonPinnable,
   ButtonAddUserQuestionFriend,
@@ -50,20 +50,20 @@ import {
   Button,
   FormButton,
 } from "./buttons";
-import { FoundContact, Friend } from "@/app/lib/definitions/contacts";
-import { UserQuestion } from "@/app/lib/definitions/userquestions";
-import { UserQuestionFriend } from "@/app/lib/definitions/userquestionfriends";
+import { FoundContact, Friend } from "@/app/libraries/definitions/contacts";
+import { UserQuestion } from "@/app/libraries/definitions/userquestions";
+import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import {
   createUserQuestionFriend,
   deleteUserQuestionFriend,
-} from "@/app/lib/actions/userquestionfriends";
+} from "@/app/libraries/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
-} from "@/app/lib/definitions/questions";
+} from "@/app/libraries/definitions/questions";
 import { LinkButton } from "./buttons";
-import { revalidate } from "@/app/lib/actions/buttons";
+import { revalidate } from "@/app/libraries/actions/buttons";
 import {
   acceptFriendRequest,
   acceptIrlRequest,
@@ -77,7 +77,7 @@ import {
   unblock,
   unfriend,
   upgradeFriendshipToIrl,
-} from "@/app/lib/actions/contacts";
+} from "@/app/libraries/actions/contacts";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {

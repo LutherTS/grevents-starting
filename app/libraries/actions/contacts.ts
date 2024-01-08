@@ -2,13 +2,26 @@
 
 import { z } from "zod";
 import { FoundContact } from "../definitions/contacts";
-import { revalidatePath, unstable_noStore as noStore } from "next/cache";
-import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 import { User } from "../definitions/users";
-import pRetry from "p-retry";
 import { findContactByUserAndSession } from "../data/contacts";
 import _ from "lodash";
-import { DEFAULT_RETRIES } from "../data/users";
+import {
+  changeResetContactStatusOtherProfile,
+  changeResetContactStatusRelationship,
+  changeSetContactProcessRelationship,
+  changeSetContactStatusRelationship,
+  changeSetMirrorContactProcessRelationship,
+  changeSetMirrorContactStatusRelationship,
+  changeUpdateContactBlocking,
+  changeUpdateContactKindToFriend,
+  changeUpdateContactKindToIrl,
+  changeUpdateContactKindToNone,
+  changeUpdateContactUnblocking,
+  changeUpdateMirrorContactKindToFriend,
+  changeUpdateMirrorContactKindToIrl,
+  changeUpdateMirrorContactKindToNone,
+} from "../changes/contacts";
 
 const CONTACT_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -83,26 +96,7 @@ export async function resetContactStatusOtherProfile(
   contact: FoundContact,
   user: User,
 ) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_status_other_profile = 'NONE',
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Status Other Profile.",
-    };
-  }
+  await changeResetContactStatusOtherProfile(contact.c1_contact_mirror_id);
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }
@@ -111,362 +105,16 @@ export async function resetContactStatusRelationship(
   contact: FoundContact,
   user: User,
 ) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_status_relationship = 'NONE',
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Status Relationship.",
-    };
-  }
+  await changeResetContactStatusRelationship(contact.c1_contact_mirror_id);
 
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
 // The following functions are essentially temporary. Send friend request, Upgrade friendship to irl, Downgrade friendship from irl, Unfriend, along with Block, Block them back, Unblock, and Unblock if it's OK with you are meant to be processes, not actions.
 
-export async function updateContactKindToFriend(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'FRIEND',
-            contact_friend_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Kind to Friend.",
-    };
-  }
-}
-
-export async function updateMirrorContactKindToFriend(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'FRIEND',
-            contact_friend_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message:
-        "Database Error: Failed to Update Mirror Contact Kind to Friend.",
-    };
-  }
-}
-
-export async function updateContactKindToIrl(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'IRL',
-            contact_irl_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Kind to IRL.",
-    };
-  }
-}
-
-export async function updateMirrorContactKindToIrl(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'IRL',
-            contact_irl_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Mirror Contact Kind to IRL.",
-    };
-  }
-}
-
-export async function updateContactKindToNone(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'NONE',
-            contact_friend_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Kind to None.",
-    };
-  }
-}
-
-export async function updateMirrorContactKindToNone(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'NONE',
-            contact_friend_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Mirror Contact Kind to None.",
-    };
-  }
-}
-
-export async function updateContactBlocking(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'NONE',
-            contact_blocking = TRUE,
-            contact_blocked_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        -- because it's the session that blocks the user
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Blocking to True.",
-    };
-  }
-}
-
-export async function updateContactUnblocking(contact: FoundContact) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_kind = 'NONE',
-            contact_blocking = FALSE,
-            contact_blocked_at = now(),
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        -- because it's the session that blocks the user
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Blocking to False.",
-    };
-  }
-}
-
 // Notification methods
 
-export type ContactStatusRelationship =
-  | "NONE"
-  | "SENTFRIEND"
-  | "SENTIRL"
-  | "RECEIVEFRIEND"
-  | "RECEIVEIRL"
-  | "ANNULFRIEND"
-  | "ANNULIRL"
-  | "REFUSEDFRIEND"
-  | "REFUSEDIRL"
-  | "NOWFRIENDS"
-  | "NOWIRLS"
-  | "NOLONGERFRIENDS"
-  | "NOLONGERIRLS"
-  | "NOWBLOCKING"
-  | "NOWUNBLOCKING"
-  | "NOWBLOCKED"
-  | "NOWUNBLOCKED";
-
-export async function setContactStatusRelationship(
-  contact: FoundContact,
-  statusRelationship: ContactStatusRelationship,
-) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_status_relationship = ${statusRelationship},
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Status Relationship.",
-    };
-  }
-}
-
-export async function setMirrorContactStatusRelationship(
-  contact: FoundContact,
-  statusRelationship: ContactStatusRelationship,
-) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_status_relationship = ${statusRelationship},
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Status Relationship.",
-    };
-  }
-}
-
 // Process methods
-
-export type ContactProcessRelationship =
-  | "NONE"
-  | "SENTFRIEND"
-  | "SENTIRL"
-  | "ANNULFRIEND"
-  | "ANNULIRL";
-
-export async function setContactProcessRelationship(
-  contact: FoundContact,
-  processRelationship: ContactProcessRelationship,
-) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_process_relationship = ${processRelationship},
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_mirror_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Process Relationship.",
-    };
-  }
-}
-
-export async function setMirrorContactProcessRelationship(
-  contact: FoundContact,
-  processRelationship: ContactProcessRelationship,
-) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Contacts
-        SET 
-            contact_process_relationship = ${processRelationship},
-            contact_updated_at = now()
-        WHERE contact_id = ${contact.c1_contact_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update Contact Process Relationship.",
-    };
-  }
-}
 
 // Now the component-called methods
 
@@ -500,6 +148,7 @@ export async function setMirrorContactProcessRelationship(
 // AND REVALIDATE REQUESTS OR NOTIFICATIONS ACCORDINGLY.
 // Objectively it's not impactful, for revalidate only affect the tab, not the full browser, and for sure not the server itself. (Meaning all the clients on all devices currently on that URL. Someday hopefully.)
 
+/* Did it's demo time.
 export async function sendFriendRequestButItsAutoFriend(
   contact: FoundContact,
   user: User,
@@ -508,8 +157,8 @@ export async function sendFriendRequestButItsAutoFriend(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToFriend(contact),
-      updateMirrorContactKindToFriend(contact),
+      changeUpdateContactKindToFriend(contact),
+      changeUpdateMirrorContactKindToFriend(contact),
       setContactStatusRelationship(contact, "NOWFRIENDS"),
       // uncomment below when available for testing
       // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
@@ -520,6 +169,7 @@ export async function sendFriendRequestButItsAutoFriend(
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
+*/
 
 // No idea why this doesn't revalidate in production.
 export async function acceptFriendRequest(
@@ -530,11 +180,11 @@ export async function acceptFriendRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToFriend(contact),
-      updateMirrorContactKindToFriend(contact),
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "NOWFRIENDS"),
-      setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
+      changeUpdateContactKindToFriend(contact),
+      changeUpdateMirrorContactKindToFriend(contact),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "NOWFRIENDS"),
+      changeSetMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -551,10 +201,10 @@ export async function sendFriendRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setContactProcessRelationship(contact, "SENTFRIEND"),
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "SENTFRIEND"),
-      setMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
+      changeSetContactProcessRelationship(contact, "SENTFRIEND"),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "SENTFRIEND"),
+      changeSetMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -571,8 +221,8 @@ export async function annulFriendRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setContactProcessRelationship(contact, "ANNULFRIEND"),
-      setContactStatusRelationship(contact, "ANNULFRIEND"),
+      changeSetContactProcessRelationship(contact, "ANNULFRIEND"),
+      changeSetContactStatusRelationship(contact, "ANNULFRIEND"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -589,8 +239,8 @@ export async function declineFriendRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "REFUSEDFRIEND"),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "REFUSEDFRIEND"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -599,6 +249,7 @@ export async function declineFriendRequest(
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
 
+/* Did it's demo time.
 export async function upgradeFriendshipToIrlButItsAutoIrl(
   contact: FoundContact,
   user: User,
@@ -607,11 +258,11 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToIrl(contact),
+      changeUpdateContactKindToIrl(contact),
       updateMirrorContactKindToIrl(contact),
-      setContactStatusRelationship(contact, "NOWIRLS"),
+      changeSetContactStatusRelationship(contact, "NOWIRLS"),
       // uncomment below when available for testing
-      // setMirrorContactStatusRelationship(contact, "NOWIRLS"),
+      // changeSetMirrorContactStatusRelationship(contact, "NOWIRLS"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -619,6 +270,7 @@ export async function upgradeFriendshipToIrlButItsAutoIrl(
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
+*/
 
 // No idea why this doesn't revalidate in production.
 export async function acceptIrlRequest(
@@ -629,11 +281,11 @@ export async function acceptIrlRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToIrl(contact),
-      updateMirrorContactKindToIrl(contact),
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "NOWIRLS"),
-      setMirrorContactStatusRelationship(contact, "NOWIRLS"),
+      changeUpdateContactKindToIrl(contact),
+      changeUpdateMirrorContactKindToIrl(contact),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "NOWIRLS"),
+      changeSetMirrorContactStatusRelationship(contact, "NOWIRLS"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -650,10 +302,10 @@ export async function upgradeFriendshipToIrl(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setContactProcessRelationship(contact, "SENTIRL"),
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "SENTIRL"),
-      setMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
+      changeSetContactProcessRelationship(contact, "SENTIRL"),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "SENTIRL"),
+      changeSetMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -670,8 +322,8 @@ export async function annulUpgradeFriendshipToIrl(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setContactProcessRelationship(contact, "ANNULIRL"),
-      setContactStatusRelationship(contact, "ANNULIRL"),
+      changeSetContactProcessRelationship(contact, "ANNULIRL"),
+      changeSetContactStatusRelationship(contact, "ANNULIRL"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -688,8 +340,8 @@ export async function declineIrlRequest(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      setMirrorContactProcessRelationship(contact, "NONE"),
-      setContactStatusRelationship(contact, "REFUSEDIRL"),
+      changeSetMirrorContactProcessRelationship(contact, "NONE"),
+      changeSetContactStatusRelationship(contact, "REFUSEDIRL"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -706,10 +358,10 @@ export async function downgradeFriendshipFromIrl(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToFriend(contact),
-      updateMirrorContactKindToFriend(contact),
-      setContactStatusRelationship(contact, "NOLONGERIRLS"),
-      setMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
+      changeUpdateContactKindToFriend(contact),
+      changeUpdateMirrorContactKindToFriend(contact),
+      changeSetContactStatusRelationship(contact, "NOLONGERIRLS"),
+      changeSetMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -726,10 +378,10 @@ export async function unfriend(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactKindToNone(contact),
-      updateMirrorContactKindToNone(contact),
-      setContactStatusRelationship(contact, "NOLONGERFRIENDS"),
-      setMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
+      changeUpdateContactKindToNone(contact),
+      changeUpdateMirrorContactKindToNone(contact),
+      changeSetContactStatusRelationship(contact, "NOLONGERFRIENDS"),
+      changeSetMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -746,9 +398,9 @@ export async function block(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactBlocking(contact),
-      setContactStatusRelationship(contact, "NOWBLOCKING"),
-      setMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
+      changeUpdateContactBlocking(contact),
+      changeSetContactStatusRelationship(contact, "NOWBLOCKING"),
+      changeSetMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);
@@ -765,9 +417,9 @@ export async function unblock(
   const verifyContact = await findContactByUserAndSession(user, session);
   if (verifyContact && _.isEqual(contact, verifyContact)) {
     await Promise.all([
-      updateContactUnblocking(contact),
-      setContactStatusRelationship(contact, "NOWUNBLOCKING"),
-      setMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
+      changeUpdateContactUnblocking(contact),
+      changeSetContactStatusRelationship(contact, "NOWUNBLOCKING"),
+      changeSetMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
     ]);
   }
   // revalidatePath(`/users/${user.user_username}/profile`);

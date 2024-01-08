@@ -3,14 +3,14 @@
 import {
   resetContactStatusOtherProfile,
   resetContactStatusRelationship,
-} from "@/app/lib/actions/contacts";
+} from "@/app/libraries/actions/contacts";
 import {
   resetUserStatusDashboard,
   resetUserStatusPersonalInfo,
   resetUserStatusTitle,
-} from "@/app/lib/actions/users";
-import { FoundContact } from "@/app/lib/definitions/contacts";
-import { User } from "@/app/lib/definitions/users";
+} from "@/app/libraries/actions/users";
+import { FoundContact } from "@/app/libraries/definitions/contacts";
+import { User } from "@/app/libraries/definitions/users";
 import { useFormStatus } from "react-dom";
 
 export function ToastForm({

@@ -1,4 +1,4 @@
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import { Suspense } from "react";
 import {
   ManyRelComboFriendCriteria,
@@ -7,7 +7,10 @@ import {
   ManyRelComboIrlCriteriaCustom,
   ManyUserSharedToContactCustomAnswers,
 } from "../server/answers";
-import { FoundContact, GatheredContact } from "@/app/lib/definitions/contacts";
+import {
+  FoundContact,
+  GatheredContact,
+} from "@/app/libraries/definitions/contacts";
 import { ActionLink, PageLink } from "./links";
 import {
   AcceptFriendForm,

@@ -2,12 +2,10 @@
 
 import { z } from "zod";
 import { User } from "../definitions/users";
-import { sql } from "@vercel/postgres";
-import { revalidatePath, unstable_noStore as noStore } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import uid from "uid2";
 import {
-  DEFAULT_RETRIES,
   fetchUserByEmail,
   fetchUserByUserNameOrEmail,
   fetchUserByUsername,
@@ -15,7 +13,20 @@ import {
 } from "../data/users";
 import { gatherContactByUserAndUsername } from "../data/contacts";
 import { v4 as uuidv4 } from "uuid";
-import pRetry from "p-retry";
+import {
+  changeCreateUser,
+  changeResetUserStatusDashboard,
+  changeResetUserStatusPersonalInfo,
+  changeResetUserStatusTitle,
+  changeSetUserStatusTitle,
+  changeUpdateUserAppWideName,
+  changeUpdateUserFriendCode,
+} from "../changes/users";
+import {
+  changeCreateContactAndMirrorContact,
+  changeSetContactMirrorContact,
+  changeSetContactStatusOtherProfile,
+} from "../changes/contacts";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -184,81 +195,22 @@ export async function updateUserAppWideName(
   // console.log(userAppWideName);
   // console.log(user.user_id);
 
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Users
-        SET 
-            user_app_wide_name = ${userAppWideName},
-            user_status_dashboard = 'APPWIDENAMEUPDATED',
-            user_updated_at = now()
-        WHERE user_id = ${user.user_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update User App-Wide Name.",
-    };
-  }
+  await changeUpdateUserAppWideName(userAppWideName, user); // and that first change worked
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
   redirect(`/users/${user.user_username}/dashboard`);
 }
 
 export async function resetUserStatusDashboard(user: User) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Users
-        SET 
-            user_status_dashboard = 'NONE',
-            user_updated_at = now()
-        WHERE user_id = ${user.user_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update User Status Dashboard.",
-    };
-  }
+  await changeResetUserStatusDashboard(user);
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
 }
 
 export async function updateUserFriendCode(user: User) {
-  noStore();
-
   const generatedFriendCode = uid(12);
 
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Users
-        SET 
-            user_friend_code = ${generatedFriendCode},
-            user_status_dashboard = 'FRIENDCODEUPDATED',
-            user_updated_at = now()
-        WHERE user_id = ${user.user_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update User Friend Code.",
-    };
-  }
+  await changeUpdateUserFriendCode(user, generatedFriendCode);
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
   revalidatePath(`/users/${user.user_username}/personal-info`);
@@ -266,26 +218,7 @@ export async function updateUserFriendCode(user: User) {
 }
 
 export async function resetUserStatusPersonalInfo(user: User) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Users
-        SET 
-            user_status_personal_info = 'NONE',
-            user_updated_at = now()
-        WHERE user_id = ${user.user_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update User Status Personal Info.",
-    };
-  }
+  await changeResetUserStatusPersonalInfo(user);
 
   revalidatePath(`/users/${user.user_username}/personal-info`);
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
@@ -362,137 +295,41 @@ export async function createOrFindContactsByFriendCode(
     const generatedUserOtherUserContactID = uuidv4();
     const generatedOtherUserUserContactID = uuidv4();
 
-    noStore();
+    await changeCreateContactAndMirrorContact(
+      user,
+      otherUser,
+      generatedUserOtherUserContactID,
+      generatedOtherUserUserContactID,
+    );
+    await changeSetContactMirrorContact(
+      generatedOtherUserUserContactID,
+      generatedUserOtherUserContactID,
+    );
+    await changeSetContactMirrorContact(
+      generatedUserOtherUserContactID,
+      generatedOtherUserUserContactID,
+    );
 
-    try {
-      const run = async () => {
-        const data = await sql`
-          INSERT INTO Contacts ( -- user and otherUser
-              contact_id,
-              user_first_id,
-              user_last_id,
-              contact_state,
-              contact_kind,
-              contact_created_at,
-              contact_updated_at
-          )
-          VALUES ( -- from user to otherUser
-              ${generatedUserOtherUserContactID},
-              ${user.user_id},
-              ${otherUser.user_id},
-              'LIVE',
-              'NONE',
-              now(),
-              now()
-          ), ( -- from otherUser to user
-              ${generatedOtherUserUserContactID},
-              ${otherUser.user_id},
-              ${user.user_id},
-              'LIVE',
-              'NONE',
-              now(),
-              now()
-          )
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Create Contacts.",
-      };
-    }
-
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Contacts -- mirror contact from otherUser to user
-          SET 
-              contact_mirror_id = ${generatedOtherUserUserContactID},
-              contact_updated_at = now()
-          WHERE contact_id = ${generatedUserOtherUserContactID}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Contact.",
-      };
-    }
-
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Contacts -- mirror contact from user to otherUser
-          SET 
-              contact_mirror_id = ${generatedUserOtherUserContactID},
-              contact_updated_at = now()
-          WHERE contact_id = ${generatedOtherUserUserContactID}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update Mirror Contact.",
-      };
-    }
-
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Contacts -- mirror contact
-          SET 
-              contact_status_other_profile = 'FIRSTACCESSTHROUGHFIND',
-              contact_updated_at = now()
-          WHERE contact_id = ${generatedUserOtherUserContactID}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message:
-          "Database Error: Failed to Update Contact Status Other Profile.",
-      };
-    }
+    await changeSetContactStatusOtherProfile(
+      generatedUserOtherUserContactID,
+      "FIRSTACCESSTHROUGHFIND",
+    );
 
     // Missing notification on generatedOtherUserUserContactID
     // to confirm to otherUser that user has accessed their profile page
     // on their Notifications page.
     // contact_status_profile (many)
+    // ADDITIONAL FEATURE TO EXPLORE //
 
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
   }
 
   if (userOtherUserContact) {
-    noStore();
-
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Contacts -- mirror contact
-          SET 
-              contact_status_other_profile = 'REACCESSTHROUGHFIND',
-              contact_updated_at = now()
-          WHERE contact_id = ${userOtherUserContact.c1_contact_id}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message:
-          "Database Error: Failed to Update Contact Status Other Profile.",
-      };
-    }
+    await changeSetContactStatusOtherProfile(
+      userOtherUserContact.c1_contact_id,
+      "REACCESSTHROUGHFIND",
+    );
 
     // Other user ABSOLUTELY DO NOT NEED TO KNOW ABOUT REVISITS.
     // For example, they don't need to know that user came back to
@@ -596,69 +433,20 @@ export async function signUpUser(
   This is a demo function to simulate an actual authentication. Therefore, even though I am verifying the password with zod, at this point I won't go any further with a library like bcrypt (which I'll do when I'll code the actual entire authentication/authorization logic). This is why for all new entries, password will just be password.
   */
 
-  try {
-    const run = async () => {
-      const data = await sql`
-        INSERT INTO Users (
-            user_id,
-            user_username,
-            user_email,
-            user_password,
-            user_app_wide_name,
-            user_friend_code,
-            user_state,
-            user_created_at,
-            user_updated_at,
-            user_status_title
-        )
-        VALUES (
-            ${generatedUserID},
-            ${userUsername},
-            ${userEmail},
-            'password', -- should be userPassword eventually
-            ${userAppWideName},
-            ${generatedFriendCode},
-            'LIVE',
-            now(),
-            now(),
-            'WELCOMETOGREVENTS'
-        )
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Create User.",
-    };
-  }
+  await changeCreateUser(
+    generatedUserID,
+    userUsername,
+    userEmail,
+    userAppWideName,
+    generatedFriendCode,
+  );
 
   revalidatePath(`/users/${userUsername}/dashboard`);
   redirect(`/users/${userUsername}/dashboard`);
 }
 
 export async function resetUserStatusTitle(user: User) {
-  noStore();
-
-  try {
-    const run = async () => {
-      const data = await sql`
-        UPDATE Users
-        SET 
-            user_status_title = 'NONE',
-            user_updated_at = now()
-        WHERE user_id = ${user.user_id}
-        RETURNING * -- to make sure
-      `;
-      console.log(data.rows);
-    };
-    await pRetry(run, { retries: DEFAULT_RETRIES });
-  } catch (error) {
-    return {
-      message: "Database Error: Failed to Update User Status Title.",
-    };
-  }
+  await changeResetUserStatusTitle(user);
 
   revalidatePath(`/users/${user.user_username}/dashboard`);
 }
@@ -714,24 +502,10 @@ export async function signInUser(
   }
 
   if (userByUsernameOrEmail) {
-    try {
-      const run = async () => {
-        const data = await sql`
-          UPDATE Users
-          SET 
-              user_status_title = 'WELCOMEBACKTOGREVENTS',
-              user_updated_at = now()
-          WHERE user_id = ${userByUsernameOrEmail.user_id}
-          RETURNING * -- to make sure
-        `;
-        console.log(data.rows);
-      };
-      await pRetry(run, { retries: DEFAULT_RETRIES });
-    } catch (error) {
-      return {
-        message: "Database Error: Failed to Update User Status Title.",
-      };
-    }
+    await changeSetUserStatusTitle(
+      userByUsernameOrEmail.user_id,
+      "WELCOMEBACKTOGREVENTS",
+    );
   }
 
   revalidatePath(`/users/${userByUsernameOrEmail.user_username}/dashboard`);

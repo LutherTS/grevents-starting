@@ -1,6 +1,6 @@
-import { fetchUserByUsername } from "@/app/lib/data/users";
-import { fetchCustomUserQuestionByIDAndUser } from "@/app/lib/data/userquestions";
-import { findAnswerByUserQuestionAndUser } from "@/app/lib/data/answers";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
+import { fetchCustomUserQuestionByIDAndUser } from "@/app/libraries/data/userquestions";
+import { findAnswerByUserQuestionAndUser } from "@/app/libraries/data/answers";
 import { OneCriteriaModify } from "@/app/components/server/answers";
 import { ManyFriendsAddable } from "@/app/components/server/contacts";
 import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
-import { User } from "@/app/lib/definitions/users";
+import { User } from "@/app/libraries/definitions/users";
 import {
   UserQuestionFriendCreated,
   UserQuestionFriendDeleted,
