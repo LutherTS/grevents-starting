@@ -49,7 +49,7 @@ export function FriendCodeInput() {
   return (
     <>
       <input
-        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
         type="text"
         id="friend-code"
         name="friendcode"
@@ -67,7 +67,7 @@ export function UserLastInput({ userLast }: { userLast: string }) {
   return (
     <>
       <input
-        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
         type="text"
         id="user-last"
         name="userlast"
@@ -85,7 +85,7 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
   return (
     <>
       <input
-        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
         type="text"
         id="rel-combo"
         name="relcombo"
@@ -131,7 +131,7 @@ export function NativeNotIrlQuestionSelect({
 
   return (
     <>
-      <div className="flex w-full justify-center">
+      <div className="mt-4 flex w-full justify-center">
         <select
           className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
           id="native-not-irl-question"
@@ -192,7 +192,7 @@ export function NativeIrlQuestionSelect({
 
   return (
     <>
-      <div className="flex w-full justify-center">
+      <div className="mt-4 flex w-full justify-center">
         <select
           className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
           id="native-irl-question"

@@ -6,10 +6,12 @@ export function ManyRelationCombinations() {
     <>
       {relationCombinations.length > 0 && (
         <>
-          <p className="mt-2">
-            Select a relation combination between you and this user you&apos;ve
-            selected. (relcombo in searchParams.)
-          </p>
+          <label className="mt-2" htmlFor="rel-combo">
+            <p>
+              Type a relation combination between you and this user you&apos;ve
+              selected. (relcombo in searchParams.)
+            </p>
+          </label>
           <ol>
             {relationCombinations.map((relationCombination) => {
               return (

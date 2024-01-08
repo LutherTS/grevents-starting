@@ -26,7 +26,7 @@ export function LinkButton({ children }: { children: React.ReactNode }) {
     <>
       <button
         disabled={status.pending}
-        className="inline-block text-blue-500 hover:text-blue-400 disabled:text-gray-500 disabled:hover:text-gray-500 dark:hover:text-blue-600 disabled:dark:hover:text-gray-500"
+        className="inline text-blue-500 hover:text-blue-400 disabled:text-gray-500 disabled:hover:text-gray-500 dark:hover:text-blue-600 disabled:dark:hover:text-gray-500"
       >
         {children}
       </button>

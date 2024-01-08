@@ -94,10 +94,6 @@ export default async function QueriedPreviewPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
         <BackToDashboardLink session={session} />
-        <p className="mt-2">
-          Type the username of a user you are acquainted with. (userlast in
-          searchParams.)
-        </p>
         <UserLastInputForm userLast={userLast} />
         {userLast !== "" && (
           <>
@@ -110,7 +106,6 @@ export default async function QueriedPreviewPage({
             )}
           </>
         )}
-        <ManyRelationCombinations />
         <RelComboInputForm relCombo={relCombo} />
         {relCombo !== "" && (
           <>
