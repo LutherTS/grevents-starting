@@ -50,3 +50,29 @@ export type ContactStatusOtherProfile =
   | "NONE"
   | "FIRSTACCESSTHROUGHFIND"
   | "REACCESSTHROUGHFIND";
+
+export type ContactStatusRelationship =
+  | "NONE"
+  | "SENTFRIEND"
+  | "SENTIRL"
+  | "RECEIVEFRIEND"
+  | "RECEIVEIRL"
+  | "ANNULFRIEND"
+  | "ANNULIRL"
+  | "REFUSEDFRIEND"
+  | "REFUSEDIRL"
+  | "NOWFRIENDS"
+  | "NOWIRLS"
+  | "NOLONGERFRIENDS"
+  | "NOLONGERIRLS"
+  | "NOWBLOCKING"
+  | "NOWUNBLOCKING"
+  | "NOWBLOCKED"
+  | "NOWUNBLOCKED";
+
+export type ContactProcessRelationship =
+  | "NONE"
+  | "SENTFRIEND"
+  | "SENTIRL"
+  | "ANNULFRIEND"
+  | "ANNULIRL";
