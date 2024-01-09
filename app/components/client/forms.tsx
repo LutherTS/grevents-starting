@@ -49,6 +49,8 @@ import {
   ButtonPseudoable,
   Button,
   FormButton,
+  ButtonPinUserQuestionFriend,
+  ButtonCancelPinUserQuestionFriend,
 } from "./buttons";
 import { FoundContact, Friend } from "@/app/libraries/definitions/contacts";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
@@ -56,6 +58,8 @@ import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfrie
 import {
   shareUserQuestionFriend,
   cancelShareUserQuestionFriend,
+  pinUserQuestionFriend,
+  cancelPinUserQuestionFriend,
 } from "@/app/libraries/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -577,6 +581,44 @@ export function ButtonCancelShareUserQuestionFriendForm({
         }
       >
         <ButtonCancelShareUserQuestionFriend />
+      </form>
+    </>
+  );
+}
+
+export function ButtonPinUserQuestionFriendForm({
+  answer,
+  contact,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="me-2 flex items-center"
+        action={() => pinUserQuestionFriend(answer, contact)}
+      >
+        <ButtonPinUserQuestionFriend />
+      </form>
+    </>
+  );
+}
+
+export function ButtonCancelPinUserQuestionFriendForm({
+  answer,
+  contact,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <form
+        className="me-2 flex items-center"
+        action={() => cancelPinUserQuestionFriend(answer, contact)}
+      >
+        <ButtonCancelPinUserQuestionFriend />
       </form>
     </>
   );

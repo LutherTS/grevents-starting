@@ -49,7 +49,9 @@ export type FoundContact = {
 export type ContactStatusOtherProfile =
   | "NONE"
   | "FIRSTACCESSTHROUGHFIND"
-  | "REACCESSTHROUGHFIND";
+  | "REACCESSTHROUGHFIND"
+  | "USERQUESTIONFRIENDPINNED"
+  | "USERQUESTIONFRIENDUNPINNED";
 
 export type ContactStatusRelationship =
   | "NONE"

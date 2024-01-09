@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { UserQuestion } from "../definitions/userquestions";
-import { Friend } from "../definitions/contacts";
+import { FoundContact, Friend } from "../definitions/contacts";
 import { revalidatePath } from "next/cache";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { v4 as uuidv4 } from "uuid";
@@ -11,9 +11,17 @@ import {
   changeDeleteAtUserQuestionFriend,
   changeCancelShareUserQuestionFriend,
   changeShareUserQuestionFriend,
+  changeCreatePinUserQuestionFriend,
+  changeCancelPinUserQuestionFriend,
+  changeDeleteAtUserQuestionFriendByAnswerAndContact,
 } from "../changes/userquestionfriends";
 import { changeSetUserStatusPersonalInfo } from "../changes/users";
-import { findUserQuestionFriend } from "../data/userquestionfriends";
+import {
+  findUserQuestionFriend,
+  findUserQuestionFriendByAnswerAndContact,
+} from "../data/userquestionfriends";
+import { changeSetContactStatusOtherProfile } from "../changes/contacts";
+import { Answer } from "../definitions/answers";
 
 const USERQUESTIONFRIEND_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -84,4 +92,61 @@ export async function cancelShareUserQuestionFriend(
   );
 }
 
-export async function pinOrUnpinUserQuestionFriend() {}
+// Better, easier in two
+// export async function pinOrUnpinUserQuestionFriend() {}
+
+export async function pinUserQuestionFriend(
+  answer: Answer,
+  contact: FoundContact,
+) {
+  const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
+    answer,
+    contact,
+  );
+
+  if (userQuestionFriend === undefined) {
+    await changeDeleteAtUserQuestionFriendByAnswerAndContact(answer, contact);
+
+    const generatedUserQuestionFriendID = uuidv4();
+
+    await changeCreatePinUserQuestionFriend(
+      answer,
+      contact,
+      generatedUserQuestionFriendID,
+    );
+
+    await changeSetContactStatusOtherProfile(
+      contact.c1_contact_mirror_id,
+      "USERQUESTIONFRIENDPINNED",
+    );
+  }
+
+  if (userQuestionFriend) {
+    await changeShareUserQuestionFriend(userQuestionFriend);
+
+    await changeSetUserStatusPersonalInfo(
+      contact.c1_contact_mirror_id,
+      "USERQUESTIONFRIENDADDED",
+    );
+  }
+
+  revalidatePath(
+    `/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`,
+  );
+}
+
+export async function cancelPinUserQuestionFriend(
+  answer: Answer,
+  contact: FoundContact,
+) {
+  await changeCancelPinUserQuestionFriend(answer, contact);
+
+  await changeSetContactStatusOtherProfile(
+    answer.user_id,
+    "USERQUESTIONFRIENDUNPINNED",
+  );
+
+  revalidatePath(
+    `/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`,
+  );
+}
