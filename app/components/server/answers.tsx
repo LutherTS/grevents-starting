@@ -19,6 +19,12 @@ import {
   fetchUserPinnedByFriendNotIrlAnswersCustom,
   fetchUserPinnedByFriendNotAndIrlAnswersCustom,
   fetchUserSharedToContactCustomAnswersNotPinnedByFriend,
+  fetchUserPinnedNotAndIrlAnswersCustomQueried,
+  fetchUserUnpinnedNativeNotIrlAnswersQueried,
+  fetchUserUnpinnedPseudonativeNotIrlAnswersQueried,
+  fetchUserUnpinnedNativeIrlAnswersQueried,
+  fetchUserUnpinnedPseudonativeIrlAnswersQueried,
+  fetchUserPinnedNotIrlAnswersCustomQueried,
 } from "@/app/libraries/data/answers";
 import { User } from "@/app/libraries/definitions/users";
 import { Answer } from "@/app/libraries/definitions/answers";
@@ -737,7 +743,7 @@ export async function ManyRelComboFriendCriteriaCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
 }) {
   const [
     pinnedByFriendNotIrlAnswers, // new
@@ -764,6 +770,7 @@ export async function ManyRelComboFriendCriteriaCustom({
       <ManyCriteria
         answers={pinnedByFriendNotIrlAnswers}
         answersLabel={answersLabels.pinnedByFriendNotIrl}
+        noAnswersLabel={noAnswersLabels.pinnedByFriend}
       />
       <ManyCriteria
         answers={pinnedNotIrlAnswers}
@@ -790,7 +797,7 @@ export async function ManyRelComboIrlCriteriaCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
 }) {
   const [
     pinnedByFriendNotAndIrlAnswers, // new
@@ -821,7 +828,108 @@ export async function ManyRelComboIrlCriteriaCustom({
       <ManyCriteria
         answers={pinnedByFriendNotAndIrlAnswers}
         answersLabel={answersLabels.pinnedByFriendNotAndIrl}
+        noAnswersLabel={noAnswersLabels.pinnedByFriend}
       />
+      <ManyCriteria
+        answers={pinnedNotAndIrlAnswers}
+        answersLabel={answersLabels.pinnedNotAndIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedNativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeIrl}
+      />
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboFriendCriteriaCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
+}) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswersCustomQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ),
+    fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
+    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
+  ]);
+
+  return (
+    <>
+      <ManyCriteria
+        answers={pinnedNotIrlAnswers}
+        answersLabel={answersLabels.pinnedNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteriaCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
+}) {
+  const [
+    pinnedNotAndIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
+  ] = await Promise.all([
+    fetchUserPinnedNotAndIrlAnswersCustomQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ),
+    fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswersQueried(user.user_id),
+    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
+  ]);
+
+  return (
+    <>
       <ManyCriteria
         answers={pinnedNotAndIrlAnswers}
         answersLabel={answersLabels.pinnedNotAndIrl}
