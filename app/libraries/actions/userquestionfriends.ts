@@ -83,3 +83,5 @@ export async function cancelShareUserQuestionFriend(
     `/users/${userQuestion.user_username}/personal-info/user-criteria/${userQuestion.userquestion_id}`,
   );
 }
+
+export async function pinOrUnpinUserQuestionFriend() {}
