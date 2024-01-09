@@ -187,8 +187,35 @@ export async function changeCancelPinUserQuestionFriend(
             userquestionfriend_pinned_by_friend = FALSE,
             userquestionfriend_updated_at = now(),
             userquestionfriend_pinned_at = NULL
-        WHERE userquestionfriend_id = ${answer.userquestion_id}
+        WHERE userquestion_id = ${answer.userquestion_id}
         AND contact_id = ${contact.c1_contact_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update User Question Friend.",
+    };
+  }
+}
+
+export async function changePinUserQuestionFriend(
+  userQuestionFriend: UserQuestionFriend,
+) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE UserQuestionFriends
+        SET 
+            userquestionfriend_state = 'LIVE',
+            userquestionfriend_pinned_by_friend = TRUE,
+            userquestionfriend_updated_at = now(),
+            userquestionfriend_pinned_at = now()
+        WHERE userquestionfriend_id = ${userQuestionFriend.userquestionfriend_id}
         RETURNING * -- to make sure
       `;
       console.log(data.rows);

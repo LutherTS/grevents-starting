@@ -1552,7 +1552,7 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
             uqf2.userquestionfriend_id -- NEW
 
         ORDER BY 
-            uqf2.userquestionfriend_pinned_by_friend DESC, -- NEW 
+            uqf2.userquestionfriend_pinned_at DESC, -- NEW 
             a.answer_updated_at DESC
 
         LIMIT 5; -- 5 for by friend, 10 for by user -- NEW
@@ -1644,7 +1644,7 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
             uqf2.userquestionfriend_id -- NEW
 
         ORDER BY 
-            uqf2.userquestionfriend_pinned_by_friend DESC, -- NEW
+            uqf2.userquestionfriend_pinned_at DESC, -- NEW
             a.answer_updated_at DESC
 
         LIMIT 5; -- 5 for by friend, 10 for by user -- NEW

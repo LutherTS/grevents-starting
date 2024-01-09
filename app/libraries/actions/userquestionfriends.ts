@@ -14,6 +14,7 @@ import {
   changeCreatePinUserQuestionFriend,
   changeCancelPinUserQuestionFriend,
   changeDeleteAtUserQuestionFriendByAnswerAndContact,
+  changePinUserQuestionFriend,
 } from "../changes/userquestionfriends";
 import { changeSetUserStatusPersonalInfo } from "../changes/users";
 import {
@@ -122,11 +123,11 @@ export async function pinUserQuestionFriend(
   }
 
   if (userQuestionFriend) {
-    await changeShareUserQuestionFriend(userQuestionFriend);
+    await changePinUserQuestionFriend(userQuestionFriend);
 
-    await changeSetUserStatusPersonalInfo(
+    await changeSetContactStatusOtherProfile(
       contact.c1_contact_mirror_id,
-      "USERQUESTIONFRIENDADDED",
+      "USERQUESTIONFRIENDPINNED",
     );
   }
 
@@ -142,7 +143,7 @@ export async function cancelPinUserQuestionFriend(
   await changeCancelPinUserQuestionFriend(answer, contact);
 
   await changeSetContactStatusOtherProfile(
-    answer.user_id,
+    contact.c1_contact_mirror_id,
     "USERQUESTIONFRIENDUNPINNED",
   );
 
