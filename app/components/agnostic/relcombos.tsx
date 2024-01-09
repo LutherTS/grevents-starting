@@ -329,7 +329,7 @@ export function RelationCombinationFriendCustom({
         }
       >
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+        {/* <ManyUserSharedToContactCustomAnswers user={user} contact={contact} /> */}
       </Suspense>
       {/* if SENTIRL (session)
     AnnulIrlRequestForm
@@ -453,7 +453,7 @@ export function RelationCombinationFriendCustomQueried({
         }
       >
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+        {/* <ManyUserSharedToContactCustomAnswers user={user} contact={contact} /> */}
       </Suspense>
       <ActionLink>Upgrade friendship to irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>
@@ -480,7 +480,6 @@ export function RelationCombinationIrlCustom({
         }
       >
         <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
       <DowngradeFriendshipToIrlForm
         session={session}
