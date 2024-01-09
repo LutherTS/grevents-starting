@@ -765,12 +765,17 @@ export async function ManyRelComboFriendCriteriaCustom({
         answers={pinnedByFriendNotIrlAnswers}
         answersLabel={answersLabels.pinnedByFriendNotIrl}
       />
-      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
+      <ManyCriteria
+        answers={pinnedNotIrlAnswers}
+        answersLabel={answersLabels.pinnedNotIrl}
       />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+      />
+      <ManyCriteria
         answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
       <ManyCriteria
         answers={userSharedToContactCustomAnswers}
@@ -817,18 +822,25 @@ export async function ManyRelComboIrlCriteriaCustom({
         answers={pinnedByFriendNotAndIrlAnswers}
         answersLabel={answersLabels.pinnedByFriendNotAndIrl}
       />
-      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
+      <ManyCriteria
+        answers={pinnedNotAndIrlAnswers}
+        answersLabel={answersLabels.pinnedNotAndIrl}
+      />
+      <ManyCriteria
         answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
       />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
-      <ManyUserUnpinnedNativeIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedNativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeIrl}
       />
-      <ManyUserUnpinnedPseudonativeIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedPseudonativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeIrl}
       />
       <ManyCriteria
         answers={userSharedToContactCustomAnswers}
