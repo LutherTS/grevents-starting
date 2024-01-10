@@ -23,6 +23,11 @@ import {
 } from "../data/userquestionfriends";
 import { changeSetContactStatusOtherProfile } from "../changes/contacts";
 import { Answer } from "../definitions/answers";
+import {
+  countUserPinnedByFriendNotAndIrlAnswersCustom,
+  countUserPinnedByFriendNotIrlAnswersCustom,
+} from "../data/answers";
+import { defineFoundRelCombo } from "../utilities/relcombos";
 
 const USERQUESTIONFRIEND_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -96,39 +101,64 @@ export async function cancelShareUserQuestionFriend(
 // Better, easier in two
 // export async function pinOrUnpinUserQuestionFriend() {}
 
+// now making sure there aren't 5 or more pinned at time of execution
 export async function pinUserQuestionFriend(
   answer: Answer,
   contact: FoundContact,
 ) {
-  const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
-    answer,
-    contact,
-  );
+  // I can refactor either with a Promise.all on the count functions, or by conditioning either function according to relCombo first, but this is so far so fast that the hassle at this time isn't worth the performance.
 
-  if (userQuestionFriend === undefined) {
-    await changeDeleteAtUserQuestionFriendByAnswerAndContact(answer, contact);
+  const pinnedbyFriendNotIrlAnswersLength =
+    await countUserPinnedByFriendNotIrlAnswersCustom(
+      answer.user_id,
+      contact.c1_contact_id,
+    );
+  // console.log(pinnedbyFriendNotIrlAnswersLength);
 
-    const generatedUserQuestionFriendID = uuidv4();
+  const pinnedbyFriendNotAndIrlAnswersLength =
+    await countUserPinnedByFriendNotAndIrlAnswersCustom(
+      answer.user_id,
+      contact.c1_contact_id,
+    );
+  // console.log(pinnedbyFriendNotAndIrlAnswersLength);
 
-    await changeCreatePinUserQuestionFriend(
+  const relCombo = defineFoundRelCombo(contact);
+  // console.log(relCombo);
+
+  if (
+    (pinnedbyFriendNotIrlAnswersLength < 5 && relCombo === "friend") ||
+    (pinnedbyFriendNotAndIrlAnswersLength < 5 && relCombo === "irl")
+  ) {
+    const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
       answer,
       contact,
-      generatedUserQuestionFriendID,
     );
 
-    await changeSetContactStatusOtherProfile(
-      contact.c1_contact_mirror_id,
-      "USERQUESTIONFRIENDPINNED",
-    );
-  }
+    if (userQuestionFriend === undefined) {
+      await changeDeleteAtUserQuestionFriendByAnswerAndContact(answer, contact);
 
-  if (userQuestionFriend) {
-    await changePinUserQuestionFriend(userQuestionFriend);
+      const generatedUserQuestionFriendID = uuidv4();
 
-    await changeSetContactStatusOtherProfile(
-      contact.c1_contact_mirror_id,
-      "USERQUESTIONFRIENDPINNED",
-    );
+      await changeCreatePinUserQuestionFriend(
+        answer,
+        contact,
+        generatedUserQuestionFriendID,
+      );
+
+      await changeSetContactStatusOtherProfile(
+        contact.c1_contact_mirror_id,
+        "USERQUESTIONFRIENDPINNED",
+      );
+    }
+
+    if (userQuestionFriend) {
+      await changePinUserQuestionFriend(userQuestionFriend);
+
+      await changeSetContactStatusOtherProfile(
+        contact.c1_contact_mirror_id,
+        "USERQUESTIONFRIENDPINNED",
+      );
+    }
   }
 
   revalidatePath(
