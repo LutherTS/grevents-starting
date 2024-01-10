@@ -1179,6 +1179,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
             OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
         )
+        AND uqf2.contact_id = ${contactId}
 
         AND (
             (
@@ -1347,6 +1348,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
             OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
         )
+        AND uqf2.contact_id = ${contactId}
 
         AND (
             (
