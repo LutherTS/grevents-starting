@@ -5,6 +5,7 @@ export const noAnswersLabels: { [K in NoAnswersLabelKey]: NoAnswersLabel } = {
   pseudonativeNotIrl: "No pseudonative criteria yet.",
   pseudonativeIrl: "No pseudonative irl criteria yet.",
   custom: "No custom criteria yet.",
+  pinnedByFriend: "No pinned by you criteria yet.",
 };
 
 export type NoAnswersLabelKey =
@@ -13,7 +14,8 @@ export type NoAnswersLabelKey =
   | "nativeIrl"
   | "pseudonativeNotIrl"
   | "pseudonativeIrl"
-  | "custom";
+  | "custom"
+  | "pinnedByFriend";
 
 export type NoAnswersLabel =
   | "No pinned criteria yet."
@@ -21,4 +23,5 @@ export type NoAnswersLabel =
   | "No native irl criteria yet."
   | "No pseudonative criteria yet."
   | "No pseudonative irl criteria yet."
-  | "No custom criteria yet.";
+  | "No custom criteria yet."
+  | "No pinned by you criteria yet.";

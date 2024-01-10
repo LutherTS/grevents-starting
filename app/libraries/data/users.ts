@@ -3,7 +3,7 @@ import { FriendCodeUser, User } from "../definitions/users";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 
-export const DEFAULT_RETRIES = 4;
+export const DEFAULT_RETRIES = 5;
 
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.

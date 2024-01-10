@@ -461,7 +461,63 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
   }
 }
 
+// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        AND (
+            UserQuestionFriends.userquestionfriend_pinned_by_friend IS NULL
+            OR UserQuestionFriends.userquestionfriend_pinned_by_friend = FALSE
+        )
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
+
+        ORDER BY 
+            Answers.answer_created_at ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native not irl answers.");
+  }
+}
+export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
+  userId: string,
+) {
   noStore();
   // console.log(userId);
   try {
@@ -506,11 +562,73 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native not irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native not irl answers queried.",
+    );
   }
 }
 
+// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
+  userId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        AND (
+            UserQuestionFriends.userquestionfriend_pinned_by_friend IS NULL
+            OR UserQuestionFriends.userquestionfriend_pinned_by_friend = FALSE
+        ) -- NEW
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
+
+        ORDER BY 
+            lower(Questions.question_name) ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative not irl answers.",
+    );
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
   userId: string,
 ) {
   noStore();
@@ -559,7 +677,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user unpinned pseudonative not irl answers.",
+      "Failed to fetch user unpinned pseudonative not irl answers queried.",
     );
   }
 }
@@ -629,7 +747,61 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
   }
 }
 
+// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        AND (
+            UserQuestionFriends.userquestionfriend_pinned_by_friend IS NULL
+            OR UserQuestionFriends.userquestionfriend_pinned_by_friend = FALSE
+        ) -- NEW
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
+
+        ORDER BY 
+            Answers.answer_created_at ASC
+            
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native irl answers.");
+  }
+}
+export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
   noStore();
   // console.log(userId);
   try {
@@ -674,11 +846,71 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native irl answers queried.",
+    );
   }
 }
 
+// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        AND (
+            UserQuestionFriends.userquestionfriend_pinned_by_friend IS NULL
+            OR UserQuestionFriends.userquestionfriend_pinned_by_friend = FALSE
+        ) -- NEW
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND Users.user_state = 'LIVE'
+
+        ORDER BY 
+            lower(Questions.question_name) ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
+  userId: string,
+) {
   noStore();
   // console.log(userId);
   try {
@@ -724,7 +956,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative irl answers queried.",
+    );
   }
 }
 
@@ -748,8 +982,8 @@ export async function fetchUserSharedToContactCustomAnswers(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id --,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -758,26 +992,28 @@ export async function fetchUserSharedToContactCustomAnswers(
         JOIN Users u ON a.user_id = u.user_id
         JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
         JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
         AND q.question_kind = 'CUSTOM'
         AND c1.contact_id = ${contactId}
+
         AND (
-                (
-                    c1.contact_kind = 'FRIEND' AND 
-                    c2.contact_kind = 'FRIEND' AND
-                    c1.contact_blocking = FALSE AND
-                    c2.contact_blocking = FALSE
-                )
-                OR (
-                    c1.contact_kind = 'IRL' AND 
-                    c2.contact_kind = 'IRL' AND
-                    c1.contact_blocking = FALSE AND
-                    c2.contact_blocking = FALSE
-                )
+            (
+                c1.contact_kind = 'FRIEND' AND 
+                c2.contact_kind = 'FRIEND' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
             )
+            OR (
+                c1.contact_kind = 'IRL' AND 
+                c2.contact_kind = 'IRL' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+        )
+
         AND uq.userquestion_is_pinned = FALSE
           
         AND a.answer_state = 'LIVE'
@@ -786,19 +1022,19 @@ export async function fetchUserSharedToContactCustomAnswers(
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
-            userquestionfriends_count ASC, -- NEW
+            -- userquestionfriends_count ASC, -- NEW
             lower(q.question_name) ASC
 
         LIMIT 10;
@@ -815,11 +1051,102 @@ export async function fetchUserSharedToContactCustomAnswers(
   }
 }
 
+export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+  userId: string,
+  contactId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  // console.log(contactId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        JOIN Users u ON a.user_id = u.user_id
+        JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND q.question_kind = 'CUSTOM'
+        AND c1.contact_id = ${contactId}
+
+        AND (
+            (
+                c1.contact_kind = 'FRIEND' AND 
+                c2.contact_kind = 'FRIEND' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+            OR (
+                c1.contact_kind = 'IRL' AND 
+                c2.contact_kind = 'IRL' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+        )
+
+        AND uq.userquestion_is_pinned = FALSE
+        AND uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
+          
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND uqf1.userquestionfriend_state = 'LIVE'
+        AND c1.contact_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
+
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
+
+        ORDER BY 
+            -- userquestionfriends_count ASC, -- NEW
+            lower(q.question_name) ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user shared to contact custom answers not pinned by friend.",
+    );
+  }
+}
+
 export async function fetchUserPinnedNotIrlAnswersCustom(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -833,8 +1160,8 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -849,6 +1176,12 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
         AND a.user_id = ${userId}
         AND uq.userquestion_is_pinned = TRUE
         AND (
+            uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
+            OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
+        )
+        AND uqf2.contact_id = ${contactId}
+
+        AND (
             (
                 q.question_kind = 'NATIVE'
             )
@@ -859,24 +1192,24 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             OR ( -- NEW
               q.question_kind = 'CUSTOM' AND
               c1.contact_id = ${contactId}
-          )
-      )
+            )
+        )
 
         AND a.answer_state = 'LIVE'
         AND uq.userquestion_state = 'LIVE'
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -896,7 +1229,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
   }
 }
 
-export async function fetchUserPinnedNotAndIrlAnswersCustom(
+export async function fetchUserPinnedNotIrlAnswersCustomQueried(
   userId: string,
   contactId: string,
 ) {
@@ -914,8 +1247,90 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uq.userquestion_is_pinned = TRUE
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+              q.question_kind = 'CUSTOM' AND
+              c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
+
+        ORDER BY 
+            uq.userquestion_pinned_at DESC, 
+            a.answer_updated_at DESC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned not irl answers queried.");
+  }
+}
+
+export async function fetchUserPinnedNotAndIrlAnswersCustom(
+  userId: string,
+  contactId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -929,6 +1344,12 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
         AND uq.userquestion_is_pinned = TRUE
+        AND (
+            uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
+            OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
+        )
+        AND uqf2.contact_id = ${contactId}
+
         AND (
             (
                 q.question_kind = 'NATIVE'
@@ -955,16 +1376,16 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -981,5 +1402,396 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned not and irl answers custom.");
+  }
+}
+
+export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
+  userId: string,
+  contactId: string,
+) {
+  noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uq.userquestion_is_pinned = TRUE
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'NATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVEIRL'
+            )
+            OR ( -- NEW
+                q.question_kind = 'CUSTOM' AND
+                c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
+
+        ORDER BY 
+            uq.userquestion_pinned_at DESC, 
+            a.answer_updated_at DESC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned not and irl answers queried.");
+  }
+}
+
+export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
+  userId: string,
+  contactId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
+            -- uqf2.userquestionfriend_id -- NEW
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uqf2.userquestionfriend_pinned_by_friend = TRUE -- NEW
+        AND uqf2.contact_id = ${contactId} -- NEW
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+              q.question_kind = 'CUSTOM' AND
+              c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id,
+            -- uqf2.userquestionfriend_id -- NEW
+
+        ORDER BY 
+            uqf2.userquestionfriend_pinned_at DESC, -- NEW 
+            a.answer_updated_at DESC
+
+        LIMIT 5; -- 5 for by friend, 10 for by user -- NEW
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned by friend not irl answers.");
+  }
+}
+
+export async function countUserPinnedByFriendNotIrlAnswersCustom(
+  userId: string,
+  contactId: string,
+) {
+  noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+          COUNT(*)
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uqf2.userquestionfriend_pinned_by_friend = TRUE -- NEW
+        AND uqf2.contact_id = ${contactId} -- NEW
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+              q.question_kind = 'CUSTOM' AND
+              c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user pinned by friend not irl answers.");
+  }
+}
+
+export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
+  userId: string,
+  contactId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
+            -- uqf2.userquestionfriend_id -- NEW
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uqf2.userquestionfriend_pinned_by_friend = TRUE -- NEW
+        AND uqf2.contact_id = ${contactId} -- NEW
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'NATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'CUSTOM' AND
+                c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id,
+            -- uqf2.userquestionfriend_id -- NEW
+
+        ORDER BY 
+            uqf2.userquestionfriend_pinned_at DESC, -- NEW
+            a.answer_updated_at DESC
+
+        LIMIT 5; -- 5 for by friend, 10 for by user -- NEW
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user pinned by friend not and irl answers.",
+    );
+  }
+}
+
+export async function countUserPinnedByFriendNotAndIrlAnswersCustom(
+  userId: string,
+  contactId: string,
+) {
+  noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN Users u ON a.user_id = u.user_id
+        LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND uqf2.userquestionfriend_pinned_by_friend = TRUE -- NEW
+        AND uqf2.contact_id = ${contactId} -- NEW
+
+        AND (
+            (
+                q.question_kind = 'NATIVE'
+            )
+            OR (
+                q.question_kind = 'NATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVE'
+            )
+            OR (
+                q.question_kind = 'PSEUDO' AND
+                uq.userquestion_kind = 'PSEUDONATIVEIRL'
+            )
+            OR (
+                q.question_kind = 'CUSTOM' AND
+                c1.contact_id = ${contactId}
+            )
+        )
+
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND q.question_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to count user pinned by friend not and irl answers.",
+    );
   }
 }

@@ -108,7 +108,10 @@ export default async function UserQuestionPage({
               </>
             }
           >
-            <OneCriteriaModify answer={userQuestionAnswer} />
+            <OneCriteriaModify
+              answer={userQuestionAnswer}
+              personalView={true}
+            />
             <ManyFriendsAddable user={user} userQuestion={userQuestion} />
             <ManyUserQuestionFriends userQuestion={userQuestion} />
           </Suspense>

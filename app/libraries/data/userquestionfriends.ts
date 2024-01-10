@@ -5,7 +5,8 @@ import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { DEFAULT_RETRIES } from "./users";
-import { Friend } from "../definitions/contacts";
+import { FoundContact, Friend } from "../definitions/contacts";
+import { Answer } from "../definitions/answers";
 
 /* No longer in use
 export async function countUserQuestionFriends(
@@ -134,5 +135,49 @@ export async function findUserQuestionFriend(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to find user question friend.");
+  }
+}
+
+export async function findUserQuestionFriendByAnswerAndContact(
+  answer: Answer,
+  contact: FoundContact,
+) {
+  noStore(); // just in case
+  // console.log(userQuestion);
+  // console.log(contact);
+  try {
+    const run = async () => {
+      const data = await sql<UserQuestionFriend>`
+        SELECT 
+            u.user_app_wide_name, 
+            u.user_username, 
+            uqf.userquestionfriend_id 
+        FROM UserQuestionFriends uqf
+        
+        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
+        JOIN Users u ON c1.user_last_id = u.user_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+        
+        WHERE uqf.userquestion_id = ${answer.userquestion_id}
+        AND uqf.contact_id = ${contact.c1_contact_id}
+        
+        AND uqf.userquestionfriend_state = 'LIVE'
+        AND c1.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
+
+        LIMIT 1;
+      `;
+      // console.log(data);
+      return data.rows[0];
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to find user question friend by answer and contact.",
+    );
   }
 }

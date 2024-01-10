@@ -3,9 +3,10 @@ import { Suspense } from "react";
 import {
   ManyRelComboFriendCriteria,
   ManyRelComboFriendCriteriaCustom,
+  ManyRelComboFriendCriteriaCustomQueried,
   ManyRelComboIrlCriteria,
   ManyRelComboIrlCriteriaCustom,
-  ManyUserSharedToContactCustomAnswers,
+  ManyRelComboIrlCriteriaCustomQueried,
 } from "../server/answers";
 import {
   FoundContact,
@@ -40,16 +41,6 @@ export function RelationCombinationNone({
 }) {
   return (
     <>
-      {/* if SENTFRIEND (session)
-    AnnulFriendRequestForm
-    else if ANNULFRIEND (session)
-    AnnulledFriendCannotSend
-    else if mirror SENTFRIEND (user)
-    DeclineFriendRequestForm
-    AcceptFriendRequestForm
-    else // even if mirror ANNULFRIEND (user)
-    SendFriendRequestForm
-    */}
       {contact.c2_contact_process_relationship === "SENTFRIEND" && (
         <>
           <AnnulFriendForm session={session} user={user} contact={contact} />
@@ -77,7 +68,6 @@ export function RelationCombinationNone({
         contact.c2_contact_process_relationship !== "ANNULFRIEND" &&
         contact.c1_contact_process_relationship !== "SENTFRIEND" && (
           <>
-            {/* <SendFriendRequestForm user={user} contact={contact} /> */}
             <SendFriendForm session={session} user={user} contact={contact} />
           </>
         )}
@@ -86,14 +76,6 @@ export function RelationCombinationNone({
           <BlockForm session={session} user={user} contact={contact} />
         </>
       )}
-      {/* <BlockForm user={user} contact={contact} /> */}
-      {/* if SENTFRIEND (session)
-    SentFriendDetails
-    else if ANNULFRIEND (session)
-    AnnulFriendDetails
-    else if mirror SENTFRIEND (user)
-    MirrorSentFriendDetails
-    */}
       {contact.c2_contact_process_relationship === "SENTFRIEND" && (
         <>
           <p className="mt-2 text-orange-500">
@@ -329,18 +311,7 @@ export function RelationCombinationFriendCustom({
         }
       >
         <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
-      {/* if SENTIRL (session)
-    AnnulIrlRequestForm
-    else if ANNULIRL (session)
-    AnnulledIrlCannotSend 
-    else if mirror SENTIRL (user)
-    DeclineIrlRequestForm
-    AcceptIrlRequestForm
-    else // even if mirror ANNULIRL (user)
-    SendIrlRequestForm
-    */}
       {contact.c2_contact_process_relationship === "SENTIRL" && (
         <>
           <AnnulIrlForm session={session} user={user} contact={contact} />
@@ -366,7 +337,6 @@ export function RelationCombinationFriendCustom({
         contact.c2_contact_process_relationship !== "ANNULIRL" &&
         contact.c1_contact_process_relationship !== "SENTIRL" && (
           <>
-            {/* <UpgradeFriendshipToIrlForm user={user} contact={contact} /> */}
             <UpgradeToIrlForm session={session} user={user} contact={contact} />
           </>
         )}
@@ -375,14 +345,6 @@ export function RelationCombinationFriendCustom({
           <UnfriendForm session={session} user={user} contact={contact} />
         </>
       )}
-      {/* <UnfriendForm user={user} contact={contact} /> */}
-      {/* if SENTFRIEND (session)
-    SentFriendDetails
-    else if ANNULFRIEND (session)
-    AnnulFriendDetails
-    else if mirror SENTFRIEND (user)
-    MirrorSentFriendDetails
-    */}
       {contact.c2_contact_process_relationship === "SENTIRL" && (
         <>
           <p className="mt-2 text-orange-500">
@@ -452,8 +414,10 @@ export function RelationCombinationFriendCustomQueried({
           </>
         }
       >
-        <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+        <ManyRelComboFriendCriteriaCustomQueried
+          user={user}
+          contact={contact}
+        />
       </Suspense>
       <ActionLink>Upgrade friendship to irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>
@@ -480,7 +444,6 @@ export function RelationCombinationIrlCustom({
         }
       >
         <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
       </Suspense>
       <DowngradeFriendshipToIrlForm
         session={session}
@@ -508,8 +471,7 @@ export function RelationCombinationIrlCustomQueried({
           </>
         }
       >
-        <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
-        <ManyUserSharedToContactCustomAnswers user={user} contact={contact} />
+        <ManyRelComboIrlCriteriaCustomQueried user={user} contact={contact} />
       </Suspense>
       <ActionLink>Downgrade friendship from irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>

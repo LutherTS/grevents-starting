@@ -35,6 +35,8 @@ import {
   ContactRefusedIrl,
   ContactSentFriend,
   ContactSentIrl,
+  ContactUserQuestionFriendPinned,
+  ContactUserQuestionFriendUnpinned,
 } from "@/app/components/client/toasts";
 
 import type { Metadata } from "next";
@@ -156,6 +158,24 @@ export default async function UserPage({
               foundContact.c2_contact_status_other_profile ===
                 "REACCESSTHROUGHFIND" && (
                 <ContactReaccessThroughFind
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "USERQUESTIONFRIENDPINNED" && (
+                <ContactUserQuestionFriendPinned
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "USERQUESTIONFRIENDUNPINNED" && (
+                <ContactUserQuestionFriendUnpinned
                   contact={foundContact}
                   user={user}
                 />

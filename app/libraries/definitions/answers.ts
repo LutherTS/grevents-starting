@@ -15,6 +15,7 @@ export type Answer = {
   user_username: string;
   user_id: string;
   userquestionfriends_count?: number;
+  userquestionfriend_id?: string;
 };
 
 export type AnswerState = "LIVE" | "DELETED";

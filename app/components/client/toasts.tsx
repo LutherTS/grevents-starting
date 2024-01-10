@@ -228,6 +228,42 @@ export function ContactReaccessThroughFind({
   );
 }
 
+export function ContactUserQuestionFriendPinned({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusOtherProfile(contact, user)}>
+        <ToastChild>
+          {user.user_app_wide_name}&apos;s criteria pinned for you
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function ContactUserQuestionFriendUnpinned({
+  contact,
+  user,
+}: {
+  contact: FoundContact;
+  user: User;
+}) {
+  return (
+    <>
+      <ToastForm action={() => resetContactStatusOtherProfile(contact, user)}>
+        <ToastChild>
+          {user.user_app_wide_name}&apos;s criteria unpinned for you
+        </ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
 // Penser à mettre en place un label dynamique sur les toasts comme précédemment avec les answers.
 
 export function ContactNowFriends({

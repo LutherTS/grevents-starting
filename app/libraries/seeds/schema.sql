@@ -123,7 +123,9 @@ CREATE TYPE contact_status_profile AS ENUM (
 CREATE TYPE contact_status_other_profile AS ENUM (
     'NONE',
     'FIRSTACCESSTHROUGHFIND',
-    'REACCESSTHROUGHFIND'
+    'REACCESSTHROUGHFIND' --,
+    'USERQUESTIONFRIENDPINNED', -- added
+    'USERQUESTIONFRIENDUNPINNED' -- added
 ); -- Done.
 
 CREATE TABLE Contacts (

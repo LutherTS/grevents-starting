@@ -16,6 +16,15 @@ import {
   fetchUserSharedToContactCustomAnswers,
   fetchUserPinnedNotIrlAnswersCustom,
   fetchUserPinnedNotAndIrlAnswersCustom,
+  fetchUserPinnedByFriendNotIrlAnswersCustom,
+  fetchUserPinnedByFriendNotAndIrlAnswersCustom,
+  fetchUserSharedToContactCustomAnswersNotPinnedByFriend,
+  fetchUserPinnedNotAndIrlAnswersCustomQueried,
+  fetchUserUnpinnedNativeNotIrlAnswersQueried,
+  fetchUserUnpinnedPseudonativeNotIrlAnswersQueried,
+  fetchUserUnpinnedNativeIrlAnswersQueried,
+  fetchUserUnpinnedPseudonativeIrlAnswersQueried,
+  fetchUserPinnedNotIrlAnswersCustomQueried,
 } from "@/app/libraries/data/answers";
 import { User } from "@/app/libraries/definitions/users";
 import { Answer } from "@/app/libraries/definitions/answers";
@@ -29,6 +38,8 @@ import {
 } from "@/app/libraries/utilities/answerslabels";
 import Link from "next/link";
 import {
+  ButtonCancelPinUserQuestionFriendForm,
+  ButtonPinUserQuestionFriendForm,
   ButtonPinnableForm,
   ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
@@ -38,7 +49,13 @@ import {
   noAnswersLabels,
 } from "@/app/libraries/utilities/noanswerslabels";
 
-export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
+export async function OneCriteriaQuestion({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
       <p className="mt-2">
@@ -68,7 +85,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
               pseudonative irl
             </span>
           )}
-        {answer.question_kind === "CUSTOM" && (
+        {answer.question_kind === "CUSTOM" && personalView && (
           <span className="text-lime-500">
             <span className="font-semibold">{answer.question_name}</span> /
             custom{" "}
@@ -78,6 +95,12 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
             ) : (
               <>/ not shared</>
             )}
+          </span>
+        )}
+        {answer.question_kind === "CUSTOM" && !personalView && (
+          <span className="text-lime-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            custom / shared to you
           </span>
         )}
       </p>
@@ -137,6 +160,47 @@ export async function OneCriteriaAnswerPinnable({
   );
 }
 
+export async function OneCriteriaAnswerPinnableByFriend({
+  answer,
+  contact,
+  pinnedbyFriendAnswersLength,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex justify-center">
+        {pinnedbyFriendAnswersLength < 5 && (
+          <ButtonPinUserQuestionFriendForm answer={answer} contact={contact} />
+        )}
+        <p>{answer.answer_value}</p>
+      </div>
+    </>
+  );
+}
+
+export async function OneCriteriaAnswerCancelPinnableByFriend({
+  answer,
+  contact,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex justify-center">
+        <ButtonCancelPinUserQuestionFriendForm
+          answer={answer}
+          contact={contact}
+        />
+        <p>{answer.answer_value}</p>
+      </div>
+    </>
+  );
+}
+
 export async function OneCriteriaAnswerPinnablePseudoable({
   answer,
 }: {
@@ -153,29 +217,86 @@ export async function OneCriteriaAnswerPinnablePseudoable({
   );
 }
 
-export async function OneCriteria({ answer }: { answer: Answer }) {
+export async function OneCriteria({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaQuestion answer={answer} personalView={true} />
       <OneCriteriaAnswer answer={answer} />
     </>
   );
 }
 
-export async function OneCriteriaModify({ answer }: { answer: Answer }) {
+export async function OneCriteriaModify({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaQuestion answer={answer} personalView={personalView} />
       <OneCriteriaAnswerModify answer={answer} />
     </>
   );
 }
 
-export async function OneCriteriaPinnable({ answer }: { answer: Answer }) {
+export async function OneCriteriaPinnable({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
+  return (
+    <>
+      <OneCriteriaQuestion answer={answer} personalView={true} />
+      <OneCriteriaAnswerPinnable answer={answer} />
+    </>
+  );
+}
+
+export async function OneCriteriaPinnableByFriend({
+  answer,
+  contact,
+  pinnedbyFriendAnswersLength,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
+}) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} />
-      <OneCriteriaAnswerPinnable answer={answer} />
+      <OneCriteriaAnswerPinnableByFriend
+        answer={answer}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
+      />
+    </>
+  );
+}
+
+export async function OneCriteriaCancelPinnableByFriend({
+  answer,
+  contact,
+}: {
+  answer: Answer;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaAnswerCancelPinnableByFriend
+        answer={answer}
+        contact={contact}
+      />
     </>
   );
 }
@@ -213,10 +334,12 @@ export async function ManyCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
+  personalView,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  personalView?: boolean;
 }) {
   return (
     <>
@@ -227,7 +350,7 @@ export async function ManyCriteria({
             {answers.map((answer) => {
               return (
                 <li key={answer.answer_id}>
-                  <OneCriteria answer={answer} />
+                  <OneCriteria answer={answer} personalView={true} />
                 </li>
               );
             })}
@@ -283,10 +406,12 @@ export async function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
+  personalView,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  personalView?: boolean;
 }) {
   return (
     <>
@@ -297,7 +422,90 @@ export async function ManyCriteriaPinnable({
             {answers.map((answer) => {
               return (
                 <li key={answer.answer_id}>
-                  <OneCriteriaPinnable answer={answer} />
+                  <OneCriteriaPinnable answer={answer} personalView={true} />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyCriteriaPinnableByFriend({
+  answers,
+  answersLabel,
+  noAnswersLabel,
+  contact,
+  pinnedbyFriendAnswersLength,
+}: {
+  answers: Answer[];
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
+  contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaPinnableByFriend
+                    answer={answer}
+                    contact={contact}
+                    pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
+                  />
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
+    </>
+  );
+}
+
+export async function ManyCriteriaCancelPinnableByFriend({
+  answers,
+  answersLabel,
+  noAnswersLabel,
+  contact,
+}: {
+  answers: Answer[];
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
+  contact: FoundContact;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <ol>
+            {answers.map((answer) => {
+              return (
+                <li key={answer.answer_id}>
+                  <OneCriteriaCancelPinnableByFriend
+                    answer={answer}
+                    contact={contact}
+                  />
                 </li>
               );
             })}
@@ -393,6 +601,7 @@ export async function ManyUserPinnedCriteria({ user }: { user: User }) {
         answers={pinnedAnswers}
         answersLabel={answersLabels.pinned}
         noAnswersLabel={noAnswersLabels.pinned}
+        personalView={true}
       />
     </>
   );
@@ -734,26 +943,61 @@ export async function ManyRelComboFriendCriteriaCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
 }) {
   const [
+    pinnedByFriendNotIrlAnswers, // new
     pinnedNotIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
     userUnpinnedPseudonativeNotIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
+    fetchUserPinnedByFriendNotIrlAnswersCustom(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // new
     fetchUserPinnedNotIrlAnswersCustom(user.user_id, contact.c1_contact_id),
     fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // optimisation
   ]);
+
+  const pinnedByFriendNotIrlAnswersCount = pinnedByFriendNotIrlAnswers.length;
 
   return (
     <>
-      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
+      <ManyCriteriaCancelPinnableByFriend
+        answers={pinnedByFriendNotIrlAnswers}
+        answersLabel={answersLabels.pinnedByFriendNotIrl}
+        noAnswersLabel={noAnswersLabels.pinnedByFriend}
+        contact={contact}
       />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+      <ManyCriteriaPinnableByFriend
+        answers={pinnedNotIrlAnswers}
+        answersLabel={answersLabels.pinnedNotIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
         answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
       />
     </>
   );
@@ -764,7 +1008,133 @@ export async function ManyRelComboIrlCriteriaCustom({
   contact,
 }: {
   user: User;
-  contact: GatheredContact | FoundContact;
+  contact: FoundContact;
+}) {
+  const [
+    pinnedByFriendNotAndIrlAnswers, // new
+    pinnedNotAndIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userUnpinnedNativeIrlAnswers,
+    userUnpinnedPseudonativeIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
+  ] = await Promise.all([
+    fetchUserPinnedByFriendNotAndIrlAnswersCustom(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // new
+    fetchUserPinnedNotAndIrlAnswersCustom(user.user_id, contact.c1_contact_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
+    fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // optimisation
+  ]);
+
+  const pinnedByFriendNotAndIrlAnswersCount =
+    pinnedByFriendNotAndIrlAnswers.length;
+
+  return (
+    <>
+      <ManyCriteriaCancelPinnableByFriend
+        answers={pinnedByFriendNotAndIrlAnswers}
+        answersLabel={answersLabels.pinnedByFriendNotAndIrl}
+        noAnswersLabel={noAnswersLabels.pinnedByFriend}
+        contact={contact}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={pinnedNotAndIrlAnswers}
+        answersLabel={answersLabels.pinnedNotAndIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userUnpinnedNativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userUnpinnedPseudonativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeIrl}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+      <ManyCriteriaPinnableByFriend
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboFriendCriteriaCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
+}) {
+  const [
+    pinnedNotIrlAnswers,
+    userUnpinnedNativeNotIrlAnswers,
+    userUnpinnedPseudonativeNotIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
+  ] = await Promise.all([
+    fetchUserPinnedNotIrlAnswersCustomQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ),
+    fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
+    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
+  ]);
+
+  return (
+    <>
+      <ManyCriteria
+        answers={pinnedNotIrlAnswers}
+        answersLabel={answersLabels.pinnedNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+      />
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
+      />
+    </>
+  );
+}
+
+export async function ManyRelComboIrlCriteriaCustomQueried({
+  user,
+  contact,
+}: {
+  user: User;
+  contact: GatheredContact;
 }) {
   const [
     pinnedNotAndIrlAnswers,
@@ -772,28 +1142,44 @@ export async function ManyRelComboIrlCriteriaCustom({
     userUnpinnedPseudonativeNotIrlAnswers,
     userUnpinnedNativeIrlAnswers,
     userUnpinnedPseudonativeIrlAnswers,
+    userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
-    fetchUserPinnedNotAndIrlAnswersCustom(user.user_id, contact.c1_contact_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
+    fetchUserPinnedNotAndIrlAnswersCustomQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ),
+    fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswersQueried(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswersQueried(user.user_id),
+    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
   ]);
 
   return (
     <>
-      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
+      <ManyCriteria
+        answers={pinnedNotAndIrlAnswers}
+        answersLabel={answersLabels.pinnedNotAndIrl}
+      />
+      <ManyCriteria
         answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
       />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
-      <ManyUserUnpinnedNativeIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedNativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeIrl}
       />
-      <ManyUserUnpinnedPseudonativeIrlCriteria
+      <ManyCriteria
         answers={userUnpinnedPseudonativeIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeIrl}
+      />
+      <ManyCriteria
+        answers={userSharedToContactCustomAnswers}
+        answersLabel={answersLabels.sharedToContactCustom}
       />
     </>
   );
