@@ -1176,10 +1176,9 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
         AND a.user_id = ${userId}
         AND uq.userquestion_is_pinned = TRUE
         AND (
-            uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
-            OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
+            uqf2.userquestionfriend_pinned_by_friend = FALSE OR -- NEW
+            uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
         )
-        AND uqf2.contact_id = ${contactId}
 
         AND (
             (
@@ -1191,7 +1190,8 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             )
             OR ( -- NEW
               q.question_kind = 'CUSTOM' AND
-              c1.contact_id = ${contactId}
+              c1.contact_id = ${contactId} AND
+              uqf2.contact_id = ${contactId}
             )
         )
 
@@ -1345,10 +1345,9 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
         AND a.user_id = ${userId}
         AND uq.userquestion_is_pinned = TRUE
         AND (
-            uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
-            OR uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
+            uqf2.userquestionfriend_pinned_by_friend = FALSE OR -- NEW
+            uqf2.userquestionfriend_pinned_by_friend IS NULL -- NEW
         )
-        AND uqf2.contact_id = ${contactId}
 
         AND (
             (
@@ -1367,7 +1366,8 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             )
             OR ( -- NEW
                 q.question_kind = 'CUSTOM' AND
-                c1.contact_id = ${contactId}
+                c1.contact_id = ${contactId} AND
+                uqf2.contact_id = ${contactId}
             )
         )
 
