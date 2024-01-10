@@ -119,7 +119,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -168,7 +168,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC
 
         LIMIT 10;
       `;
@@ -284,6 +284,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   }
 }
 
+// Internal
 export async function fetchUserCustomAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);
@@ -448,7 +449,8 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             UserQuestions.userquestion_pinned_at DESC, 
@@ -490,6 +492,58 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
         JOIN Questions ON UserQuestions.question_id = Questions.question_id
         JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+
+        ORDER BY 
+            lower(Questions.question_name) ASC -- lower for case sensitiveness
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native not irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
+  userId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
         LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
         
         WHERE UserQuestions.user_id = ${userId}
@@ -507,7 +561,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC -- lower for case sensitiveness
 
         LIMIT 10;
       `;
@@ -519,9 +573,12 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native not irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native not irl answers exposed.",
+    );
   }
 }
+
 export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
   userId: string,
 ) {
@@ -557,7 +614,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC -- lower for case sensitiveness
 
         LIMIT 10;
       `;
@@ -577,6 +634,61 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
 
 // !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
+  userId: string,
+) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+
+        ORDER BY 
+            lower(Questions.question_name) ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative not irl answers.",
+    );
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
   userId: string,
 ) {
   // noStore();
@@ -630,7 +742,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user unpinned pseudonative not irl answers.",
+      "Failed to fetch user unpinned pseudonative not irl answers exposed.",
     );
   }
 }
@@ -734,7 +846,8 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             UserQuestions.userquestion_pinned_at DESC, 
@@ -776,6 +889,56 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
         JOIN Questions ON UserQuestions.question_id = Questions.question_id
         JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+
+        ORDER BY 
+            lower(Questions.question_name) ASC
+            
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned native irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
         LEFT JOIN UserQuestionFriends ON Answers.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
         
         WHERE UserQuestions.user_id = ${userId}
@@ -793,7 +956,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC
             
         LIMIT 10;
       `;
@@ -805,9 +968,12 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native irl answers exposed.",
+    );
   }
 }
+
 export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
   noStore();
   // console.log(userId);
@@ -841,7 +1007,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
         AND Users.user_state = 'LIVE'
 
         ORDER BY 
-            Answers.answer_created_at ASC
+            lower(Questions.question_name) ASC
             
         LIMIT 10;
       `;
@@ -861,6 +1027,59 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
 
 // !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
+  // noStore();
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            Questions.question_name, 
+            Answers.answer_value, 
+            Answers.answer_id,
+            UserQuestions.userquestion_is_pinned,
+            Questions.question_kind,
+            UserQuestions.userquestion_kind,
+            UserQuestions.userquestion_id,
+            Users.user_username,
+            Users.user_id
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+        AND UserQuestions.userquestion_is_pinned = FALSE
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+
+        ORDER BY 
+            lower(Questions.question_name) ASC
+
+        LIMIT 10;
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
+  }
+}
+
+export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
+  userId: string,
+) {
   // noStore();
   // console.log(userId);
   try {
@@ -911,7 +1130,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative irl answers exposed.",
+    );
   }
 }
 
@@ -969,8 +1190,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
   }
 }
 
-// !! What I need to include to the customs below !! //
-export async function fetchUserSharedToContactCustomAnswers(
+export async function fetchUserSharedToContactCustomAnswersQueried(
   userId: string,
   contactId: string,
 ) {
@@ -1028,6 +1248,7 @@ export async function fetchUserSharedToContactCustomAnswers(
         AND uqf1.userquestionfriend_state = 'LIVE'
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
 
         -- GROUP BY -- NEW
             -- q.question_name, 
@@ -1054,11 +1275,15 @@ export async function fetchUserSharedToContactCustomAnswers(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user shared to contact custom answers.");
+    throw new Error(
+      "Failed to fetch user shared to contact custom answers queried.",
+    );
   }
 }
 
-export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+// Previously and more descriptively:
+// fetchUserSharedToContactCustomAnswersNotPinnedByFriend
+export async function fetchUserSharedToContactCustomAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1144,12 +1369,12 @@ export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user shared to contact custom answers not pinned by friend.",
+      "Failed to fetch user shared to contact custom answers not pinned by friend exposed.",
     );
   }
 }
 
-export async function fetchUserPinnedNotIrlAnswersCustom(
+export async function fetchUserPinnedNotIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1232,11 +1457,11 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not irl answers custom.");
+    throw new Error("Failed to fetch user pinned not irl answers exposed.");
   }
 }
 
-export async function fetchUserPinnedNotIrlAnswersCustomQueried(
+export async function fetchUserPinnedNotIrlAnswersQueried(
   userId: string,
   contactId: string,
 ) {
@@ -1318,7 +1543,7 @@ export async function fetchUserPinnedNotIrlAnswersCustomQueried(
   }
 }
 
-export async function fetchUserPinnedNotAndIrlAnswersCustom(
+export async function fetchUserPinnedNotAndIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1408,11 +1633,11 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not and irl answers custom.");
+    throw new Error("Failed to fetch user pinned not and irl answers exposed.");
   }
 }
 
-export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
+export async function fetchUserPinnedNotAndIrlAnswersQueried(
   userId: string,
   contactId: string,
 ) {
@@ -1501,7 +1726,9 @@ export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
   }
 }
 
-export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
+// Previously and more simply:
+// fetchUserPinnedByFriendNotIrlAnswers
+export async function fetchUserPinnedByFriendNotIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1582,11 +1809,13 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned by friend not irl answers.");
+    throw new Error(
+      "Failed to fetch user pinned by friend not irl answers exposed.",
+    );
   }
 }
 
-export async function countUserPinnedByFriendNotIrlAnswersCustom(
+export async function countUserPinnedByFriendNotIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1639,11 +1868,15 @@ export async function countUserPinnedByFriendNotIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to count user pinned by friend not irl answers.");
+    throw new Error(
+      "Failed to count user pinned by friend not irl answers exposed.",
+    );
   }
 }
 
-export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
+// Previously and more descriptively:
+// fetchUserPinnedByFriendNotAndIrlAnswers
+export async function fetchUserPinnedByFriendNotAndIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1732,12 +1965,12 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user pinned by friend not and irl answers.",
+      "Failed to fetch user pinned by friend not and irl answers exposed.",
     );
   }
 }
 
-export async function countUserPinnedByFriendNotAndIrlAnswersCustom(
+export async function countUserPinnedByFriendNotAndIrlAnswersExposed(
   userId: string,
   contactId: string,
 ) {
@@ -1798,7 +2031,7 @@ export async function countUserPinnedByFriendNotAndIrlAnswersCustom(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to count user pinned by friend not and irl answers.",
+      "Failed to count user pinned by friend not and irl answers exposed.",
     );
   }
 }

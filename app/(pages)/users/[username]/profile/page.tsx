@@ -5,12 +5,12 @@ import { User } from "@/app/libraries/definitions/users";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import {
-  RelationCombinationNone,
-  RelationCombinationFriendCustom,
-  RelationCombinationIrlCustom,
-  RelationCombinationIAmBlocking,
-  RelationCombinationHasMeBlocked,
-  RelationCombinationBlockingBlocked,
+  RelationCombinationNoneExposed,
+  RelationCombinationFriendExposed,
+  RelationCombinationIrlExposed,
+  RelationCombinationIAmBlockingExposed,
+  RelationCombinationHasMeBlockedExposed,
+  RelationCombinationBlockingBlockedExposed,
 } from "@/app/components/agnostic/relcombos";
 import {
   RelationCombination,
@@ -289,7 +289,7 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {foundContact && relCombo === "none" && (
-              <RelationCombinationNone
+              <RelationCombinationNoneExposed
                 user={user}
                 contact={foundContact}
                 session={session}
@@ -298,7 +298,7 @@ export default async function UserPage({
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "friend" && foundContact && (
               <>
-                <RelationCombinationFriendCustom
+                <RelationCombinationFriendExposed
                   user={user}
                   contact={foundContact}
                   session={session}
@@ -308,7 +308,7 @@ export default async function UserPage({
             {/* @ts-ignore // for intentional during relCombo testing */}
             {relCombo === "irl" && foundContact && (
               <>
-                <RelationCombinationIrlCustom
+                <RelationCombinationIrlExposed
                   user={user}
                   contact={foundContact}
                   session={session}
@@ -317,7 +317,7 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {foundContact && relCombo === "i-am-blocking" && (
-              <RelationCombinationIAmBlocking
+              <RelationCombinationIAmBlockingExposed
                 user={user}
                 contact={foundContact}
                 session={session}
@@ -325,7 +325,7 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {foundContact && relCombo === "has-me-blocked" && (
-              <RelationCombinationHasMeBlocked
+              <RelationCombinationHasMeBlockedExposed
                 user={user}
                 contact={foundContact}
                 session={session}
@@ -333,7 +333,7 @@ export default async function UserPage({
             )}
             {/* @ts-ignore // for intentional during relCombo testing */}
             {foundContact && relCombo === "blocking-blocked" && (
-              <RelationCombinationBlockingBlocked
+              <RelationCombinationBlockingBlockedExposed
                 user={user}
                 contact={foundContact}
                 session={session}

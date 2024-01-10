@@ -24,8 +24,8 @@ import {
 import { changeSetContactStatusOtherProfile } from "../changes/contacts";
 import { Answer } from "../definitions/answers";
 import {
-  countUserPinnedByFriendNotAndIrlAnswersCustom,
-  countUserPinnedByFriendNotIrlAnswersCustom,
+  countUserPinnedByFriendNotAndIrlAnswersExposed,
+  countUserPinnedByFriendNotIrlAnswersExposed,
 } from "../data/answers";
 import { defineFoundRelCombo } from "../utilities/relcombos";
 
@@ -118,14 +118,14 @@ export async function pinUserQuestionFriend(
   // This is to say that, there are many tweaks that could and should be made to a project in order to assess E-VE-RY SIN-GLE case, but some are a lot more rare than others, less breaking than others, and therefore can be depriorities for assessment ONLY when they actually happen, assuming that their happening has a truly minor impact on user experience.
 
   const pinnedbyFriendNotIrlAnswersLength =
-    await countUserPinnedByFriendNotIrlAnswersCustom(
+    await countUserPinnedByFriendNotIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );
   // console.log(pinnedbyFriendNotIrlAnswersLength);
 
   const pinnedbyFriendNotAndIrlAnswersLength =
-    await countUserPinnedByFriendNotAndIrlAnswersCustom(
+    await countUserPinnedByFriendNotAndIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );

@@ -1,12 +1,12 @@
 import { User } from "@/app/libraries/definitions/users";
 import { Suspense } from "react";
 import {
-  ManyRelComboFriendCriteria,
-  ManyRelComboFriendCriteriaCustom,
-  ManyRelComboFriendCriteriaCustomQueried,
-  ManyRelComboIrlCriteria,
-  ManyRelComboIrlCriteriaCustom,
-  ManyRelComboIrlCriteriaCustomQueried,
+  ManyRelComboFriendCriteriaPreviewed,
+  ManyRelComboFriendCriteriaExposed,
+  ManyRelComboFriendCriteriaQueried,
+  ManyRelComboIrlCriteriaPreviewed,
+  ManyRelComboIrlCriteriaExposed,
+  ManyRelComboIrlCriteriaQueried,
 } from "../server/answers";
 import {
   FoundContact,
@@ -30,7 +30,7 @@ import {
   UpgradeToIrlForm,
 } from "../client/forms";
 
-export function RelationCombinationNone({
+export function RelationCombinationNoneExposed({
   user,
   contact,
   session,
@@ -125,7 +125,7 @@ export function RelationCombinationNone({
   );
 }
 
-export function RelationCombinationNonePreview() {
+export function RelationCombinationNonePreviewed() {
   return (
     <>
       <ActionLink>Send friend request</ActionLink>
@@ -134,7 +134,7 @@ export function RelationCombinationNonePreview() {
   );
 }
 
-export function RelationCombinationFriendPreview({ user }: { user: User }) {
+export function RelationCombinationFriendPreviewed({ user }: { user: User }) {
   return (
     <>
       <Suspense
@@ -144,7 +144,7 @@ export function RelationCombinationFriendPreview({ user }: { user: User }) {
           </>
         }
       >
-        <ManyRelComboFriendCriteria user={user} />
+        <ManyRelComboFriendCriteriaPreviewed user={user} />
       </Suspense>
       <ActionLink>Upgrade friendship to irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>
@@ -152,7 +152,7 @@ export function RelationCombinationFriendPreview({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationIrlPreview({ user }: { user: User }) {
+export function RelationCombinationIrlPreviewed({ user }: { user: User }) {
   return (
     <>
       <Suspense
@@ -162,7 +162,7 @@ export function RelationCombinationIrlPreview({ user }: { user: User }) {
           </>
         }
       >
-        <ManyRelComboIrlCriteria user={user} />
+        <ManyRelComboIrlCriteriaPreviewed user={user} />
       </Suspense>
       <ActionLink>Downgrade friendship from irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>
@@ -170,7 +170,7 @@ export function RelationCombinationIrlPreview({ user }: { user: User }) {
   );
 }
 
-export function RelationCombinationIAmBlocking({
+export function RelationCombinationIAmBlockingExposed({
   user,
   contact,
   session,
@@ -191,7 +191,7 @@ export function RelationCombinationIAmBlocking({
   );
 }
 
-export function RelationCombinationIAmBlockingPreview({
+export function RelationCombinationIAmBlockingPreviewed({
   user,
 }: {
   user: User;
@@ -208,7 +208,7 @@ export function RelationCombinationIAmBlockingPreview({
   );
 }
 
-export function RelationCombinationHasMeBlocked({
+export function RelationCombinationHasMeBlockedExposed({
   user,
   contact,
   session,
@@ -229,7 +229,7 @@ export function RelationCombinationHasMeBlocked({
   );
 }
 
-export function RelationCombinationHasMeBlockedPreview({
+export function RelationCombinationHasMeBlockedPreviewed({
   user,
 }: {
   user: User;
@@ -246,7 +246,7 @@ export function RelationCombinationHasMeBlockedPreview({
   );
 }
 
-export function RelationCombinationBlockingBlocked({
+export function RelationCombinationBlockingBlockedExposed({
   user,
   contact,
   session,
@@ -273,7 +273,7 @@ export function RelationCombinationBlockingBlocked({
   );
 }
 
-export function RelationCombinationBlockingBlockedPreview({
+export function RelationCombinationBlockingBlockedPreviewed({
   user,
 }: {
   user: User;
@@ -292,7 +292,7 @@ export function RelationCombinationBlockingBlockedPreview({
   );
 }
 
-export function RelationCombinationFriendCustom({
+export function RelationCombinationFriendExposed({
   user,
   contact,
   session,
@@ -310,7 +310,7 @@ export function RelationCombinationFriendCustom({
           </>
         }
       >
-        <ManyRelComboFriendCriteriaCustom user={user} contact={contact} />
+        <ManyRelComboFriendCriteriaExposed user={user} contact={contact} />
       </Suspense>
       {contact.c2_contact_process_relationship === "SENTIRL" && (
         <>
@@ -398,7 +398,7 @@ export function RelationCombinationFriendCustom({
   );
 }
 
-export function RelationCombinationFriendCustomQueried({
+export function RelationCombinationFriendQueried({
   user,
   contact,
 }: {
@@ -414,10 +414,7 @@ export function RelationCombinationFriendCustomQueried({
           </>
         }
       >
-        <ManyRelComboFriendCriteriaCustomQueried
-          user={user}
-          contact={contact}
-        />
+        <ManyRelComboFriendCriteriaQueried user={user} contact={contact} />
       </Suspense>
       <ActionLink>Upgrade friendship to irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>
@@ -425,7 +422,7 @@ export function RelationCombinationFriendCustomQueried({
   );
 }
 
-export function RelationCombinationIrlCustom({
+export function RelationCombinationIrlExposed({
   user,
   contact,
   session,
@@ -443,7 +440,7 @@ export function RelationCombinationIrlCustom({
           </>
         }
       >
-        <ManyRelComboIrlCriteriaCustom user={user} contact={contact} />
+        <ManyRelComboIrlCriteriaExposed user={user} contact={contact} />
       </Suspense>
       <DowngradeFriendshipToIrlForm
         session={session}
@@ -455,7 +452,7 @@ export function RelationCombinationIrlCustom({
   );
 }
 
-export function RelationCombinationIrlCustomQueried({
+export function RelationCombinationIrlQueried({
   user,
   contact,
 }: {
@@ -471,7 +468,7 @@ export function RelationCombinationIrlCustomQueried({
           </>
         }
       >
-        <ManyRelComboIrlCriteriaCustomQueried user={user} contact={contact} />
+        <ManyRelComboIrlCriteriaQueried user={user} contact={contact} />
       </Suspense>
       <ActionLink>Downgrade friendship from irl</ActionLink>
       <ActionLink>Unfriend</ActionLink>

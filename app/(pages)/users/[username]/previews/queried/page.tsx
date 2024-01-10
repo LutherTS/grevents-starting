@@ -9,12 +9,12 @@ import {
   relationCombinations,
 } from "@/app/libraries/utilities/relcombos";
 import {
-  RelationCombinationNonePreview,
-  RelationCombinationFriendCustomQueried,
-  RelationCombinationIrlCustomQueried,
-  RelationCombinationIAmBlockingPreview,
-  RelationCombinationHasMeBlockedPreview,
-  RelationCombinationBlockingBlockedPreview,
+  RelationCombinationNonePreviewed,
+  RelationCombinationFriendQueried,
+  RelationCombinationIrlQueried,
+  RelationCombinationIAmBlockingPreviewed,
+  RelationCombinationHasMeBlockedPreviewed,
+  RelationCombinationBlockingBlockedPreviewed,
 } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
@@ -126,11 +126,11 @@ export default async function QueriedPreviewPage({
           }
         >
           {gatheredContact && relCombo === "none" && (
-            <RelationCombinationNonePreview />
+            <RelationCombinationNonePreviewed />
           )}
           {gatheredContact && relCombo === "friend" && (
             <>
-              <RelationCombinationFriendCustomQueried
+              <RelationCombinationFriendQueried
                 user={user}
                 contact={gatheredContact}
               />
@@ -138,20 +138,20 @@ export default async function QueriedPreviewPage({
           )}
           {gatheredContact && relCombo === "irl" && (
             <>
-              <RelationCombinationIrlCustomQueried
+              <RelationCombinationIrlQueried
                 user={user}
                 contact={gatheredContact}
               />
             </>
           )}
           {gatheredContact && relCombo === "i-am-blocking" && (
-            <RelationCombinationIAmBlockingPreview user={user} />
+            <RelationCombinationIAmBlockingPreviewed user={user} />
           )}
           {gatheredContact && relCombo === "has-me-blocked" && (
-            <RelationCombinationHasMeBlockedPreview user={user} />
+            <RelationCombinationHasMeBlockedPreviewed user={user} />
           )}
           {gatheredContact && relCombo === "blocking-blocked" && (
-            <RelationCombinationBlockingBlockedPreview user={user} />
+            <RelationCombinationBlockingBlockedPreviewed user={user} />
           )}
           {gatheredContact && relationCombinations.includes(relCombo) && (
             <>

@@ -273,7 +273,8 @@ export async function fetchAllUserNotIrlFriends(user: User) {
         )
         
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
@@ -317,7 +318,8 @@ export async function fetchAllUserIrlFriends(user: User) {
         )
         
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
@@ -360,7 +362,8 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
         )
         
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
@@ -404,7 +407,8 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
         )
         
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
