@@ -226,7 +226,7 @@ export async function OneCriteria({
 }) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} personalView={true} />
+      <OneCriteriaQuestion answer={answer} personalView={personalView} />
       <OneCriteriaAnswer answer={answer} />
     </>
   );
@@ -350,7 +350,7 @@ export async function ManyCriteria({
             {answers.map((answer) => {
               return (
                 <li key={answer.answer_id}>
-                  <OneCriteria answer={answer} personalView={true} />
+                  <OneCriteria answer={answer} personalView={personalView} />
                 </li>
               );
             })}
@@ -780,12 +780,17 @@ export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyUserPinnedNotIrlCriteria answers={pinnedNotIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
+      <ManyCriteria
+        answers={pinnedNotIrlAnswers}
+        answersLabel={answersLabels.pinnedNotIrl}
       />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
+      <ManyCriteria
+        answers={userUnpinnedNativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedNativeNotIrl}
+      />
+      <ManyCriteria
         answers={userUnpinnedPseudonativeNotIrlAnswers}
+        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
     </>
   );
@@ -808,135 +813,52 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
 
   return (
     <>
-      <ManyUserPinnedNotAndIrlCriteria answers={pinnedNotAndIrlAnswers} />
-      <ManyUserUnpinnedNativeNotIrlCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
-      />
-      <ManyUserUnpinnedPseudonativeNotIrlCriteria
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-      />
-      <ManyUserUnpinnedNativeIrlCriteria
-        answers={userUnpinnedNativeIrlAnswers}
-      />
-      <ManyUserUnpinnedPseudonativeIrlCriteria
-        answers={userUnpinnedPseudonativeIrlAnswers}
-      />
-    </>
-  );
-}
-
-export async function ManyUserPinnedNotIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
       <ManyCriteria
-        answers={answers}
-        answersLabel={answersLabels.pinnedNotIrl}
-      />
-    </>
-  );
-}
-
-export async function ManyUserPinnedNotAndIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
-      <ManyCriteria
-        answers={answers}
+        answers={pinnedNotAndIrlAnswers}
         answersLabel={answersLabels.pinnedNotAndIrl}
       />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedNativeNotIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
       <ManyCriteria
-        answers={answers}
+        answers={userUnpinnedNativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedNativeNotIrl}
       />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedPseudonativeNotIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
       <ManyCriteria
-        answers={answers}
+        answers={userUnpinnedPseudonativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
       />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedNativeIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
       <ManyCriteria
-        answers={answers}
+        answers={userUnpinnedNativeIrlAnswers}
         answersLabel={answersLabels.unpinnedNativeIrl}
       />
-    </>
-  );
-}
-
-export async function ManyUserUnpinnedPseudonativeIrlCriteria({
-  answers,
-}: {
-  answers: Answer[];
-}) {
-  return (
-    <>
       <ManyCriteria
-        answers={answers}
+        answers={userUnpinnedPseudonativeIrlAnswers}
         answersLabel={answersLabels.unpinnedPseudonativeIrl}
       />
     </>
   );
 }
 
-export async function ManyUserSharedToContactCustomAnswers({
-  user,
-  contact,
-}: {
-  user: User;
-  contact: GatheredContact | FoundContact;
-}) {
-  const userSharedToContactCustomAnswers =
-    await fetchUserSharedToContactCustomAnswers(
-      user.user_id,
-      contact.c1_contact_id,
-    );
+// export async function ManyUserSharedToContactCustomAnswers({
+//   user,
+//   contact,
+// }: {
+//   user: User;
+//   contact: GatheredContact | FoundContact;
+// }) {
+//   const userSharedToContactCustomAnswers =
+//     await fetchUserSharedToContactCustomAnswers(
+//       user.user_id,
+//       contact.c1_contact_id,
+//     );
 
-  return (
-    <>
-      <ManyCriteria
-        answers={userSharedToContactCustomAnswers}
-        answersLabel={answersLabels.sharedToContactCustom}
-      />
-    </>
-  );
-}
+//   return (
+//     <>
+//       <ManyCriteria
+//         answers={userSharedToContactCustomAnswers}
+//         answersLabel={answersLabels.sharedToContactCustom}
+//       />
+//     </>
+//   );
+// }
 
 export async function ManyRelComboFriendCriteriaCustom({
   user,
