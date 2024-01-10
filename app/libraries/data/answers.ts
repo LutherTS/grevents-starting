@@ -463,7 +463,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
 
 // !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -572,7 +572,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
 export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   userId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -749,7 +749,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
 
 // !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -854,7 +854,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
 
 // !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -1055,7 +1055,7 @@ export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   // console.log(contactId);
   try {
@@ -1146,7 +1146,7 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -1315,7 +1315,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -1498,7 +1498,7 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {
@@ -1640,7 +1640,7 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
   userId: string,
   contactId: string,
 ) {
-  noStore();
+  // noStore();
   // console.log(userId);
   try {
     const run = async () => {

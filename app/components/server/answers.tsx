@@ -217,28 +217,46 @@ export async function OneCriteriaAnswerPinnablePseudoable({
   );
 }
 
-export async function OneCriteria({ answer }: { answer: Answer }) {
+export async function OneCriteria({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaQuestion answer={answer} personalView={true} />
       <OneCriteriaAnswer answer={answer} />
     </>
   );
 }
 
-export async function OneCriteriaModify({ answer }: { answer: Answer }) {
+export async function OneCriteriaModify({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaQuestion answer={answer} personalView={personalView} />
       <OneCriteriaAnswerModify answer={answer} />
     </>
   );
 }
 
-export async function OneCriteriaPinnable({ answer }: { answer: Answer }) {
+export async function OneCriteriaPinnable({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaQuestion answer={answer} personalView={true} />
       <OneCriteriaAnswerPinnable answer={answer} />
     </>
   );
@@ -316,10 +334,12 @@ export async function ManyCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
+  personalView,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  personalView?: boolean;
 }) {
   return (
     <>
@@ -330,7 +350,7 @@ export async function ManyCriteria({
             {answers.map((answer) => {
               return (
                 <li key={answer.answer_id}>
-                  <OneCriteria answer={answer} />
+                  <OneCriteria answer={answer} personalView={true} />
                 </li>
               );
             })}
@@ -386,10 +406,12 @@ export async function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
+  personalView,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  personalView?: boolean;
 }) {
   return (
     <>
@@ -400,7 +422,7 @@ export async function ManyCriteriaPinnable({
             {answers.map((answer) => {
               return (
                 <li key={answer.answer_id}>
-                  <OneCriteriaPinnable answer={answer} />
+                  <OneCriteriaPinnable answer={answer} personalView={true} />
                 </li>
               );
             })}
@@ -579,6 +601,7 @@ export async function ManyUserPinnedCriteria({ user }: { user: User }) {
         answers={pinnedAnswers}
         answersLabel={answersLabels.pinned}
         noAnswersLabel={noAnswersLabels.pinned}
+        personalView={true}
       />
     </>
   );
