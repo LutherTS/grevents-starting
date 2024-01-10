@@ -176,6 +176,8 @@ export async function findUserQuestionFriendByAnswerAndContact(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to find user question friend.");
+    throw new Error(
+      "Failed to find user question friend by answer and contact.",
+    );
   }
 }

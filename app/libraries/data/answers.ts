@@ -562,7 +562,9 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native not irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native not irl answers queried.",
+    );
   }
 }
 
@@ -675,7 +677,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user unpinned pseudonative not irl answers.",
+      "Failed to fetch user unpinned pseudonative not irl answers queried.",
     );
   }
 }
@@ -844,7 +846,9 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned native irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned native irl answers queried.",
+    );
   }
 }
 
@@ -952,7 +956,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user unpinned pseudonative irl answers.");
+    throw new Error(
+      "Failed to fetch user unpinned pseudonative irl answers queried.",
+    );
   }
 }
 
@@ -1130,7 +1136,9 @@ export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user shared to contact custom answers.");
+    throw new Error(
+      "Failed to fetch user shared to contact custom answers not pinned by friend.",
+    );
   }
 }
 
@@ -1298,7 +1306,7 @@ export async function fetchUserPinnedNotIrlAnswersCustomQueried(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not irl answers custom.");
+    throw new Error("Failed to fetch user pinned not irl answers queried.");
   }
 }
 
@@ -1480,7 +1488,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not and irl answers custom.");
+    throw new Error("Failed to fetch user pinned not and irl answers queried.");
   }
 }
 
@@ -1565,7 +1573,7 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not irl answers custom 2.");
+    throw new Error("Failed to fetch user pinned by friend not irl answers.");
   }
 }
 
@@ -1622,7 +1630,7 @@ export async function countUserPinnedByFriendNotIrlAnswersCustom(
     return data;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch user pinned not irl answers custom 2.");
+    throw new Error("Failed to count user pinned by friend not irl answers.");
   }
 }
 
@@ -1715,7 +1723,7 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user pinned not and irl answers custom 2.",
+      "Failed to fetch user pinned by friend not and irl answers.",
     );
   }
 }
@@ -1781,7 +1789,7 @@ export async function countUserPinnedByFriendNotAndIrlAnswersCustom(
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error(
-      "Failed to fetch user pinned not and irl answers custom 2.",
+      "Failed to count user pinned by friend not and irl answers.",
     );
   }
 }
