@@ -151,14 +151,18 @@ export async function OneCriteriaAnswerPinnable({
 export async function OneCriteriaAnswerPinnableByFriend({
   answer,
   contact,
+  pinnedbyFriendAnswersLength,
 }: {
   answer: Answer;
   contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
 }) {
   return (
     <>
       <div className="mt-2 flex justify-center">
-        <ButtonPinUserQuestionFriendForm answer={answer} contact={contact} />
+        {pinnedbyFriendAnswersLength < 5 && (
+          <ButtonPinUserQuestionFriendForm answer={answer} contact={contact} />
+        )}
         <p>{answer.answer_value}</p>
       </div>
     </>
@@ -231,14 +235,20 @@ export async function OneCriteriaPinnable({ answer }: { answer: Answer }) {
 export async function OneCriteriaPinnableByFriend({
   answer,
   contact,
+  pinnedbyFriendAnswersLength,
 }: {
   answer: Answer;
   contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
 }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} />
-      <OneCriteriaAnswerPinnableByFriend answer={answer} contact={contact} />
+      <OneCriteriaAnswerPinnableByFriend
+        answer={answer}
+        contact={contact}
+        pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
+      />
     </>
   );
 }
@@ -400,11 +410,13 @@ export async function ManyCriteriaPinnableByFriend({
   answersLabel,
   noAnswersLabel,
   contact,
+  pinnedbyFriendAnswersLength,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
   contact: FoundContact;
+  pinnedbyFriendAnswersLength: number;
 }) {
   return (
     <>
@@ -418,6 +430,7 @@ export async function ManyCriteriaPinnableByFriend({
                   <OneCriteriaPinnableByFriend
                     answer={answer}
                     contact={contact}
+                    pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
                   />
                 </li>
               );
@@ -917,6 +930,8 @@ export async function ManyRelComboFriendCriteriaCustom({
     ), // optimisation
   ]);
 
+  const pinnedByFriendNotIrlAnswersCount = pinnedByFriendNotIrlAnswers.length;
+
   return (
     <>
       <ManyCriteriaCancelPinnableByFriend
@@ -929,21 +944,25 @@ export async function ManyRelComboFriendCriteriaCustom({
         answers={pinnedNotIrlAnswers}
         answersLabel={answersLabels.pinnedNotIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedNativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedNativeNotIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedPseudonativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userSharedToContactCustomAnswers}
         answersLabel={answersLabels.sharedToContactCustom}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
       />
     </>
   );
@@ -980,6 +999,9 @@ export async function ManyRelComboIrlCriteriaCustom({
     ), // optimisation
   ]);
 
+  const pinnedByFriendNotAndIrlAnswersCount =
+    pinnedByFriendNotAndIrlAnswers.length;
+
   return (
     <>
       <ManyCriteriaCancelPinnableByFriend
@@ -992,31 +1014,37 @@ export async function ManyRelComboIrlCriteriaCustom({
         answers={pinnedNotAndIrlAnswers}
         answersLabel={answersLabels.pinnedNotAndIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedNativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedNativeNotIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedPseudonativeNotIrlAnswers}
         answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedNativeIrlAnswers}
         answersLabel={answersLabels.unpinnedNativeIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userUnpinnedPseudonativeIrlAnswers}
         answersLabel={answersLabels.unpinnedPseudonativeIrl}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
       <ManyCriteriaPinnableByFriend
         answers={userSharedToContactCustomAnswers}
         answersLabel={answersLabels.sharedToContactCustom}
         contact={contact}
+        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
       />
     </>
   );

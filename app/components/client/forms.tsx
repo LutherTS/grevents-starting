@@ -60,6 +60,9 @@ import {
   cancelShareUserQuestionFriend,
   pinUserQuestionFriend,
   cancelPinUserQuestionFriend,
+  // pinUserQuestionFriendForBind,
+  // Pelepelepele,
+  // AnswerAndContact,
 } from "@/app/libraries/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -83,6 +86,7 @@ import {
   upgradeFriendshipToIrl,
 } from "@/app/libraries/actions/contacts";
 import { ManyRelationCombinations } from "../agnostic/lists";
+import { bind } from "lodash";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -593,13 +597,35 @@ export function ButtonPinUserQuestionFriendForm({
   answer: Answer;
   contact: FoundContact;
 }) {
+  /*
+  const answerAndContact: AnswerAndContact = {
+    answer: answer,
+    contact: contact
+  }
+  const initialState: Pelepelepele = {
+    message: null,
+  };
+  const pinUserQuestionFriendWithBind = pinUserQuestionFriendForBind.bind(null, answerAndContact);
+  const [state, formAction] = useFormState(
+    pinUserQuestionFriendWithBind,
+    initialState,
+  );
+  */
+
   return (
     <>
       <form
         className="me-2 flex items-center"
         action={() => pinUserQuestionFriend(answer, contact)}
+        // action={formAction}
       >
         <ButtonPinUserQuestionFriend />
+        {/* {state && state.message ? (
+          <div id="native-not-irl-answer-form-error" aria-live="polite">
+            <p className="mt-2 text-red-500">{state.message}</p>
+          </div>
+        ) : null} */}
+        {/* Note : À l'avenir, si je veux et peux vraiment faire ressortir le message d'erreur sous la Answer, il faudra que la Answer toute entière soit incluse dans le formulaire. En soi, que la Answer soit encapsulée par le formulaire. */}
       </form>
     </>
   );

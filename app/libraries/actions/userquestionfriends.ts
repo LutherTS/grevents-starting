@@ -151,3 +151,58 @@ export async function cancelPinUserQuestionFriend(
     `/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`,
   );
 }
+
+/*
+export type Pelepelepele = {
+  message?: string | null;
+};
+
+export type AnswerAndContact = { answer: Answer; contact: FoundContact }
+
+export async function pinUserQuestionFriendForBind(
+  answerAndContact: AnswerAndContact,
+  prevState: Pelepelepele | undefined,
+  formData: FormData
+) {
+  console.log(prevState);
+  console.log(formData)
+
+  const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
+    answerAndContact.answer,
+    answerAndContact.contact,
+  );
+
+  if (userQuestionFriend === undefined) {
+    await changeDeleteAtUserQuestionFriendByAnswerAndContact(
+      answerAndContact.answer,
+      answerAndContact.contact,
+    );
+
+    const generatedUserQuestionFriendID = uuidv4();
+
+    await changeCreatePinUserQuestionFriend(
+      answerAndContact.answer,
+      answerAndContact.contact,
+      generatedUserQuestionFriendID,
+    );
+
+    await changeSetContactStatusOtherProfile(
+      answerAndContact.contact.c1_contact_mirror_id,
+      "USERQUESTIONFRIENDPINNED",
+    );
+  }
+
+  if (userQuestionFriend) {
+    await changePinUserQuestionFriend(userQuestionFriend);
+
+    await changeSetContactStatusOtherProfile(
+      answerAndContact.contact.c1_contact_mirror_id,
+      "USERQUESTIONFRIENDPINNED",
+    );
+  }
+
+  revalidatePath(
+    `/users/${answerAndContact.answer.user_username}/personal-info/user-criteria/${answerAndContact.answer.userquestion_id}`,
+  );
+}
+*/
