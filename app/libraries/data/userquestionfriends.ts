@@ -75,7 +75,8 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
         
         AND uqf.userquestionfriend_state = 'LIVE'
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 

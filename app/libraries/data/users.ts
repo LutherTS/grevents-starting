@@ -28,7 +28,8 @@ export async function fetchUserByUsername(username: string) {
 
         WHERE user_username = ${username}
 
-        AND user_state = 'LIVE'
+        AND (user_state = 'LIVE'
+        OR user_state = 'DEACTIVATED')
         
         LIMIT 1;
       `;

@@ -54,7 +54,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         GROUP BY -- NEW
             Questions.question_name, 
@@ -114,7 +115,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             Answers.answer_created_at ASC
@@ -162,7 +164,8 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             Answers.answer_created_at ASC
@@ -211,7 +214,8 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             lower(Questions.question_name) ASC
@@ -260,7 +264,8 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         ORDER BY 
             lower(Questions.question_name) ASC
@@ -310,7 +315,8 @@ export async function fetchUserCustomAnswers(userId: string) {
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
         AND Questions.question_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
 
         GROUP BY -- NEW
             Questions.question_name, 
@@ -375,7 +381,8 @@ export async function findAnswerByUserQuestionAndUser(
         
         AND Answers.answer_state = 'LIVE'
         AND UserQuestions.userquestion_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
         AND Questions.question_state = 'LIVE'
 
         GROUP BY -- NEW
