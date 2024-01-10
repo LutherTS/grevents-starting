@@ -982,8 +982,8 @@ export async function fetchUserSharedToContactCustomAnswers(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id --,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -992,7 +992,7 @@ export async function fetchUserSharedToContactCustomAnswers(
         JOIN Users u ON a.user_id = u.user_id
         JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
         JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
@@ -1022,19 +1022,19 @@ export async function fetchUserSharedToContactCustomAnswers(
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
-            userquestionfriends_count ASC, -- NEW
+            -- userquestionfriends_count ASC, -- NEW
             lower(q.question_name) ASC
 
         LIMIT 10;
@@ -1070,8 +1070,8 @@ export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1111,19 +1111,19 @@ export async function fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
-            userquestionfriends_count ASC, -- NEW
+            -- userquestionfriends_count ASC, -- NEW
             lower(q.question_name) ASC
 
         LIMIT 10;
@@ -1160,8 +1160,8 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1199,16 +1199,16 @@ export async function fetchUserPinnedNotIrlAnswersCustom(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -1246,8 +1246,8 @@ export async function fetchUserPinnedNotIrlAnswersCustomQueried(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1256,7 +1256,7 @@ export async function fetchUserPinnedNotIrlAnswersCustomQueried(
         LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
         LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
         LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
@@ -1281,16 +1281,16 @@ export async function fetchUserPinnedNotIrlAnswersCustomQueried(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -1328,8 +1328,8 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1374,16 +1374,16 @@ export async function fetchUserPinnedNotAndIrlAnswersCustom(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -1421,8 +1421,8 @@ export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1431,7 +1431,7 @@ export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
         LEFT JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
         LEFT JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
         LEFT JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
@@ -1463,16 +1463,16 @@ export async function fetchUserPinnedNotAndIrlAnswersCustomQueried(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY -- NEW
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
+        -- GROUP BY -- NEW
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id
 
         ORDER BY 
             uq.userquestion_pinned_at DESC, 
@@ -1510,9 +1510,9 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
-            uqf2.userquestionfriend_id -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
+            -- uqf2.userquestionfriend_id -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1547,17 +1547,17 @@ export async function fetchUserPinnedByFriendNotIrlAnswersCustom(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id,
-            uqf2.userquestionfriend_id -- NEW
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id,
+            -- uqf2.userquestionfriend_id -- NEW
 
         ORDER BY 
             uqf2.userquestionfriend_pinned_at DESC, -- NEW 
@@ -1652,9 +1652,9 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id,
-            COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
-            uqf2.userquestionfriend_id -- NEW
+            u.user_id -- ,
+            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count,
+            -- uqf2.userquestionfriend_id -- NEW
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
@@ -1696,17 +1696,17 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersCustom(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        GROUP BY
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id,
-            uqf2.userquestionfriend_id -- NEW
+        -- GROUP BY
+            -- q.question_name, 
+            -- a.answer_value, 
+            -- a.answer_id,
+            -- uq.userquestion_is_pinned,
+            -- q.question_kind,
+            -- uq.userquestion_kind,
+            -- uq.userquestion_id,
+            -- u.user_username,
+            -- u.user_id,
+            -- uqf2.userquestionfriend_id -- NEW
 
         ORDER BY 
             uqf2.userquestionfriend_pinned_at DESC, -- NEW

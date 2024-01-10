@@ -49,7 +49,13 @@ import {
   noAnswersLabels,
 } from "@/app/libraries/utilities/noanswerslabels";
 
-export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
+export async function OneCriteriaQuestion({
+  answer,
+  personalView,
+}: {
+  answer: Answer;
+  personalView?: boolean;
+}) {
   return (
     <>
       <p className="mt-2">
@@ -79,7 +85,7 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
               pseudonative irl
             </span>
           )}
-        {answer.question_kind === "CUSTOM" && (
+        {answer.question_kind === "CUSTOM" && personalView && (
           <span className="text-lime-500">
             <span className="font-semibold">{answer.question_name}</span> /
             custom{" "}
@@ -89,6 +95,12 @@ export async function OneCriteriaQuestion({ answer }: { answer: Answer }) {
             ) : (
               <>/ not shared</>
             )}
+          </span>
+        )}
+        {answer.question_kind === "CUSTOM" && !personalView && (
+          <span className="text-lime-500">
+            <span className="font-semibold">{answer.question_name}</span> /
+            custom / shared to you
           </span>
         )}
       </p>
