@@ -28,8 +28,6 @@ CREATE TYPE user_status_personal_info AS ENUM (
     'NONE',
     'CRITERIAPINNED',
     'CRITERIAUNPINNED',
-    -- 'ANSWERUPDATED', -- to be deleted
-    -- 'ANSWERDELETED', -- to be deleted
     'STANDARDIZEDANSWERUPDATED', -- added
     'STANDARDIZEDANSWERDELETED', -- added
     'CUSTOMIZEDANSWERUPDATED', -- added
@@ -43,9 +41,6 @@ CREATE TYPE user_status_personal_info AS ENUM (
     'CUSTOMCRITERIAADDED',
     'CUSTOMCRITERIADELETED',
     'USERQUESTIONFRIENDADDED',
-    'USERQUESTIONFRIENDUPDATED', -- Why now ?
-    -- 'FRIENDCRITERIAPINNEDFORME' -- next up
-    -- 'FRIENDCRITERIAUNPINNEDFORME' -- next up
     'USERQUESTIONFRIENDDELETED',
     'REDIRECTEDTOPERSONALINFO'
 ); -- Done.
@@ -58,7 +53,7 @@ CREATE TABLE Users (
     user_status_personal_info user_status_personal_info DEFAULT 'NONE' NOT NULL,
     user_username varchar(50) UNIQUE NOT NULL,
     user_email varchar(50) UNIQUE NOT NULL, -- to be changed from 100 to 50 to match username length for validations
-    user_password varchar(50) NOT NULL, -- might have to be more characters since it's the hashed password that will be stored
+    user_password varchar(100) NOT NULL, -- might have to be more characters since it's the hashed password that will be stored, upped to 100
     user_app_wide_name varchar(50) NOT NULL,
     user_friend_code char(12) UNIQUE NOT NULL,
     user_has_temporary_password boolean DEFAULT FALSE NOT NULL,
@@ -106,14 +101,6 @@ CREATE TYPE contact_status_relationship AS ENUM (
     'NOWUNBLOCKED' -- added
 ); -- Done.
 
--- CREATE TYPE contact_status_blocking AS ENUM ( -- to removed
-    -- 'NONE',
-    -- 'NOWBLOCKING', -- to remove
-    -- 'NOWUNBLOCKING', -- to remove
-    -- 'NOWBLOCKED', -- to remove
-    -- 'NOWUNBLOCKED' -- to remove
--- ); -- Done.
-
 CREATE TYPE contact_status_profile AS ENUM (
     'NONE',
     'FIRSTACCESSEDTHROUGHFIND' --,
@@ -138,7 +125,6 @@ CREATE TABLE Contacts (
     contact_process_relationship contact_process_relationship DEFAULT 'NONE' NOT NULL,
     contact_status_relationship contact_status_relationship DEFAULT 'NONE' NOT NULL,
     contact_blocking boolean DEFAULT FALSE NOT NULL,
-    -- contact_status_blocking contact_status_blocking DEFAULT 'NONE' NOT NULL, -- removed
     contact_status_profile contact_status_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
     contact_status_other_profile contact_status_other_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
     contact_created_at timestamp NOT NULL,
@@ -229,7 +215,7 @@ CREATE TABLE UserQuestionFriends (
     userquestionfriend_created_at timestamp NOT NULL,
     userquestionfriend_updated_at timestamp NOT NULL,
     userquestionfriend_shared_at timestamp NULL,
-    userquestionfriend_pinned_at timestamp NULL -- added
+    userquestionfriend_pinned_at timestamp NULL, -- added
 
     UNIQUE (
         userquestion_id, 
