@@ -140,42 +140,61 @@ export default async function QueriedPreviewPage({
             </>
           ) : (
             <>
-              {gatheredContact && relCombo === "none" && (
-                <RelationCombinationNonePreviewed />
-              )}
-              {gatheredContact && relCombo === "friend" && (
-                <>
-                  <RelationCombinationFriendQueried
-                    user={user}
-                    contact={gatheredContact}
-                  />
-                </>
-              )}
-              {gatheredContact && relCombo === "irl" && (
-                <>
-                  <RelationCombinationIrlQueried
-                    user={user}
-                    contact={gatheredContact}
-                  />
-                </>
-              )}
-              {gatheredContact && relCombo === "i-am-blocking" && (
-                <RelationCombinationIAmBlockingPreviewed user={user} />
-              )}
-              {gatheredContact && relCombo === "has-me-blocked" && (
-                <RelationCombinationHasMeBlockedPreviewed user={user} />
-              )}
-              {gatheredContact && relCombo === "blocking-blocked" && (
-                <RelationCombinationBlockingBlockedPreviewed user={user} />
-              )}
-              {gatheredContact && relationCombinations.includes(relCombo) && (
-                <>
-                  <PageLink
-                    href={`/users/${gatheredContact.user_username}/profile`}
-                    name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
-                  />
-                </>
-              )}
+              {gatheredContact &&
+                gatheredContact.user_state === "DEACTIVATED" && (
+                  <p className="mt-2">
+                    You cannot see other users&apos; profiles while yours is
+                    deactivated.
+                  </p>
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "none" && <RelationCombinationNonePreviewed />}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "friend" && (
+                  <>
+                    <RelationCombinationFriendQueried
+                      user={user}
+                      contact={gatheredContact}
+                    />
+                  </>
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "irl" && (
+                  <>
+                    <RelationCombinationIrlQueried
+                      user={user}
+                      contact={gatheredContact}
+                    />
+                  </>
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "i-am-blocking" && (
+                  <RelationCombinationIAmBlockingPreviewed user={user} />
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "has-me-blocked" && (
+                  <RelationCombinationHasMeBlockedPreviewed user={user} />
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relCombo === "blocking-blocked" && (
+                  <RelationCombinationBlockingBlockedPreviewed user={user} />
+                )}
+              {gatheredContact &&
+                gatheredContact.user_state === "LIVE" &&
+                relationCombinations.includes(relCombo) && (
+                  <>
+                    <PageLink
+                      href={`/users/${gatheredContact.user_username}/profile`}
+                      name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
+                    />
+                  </>
+                )}
             </>
           )}
         </Suspense>
