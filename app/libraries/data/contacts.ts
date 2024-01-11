@@ -393,6 +393,7 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
   }
 }
 
+// Since I'm not verifying if I'm deactivated or not, it's not an issue.
 export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   noStore();
   // console.log(user);
@@ -534,8 +535,10 @@ export async function findSentFriendToContactsByUser(user: User) {
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
-          AND u1.user_state = 'LIVE' -- NEW
-          AND u2.user_state = 'LIVE' -- NEW
+          AND (u1.user_state = 'LIVE'
+          OR u1.user_state = 'DEACTIVATED') -- NEW
+          AND (u2.user_state = 'LIVE'
+          OR u2.user_state = 'DEACTIVATED') -- NEW
 
           ORDER BY 
             -- c1.contact_sent_friend_at DESC,
@@ -591,8 +594,10 @@ export async function findSentIrlToContactsByUser(user: User) {
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
-          AND u1.user_state = 'LIVE' -- NEW
-          AND u2.user_state = 'LIVE' -- NEW
+          AND (u1.user_state = 'LIVE'
+          OR u1.user_state = 'DEACTIVATED') -- NEW
+          AND (u2.user_state = 'LIVE'
+          OR u2.user_state = 'DEACTIVATED') -- NEW
 
           ORDER BY 
             -- c1.contact_sent_irl_at DESC,
@@ -648,8 +653,10 @@ export async function findSentFriendFromContactsByUser(user: User) {
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
-          AND u1.user_state = 'LIVE' -- NEW
-          AND u2.user_state = 'LIVE' -- NEW
+          AND (u1.user_state = 'LIVE'
+          OR u1.user_state = 'DEACTIVATED') -- NEW
+          AND (u2.user_state = 'LIVE'
+          OR u2.user_state = 'DEACTIVATED') -- NEW
 
           ORDER BY 
             -- c1.contact_sent_friend_at DESC,
@@ -705,8 +712,10 @@ export async function findSentIrlFromContactsByUser(user: User) {
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
-          AND u1.user_state = 'LIVE' -- NEW
-          AND u2.user_state = 'LIVE' -- NEW
+          AND (u1.user_state = 'LIVE'
+          OR u1.user_state = 'DEACTIVATED') -- NEW
+          AND (u2.user_state = 'LIVE'
+          OR u2.user_state = 'DEACTIVATED') -- NEW
 
           ORDER BY 
             -- c1.contact_sent_irl_at DESC,
