@@ -7,7 +7,9 @@ import {
 } from "@/app/components/agnostic/links";
 import {
   UserAppWideNameUpdated,
+  UserDeactivated,
   UserFriendCodeUpdated,
+  UserReactivated,
   UserWelcomeBackToGrevents,
   UserWelcomeToGrevents,
 } from "@/app/components/client/toasts";
@@ -100,6 +102,12 @@ export default async function DashboardPage({
         )}
         {user.user_status_dashboard === "FRIENDCODEUPDATED" && (
           <UserFriendCodeUpdated user={user} />
+        )}
+        {user.user_status_dashboard === "NOWDEACTIVATED" && (
+          <UserDeactivated user={user} />
+        )}
+        {user.user_status_dashboard === "NOWREACTIVATED" && (
+          <UserReactivated user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
         <PageLinkWithChildren

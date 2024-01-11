@@ -3,6 +3,8 @@
 import {
   createOrFindContactsByFriendCode,
   CreateOrFindContactsByFriendCodeFormState,
+  deactivateUser,
+  reactivateUser,
   signInUser,
   SignInUserFormState,
   signUpUser,
@@ -171,6 +173,26 @@ export function UserFriendCodeUpdateForm({ user }: { user: User }) {
     <>
       <form className="mt-2" action={() => updateUserFriendCode(user)}>
         <LinkButton>Generate a new friend code</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UserDeactivateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => deactivateUser(user)}>
+        <LinkButton>Deactivate your profile</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UserReactivateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => reactivateUser(user)}>
+        <LinkButton>Reactivate your profile</LinkButton>
       </form>
     </>
   );
