@@ -1,7 +1,6 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { gatherContactByUserAndUsername } from "@/app/libraries/data/contacts";
 import { notFound } from "next/navigation";
-// import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
 import { Suspense } from "react";
 import {
   defineGatheredRelCombo,
