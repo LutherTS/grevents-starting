@@ -71,7 +71,7 @@ export default async function ModifyAppWideNamePage({
         <UserAppWideNameModifyForm user={user} />
         <UserFriendCodeUpdateForm user={user} />
         <p className="mt-2">
-          You&pos;ll see it changed on your Personal info page.
+          You&apos;ll see it changed on your Personal info page.
         </p>
         {user.user_state === "LIVE" && (
           <>
