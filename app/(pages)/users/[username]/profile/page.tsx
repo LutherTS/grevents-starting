@@ -66,22 +66,22 @@ export default async function UserPage({
     username: string;
   };
 }) {
-  // const session: { [K in "user"]: User } = {
-  //   // “me”
-  //   user: {
-  //     user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
-  //     user_state: "LIVE",
-  //     user_status_title: "NONE",
-  //     user_status_dashboard: "NONE",
-  //     user_status_personal_info: "NONE",
-  //     user_username: "LePapier",
-  //     user_app_wide_name: "“me”",
-  //     user_friend_code: "fsa7hyt3g58x",
-  //     user_has_temporary_password: false,
-  //     user_created_at: "2023-12-09T05:59:58.074Z",
-  //     user_updated_at: "2023-12-09T05:59:58.074Z",
-  //   },
-  // };
+  const session: { [K in "user"]: User } = {
+    // “me”
+    user: {
+      user_id: "2640aaf6-20b5-497c-b980-fbee374830c2",
+      user_state: "LIVE",
+      user_status_title: "NONE",
+      user_status_dashboard: "NONE",
+      user_status_personal_info: "NONE",
+      user_username: "LePapier",
+      user_app_wide_name: "“me”",
+      user_friend_code: "fsa7hyt3g58x",
+      user_has_temporary_password: false,
+      user_created_at: "2023-12-09T05:59:58.074Z",
+      user_updated_at: "2023-12-09T05:59:58.074Z",
+    },
+  };
 
   // const session: { [K in "user"]: User } = {
   //   // Alice
@@ -100,22 +100,22 @@ export default async function UserPage({
   //   },
   // };
 
-  const session: { [K in "user"]: User } = {
-    // Alice, but DEACTIVATED
-    user: {
-      user_id: "e17bc7f7-b93f-4915-9f72-83d055c66e77",
-      user_state: "DEACTIVATED",
-      user_status_title: "NONE",
-      user_status_dashboard: "NONE",
-      user_status_personal_info: "NONE",
-      user_username: "Alice-chan",
-      user_app_wide_name: "Alice",
-      user_friend_code: "k7mdsfwq2e9g",
-      user_has_temporary_password: false,
-      user_created_at: "2023-12-09T06:00:33.323Z",
-      user_updated_at: "2023-12-09T06:00:33.323Z",
-    },
-  };
+  // const session: { [K in "user"]: User } = {
+  //   // Alice, but DEACTIVATED
+  //   user: {
+  //     user_id: "e17bc7f7-b93f-4915-9f72-83d055c66e77",
+  //     user_state: "DEACTIVATED",
+  //     user_status_title: "NONE",
+  //     user_status_dashboard: "NONE",
+  //     user_status_personal_info: "NONE",
+  //     user_username: "Alice-chan",
+  //     user_app_wide_name: "Alice",
+  //     user_friend_code: "k7mdsfwq2e9g",
+  //     user_has_temporary_password: false,
+  //     user_created_at: "2023-12-09T06:00:33.323Z",
+  //     user_updated_at: "2023-12-09T06:00:33.323Z",
+  //   },
+  // };
 
   // const session: { [K in "user"]: User } = {
   //   // Le Maréchal
@@ -379,7 +379,7 @@ export default async function UserPage({
                 {user.user_app_wide_name} has deactivated their profile.
               </p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {session &&
@@ -392,7 +392,7 @@ export default async function UserPage({
                 deactivated.
               </p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {session &&
@@ -402,7 +402,7 @@ export default async function UserPage({
               <BackToDashboardLink session={session} />
               <p className="mt-2">You&apos;ve deactivated your profile.</p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {!session && (
