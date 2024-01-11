@@ -298,6 +298,7 @@ export default async function UserPage({
                 )}
               <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
               <BackToDashboardLink session={session} />
+              <PageLink href={`/sign-in`} name={`sign out`} />
               {username === session.user.user_username && (
                 <p className="mt-2">
                   This is your profile page, the one where others will be able
@@ -366,7 +367,6 @@ export default async function UserPage({
                 href={`/users/${session.user.user_username}/friends`}
                 name={`back to your friends`}
               />
-              <PageLink href={`/sign-in`} name={`sign out`} />
               <RevalidateButtonForm />
             </>
           )}

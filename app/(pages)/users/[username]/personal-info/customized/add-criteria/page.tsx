@@ -68,6 +68,7 @@ export default async function AddCriteriaCustomizedPage({
             Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
           </H1>
           <BackToDashboardLink session={session} />
+          <PageLink href={`/sign-in`} name={`sign out`} />
           <PseudoNativeNotIrlAnswerForm user={user} />
           <PseudoNativeIrlAnswerForm user={user} />
           <CustomAnswerForm user={user} />
@@ -75,7 +76,6 @@ export default async function AddCriteriaCustomizedPage({
             href={`/users/${username}/personal-info/customized`}
             name={"Cancel"}
           />
-          <PageLink href={`/sign-in`} name={`sign out`} />
         </div>
       </main>
     </>

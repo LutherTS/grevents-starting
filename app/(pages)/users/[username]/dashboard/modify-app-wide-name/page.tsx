@@ -68,6 +68,7 @@ export default async function ModifyAppWideNamePage({
           Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.
         </H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <UserAppWideNameModifyForm user={user} />
         <UserFriendCodeUpdateForm user={user} />
         <p className="mt-2">
@@ -88,7 +89,6 @@ export default async function ModifyAppWideNamePage({
           </>
         )}
         <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

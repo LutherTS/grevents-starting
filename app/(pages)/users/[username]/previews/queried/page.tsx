@@ -1,7 +1,6 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { gatherContactByUserAndUsername } from "@/app/libraries/data/contacts";
 import { notFound } from "next/navigation";
-// import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
 import { Suspense } from "react";
 import {
   defineGatheredRelCombo,
@@ -93,6 +92,7 @@ export default async function QueriedPreviewPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <UserLastInputForm userLast={userLast} />
         {userLast !== "" && (
           <>
@@ -178,7 +178,6 @@ export default async function QueriedPreviewPage({
           href={`/users/${username}/profile`}
           name={"To Your Profile"}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

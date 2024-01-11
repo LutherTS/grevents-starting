@@ -80,8 +80,10 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            uqf.userquestionfriend_shared_at DESC,
-            uqf.userquestionfriend_updated_at DESC
+            -- uqf.userquestionfriend_shared_at DESC,
+            -- uqf.userquestionfriend_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
 
         LIMIT 10;
       `;

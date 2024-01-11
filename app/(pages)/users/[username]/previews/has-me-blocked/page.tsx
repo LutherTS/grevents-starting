@@ -63,9 +63,9 @@ export default async function BlockedPreviewPage({
           Welcome to {user.user_app_wide_name}&apos;s Has-Me-Blocked Preview.
         </H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <RelationCombinationHasMeBlockedPreviewed user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

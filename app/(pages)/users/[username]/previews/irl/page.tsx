@@ -61,9 +61,9 @@ export default async function IrlPreviewPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Irl Preview.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <RelationCombinationIrlPreviewed user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

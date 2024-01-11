@@ -86,6 +86,7 @@ export default async function AddCriteriaStandardizedPage({
             Standardized.
           </H1>
           <BackToDashboardLink session={session} />
+          <PageLink href={`/sign-in`} name={`sign out`} />
           {/* {allNativeNotIrlQuestions.length > 0 && (
             <>
               <p className="mt-2 font-semibold text-zinc-500">
@@ -148,7 +149,6 @@ export default async function AddCriteriaStandardizedPage({
             href={`/users/${username}/personal-info/standardized`}
             name={"Cancel"}
           />
-          <PageLink href={`/sign-in`} name={`sign out`} />
         </div>
       </main>
     </>

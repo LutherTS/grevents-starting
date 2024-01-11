@@ -90,6 +90,7 @@ export default async function StardardizedPage({
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <Suspense
           fallback={
             <>
@@ -116,7 +117,6 @@ export default async function StardardizedPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>
