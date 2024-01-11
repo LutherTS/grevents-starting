@@ -223,7 +223,8 @@ export async function gatherContactByUserAndUsername(
               c1.contact_id c1_contact_id, 
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.contact_status_profile c1_contact_status_profile, -- NEW
-              c2.contact_status_other_profile c2_contact_status_other_profile -- NEW
+              c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
+              u.user_state
           FROM Contacts c1
 
           JOIN Users u ON c1.user_last_id = u.user_id
@@ -233,7 +234,8 @@ export async function gatherContactByUserAndUsername(
           AND u.user_username = ${username}
           
           AND c1.contact_state = 'LIVE'
-          AND u.user_state = 'LIVE'
+          AND (u.user_state = 'LIVE'
+          OR u.user_state = 'DEACTIVATED')
           AND c2.contact_state = 'LIVE'
 
           LIMIT 1;
