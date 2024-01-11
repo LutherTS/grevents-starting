@@ -110,6 +110,7 @@ export default async function DashboardPage({
           <UserReactivated user={user} />
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <PageLinkWithChildren
           href={`/users/${username}/dashboard/modify-app-wide-name`}
         >
@@ -158,7 +159,6 @@ export default async function DashboardPage({
         >
           <p>My notifications</p>
         </PageLinkWithChildren>
-        <PageLink href={`/sign-in`} name={`sign out`} />
         <PageLink href={`/`} name={`Return home`} />
         {user.user_state === "DEACTIVATED" && (
           <p className="mt-8 font-bold text-red-500">

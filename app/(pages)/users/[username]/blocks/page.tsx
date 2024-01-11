@@ -65,6 +65,7 @@ export default async function BlocksPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Blocks.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <Suspense
           fallback={
             <>
@@ -80,7 +81,6 @@ export default async function BlocksPage({
           Blocked users and Users that have me blocked.
         </p>
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

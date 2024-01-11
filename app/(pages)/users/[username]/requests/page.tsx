@@ -65,6 +65,7 @@ export default async function RequestsPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Requests.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <Suspense
           fallback={
             <>
@@ -79,7 +80,6 @@ export default async function RequestsPage({
           href={`/users/${username}/notifications`}
           name={`To notifications`}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

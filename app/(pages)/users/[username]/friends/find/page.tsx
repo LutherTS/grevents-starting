@@ -73,6 +73,7 @@ export default async function FindContactsPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <FriendCodeInputForm user={user} />
         {/* {friendCode !== "" && (
           <>
@@ -94,7 +95,6 @@ export default async function FindContactsPage({
         )} */}
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
         <PageLink href={`/users/${username}/previews`} name={`See previews`} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

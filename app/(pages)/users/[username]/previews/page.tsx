@@ -60,6 +60,7 @@ export default async function PreviewsPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Previews.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <PageLink
           href={`/users/${username}/previews/none`}
           name={`To "none" preview`}
@@ -92,7 +93,6 @@ export default async function PreviewsPage({
           href={`/users/${username}/friends/find`}
           name={`Search for contacts`}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
       </div>
     </main>
   );

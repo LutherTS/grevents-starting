@@ -101,6 +101,7 @@ export default async function UserQuestionPage({
             {userQuestion.question_name}&quot; User Criteria.
           </H1>
           <BackToDashboardLink session={session} />
+          <PageLink href={`/sign-in`} name={`sign out`} />
           <Suspense
             fallback={
               <>
@@ -123,7 +124,6 @@ export default async function UserQuestionPage({
             href={`/users/${username}/personal-info`}
             name={"To Personal Info"}
           />
-          <PageLink href={`/sign-in`} name={`sign out`} />
         </div>
       </main>
     </>

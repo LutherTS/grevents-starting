@@ -69,6 +69,7 @@ export default async function ModifyCriteriaStandardizedPage({
           Standardized.
         </H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <Suspense
           fallback={
             <>
@@ -83,7 +84,6 @@ export default async function ModifyCriteriaStandardizedPage({
           href={`/users/${username}/personal-info/standardized`}
           name={"Cancel"}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>

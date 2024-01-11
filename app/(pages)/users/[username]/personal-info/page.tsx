@@ -83,6 +83,7 @@ export default async function PersonalInfoPage({
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
         <BackToDashboardLink session={session} />
+        <PageLink href={`/sign-in`} name={`sign out`} />
         <p className="mt-2">{user.user_username}</p>
         <p className="mt-2">{user.user_friend_code}</p>
         <Suspense
@@ -102,7 +103,6 @@ export default async function PersonalInfoPage({
           href={`/users/${username}/personal-info/customized`}
           name={"To Customized criteria"}
         />
-        <PageLink href={`/sign-in`} name={`sign out`} />
         <RevalidateButtonForm />
       </div>
     </main>

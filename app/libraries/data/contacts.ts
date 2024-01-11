@@ -540,8 +540,8 @@ export async function findSentFriendToContactsByUser(user: User) {
           ORDER BY 
             -- c1.contact_sent_friend_at DESC,
             -- c1.contact_updated_at DESC,
-            lower(u2_user_app_wide_name) ASC,
-            u2_user_username ASC
+            lower(u2.user_app_wide_name) ASC,
+            u2.user_username ASC
 
           LIMIT 10;
         `;
@@ -597,8 +597,8 @@ export async function findSentIrlToContactsByUser(user: User) {
           ORDER BY 
             -- c1.contact_sent_irl_at DESC,
             -- c1.contact_updated_at DESC,
-            lower(u2_user_app_wide_name) ASC,
-            u2_user_username ASC
+            lower(u2.user_app_wide_name) ASC,
+            u2.user_username ASC
 
           LIMIT 10;
         `;
@@ -654,8 +654,8 @@ export async function findSentFriendFromContactsByUser(user: User) {
           ORDER BY 
             -- c1.contact_sent_friend_at DESC,
             -- c1.contact_updated_at DESC,
-            lower(u1_user_app_wide_name) ASC,
-            u1_user_username ASC
+            lower(u1.user_app_wide_name) ASC,
+            u1.user_username ASC
 
           LIMIT 10;
         `;
@@ -711,8 +711,8 @@ export async function findSentIrlFromContactsByUser(user: User) {
           ORDER BY 
             -- c1.contact_sent_irl_at DESC,
             -- c1.contact_updated_at DESC,
-            lower(u1_user_app_wide_name) ASC,
-            u1_user_username ASC
+            lower(u1.user_app_wide_name) ASC,
+            u1.user_username ASC
 
           LIMIT 10;
         `;
