@@ -367,7 +367,7 @@ export default async function UserPage({
                 href={`/users/${session.user.user_username}/friends`}
                 name={`back to your friends`}
               />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {session &&
@@ -402,7 +402,7 @@ export default async function UserPage({
               <BackToDashboardLink session={session} />
               <p className="mt-2">You&apos;ve deactivated your profile.</p>
               <BackLinkForm />
-              <RevalidateButtonForm />
+              {/* <RevalidateButtonForm /> */}
             </>
           )}
         {!session && (

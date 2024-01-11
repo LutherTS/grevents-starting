@@ -447,7 +447,7 @@ export async function findContactByUserAndSession(
   session: { [K in "user"]: User } | null,
 ) {
   noStore(); // since changes in relation will revalidate // no
-  // revalidate all the tyme now that I know revalidate isn't general
+  // revalidate all the time now that I know revalidate isn't general
   // console.log(user);
   // console.log(session);
   if (session !== null) {
@@ -483,8 +483,10 @@ export async function findContactByUserAndSession(
           
           AND c1.contact_state = 'LIVE'
           AND c2.contact_state = 'LIVE'
-          AND u1.user_state = 'LIVE' -- NEW
-          AND u2.user_state = 'LIVE' -- NEW
+          AND (u1.user_state = 'LIVE'
+          OR u1.user_state = 'DEACTIVATED') -- NEW
+          AND (u2.user_state = 'LIVE'
+          OR u2.user_state = 'DEACTIVATED') -- NEW
 
           LIMIT 1;
         `;
