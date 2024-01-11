@@ -87,7 +87,6 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- LePapier, Favorite actress
 -- custom / shared (1)
--- !! Former 'Favorite series' !! --
     userquestion_id,
     user_id,
     question_id,
@@ -142,7 +141,6 @@ VALUES (
 
 INSERT INTO UserQuestions ( -- Alice-chan, Favorite actress
 -- custom / not shared
--- !! Former 'Favorite series' !! --
     userquestion_id,
     user_id,
     question_id,

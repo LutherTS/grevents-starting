@@ -64,6 +64,26 @@ export function UserFriendCodeUpdated({ user }: { user: User }) {
   );
 }
 
+export function UserDeactivated({ user }: { user: User }) {
+  return (
+    <>
+      <ToastForm action={() => resetUserStatusDashboard(user)}>
+        <ToastChild>You&apos;ve deactivated your profile</ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+export function UserReactivated({ user }: { user: User }) {
+  return (
+    <>
+      <ToastForm action={() => resetUserStatusDashboard(user)}>
+        <ToastChild>You&apos;ve reactivated your profile</ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
 export function AnswerValueUpdated({ user }: { user: User }) {
   return (
     <>

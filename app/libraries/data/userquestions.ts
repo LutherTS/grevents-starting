@@ -64,7 +64,8 @@ export async function fetchCustomUserQuestionByIDAndUser(
         AND Questions.question_kind = 'CUSTOM'
         
         AND UserQuestions.userquestion_state = 'LIVE'
-        AND Users.user_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
         AND Questions.question_state = 'LIVE'
 
         LIMIT 1;

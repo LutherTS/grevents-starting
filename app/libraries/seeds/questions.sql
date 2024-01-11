@@ -333,7 +333,6 @@ VALUES (
 ); -- Done. 
 
 INSERT INTO Questions ( -- Favorite actress / custom
--- !! Former 'Favorite series' !! --
     question_id,
     user_id,
     question_name,

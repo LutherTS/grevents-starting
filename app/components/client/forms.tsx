@@ -3,6 +3,8 @@
 import {
   createOrFindContactsByFriendCode,
   CreateOrFindContactsByFriendCodeFormState,
+  deactivateUser,
+  reactivateUser,
   signInUser,
   SignInUserFormState,
   signUpUser,
@@ -171,6 +173,26 @@ export function UserFriendCodeUpdateForm({ user }: { user: User }) {
     <>
       <form className="mt-2" action={() => updateUserFriendCode(user)}>
         <LinkButton>Generate a new friend code</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UserDeactivateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => deactivateUser(user)}>
+        <LinkButton>Deactivate your profile</LinkButton>
+      </form>
+    </>
+  );
+}
+
+export function UserReactivateForm({ user }: { user: User }) {
+  return (
+    <>
+      <form className="mt-2" action={() => reactivateUser(user)}>
+        <LinkButton>Reactivate your profile</LinkButton>
       </form>
     </>
   );
@@ -524,6 +546,20 @@ export function BackButtonForm() {
   );
 }
 
+export function BackLinkForm() {
+  const router = useRouter();
+
+  return (
+    <>
+      <form className="mt-2" action={() => router.back()}>
+        <button className="inline-block text-blue-500 underline hover:text-blue-400 dark:hover:text-blue-600">
+          back to the previous page
+        </button>
+      </form>
+    </>
+  );
+}
+
 export function ButtonPinnableForm({ answer }: { answer: Answer }) {
   return (
     <>
@@ -678,7 +714,7 @@ export function FriendCodeInputForm({
         <label htmlFor="friend-code">
           <p>Find a user by their friend code.</p>
         </label>
-        <FriendCodeInput />
+        <FriendCodeInput user={user} />
         {state && state.errors?.otherUserFriendCode ? (
           <div id="question-id-native-not-irl-error" aria-live="polite">
             {state.errors.otherUserFriendCode.map((error: string) => (

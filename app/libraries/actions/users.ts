@@ -18,6 +18,8 @@ import {
   changeResetUserStatusDashboard,
   changeResetUserStatusPersonalInfo,
   changeResetUserStatusTitle,
+  changeSetUserStateDeactivated,
+  changeSetUserStateReactivated,
   changeSetUserStatusTitle,
   changeUpdateUserAppWideName,
   changeUpdateUserFriendCode,
@@ -223,6 +225,24 @@ export async function resetUserStatusPersonalInfo(user: User) {
   revalidatePath(`/users/${user.user_username}/personal-info`);
   revalidatePath(`/users/${user.user_username}/personal-info/standardized`);
   revalidatePath(`/users/${user.user_username}/personal-info/customized`);
+}
+
+export async function deactivateUser(user: User) {
+  await changeSetUserStateDeactivated(user);
+
+  revalidatePath(`/users/${user.user_username}/dashboard`);
+  revalidatePath(`/users/${user.user_username}/personal-info`);
+  revalidatePath(`/users/${user.user_username}/modify-app-wide-name`);
+  redirect(`/users/${user.user_username}/dashboard`);
+}
+
+export async function reactivateUser(user: User) {
+  await changeSetUserStateReactivated(user);
+
+  revalidatePath(`/users/${user.user_username}/dashboard`);
+  revalidatePath(`/users/${user.user_username}/personal-info`);
+  revalidatePath(`/users/${user.user_username}/modify-app-wide-name`);
+  redirect(`/users/${user.user_username}/dashboard`);
 }
 
 /* Note importante :

@@ -1,6 +1,6 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
-import { RelationCombinationIAmBlockingPreview } from "@/app/components/agnostic/relcombos";
+import { RelationCombinationIAmBlockingPreviewed } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
@@ -63,7 +63,7 @@ export default async function BlockingPreviewPage({
           Welcome to {user.user_app_wide_name}&apos;s I-Am-Blocking Preview.
         </H1>
         <BackToDashboardLink session={session} />
-        <RelationCombinationIAmBlockingPreview user={user} />
+        <RelationCombinationIAmBlockingPreviewed user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
         <PageLink href={`/sign-in`} name={`sign out`} />
       </div>

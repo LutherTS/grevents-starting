@@ -4,7 +4,9 @@ import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import {
   UserAppWideNameModifyForm,
+  UserDeactivateForm,
   UserFriendCodeUpdateForm,
+  UserReactivateForm,
 } from "@/app/components/client/forms";
 import { User } from "@/app/libraries/definitions/users";
 
@@ -69,8 +71,22 @@ export default async function ModifyAppWideNamePage({
         <UserAppWideNameModifyForm user={user} />
         <UserFriendCodeUpdateForm user={user} />
         <p className="mt-2">
-          You’ll see it changed on your Personal info page.
+          You&apos;ll see it changed on your Personal info page.
         </p>
+        {user.user_state === "LIVE" && (
+          <>
+            <UserDeactivateForm user={user} />
+            <p className="mt-2">
+              All other users will no longer be able to see your profile.
+            </p>
+          </>
+        )}
+        {user.user_state === "DEACTIVATED" && (
+          <>
+            <UserReactivateForm user={user} />
+            <p className="mt-2">Reallow your friends to access your profile.</p>
+          </>
+        )}
         <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
         <PageLink href={`/sign-in`} name={`sign out`} />
       </div>

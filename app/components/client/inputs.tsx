@@ -42,7 +42,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   );
 }
 
-export function FriendCodeInput() {
+export function FriendCodeInput({ user }: { user: User }) {
   // { friendCode }: { friendCode: string }
   const status = useFormStatus();
 
@@ -54,9 +54,14 @@ export function FriendCodeInput() {
         id="friend-code"
         name="friendcode"
         placeholder="Enter a user's friend code"
-        disabled={status.pending}
+        disabled={status.pending || user.user_state === "DEACTIVATED"}
         // required // validation now gone server-side
       />
+      {user.user_state === "DEACTIVATED" && (
+        <p className="mt-2 text-red-500">
+          You can&apos;t use the find feature while your profile is deactivated.
+        </p>
+      )}
     </>
   );
 }

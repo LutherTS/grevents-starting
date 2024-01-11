@@ -1,6 +1,6 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
-import { RelationCombinationFriendPreview } from "@/app/components/agnostic/relcombos";
+import { RelationCombinationFriendPreviewed } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
@@ -61,7 +61,7 @@ export default async function FriendPreviewPage({
       <div className="max-w-prose text-center">
         <H1>Welcome to {user.user_app_wide_name}&apos;s Friend Preview.</H1>
         <BackToDashboardLink session={session} />
-        <RelationCombinationFriendPreview user={user} />
+        <RelationCombinationFriendPreviewed user={user} />
         <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
         <PageLink href={`/sign-in`} name={`sign out`} />
       </div>

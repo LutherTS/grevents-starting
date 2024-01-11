@@ -3,7 +3,6 @@
 
 INSERT INTO UserQuestionFriends ( -- LePapier, Favorite actress
 -- shared to Alice-chan
--- !! Former 'Favorite series' !! --
     userquestionfriend_id,
     userquestion_id,
     contact_id,
@@ -137,3 +136,4 @@ VALUES (
     now(),
     now()
 ); -- Done. 
+

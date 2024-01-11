@@ -3,18 +3,17 @@ import { gatherContactByUserAndUsername } from "@/app/libraries/data/contacts";
 import { notFound } from "next/navigation";
 // import { ManyContacts } from "@/app/components/server/contacts"; // No longer concording with the expected user experience.
 import { Suspense } from "react";
-import { ManyRelationCombinations } from "@/app/components/agnostic/lists";
 import {
   defineGatheredRelCombo,
   relationCombinations,
 } from "@/app/libraries/utilities/relcombos";
 import {
-  RelationCombinationNonePreview,
-  RelationCombinationFriendCustomQueried,
-  RelationCombinationIrlCustomQueried,
-  RelationCombinationIAmBlockingPreview,
-  RelationCombinationHasMeBlockedPreview,
-  RelationCombinationBlockingBlockedPreview,
+  RelationCombinationNonePreviewed,
+  RelationCombinationFriendQueried,
+  RelationCombinationIrlQueried,
+  RelationCombinationIAmBlockingPreviewed,
+  RelationCombinationHasMeBlockedPreviewed,
+  RelationCombinationBlockingBlockedPreviewed,
 } from "@/app/components/agnostic/relcombos";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
@@ -125,40 +124,52 @@ export default async function QueriedPreviewPage({
             </>
           }
         >
-          {gatheredContact && relCombo === "none" && (
-            <RelationCombinationNonePreview />
-          )}
-          {gatheredContact && relCombo === "friend" && (
+          {gatheredContact &&
+          relationCombinations.includes(relCombo) &&
+          user.user_state === "DEACTIVATED" ? (
             <>
-              <RelationCombinationFriendCustomQueried
-                user={user}
-                contact={gatheredContact}
-              />
+              <p className="mt-2">
+                {user.user_app_wide_name} has deactivated their profile.
+              </p>
             </>
-          )}
-          {gatheredContact && relCombo === "irl" && (
+          ) : (
             <>
-              <RelationCombinationIrlCustomQueried
-                user={user}
-                contact={gatheredContact}
-              />
-            </>
-          )}
-          {gatheredContact && relCombo === "i-am-blocking" && (
-            <RelationCombinationIAmBlockingPreview user={user} />
-          )}
-          {gatheredContact && relCombo === "has-me-blocked" && (
-            <RelationCombinationHasMeBlockedPreview user={user} />
-          )}
-          {gatheredContact && relCombo === "blocking-blocked" && (
-            <RelationCombinationBlockingBlockedPreview user={user} />
-          )}
-          {gatheredContact && relationCombinations.includes(relCombo) && (
-            <>
-              <PageLink
-                href={`/users/${gatheredContact.user_username}/profile`}
-                name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
-              />
+              {gatheredContact && relCombo === "none" && (
+                <RelationCombinationNonePreviewed />
+              )}
+              {gatheredContact && relCombo === "friend" && (
+                <>
+                  <RelationCombinationFriendQueried
+                    user={user}
+                    contact={gatheredContact}
+                  />
+                </>
+              )}
+              {gatheredContact && relCombo === "irl" && (
+                <>
+                  <RelationCombinationIrlQueried
+                    user={user}
+                    contact={gatheredContact}
+                  />
+                </>
+              )}
+              {gatheredContact && relCombo === "i-am-blocking" && (
+                <RelationCombinationIAmBlockingPreviewed user={user} />
+              )}
+              {gatheredContact && relCombo === "has-me-blocked" && (
+                <RelationCombinationHasMeBlockedPreviewed user={user} />
+              )}
+              {gatheredContact && relCombo === "blocking-blocked" && (
+                <RelationCombinationBlockingBlockedPreviewed user={user} />
+              )}
+              {gatheredContact && relationCombinations.includes(relCombo) && (
+                <>
+                  <PageLink
+                    href={`/users/${gatheredContact.user_username}/profile`}
+                    name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
+                  />
+                </>
+              )}
             </>
           )}
         </Suspense>

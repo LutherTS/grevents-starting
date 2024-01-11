@@ -231,3 +231,51 @@ export async function changeSetUserStatusPersonalInfo(
     };
   }
 }
+
+export async function changeSetUserStateDeactivated(user: User) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_state = 'DEACTIVATED',
+            user_status_dashboard = 'NOWDEACTIVATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Deactivated User.",
+    };
+  }
+}
+
+export async function changeSetUserStateReactivated(user: User) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE Users
+        SET 
+            user_state = 'LIVE',
+            user_status_dashboard = 'NOWREACTIVATED',
+            user_updated_at = now()
+        WHERE user_id = ${user.user_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Reactivated User.",
+    };
+  }
+}

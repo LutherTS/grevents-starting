@@ -13,18 +13,22 @@ import {
   fetchUserPinnedNotAndIrlAnswers,
   fetchUserUnpinnedNativeIrlAnswers,
   fetchUserUnpinnedPseudonativeIrlAnswers,
-  fetchUserSharedToContactCustomAnswers,
-  fetchUserPinnedNotIrlAnswersCustom,
-  fetchUserPinnedNotAndIrlAnswersCustom,
-  fetchUserPinnedByFriendNotIrlAnswersCustom,
-  fetchUserPinnedByFriendNotAndIrlAnswersCustom,
-  fetchUserSharedToContactCustomAnswersNotPinnedByFriend,
-  fetchUserPinnedNotAndIrlAnswersCustomQueried,
+  fetchUserPinnedNotIrlAnswersExposed,
+  fetchUserPinnedNotAndIrlAnswersExposed,
+  fetchUserPinnedByFriendNotIrlAnswersExposed,
+  fetchUserPinnedByFriendNotAndIrlAnswersExposed,
+  fetchUserSharedToContactCustomAnswersExposed,
+  fetchUserPinnedNotAndIrlAnswersQueried,
   fetchUserUnpinnedNativeNotIrlAnswersQueried,
   fetchUserUnpinnedPseudonativeNotIrlAnswersQueried,
   fetchUserUnpinnedNativeIrlAnswersQueried,
   fetchUserUnpinnedPseudonativeIrlAnswersQueried,
-  fetchUserPinnedNotIrlAnswersCustomQueried,
+  fetchUserPinnedNotIrlAnswersQueried,
+  fetchUserUnpinnedNativeNotIrlAnswersExposed,
+  fetchUserUnpinnedPseudonativeNotIrlAnswersExposed,
+  fetchUserUnpinnedNativeIrlAnswersExposed,
+  fetchUserUnpinnedPseudonativeIrlAnswersExposed,
+  fetchUserSharedToContactCustomAnswersQueried,
 } from "@/app/libraries/data/answers";
 import { User } from "@/app/libraries/definitions/users";
 import { Answer } from "@/app/libraries/definitions/answers";
@@ -406,12 +410,10 @@ export async function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
-  personalView,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
-  personalView?: boolean;
 }) {
   return (
     <>
@@ -767,7 +769,11 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
   );
 }
 
-export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
+export async function ManyRelComboFriendCriteriaPreviewed({
+  user,
+}: {
+  user: User;
+}) {
   const [
     pinnedNotIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
@@ -796,7 +802,11 @@ export async function ManyRelComboFriendCriteria({ user }: { user: User }) {
   );
 }
 
-export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
+export async function ManyRelComboIrlCriteriaPreviewed({
+  user,
+}: {
+  user: User;
+}) {
   const [
     pinnedNotAndIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
@@ -805,7 +815,7 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
     userUnpinnedPseudonativeIrlAnswers,
   ] = await Promise.all([
     fetchUserPinnedNotAndIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id), // garder DEACTIVATED, enlever pinned_by_friend
     fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedNativeIrlAnswers(user.user_id),
     fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
@@ -837,30 +847,7 @@ export async function ManyRelComboIrlCriteria({ user }: { user: User }) {
   );
 }
 
-// export async function ManyUserSharedToContactCustomAnswers({
-//   user,
-//   contact,
-// }: {
-//   user: User;
-//   contact: GatheredContact | FoundContact;
-// }) {
-//   const userSharedToContactCustomAnswers =
-//     await fetchUserSharedToContactCustomAnswers(
-//       user.user_id,
-//       contact.c1_contact_id,
-//     );
-
-//   return (
-//     <>
-//       <ManyCriteria
-//         answers={userSharedToContactCustomAnswers}
-//         answersLabel={answersLabels.sharedToContactCustom}
-//       />
-//     </>
-//   );
-// }
-
-export async function ManyRelComboFriendCriteriaCustom({
+export async function ManyRelComboFriendCriteriaExposed({
   user,
   contact,
 }: {
@@ -874,14 +861,14 @@ export async function ManyRelComboFriendCriteriaCustom({
     userUnpinnedPseudonativeNotIrlAnswers,
     userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
-    fetchUserPinnedByFriendNotIrlAnswersCustom(
+    fetchUserPinnedByFriendNotIrlAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
     ), // new
-    fetchUserPinnedNotIrlAnswersCustom(user.user_id, contact.c1_contact_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
-    fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+    fetchUserPinnedNotIrlAnswersExposed(user.user_id, contact.c1_contact_id),
+    fetchUserUnpinnedNativeNotIrlAnswersExposed(user.user_id), // enlever DEACTIVATED
+    fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(user.user_id),
+    fetchUserSharedToContactCustomAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
     ), // optimisation
@@ -925,7 +912,7 @@ export async function ManyRelComboFriendCriteriaCustom({
   );
 }
 
-export async function ManyRelComboIrlCriteriaCustom({
+export async function ManyRelComboIrlCriteriaExposed({
   user,
   contact,
 }: {
@@ -941,16 +928,16 @@ export async function ManyRelComboIrlCriteriaCustom({
     userUnpinnedPseudonativeIrlAnswers,
     userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
-    fetchUserPinnedByFriendNotAndIrlAnswersCustom(
+    fetchUserPinnedByFriendNotAndIrlAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
     ), // new
-    fetchUserPinnedNotAndIrlAnswersCustom(user.user_id, contact.c1_contact_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeIrlAnswers(user.user_id),
-    fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
-    fetchUserSharedToContactCustomAnswersNotPinnedByFriend(
+    fetchUserPinnedNotAndIrlAnswersExposed(user.user_id, contact.c1_contact_id),
+    fetchUserUnpinnedNativeNotIrlAnswersExposed(user.user_id),
+    fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(user.user_id),
+    fetchUserUnpinnedNativeIrlAnswersExposed(user.user_id),
+    fetchUserUnpinnedPseudonativeIrlAnswersExposed(user.user_id),
+    fetchUserSharedToContactCustomAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
     ), // optimisation
@@ -1007,7 +994,7 @@ export async function ManyRelComboIrlCriteriaCustom({
   );
 }
 
-export async function ManyRelComboFriendCriteriaCustomQueried({
+export async function ManyRelComboFriendCriteriaQueried({
   user,
   contact,
 }: {
@@ -1020,13 +1007,13 @@ export async function ManyRelComboFriendCriteriaCustomQueried({
     userUnpinnedPseudonativeNotIrlAnswers,
     userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
-    fetchUserPinnedNotIrlAnswersCustomQueried(
-      user.user_id,
-      contact.c1_contact_id,
-    ),
+    fetchUserPinnedNotIrlAnswersQueried(user.user_id, contact.c1_contact_id),
     fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
-    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
+    fetchUserSharedToContactCustomAnswersQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // optimisation
   ]);
 
   return (
@@ -1051,7 +1038,7 @@ export async function ManyRelComboFriendCriteriaCustomQueried({
   );
 }
 
-export async function ManyRelComboIrlCriteriaCustomQueried({
+export async function ManyRelComboIrlCriteriaQueried({
   user,
   contact,
 }: {
@@ -1066,15 +1053,15 @@ export async function ManyRelComboIrlCriteriaCustomQueried({
     userUnpinnedPseudonativeIrlAnswers,
     userSharedToContactCustomAnswers, // optimisation
   ] = await Promise.all([
-    fetchUserPinnedNotAndIrlAnswersCustomQueried(
-      user.user_id,
-      contact.c1_contact_id,
-    ),
+    fetchUserPinnedNotAndIrlAnswersQueried(user.user_id, contact.c1_contact_id),
     fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(user.user_id),
     fetchUserUnpinnedNativeIrlAnswersQueried(user.user_id),
     fetchUserUnpinnedPseudonativeIrlAnswersQueried(user.user_id),
-    fetchUserSharedToContactCustomAnswers(user.user_id, contact.c1_contact_id), // optimisation
+    fetchUserSharedToContactCustomAnswersQueried(
+      user.user_id,
+      contact.c1_contact_id,
+    ), // optimisation
   ]);
 
   return (
