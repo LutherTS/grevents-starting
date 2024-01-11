@@ -878,36 +878,49 @@ export async function ManyRelComboFriendCriteriaExposed({
 
   return (
     <>
-      <ManyCriteriaCancelPinnableByFriend
-        answers={pinnedByFriendNotIrlAnswers}
-        answersLabel={answersLabels.pinnedByFriendNotIrl}
-        noAnswersLabel={noAnswersLabels.pinnedByFriend}
-        contact={contact}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={pinnedNotIrlAnswers}
-        answersLabel={answersLabels.pinnedNotIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedNativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeNotIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userSharedToContactCustomAnswers}
-        answersLabel={answersLabels.sharedToContactCustom}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
-      />
+      {pinnedByFriendNotIrlAnswers.length +
+        pinnedNotIrlAnswers.length +
+        userUnpinnedNativeNotIrlAnswers.length +
+        userUnpinnedPseudonativeNotIrlAnswers.length +
+        userSharedToContactCustomAnswers.length >
+      0 ? (
+        <>
+          <ManyCriteriaCancelPinnableByFriend
+            answers={pinnedByFriendNotIrlAnswers}
+            answersLabel={answersLabels.pinnedByFriendNotIrl}
+            noAnswersLabel={noAnswersLabels.pinnedByFriend}
+            contact={contact}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={pinnedNotIrlAnswers}
+            answersLabel={answersLabels.pinnedNotIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedNativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeNotIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedPseudonativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userSharedToContactCustomAnswers}
+            answersLabel={answersLabels.sharedToContactCustom}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotIrlAnswersCount}
+          />
+        </>
+      ) : (
+        <>
+          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+        </>
+      )}
     </>
   );
 }
@@ -948,48 +961,63 @@ export async function ManyRelComboIrlCriteriaExposed({
 
   return (
     <>
-      <ManyCriteriaCancelPinnableByFriend
-        answers={pinnedByFriendNotAndIrlAnswers}
-        answersLabel={answersLabels.pinnedByFriendNotAndIrl}
-        noAnswersLabel={noAnswersLabels.pinnedByFriend}
-        contact={contact}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={pinnedNotAndIrlAnswers}
-        answersLabel={answersLabels.pinnedNotAndIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedNativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeNotIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedNativeIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userUnpinnedPseudonativeIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeIrl}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
-      <ManyCriteriaPinnableByFriend
-        answers={userSharedToContactCustomAnswers}
-        answersLabel={answersLabels.sharedToContactCustom}
-        contact={contact}
-        pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
-      />
+      {pinnedByFriendNotAndIrlAnswers.length +
+        pinnedNotAndIrlAnswers.length +
+        userUnpinnedNativeNotIrlAnswers.length +
+        userUnpinnedPseudonativeNotIrlAnswers.length +
+        userUnpinnedNativeIrlAnswers.length +
+        userUnpinnedPseudonativeIrlAnswers.length +
+        userSharedToContactCustomAnswers.length >
+      0 ? (
+        <>
+          <ManyCriteriaCancelPinnableByFriend
+            answers={pinnedByFriendNotAndIrlAnswers}
+            answersLabel={answersLabels.pinnedByFriendNotAndIrl}
+            noAnswersLabel={noAnswersLabels.pinnedByFriend}
+            contact={contact}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={pinnedNotAndIrlAnswers}
+            answersLabel={answersLabels.pinnedNotAndIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedNativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeNotIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedPseudonativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedNativeIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userUnpinnedPseudonativeIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeIrl}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+          <ManyCriteriaPinnableByFriend
+            answers={userSharedToContactCustomAnswers}
+            answersLabel={answersLabels.sharedToContactCustom}
+            contact={contact}
+            pinnedbyFriendAnswersLength={pinnedByFriendNotAndIrlAnswersCount}
+          />
+        </>
+      ) : (
+        <>
+          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+        </>
+      )}
     </>
   );
 }
@@ -1018,22 +1046,34 @@ export async function ManyRelComboFriendCriteriaQueried({
 
   return (
     <>
-      <ManyCriteria
-        answers={pinnedNotIrlAnswers}
-        answersLabel={answersLabels.pinnedNotIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeNotIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
-      />
-      <ManyCriteria
-        answers={userSharedToContactCustomAnswers}
-        answersLabel={answersLabels.sharedToContactCustom}
-      />
+      {pinnedNotIrlAnswers.length +
+        userUnpinnedNativeNotIrlAnswers.length +
+        userUnpinnedPseudonativeNotIrlAnswers.length +
+        userSharedToContactCustomAnswers.length >
+      0 ? (
+        <>
+          <ManyCriteria
+            answers={pinnedNotIrlAnswers}
+            answersLabel={answersLabels.pinnedNotIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedNativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeNotIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedPseudonativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+          />
+          <ManyCriteria
+            answers={userSharedToContactCustomAnswers}
+            answersLabel={answersLabels.sharedToContactCustom}
+          />
+        </>
+      ) : (
+        <>
+          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+        </>
+      )}
     </>
   );
 }
@@ -1066,30 +1106,44 @@ export async function ManyRelComboIrlCriteriaQueried({
 
   return (
     <>
-      <ManyCriteria
-        answers={pinnedNotAndIrlAnswers}
-        answersLabel={answersLabels.pinnedNotAndIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedNativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeNotIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedPseudonativeNotIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedNativeIrlAnswers}
-        answersLabel={answersLabels.unpinnedNativeIrl}
-      />
-      <ManyCriteria
-        answers={userUnpinnedPseudonativeIrlAnswers}
-        answersLabel={answersLabels.unpinnedPseudonativeIrl}
-      />
-      <ManyCriteria
-        answers={userSharedToContactCustomAnswers}
-        answersLabel={answersLabels.sharedToContactCustom}
-      />
+      {pinnedNotAndIrlAnswers.length +
+        userUnpinnedNativeNotIrlAnswers.length +
+        userUnpinnedPseudonativeNotIrlAnswers.length +
+        userUnpinnedNativeIrlAnswers.length +
+        userUnpinnedPseudonativeIrlAnswers.length +
+        userSharedToContactCustomAnswers.length >
+      0 ? (
+        <>
+          <ManyCriteria
+            answers={pinnedNotAndIrlAnswers}
+            answersLabel={answersLabels.pinnedNotAndIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedNativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeNotIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedPseudonativeNotIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeNotIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedNativeIrlAnswers}
+            answersLabel={answersLabels.unpinnedNativeIrl}
+          />
+          <ManyCriteria
+            answers={userUnpinnedPseudonativeIrlAnswers}
+            answersLabel={answersLabels.unpinnedPseudonativeIrl}
+          />
+          <ManyCriteria
+            answers={userSharedToContactCustomAnswers}
+            answersLabel={answersLabels.sharedToContactCustom}
+          />
+        </>
+      ) : (
+        <>
+          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+        </>
+      )}
     </>
   );
 }
