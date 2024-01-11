@@ -178,7 +178,8 @@ export async function fetchUserByUserNameOrEmail(usernameOrEmail: string) {
         )
         AND user_password = 'password' -- no password logic at this time
 
-        AND user_state = 'LIVE'
+        AND (user_state = 'LIVE'
+        OR user_state = 'DEACTIVATED')
         
         LIMIT 1;
       `;
