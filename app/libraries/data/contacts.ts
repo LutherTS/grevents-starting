@@ -222,7 +222,7 @@ export async function gatherContactByUserAndUsername(
               c2.contact_blocking c2_contact_blocking, 
               c1.contact_id c1_contact_id, 
               c1.contact_mirror_id c1_contact_mirror_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               u.user_state
           FROM Contacts c1
@@ -465,7 +465,7 @@ export async function findContactByUserAndSession(
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
               c1.user_last_id c1_user_last_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
@@ -519,7 +519,7 @@ export async function findSentFriendToContactsByUser(user: User) {
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
               c1.user_last_id c1_user_last_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
@@ -578,7 +578,7 @@ export async function findSentIrlToContactsByUser(user: User) {
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
               c1.user_last_id c1_user_last_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
@@ -637,7 +637,7 @@ export async function findSentFriendFromContactsByUser(user: User) {
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
               c1.user_last_id c1_user_last_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
@@ -696,7 +696,7 @@ export async function findSentIrlFromContactsByUser(user: User) {
               c1.contact_mirror_id c1_contact_mirror_id,
               c1.user_first_id c1_user_first_id,
               c1.user_last_id c1_user_last_id,
-              c1.contact_status_profile c1_contact_status_profile, -- NEW
+              -- c1.contact_status_profile c1_contact_status_profile, -- NEW
               c2.contact_status_other_profile c2_contact_status_other_profile, -- NEW
               c2.contact_status_relationship c2_contact_status_relationship, -- NEW
               c2.contact_process_relationship c2_contact_process_relationship, -- NEW
