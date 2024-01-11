@@ -524,6 +524,20 @@ export function BackButtonForm() {
   );
 }
 
+export function BackLinkForm() {
+  const router = useRouter();
+
+  return (
+    <>
+      <form className="mt-2" action={() => router.back()}>
+        <button className="inline-block text-blue-500 underline hover:text-blue-400 dark:hover:text-blue-600">
+          back to the previous page
+        </button>
+      </form>
+    </>
+  );
+}
+
 export function ButtonPinnableForm({ answer }: { answer: Answer }) {
   return (
     <>
@@ -678,7 +692,7 @@ export function FriendCodeInputForm({
         <label htmlFor="friend-code">
           <p>Find a user by their friend code.</p>
         </label>
-        <FriendCodeInput />
+        <FriendCodeInput user={user} />
         {state && state.errors?.otherUserFriendCode ? (
           <div id="question-id-native-not-irl-error" aria-live="polite">
             {state.errors.otherUserFriendCode.map((error: string) => (

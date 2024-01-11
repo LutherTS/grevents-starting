@@ -152,6 +152,11 @@ export default async function DashboardPage({
         </PageLinkWithChildren>
         <PageLink href={`/sign-in`} name={`sign out`} />
         <PageLink href={`/`} name={`Return home`} />
+        {user.user_state === "DEACTIVATED" && (
+          <p className="mt-8 font-bold text-red-500">
+            You&apos;ve deactived your profile.
+          </p>
+        )}
       </div>
     </main>
   );

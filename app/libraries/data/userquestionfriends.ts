@@ -122,7 +122,8 @@ export async function findUserQuestionFriend(
         
         AND uqf.userquestionfriend_state = 'LIVE'
         AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND (u.user_state = 'LIVE'
+        OR u.user_state = 'DEACTIVATED')
         AND c2.contact_state = 'LIVE'
 
         LIMIT 1;
