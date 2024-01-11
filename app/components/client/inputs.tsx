@@ -59,7 +59,7 @@ export function FriendCodeInput({ user }: { user: User }) {
       />
       {user.user_state === "DEACTIVATED" && (
         <p className="mt-2 text-red-500">
-          You can't use the find feature while your profile is deactivated.
+          You can&apos;t use the find feature while your profile is deactivated.
         </p>
       )}
     </>
