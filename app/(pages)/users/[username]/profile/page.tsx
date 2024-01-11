@@ -379,7 +379,7 @@ export default async function UserPage({
                 {user.user_app_wide_name} has deactivated their profile.
               </p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {session &&
@@ -392,7 +392,7 @@ export default async function UserPage({
                 deactivated.
               </p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {session &&
@@ -402,7 +402,7 @@ export default async function UserPage({
               <BackToDashboardLink session={session} />
               <p className="mt-2">You&apos;ve deactivated your profile.</p>
               <BackLinkForm />
-              {/* <RevalidateButtonForm /> */}
+              <RevalidateButtonForm />
             </>
           )}
         {!session && (

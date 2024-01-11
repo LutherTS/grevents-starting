@@ -109,13 +109,13 @@ CREATE TYPE contact_status_profile AS ENUM (
     -- 'REACCESSEDTHROUGHFIND' -- Don't need to be a thing.
 ); -- Done.
 
-CREATE TYPE contact_status_other_profile AS ENUM (
+CREATE TYPE contact_status_mirror_profile AS ENUM (
     'NONE',
     'FIRSTACCESSTHROUGHFIND',
     'REACCESSTHROUGHFIND' --,
     'USERQUESTIONFRIENDPINNED', -- added
     'USERQUESTIONFRIENDUNPINNED' -- added
-); -- Done.
+); -- from contact_status_other_profile to contact_status_mirror_profile
 
 CREATE TABLE Contacts (
     contact_id char(36) NOT NULL PRIMARY KEY,
@@ -126,9 +126,9 @@ CREATE TABLE Contacts (
     contact_kind contact_kind DEFAULT 'NONE' NOT NULL,
     contact_process_relationship contact_process_relationship DEFAULT 'NONE' NOT NULL,
     contact_status_relationship contact_status_relationship DEFAULT 'NONE' NOT NULL,
-    contact_blocking boolean DEFAULT FALSE NOT NULL,
-    contact_status_profile contact_status_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
-    contact_status_other_profile contact_status_other_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
+    -- contact_status_profile contact_status_profile DEFAULT 'NONE' NOT NULL, -- NEW -- Done.
+    contact_status_mirror_profile contact_status_mirror_profile DEFAULT 'NONE' NOT NULL, -- from contact_status_other_profile to contact_status_mirror_profile
+    contact_blocking boolean DEFAULT FALSE NOT NULL, -- moved after contact_status_mirror_profile
     contact_created_at timestamp NOT NULL,
     contact_updated_at timestamp NOT NULL,
     contact_sent_friend_at timestamp NULL,
