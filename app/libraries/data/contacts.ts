@@ -141,7 +141,9 @@ export async function fetchAllUserFriendsNotToUserQuestion(
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            c1.contact_updated_at DESC
+            -- c1.contact_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
 
         LIMIT 10;
       `;
@@ -278,7 +280,9 @@ export async function fetchAllUserNotIrlFriends(user: User) {
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            c1.contact_updated_at DESC
+            -- c1.contact_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
 
         LIMIT 10;
       `;
@@ -323,7 +327,10 @@ export async function fetchAllUserIrlFriends(user: User) {
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            c1.contact_updated_at DESC
+            -- c1.contact_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
+            
 
         LIMIT 10;
       `;
@@ -367,8 +374,10 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            c1.contact_blocked_at DESC,
-            c1.contact_updated_at DESC
+            -- c1.contact_blocked_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
 
         LIMIT 10;
       `;
@@ -412,8 +421,10 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
         AND c2.contact_state = 'LIVE'
 
         ORDER BY 
-            c2.contact_blocked_at DESC,
-            c1.contact_updated_at DESC
+            -- c2.contact_blocked_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u.user_app_wide_name) ASC,
+            u.user_username ASC
 
         LIMIT 10;
       `;
@@ -527,8 +538,10 @@ export async function findSentFriendToContactsByUser(user: User) {
           AND u2.user_state = 'LIVE' -- NEW
 
           ORDER BY 
-            c1.contact_sent_friend_at DESC,
-            c1.contact_updated_at DESC
+            -- c1.contact_sent_friend_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u2_user_app_wide_name) ASC,
+            u2_user_username ASC
 
           LIMIT 10;
         `;
@@ -582,8 +595,10 @@ export async function findSentIrlToContactsByUser(user: User) {
           AND u2.user_state = 'LIVE' -- NEW
 
           ORDER BY 
-            c1.contact_sent_irl_at DESC,
-            c1.contact_updated_at DESC
+            -- c1.contact_sent_irl_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u2_user_app_wide_name) ASC,
+            u2_user_username ASC
 
           LIMIT 10;
         `;
@@ -637,8 +652,10 @@ export async function findSentFriendFromContactsByUser(user: User) {
           AND u2.user_state = 'LIVE' -- NEW
 
           ORDER BY 
-            c1.contact_sent_friend_at DESC,
-            c1.contact_updated_at DESC
+            -- c1.contact_sent_friend_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u1_user_app_wide_name) ASC,
+            u1_user_username ASC
 
           LIMIT 10;
         `;
@@ -692,8 +709,10 @@ export async function findSentIrlFromContactsByUser(user: User) {
           AND u2.user_state = 'LIVE' -- NEW
 
           ORDER BY 
-            c1.contact_sent_irl_at DESC,
-            c1.contact_updated_at DESC
+            -- c1.contact_sent_irl_at DESC,
+            -- c1.contact_updated_at DESC,
+            lower(u1_user_app_wide_name) ASC,
+            u1_user_username ASC
 
           LIMIT 10;
         `;
