@@ -14,7 +14,7 @@ export function UserAppWideNameModifyInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="user-app-wide-name"
         name="userappwidename"
@@ -31,7 +31,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id={answer.answer_id}
         name="answervalue"
@@ -49,7 +49,7 @@ export function FriendCodeInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="friend-code"
         name="friendcode"
@@ -72,7 +72,7 @@ export function UserLastInput({ userLast }: { userLast: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="user-last"
         name="userlast"
@@ -90,7 +90,7 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="rel-combo"
         name="relcombo"
@@ -109,7 +109,7 @@ export function RelComboSelect({ relCombo }: { relCombo: string }) {
   return (
     <>
       <select
-        className="truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         id="rel-combo"
         name="relcombo"
         placeholder={relCombo}
@@ -138,7 +138,7 @@ export function NativeNotIrlQuestionSelect({
     <>
       <div className="mt-4 flex w-full justify-center">
         <select
-          className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+          className="block truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
           id="native-not-irl-question"
           name="nativenotirlquestion"
           defaultValue=""
@@ -177,7 +177,7 @@ export function AnswerInput({
   return (
     <>
       <input
-        className="mt-4 w-10/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-4 w-10/12 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id={id}
         name={name}
@@ -199,7 +199,7 @@ export function NativeIrlQuestionSelect({
     <>
       <div className="mt-4 flex w-full justify-center">
         <select
-          className="block truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+          className="block truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
           id="native-irl-question"
           name="nativeirlquestion"
           defaultValue=""
@@ -238,7 +238,7 @@ export function CustomizedQuestionInput({
   return (
     <>
       <input
-        className="mt-4 w-11/12 truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        className="mt-4 w-11/12 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id={id}
         name={name}
@@ -265,7 +265,8 @@ export function SignInput({
   return (
     <>
       <input
-        className="mt-2 w-full truncate px-2 text-center text-black disabled:bg-gray-500 disabled:text-white"
+        // disabled classes don't apply when the field is fulfilled via autocomplete
+        className="mt-2 w-full truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type={type ? type : "text"}
         id={id}
         name={name}
