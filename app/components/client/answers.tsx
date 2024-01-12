@@ -41,7 +41,7 @@ export function ManyPaginatedCriteria({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneCriteria answer={answer} personalView={personalView} />
@@ -90,7 +90,7 @@ export function ManyPaginatedCriteriaModify({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneCriteriaModify answer={answer} />
@@ -139,7 +139,7 @@ export function ManyPaginatedCriteriaPinnable({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneCriteriaPinnable answer={answer} personalView={true} />
@@ -252,7 +252,7 @@ export function ManyPaginatedCriteriaCancelPinnableByFriend({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneCriteriaCancelPinnableByFriend
@@ -304,7 +304,7 @@ export function ManyPaginatedCriteriaPinnablePseudoable({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneCriteriaPinnablePseudoable answer={answer} />
@@ -353,7 +353,7 @@ export function ManyPaginatedLinkCriteria({
   return (
     <>
       <ol>
-        {answers.map((answer) => {
+        {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
               <OneLinkCriteria answer={answer} />
