@@ -918,7 +918,9 @@ export async function ManyRelComboFriendCriteriaExposed({
         </>
       ) : (
         <>
-          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+          <p className="mt-2">
+            {user.user_app_wide_name} has not exposed any criteria yet.
+          </p>
         </>
       )}
     </>
@@ -1015,7 +1017,9 @@ export async function ManyRelComboIrlCriteriaExposed({
         </>
       ) : (
         <>
-          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+          <p className="mt-2">
+            {user.user_app_wide_name} has not exposed any criteria yet.
+          </p>
         </>
       )}
     </>
@@ -1071,7 +1075,9 @@ export async function ManyRelComboFriendCriteriaQueried({
         </>
       ) : (
         <>
-          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+          <p className="mt-2">
+            {user.user_app_wide_name} has not exposed any criteria yet.
+          </p>
         </>
       )}
     </>
@@ -1141,7 +1147,9 @@ export async function ManyRelComboIrlCriteriaQueried({
         </>
       ) : (
         <>
-          <p>{user.user_app_wide_name} has not exposed any criteria yet.</p>
+          <p className="mt-2">
+            {user.user_app_wide_name} has not exposed any criteria yet.
+          </p>
         </>
       )}
     </>
