@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 import {
   fetchAllUserFriendsNotToUserQuestion,
@@ -21,7 +21,7 @@ import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { ButtonShareUserQuestionFriendForm } from "../client/forms";
 import Link from "next/link";
 
-export async function OneFriend({ friend }: { friend: Friend }) {
+export function OneFriend({ friend }: { friend: Friend }) {
   return (
     <>
       <p className="mt-2">
@@ -37,7 +37,7 @@ export async function OneFriend({ friend }: { friend: Friend }) {
   );
 }
 
-export async function OneFriendAddable({
+export function OneFriendAddable({
   friend,
   userQuestion,
 }: {
@@ -157,7 +157,7 @@ export async function ManyIrlFriends({ user }: { user: User }) {
   );
 }
 
-export async function OneBlock({ block }: { block: Block }) {
+export function OneBlock({ block }: { block: Block }) {
   return (
     <>
       <p className="mt-2">
@@ -225,7 +225,7 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
   );
 }
 
-export async function OneSentToContact({ contact }: { contact: FoundContact }) {
+export function OneSentToContact({ contact }: { contact: FoundContact }) {
   return (
     <>
       <p className="mt-2">
@@ -293,11 +293,7 @@ export async function ManySentIrlToContacts({ user }: { user: User }) {
   );
 }
 
-export async function OneSentFromContact({
-  contact,
-}: {
-  contact: FoundContact;
-}) {
+export function OneSentFromContact({ contact }: { contact: FoundContact }) {
   return (
     <>
       <p className="mt-2">

@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 import {
   // countUserQuestionFriends,
@@ -8,15 +8,11 @@ import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import { ButtonCancelShareUserQuestionFriendForm } from "../client/forms";
 
-export async function ManyUserQuestionFriendsLabel({
-  // userQuestion,
+export function ManyUserQuestionFriendsLabel({
   userQuestionFriends,
 }: {
-  // userQuestion: UserQuestion;
   userQuestionFriends: UserQuestionFriend[];
 }) {
-  // const userQuestionFriendsCount = await countUserQuestionFriends(userQuestion);
-
   return (
     <>
       {userQuestionFriends.length >= 2 ? (
@@ -32,7 +28,7 @@ export async function ManyUserQuestionFriendsLabel({
   );
 }
 
-export async function OneUserQuestionFriend({
+export function OneUserQuestionFriend({
   userQuestion,
   userQuestionFriend,
 }: {

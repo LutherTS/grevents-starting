@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 import {
   fetchUserPinnedAnswers,
@@ -54,8 +54,17 @@ import {
   NoAnswersLabel,
   noAnswersLabels,
 } from "@/app/libraries/utilities/noanswerslabels";
+import {
+  ManyPaginatedCriteria,
+  ManyPaginatedCriteriaCancelPinnableByFriend,
+  ManyPaginatedCriteriaModify,
+  ManyPaginatedCriteriaPinnable,
+  ManyPaginatedCriteriaPinnableByFriend,
+  ManyPaginatedCriteriaPinnablePseudoable,
+  ManyPaginatedLinkCriteria,
+} from "../client/answers";
 
-export async function OneCriteriaQuestion({
+export function OneCriteriaQuestion({
   answer,
   personalView,
 }: {
@@ -114,7 +123,7 @@ export async function OneCriteriaQuestion({
   );
 }
 
-export async function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
+export function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="mt-2">
@@ -135,7 +144,7 @@ export async function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
   );
 }
 
-export async function OneCriteriaAnswer({ answer }: { answer: Answer }) {
+export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
       <p className="mt-2">{answer.answer_value}</p>
@@ -143,7 +152,7 @@ export async function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   );
 }
 
-export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
+export function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   return (
     <>
       <OneCriteriaAnswerModifyForm answer={answer} />
@@ -151,11 +160,7 @@ export async function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   );
 }
 
-export async function OneCriteriaAnswerPinnable({
-  answer,
-}: {
-  answer: Answer;
-}) {
+export function OneCriteriaAnswerPinnable({ answer }: { answer: Answer }) {
   return (
     <>
       <div className="mt-2 flex justify-center">
@@ -166,7 +171,7 @@ export async function OneCriteriaAnswerPinnable({
   );
 }
 
-export async function OneCriteriaAnswerPinnableByFriend({
+export function OneCriteriaAnswerPinnableByFriend({
   answer,
   contact,
   pinnedbyFriendAnswersLength,
@@ -187,7 +192,7 @@ export async function OneCriteriaAnswerPinnableByFriend({
   );
 }
 
-export async function OneCriteriaAnswerCancelPinnableByFriend({
+export function OneCriteriaAnswerCancelPinnableByFriend({
   answer,
   contact,
 }: {
@@ -207,7 +212,7 @@ export async function OneCriteriaAnswerCancelPinnableByFriend({
   );
 }
 
-export async function OneCriteriaAnswerPinnablePseudoable({
+export function OneCriteriaAnswerPinnablePseudoable({
   answer,
 }: {
   answer: Answer;
@@ -223,7 +228,7 @@ export async function OneCriteriaAnswerPinnablePseudoable({
   );
 }
 
-export async function OneCriteria({
+export function OneCriteria({
   // That async is actually useless, because no function inside this component is actually async. Thus it's time for a file structure overhaul.
   answer,
   personalView,
@@ -239,7 +244,7 @@ export async function OneCriteria({
   );
 }
 
-export async function OneCriteriaModify({
+export function OneCriteriaModify({
   answer,
   personalView,
 }: {
@@ -254,7 +259,7 @@ export async function OneCriteriaModify({
   );
 }
 
-export async function OneCriteriaPinnable({
+export function OneCriteriaPinnable({
   answer,
   personalView,
 }: {
@@ -263,13 +268,13 @@ export async function OneCriteriaPinnable({
 }) {
   return (
     <>
-      <OneCriteriaQuestion answer={answer} personalView={true} />
+      <OneCriteriaQuestion answer={answer} personalView={personalView} />
       <OneCriteriaAnswerPinnable answer={answer} />
     </>
   );
 }
 
-export async function OneCriteriaPinnableByFriend({
+export function OneCriteriaPinnableByFriend({
   answer,
   contact,
   pinnedbyFriendAnswersLength,
@@ -290,7 +295,7 @@ export async function OneCriteriaPinnableByFriend({
   );
 }
 
-export async function OneCriteriaCancelPinnableByFriend({
+export function OneCriteriaCancelPinnableByFriend({
   answer,
   contact,
 }: {
@@ -308,11 +313,7 @@ export async function OneCriteriaCancelPinnableByFriend({
   );
 }
 
-export async function OneCriteriaPinnablePseudoable({
-  answer,
-}: {
-  answer: Answer;
-}) {
+export function OneCriteriaPinnablePseudoable({ answer }: { answer: Answer }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} />
@@ -321,7 +322,7 @@ export async function OneCriteriaPinnablePseudoable({
   );
 }
 
-export async function OneLinkCriteria({ answer }: { answer: Answer }) {
+export function OneLinkCriteria({ answer }: { answer: Answer }) {
   return (
     <>
       <div>
@@ -337,7 +338,7 @@ export async function OneLinkCriteria({ answer }: { answer: Answer }) {
   );
 }
 
-export async function ManyCriteria({
+export function ManyCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -371,23 +372,10 @@ export async function ManyCriteria({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteria
-                        answer={answer}
-                        personalView={personalView}
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteria
+                answers={answers}
+                personalView={personalView}
+              />
             </>
           )}
         </>
@@ -402,7 +390,7 @@ export async function ManyCriteria({
   );
 }
 
-export async function ManyCriteriaModify({
+export function ManyCriteriaModify({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -431,20 +419,7 @@ export async function ManyCriteriaModify({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaModify answer={answer} />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteriaModify answers={answers} />
             </>
           )}
         </>
@@ -459,7 +434,7 @@ export async function ManyCriteriaModify({
   );
 }
 
-export async function ManyCriteriaPinnable({
+export function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -491,23 +466,7 @@ export async function ManyCriteriaPinnable({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaPinnable
-                        answer={answer}
-                        personalView={true}
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteriaPinnable answers={answers} />
             </>
           )}
         </>
@@ -522,7 +481,7 @@ export async function ManyCriteriaPinnable({
   );
 }
 
-export async function ManyCriteriaPinnableByFriend({
+export function ManyCriteriaPinnableByFriend({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -561,26 +520,11 @@ export async function ManyCriteriaPinnableByFriend({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaPinnableByFriend
-                        answer={answer}
-                        contact={contact}
-                        pinnedbyFriendAnswersLength={
-                          pinnedbyFriendAnswersLength
-                        }
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteriaPinnableByFriend
+                answers={answers}
+                contact={contact}
+                pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
+              />
             </>
           )}
         </>
@@ -595,7 +539,7 @@ export async function ManyCriteriaPinnableByFriend({
   );
 }
 
-export async function ManyCriteriaCancelPinnableByFriend({
+export function ManyCriteriaCancelPinnableByFriend({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -629,23 +573,10 @@ export async function ManyCriteriaCancelPinnableByFriend({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaCancelPinnableByFriend
-                        answer={answer}
-                        contact={contact}
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteriaCancelPinnableByFriend
+                answers={answers}
+                contact={contact}
+              />
             </>
           )}
         </>
@@ -660,7 +591,7 @@ export async function ManyCriteriaCancelPinnableByFriend({
   );
 }
 
-export async function ManyCriteriaPinnablePseudoable({
+export function ManyCriteriaPinnablePseudoable({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -689,20 +620,7 @@ export async function ManyCriteriaPinnablePseudoable({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaPinnablePseudoable answer={answer} />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedCriteriaPinnablePseudoable answers={answers} />
             </>
           )}
         </>
@@ -717,7 +635,7 @@ export async function ManyCriteriaPinnablePseudoable({
   );
 }
 
-export async function ManyLinkCriteria({
+export function ManyLinkCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
@@ -746,20 +664,7 @@ export async function ManyLinkCriteria({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneLinkCriteria answer={answer} />
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className="mt-2">
-                <PaginationPreviousForm />
-                &nbsp;/&nbsp;
-                <PaginationNextForm />
-              </p>
+              <ManyPaginatedLinkCriteria answers={answers} />
             </>
           )}
         </>
