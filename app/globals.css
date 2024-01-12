@@ -25,3 +25,18 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* https://codepen.io/laylacodogno/pen/yeNydz 
+That's the best I'll be able to do on this issue.
+The work around can't affect the text color.
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  background-color: transparent;
+}
+*/
+input:-webkit-autofill:disabled {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(107 114 128 / var(--tw-text-opacity))
+    inset;
+  background-color: transparent;
+  color: white;
+}
