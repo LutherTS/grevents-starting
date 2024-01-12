@@ -72,7 +72,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40; -- client-side pagination allowed
       `;
       // console.log(data);
       return data.rows;
@@ -121,7 +121,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -170,7 +170,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -220,7 +220,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -270,7 +270,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -334,7 +334,7 @@ export async function fetchUserCustomAnswers(userId: string) {
             userquestionfriends_count ASC, -- NEW
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -456,7 +456,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -507,7 +507,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -563,7 +563,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -616,7 +616,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -672,7 +672,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -731,7 +731,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -785,7 +785,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -853,7 +853,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -904,7 +904,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -958,7 +958,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1009,7 +1009,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1063,7 +1063,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1120,7 +1120,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1174,7 +1174,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1252,7 +1252,7 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
         ORDER BY
             lower(q.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1336,7 +1336,7 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
         ORDER BY
             lower(q.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1425,7 +1425,7 @@ export async function fetchUserPinnedNotIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1507,7 +1507,7 @@ export async function fetchUserPinnedNotIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1601,7 +1601,7 @@ export async function fetchUserPinnedNotAndIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1690,7 +1690,7 @@ export async function fetchUserPinnedNotAndIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
