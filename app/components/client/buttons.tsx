@@ -11,7 +11,7 @@ export function Button({ children }: { children: React.ReactNode }) {
     <>
       <button
         disabled={status.pending}
-        className="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-blue-600 disabled:dark:hover:bg-gray-500"
+        className="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-blue-600 disabled:dark:hover:bg-gray-500"
       >
         {children}
       </button>
@@ -41,7 +41,7 @@ export function FormButton({ children }: { children: React.ReactNode }) {
     <>
       <button
         disabled={status.pending}
-        className="mt-6 w-full rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-blue-600 disabled:dark:hover:bg-gray-500"
+        className="mt-6 w-full rounded-md bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-400 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-blue-600 disabled:dark:hover:bg-gray-500"
       >
         {children}
       </button>
@@ -57,7 +57,7 @@ export function ButtonPinnable({ answer }: { answer: Answer }) {
       <button
         disabled={status.pending}
         className={clsx(
-          "h-4 w-4 rounded-full disabled:bg-gray-500 disabled:hover:bg-gray-500",
+          "h-4 w-4 rounded-full disabled:!bg-gray-500 disabled:hover:bg-gray-500",
           {
             "bg-cyan-500 hover:bg-pink-300 dark:hover:bg-pink-700":
               answer.userquestion_is_pinned === true,
@@ -78,7 +78,7 @@ export function ButtonPseudoable({ answer }: { answer: Answer }) {
       <button
         disabled={status.pending}
         className={clsx(
-          "h-4 w-4 rounded-full bg-yellow-500 disabled:bg-gray-500 disabled:hover:bg-gray-500",
+          "h-4 w-4 rounded-full bg-yellow-500 disabled:!bg-gray-500 disabled:hover:bg-gray-500",
           {
             "hover:bg-emerald-300 dark:hover:bg-emerald-700":
               answer.question_kind === "PSEUDO" &&
@@ -100,7 +100,7 @@ export function ButtonShareUserQuestionFriend() {
     <>
       <button
         disabled={status.pending}
-        className="h-4 w-4 rounded-full bg-cyan-500 hover:bg-cyan-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-cyan-700"
+        className="h-4 w-4 rounded-full bg-cyan-500 hover:bg-cyan-300 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-cyan-700"
       ></button>
     </>
   );
@@ -113,7 +113,7 @@ export function ButtonCancelShareUserQuestionFriend() {
     <>
       <button
         disabled={status.pending}
-        className="h-4 w-4 rounded-full bg-pink-500 hover:bg-pink-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-pink-700"
+        className="h-4 w-4 rounded-full bg-pink-500 hover:bg-pink-300 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-pink-700"
       ></button>
     </>
   );
@@ -126,7 +126,7 @@ export function ButtonPinUserQuestionFriend() {
     <>
       <button
         disabled={status.pending}
-        className="h-4 w-4 rounded-full bg-cyan-500 hover:bg-cyan-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-cyan-700"
+        className="h-4 w-4 rounded-full bg-cyan-500 hover:bg-cyan-300 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-cyan-700"
       ></button>
     </>
   );
@@ -139,7 +139,7 @@ export function ButtonCancelPinUserQuestionFriend() {
     <>
       <button
         disabled={status.pending}
-        className="h-4 w-4 rounded-full bg-pink-500 hover:bg-pink-300 disabled:bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-pink-700"
+        className="h-4 w-4 rounded-full bg-pink-500 hover:bg-pink-300 disabled:!bg-gray-500 disabled:hover:bg-gray-500 dark:hover:bg-pink-700"
       ></button>
     </>
   );
