@@ -72,7 +72,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40; -- client-side pagination allowed
       `;
       // console.log(data);
       return data.rows;
@@ -121,7 +121,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -170,7 +170,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -220,7 +220,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -270,7 +270,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -334,7 +334,7 @@ export async function fetchUserCustomAnswers(userId: string) {
             userquestionfriends_count ASC, -- NEW
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -456,7 +456,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -507,7 +507,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -563,7 +563,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -616,7 +616,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -672,7 +672,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -731,7 +731,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -785,7 +785,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -853,7 +853,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -904,7 +904,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -958,7 +958,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1009,7 +1009,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1063,7 +1063,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1120,7 +1120,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1174,7 +1174,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1209,22 +1209,21 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id --,
-            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
         JOIN Questions q ON uq.question_id = q.question_id
-        JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        JOIN UserQuestionFriends uqf ON a.userquestion_id = uqf.userquestion_id
         JOIN Users u ON a.user_id = u.user_id
-        JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
         JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        -- LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
         AND q.question_kind = 'CUSTOM'
         AND c1.contact_id = ${contactId}
+        AND uqf.contact_id = ${contactId} -- FIX
 
         AND (
             (
@@ -1245,27 +1244,15 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
           
         AND a.answer_state = 'LIVE'
         AND uq.userquestion_state = 'LIVE'
-        AND uqf1.userquestionfriend_state = 'LIVE'
+        AND uqf.userquestionfriend_state = 'LIVE'
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
         AND u.user_state = 'LIVE'
 
-        -- GROUP BY -- NEW
-            -- q.question_name, 
-            -- a.answer_value, 
-            -- a.answer_id,
-            -- uq.userquestion_is_pinned,
-            -- q.question_kind,
-            -- uq.userquestion_kind,
-            -- uq.userquestion_id,
-            -- u.user_username,
-            -- u.user_id
-
-        ORDER BY 
-            -- userquestionfriends_count ASC, -- NEW
+        ORDER BY
             lower(q.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1280,6 +1267,8 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
     );
   }
 }
+
+// Maintenance here is starting to get real. I will eventually have to put these SQL strings into variables.
 
 // Previously and more descriptively:
 // fetchUserSharedToContactCustomAnswersNotPinnedByFriend
@@ -1302,22 +1291,22 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
             uq.userquestion_kind,
             uq.userquestion_id,
             u.user_username,
-            u.user_id -- ,
-            -- COUNT(CASE uqf2.userquestionfriend_shared_to_friend WHEN TRUE THEN 1 ELSE null END) userquestionfriends_count -- NEW
+            u.user_id
         FROM Answers a
 
         JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
         JOIN Questions q ON uq.question_id = q.question_id
-        JOIN UserQuestionFriends uqf1 ON a.userquestion_id = uqf1.userquestion_id
+        JOIN UserQuestionFriends uqf ON a.userquestion_id = uqf.userquestion_id
         JOIN Users u ON a.user_id = u.user_id
-        JOIN Contacts c1 ON uqf1.contact_id = c1.contact_id
+        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
         JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        LEFT JOIN UserQuestionFriends uqf2 ON uq.userquestion_id = uqf2.userquestion_id -- NEW
+        
 
         WHERE uq.user_id = ${userId}
         AND a.user_id = ${userId}
         AND q.question_kind = 'CUSTOM'
         AND c1.contact_id = ${contactId}
+        AND uqf.contact_id = ${contactId} -- FIX 
 
         AND (
             (
@@ -1335,30 +1324,19 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
         )
 
         AND uq.userquestion_is_pinned = FALSE
-        AND uqf2.userquestionfriend_pinned_by_friend = FALSE -- NEW
+        AND uqf.userquestionfriend_pinned_by_friend = FALSE -- NEW
           
         AND a.answer_state = 'LIVE'
         AND uq.userquestion_state = 'LIVE'
-        AND uqf1.userquestionfriend_state = 'LIVE'
+        AND uqf.userquestionfriend_state = 'LIVE'
         AND c1.contact_state = 'LIVE'
         AND c2.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
 
-        -- GROUP BY -- NEW
-            -- q.question_name, 
-            -- a.answer_value, 
-            -- a.answer_id,
-            -- uq.userquestion_is_pinned,
-            -- q.question_kind,
-            -- uq.userquestion_kind,
-            -- uq.userquestion_id,
-            -- u.user_username,
-            -- u.user_id
-
-        ORDER BY 
-            -- userquestionfriends_count ASC, -- NEW
+        ORDER BY
             lower(q.question_name) ASC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1447,7 +1425,7 @@ export async function fetchUserPinnedNotIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1529,7 +1507,7 @@ export async function fetchUserPinnedNotIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1623,7 +1601,7 @@ export async function fetchUserPinnedNotAndIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;
@@ -1712,7 +1690,7 @@ export async function fetchUserPinnedNotAndIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 10;
+        LIMIT 40;
       `;
       // console.log(data);
       return data.rows;

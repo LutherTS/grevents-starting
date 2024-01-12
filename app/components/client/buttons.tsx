@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import { Answer } from "@/app/libraries/definitions/answers";
 import { useFormStatus } from "react-dom";
+import { MouseEventHandler } from "react";
 
 export function Button({ children }: { children: React.ReactNode }) {
   const status = useFormStatus();
@@ -26,6 +27,28 @@ export function LinkButton({ children }: { children: React.ReactNode }) {
     <>
       <button
         disabled={status.pending}
+        className="inline text-blue-500 hover:text-blue-400 disabled:text-gray-500 disabled:hover:text-gray-500 dark:hover:text-blue-600 disabled:dark:hover:text-gray-500"
+      >
+        {children}
+      </button>
+    </>
+  );
+}
+
+export function OnClickLinkButton({
+  children,
+  handleClick,
+  isDisabled,
+}: {
+  children: React.ReactNode;
+  handleClick: MouseEventHandler<HTMLButtonElement>;
+  isDisabled: boolean;
+}) {
+  return (
+    <>
+      <button
+        onClick={handleClick}
+        disabled={isDisabled}
         className="inline text-blue-500 hover:text-blue-400 disabled:text-gray-500 disabled:hover:text-gray-500 dark:hover:text-blue-600 disabled:dark:hover:text-gray-500"
       >
         {children}
