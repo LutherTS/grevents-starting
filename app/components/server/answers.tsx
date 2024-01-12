@@ -47,6 +47,8 @@ import {
   ButtonPinnableForm,
   ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
+  PaginationNextForm,
+  PaginationPreviousForm,
 } from "../client/forms";
 import {
   NoAnswersLabel,
@@ -349,16 +351,44 @@ export async function ManyCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteria answer={answer} personalView={personalView} />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteria
+                        answer={answer}
+                        personalView={personalView}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteria
+                        answer={answer}
+                        personalView={personalView}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -384,16 +414,38 @@ export async function ManyCriteriaModify({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteriaModify answer={answer} />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaModify answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaModify answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -419,16 +471,44 @@ export async function ManyCriteriaPinnable({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteriaPinnable answer={answer} personalView={true} />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnable
+                        answer={answer}
+                        personalView={true}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnable
+                        answer={answer}
+                        personalView={true}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -458,20 +538,50 @@ export async function ManyCriteriaPinnableByFriend({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteriaPinnableByFriend
-                    answer={answer}
-                    contact={contact}
-                    pinnedbyFriendAnswersLength={pinnedbyFriendAnswersLength}
-                  />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnableByFriend
+                        answer={answer}
+                        contact={contact}
+                        pinnedbyFriendAnswersLength={
+                          pinnedbyFriendAnswersLength
+                        }
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnableByFriend
+                        answer={answer}
+                        contact={contact}
+                        pinnedbyFriendAnswersLength={
+                          pinnedbyFriendAnswersLength
+                        }
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -499,19 +609,44 @@ export async function ManyCriteriaCancelPinnableByFriend({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteriaCancelPinnableByFriend
-                    answer={answer}
-                    contact={contact}
-                  />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaCancelPinnableByFriend
+                        answer={answer}
+                        contact={contact}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaCancelPinnableByFriend
+                        answer={answer}
+                        contact={contact}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -537,16 +672,38 @@ export async function ManyCriteriaPinnablePseudoable({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneCriteriaPinnablePseudoable answer={answer} />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnablePseudoable answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnablePseudoable answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
@@ -572,16 +729,38 @@ export async function ManyLinkCriteria({
     <>
       {answers.length > 0 && (
         <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <ol>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.answer_id}>
-                  <OneLinkCriteria answer={answer} />
-                </li>
-              );
-            })}
-          </ol>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneLinkCriteria answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneLinkCriteria answer={answer} />
+                    </li>
+                  );
+                })}
+              </ol>
+              <p className="mt-2">
+                <PaginationPreviousForm />
+                &nbsp;/&nbsp;
+                <PaginationNextForm />
+              </p>
+            </>
+          )}
         </>
       )}
       {answers.length === 0 && noAnswersLabel && (
