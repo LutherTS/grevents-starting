@@ -47,8 +47,6 @@ import {
   ButtonPinnableForm,
   ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
-  PaginationNextForm,
-  PaginationPreviousForm,
 } from "../client/forms";
 import {
   NoAnswersLabel,
