@@ -21,6 +21,7 @@ import {
 } from "../client/answers";
 import { AnswersLabel } from "@/app/libraries/utilities/answerslabels";
 import { NoAnswersLabel } from "@/app/libraries/utilities/noanswerslabels";
+import { ANSWERS_PINNED_BY_FRIEND_LIMIT } from "@/app/libraries/data/answers";
 
 export function OneCriteriaQuestion({
   answer,
@@ -141,7 +142,7 @@ export function OneCriteriaAnswerPinnableByFriend({
   return (
     <>
       <div className="mt-2 flex justify-center">
-        {pinnedbyFriendAnswersLength < 5 && (
+        {pinnedbyFriendAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT && (
           <ButtonPinUserQuestionFriendForm answer={answer} contact={contact} />
         )}
         <p>{answer.answer_value}</p>
