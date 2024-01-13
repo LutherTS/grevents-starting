@@ -1,7 +1,6 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { fetchCustomUserQuestionByIDAndUser } from "@/app/libraries/data/userquestions";
 import { findAnswerByUserQuestionAndUser } from "@/app/libraries/data/answers";
-import { OneCriteriaModify } from "@/app/components/server/answers";
 import { ManyFriendsAddable } from "@/app/components/server/contacts";
 import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
 import { notFound } from "next/navigation";
@@ -13,6 +12,7 @@ import {
   UserQuestionFriendCreated,
   UserQuestionFriendDeleted,
 } from "@/app/components/client/toasts";
+import { OneCriteriaModify } from "@/app/components/agnostic/answers";
 
 import type { Metadata } from "next";
 
