@@ -104,7 +104,6 @@ export async function countUserPinnedAnswers(userId: string) {
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
         JOIN Questions ON UserQuestions.question_id = Questions.question_id
         JOIN Users ON Answers.user_id = Users.user_id
-        LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
 
         WHERE UserQuestions.user_id = ${userId}
         AND Answers.user_id = ${userId}

@@ -136,6 +136,10 @@ export function OneCriteriaAnswerPinnable({
         {pinnedAnswersCount < ANSWERS_PINNED_BY_USER_LIMIT && (
           <ButtonPinnableForm answer={answer} />
         )}
+        {pinnedAnswersCount >= ANSWERS_PINNED_BY_USER_LIMIT &&
+          answer.userquestion_is_pinned === true && (
+            <ButtonPinnableForm answer={answer} />
+          )}
         <p>{answer.answer_value}</p>
       </div>
     </>
@@ -156,6 +160,10 @@ export function OneCriteriaAnswerPinnablePseudoable({
         {pinnedAnswersCount < ANSWERS_PINNED_BY_USER_LIMIT && (
           <ButtonPinnableForm answer={answer} />
         )}
+        {pinnedAnswersCount >= ANSWERS_PINNED_BY_USER_LIMIT &&
+          answer.userquestion_is_pinned === true && (
+            <ButtonPinnableForm answer={answer} />
+          )}
         <p>{answer.answer_value}</p>
         <ButtonPseudoableForm answer={answer} />
       </div>

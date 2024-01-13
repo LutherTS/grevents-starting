@@ -261,40 +261,44 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
 
   revalidatePath(`/users/${answer.user_username}/personal-info`);
 
-  if (
-    answer.question_kind === "NATIVE" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
-  }
+  // if (
+  //   answer.question_kind === "NATIVE" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  // }
 
-  if (
-    answer.question_kind === "NATIVEIRL" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
-  }
+  // if (
+  //   answer.question_kind === "NATIVEIRL" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  // }
 
-  if (
-    answer.question_kind === "PSEUDO" &&
-    answer.userquestion_kind === "PSEUDONATIVE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "PSEUDO" &&
+  //   answer.userquestion_kind === "PSEUDONATIVE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
 
-  if (
-    answer.question_kind === "PSEUDO" &&
-    answer.userquestion_kind === "PSEUDONATIVEIRL"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "PSEUDO" &&
+  //   answer.userquestion_kind === "PSEUDONATIVEIRL"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
 
-  if (
-    answer.question_kind === "CUSTOM" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "CUSTOM" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
+
+  // Because both pages need to know if ANSWERS_PINNED_BY_USER_LIMIT has been reached.
+  revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
 
   redirect(`/users/${answer.user_username}/personal-info`);
 }

@@ -19,9 +19,12 @@ import {
 } from "@/app/components/client/toasts";
 import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
+import {
+  ANSWERS_PINNED_BY_USER_LIMIT,
+  countUserPinnedAnswers,
+} from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
-import { countUserPinnedAnswers } from "@/app/libraries/data/answers";
 
 export async function generateMetadata({
   params,
@@ -107,6 +110,11 @@ export default async function CustomizedPage({
         )}
         {user.user_status_personal_info === "CUSTOMCRITERIAADDED" && (
           <UserCustomCriteriaAdded user={user} />
+        )}
+        {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
+          <p className="mb-2 cursor-default text-orange-500">
+            You can&apos;t pin more than 16 of your own criteria.
+          </p>
         )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
         <BackToDashboardLink session={session} />
