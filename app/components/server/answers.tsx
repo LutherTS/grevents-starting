@@ -79,7 +79,7 @@ export async function ManyUserNativeNotIrlCriteria({
         answers={userNativeNotIrlAnswers}
         answersLabel={answersLabels.nativeNotIrl}
         noAnswersLabel={noAnswersLabels.nativeNotIrl}
-        pinnedAnswersLength={pinnedAnswerCount}
+        pinnedAnswersCount={pinnedAnswerCount}
       />
     </>
   );
@@ -120,7 +120,7 @@ export async function ManyUserNativeIrlCriteria({
         answers={userNativeIrlAnswers}
         answersLabel={answersLabels.nativeIrl}
         noAnswersLabel={noAnswersLabels.nativeIrl}
-        pinnedAnswersLength={pinnedAnswerCount}
+        pinnedAnswersCount={pinnedAnswerCount}
       />
     </>
   );
@@ -160,7 +160,7 @@ export async function ManyUserPseudonativeNotIrlCriteria({
         answers={userPseudonativeNotIrlAnswers}
         answersLabel={answersLabels.pseudonativeNotIrl}
         noAnswersLabel={noAnswersLabels.pseudonativeNotIrl}
-        pinnedAnswersLength={pinnedAnswerCount}
+        pinnedAnswersCount={pinnedAnswerCount}
       />
     </>
   );
@@ -202,7 +202,7 @@ export async function ManyUserPseudonativeIrlCriteria({
         answers={userPseudonativeIrlAnswers}
         answersLabel={answersLabels.pseudonativeIrl}
         noAnswersLabel={noAnswersLabels.pseudonativeIrl}
-        pinnedAnswersLength={pinnedAnswerCount}
+        pinnedAnswersCount={pinnedAnswerCount}
       />
     </>
   );
@@ -243,7 +243,7 @@ export async function ManyUserCustomCriteria({
         answers={userCustomAnswers}
         answersLabel={answersLabels.custom}
         noAnswersLabel={noAnswersLabels.custom}
-        pinnedAnswersLength={pinnedAnswerCount}
+        pinnedAnswersCount={pinnedAnswerCount}
       />
     </>
   );

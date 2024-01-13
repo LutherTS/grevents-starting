@@ -120,11 +120,11 @@ export function ManyPaginatedCriteriaModify({
 export function ManyPaginatedCriteriaPinnable({
   // children,
   answers,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   // children: React.ReactNode;
   answers: Answer[];
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
 
@@ -147,7 +147,7 @@ export function ManyPaginatedCriteriaPinnable({
               <OneCriteriaPinnable
                 answer={answer}
                 personalView={true}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </li>
           );
@@ -175,11 +175,11 @@ export function ManyPaginatedCriteriaPinnable({
 export function ManyPaginatedCriteriaPinnablePseudoable({
   // children,
   answers,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   // children: React.ReactNode;
   answers: Answer[];
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
 
@@ -201,7 +201,7 @@ export function ManyPaginatedCriteriaPinnablePseudoable({
             <li key={answer.answer_id}>
               <OneCriteriaPinnablePseudoable
                 answer={answer}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </li>
           );
@@ -345,11 +345,11 @@ export function ManyPaginatedCriteriaCancelPinnableByFriend({
 export function ManyPaginatedLinkCriteria({
   // children,
   answers,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   // children: React.ReactNode;
   answers: Answer[];
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
 
@@ -371,7 +371,7 @@ export function ManyPaginatedLinkCriteria({
             <li key={answer.answer_id}>
               <OneLinkCriteria
                 answer={answer}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </li>
           );

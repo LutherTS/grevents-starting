@@ -124,16 +124,16 @@ export function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
 
 export function OneCriteriaAnswerPinnable({
   answer,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answer: Answer;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
       <div className="mt-2 flex justify-center">
         {/* <ButtonPinnableForm answer={answer} /> */}
-        {pinnedAnswersLength < ANSWERS_PINNED_BY_USER_LIMIT && (
+        {pinnedAnswersCount < ANSWERS_PINNED_BY_USER_LIMIT && (
           <ButtonPinnableForm answer={answer} />
         )}
         <p>{answer.answer_value}</p>
@@ -144,16 +144,16 @@ export function OneCriteriaAnswerPinnable({
 
 export function OneCriteriaAnswerPinnablePseudoable({
   answer,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answer: Answer;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
       <div className="mt-2 flex justify-center">
         {/* <ButtonPinnableForm answer={answer} /> */}
-        {pinnedAnswersLength < ANSWERS_PINNED_BY_USER_LIMIT && (
+        {pinnedAnswersCount < ANSWERS_PINNED_BY_USER_LIMIT && (
           <ButtonPinnableForm answer={answer} />
         )}
         <p>{answer.answer_value}</p>
@@ -238,18 +238,18 @@ export function OneCriteriaModify({
 export function OneCriteriaPinnable({
   answer,
   personalView,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answer: Answer;
   personalView?: boolean;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} personalView={personalView} />
       <OneCriteriaAnswerPinnable
         answer={answer}
-        pinnedAnswersLength={pinnedAnswersLength}
+        pinnedAnswersCount={pinnedAnswersCount}
       />
     </>
   );
@@ -257,17 +257,17 @@ export function OneCriteriaPinnable({
 
 export function OneCriteriaPinnablePseudoable({
   answer,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answer: Answer;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} />
       <OneCriteriaAnswerPinnablePseudoable
         answer={answer}
-        pinnedAnswersLength={pinnedAnswersLength}
+        pinnedAnswersCount={pinnedAnswersCount}
       />
     </>
   );
@@ -314,10 +314,10 @@ export function OneCriteriaCancelPinnableByFriend({
 
 export function OneLinkCriteria({
   answer,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answer: Answer;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
@@ -331,7 +331,7 @@ export function OneLinkCriteria({
       </div>
       <OneCriteriaAnswerPinnable
         answer={answer}
-        pinnedAnswersLength={pinnedAnswersLength}
+        pinnedAnswersCount={pinnedAnswersCount}
       />
     </>
   );
@@ -437,12 +437,12 @@ export function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
@@ -458,7 +458,7 @@ export function ManyCriteriaPinnable({
                       <OneCriteriaPinnable
                         answer={answer}
                         personalView={true}
-                        pinnedAnswersLength={pinnedAnswersLength}
+                        pinnedAnswersCount={pinnedAnswersCount}
                       />
                     </li>
                   );
@@ -470,7 +470,7 @@ export function ManyCriteriaPinnable({
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
               <ManyPaginatedCriteriaPinnable
                 answers={answers}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </>
           )}
@@ -490,12 +490,12 @@ export function ManyCriteriaPinnablePseudoable({
   answers,
   answersLabel,
   noAnswersLabel,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
@@ -510,7 +510,7 @@ export function ManyCriteriaPinnablePseudoable({
                     <li key={answer.answer_id}>
                       <OneCriteriaPinnablePseudoable
                         answer={answer}
-                        pinnedAnswersLength={pinnedAnswersLength}
+                        pinnedAnswersCount={pinnedAnswersCount}
                       />
                     </li>
                   );
@@ -522,7 +522,7 @@ export function ManyCriteriaPinnablePseudoable({
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
               <ManyPaginatedCriteriaPinnablePseudoable
                 answers={answers}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </>
           )}
@@ -652,12 +652,12 @@ export function ManyLinkCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
-  pinnedAnswersLength,
+  pinnedAnswersCount,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
-  pinnedAnswersLength: number;
+  pinnedAnswersCount: number;
 }) {
   return (
     <>
@@ -672,7 +672,7 @@ export function ManyLinkCriteria({
                     <li key={answer.answer_id}>
                       <OneLinkCriteria
                         answer={answer}
-                        pinnedAnswersLength={pinnedAnswersLength}
+                        pinnedAnswersCount={pinnedAnswersCount}
                       />
                     </li>
                   );
@@ -684,7 +684,7 @@ export function ManyLinkCriteria({
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
               <ManyPaginatedLinkCriteria
                 answers={answers}
-                pinnedAnswersLength={pinnedAnswersLength}
+                pinnedAnswersCount={pinnedAnswersCount}
               />
             </>
           )}
