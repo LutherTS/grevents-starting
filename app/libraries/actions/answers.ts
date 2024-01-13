@@ -41,6 +41,10 @@ import {
   changeCreateCustomQuestion,
   changeCreatePseudoQuestion,
 } from "../changes/questions";
+import {
+  ANSWERS_PINNED_BY_USER_LIMIT,
+  countUserPinnedAnswers,
+} from "../data/answers";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -235,8 +239,14 @@ export async function updateOrDeleteAnswerValue(
 }
 
 export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
+  // FULL IMPOSSIBILITY TO PIN AT OR ABOVE ANSWERS_PINNED_BY_USER_LIMIT STILL NEEDS TO BE TESTED (ANSWERS_PINNED_BY_USER_LIMIT = 16).
+
   if (answer.userquestion_is_pinned === false) {
-    await changePinUserQuestionOfAnswer(answer);
+    const userPinnedAnswerLength = await countUserPinnedAnswers(answer.user_id);
+
+    if (userPinnedAnswerLength < ANSWERS_PINNED_BY_USER_LIMIT) {
+      await changePinUserQuestionOfAnswer(answer);
+    }
 
     // When the issue arises, I'm going to have to use data from RETURNING in order to trigger the following code not from answer.user_username (answer.user_id), but from the same data that should be obtained from the previous query to make the next one dependent on that result.
 

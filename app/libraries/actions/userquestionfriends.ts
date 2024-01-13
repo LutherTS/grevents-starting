@@ -118,27 +118,27 @@ export async function pinUserQuestionFriend(
   // Now, you can't have more that 5, rather ANSWERS_PINNED_BY_FRIEND_LIMIT pinned with this function. That's definitive. But you can pin even if in the meantime you've been blocked or unfriended, which you'll find out with revalidatePath at the end of the function. But is it really as important as changing relation combinaison where this verification is mandatory and has been implemented?
   // This is to say that, there are many tweaks that could and should be made to a project in order to assess E-VE-RY SIN-GLE case, but some are a lot more rare than others, less breaking than others, and therefore can be depriorities for assessment ONLY when they actually happen, assuming that their happening has a truly minor impact on user experience.
 
-  const pinnedbyFriendNotIrlAnswersLength =
+  const pinnedByFriendNotIrlAnswersLength =
     await countUserPinnedByFriendNotIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );
-  // console.log(pinnedbyFriendNotIrlAnswersLength);
+  // console.log(pinnedByFriendNotIrlAnswersLength);
 
-  const pinnedbyFriendNotAndIrlAnswersLength =
+  const pinnedByFriendNotAndIrlAnswersLength =
     await countUserPinnedByFriendNotAndIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );
-  // console.log(pinnedbyFriendNotAndIrlAnswersLength);
+  // console.log(pinnedByFriendNotAndIrlAnswersLength);
 
   const relCombo = defineFoundRelCombo(contact);
   // console.log(relCombo);
 
   if (
-    (pinnedbyFriendNotIrlAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT &&
+    (pinnedByFriendNotIrlAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT &&
       relCombo === "friend") ||
-    (pinnedbyFriendNotAndIrlAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT &&
+    (pinnedByFriendNotAndIrlAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT &&
       relCombo === "irl")
   ) {
     const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
