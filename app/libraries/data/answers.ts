@@ -90,6 +90,44 @@ export async function fetchUserPinnedAnswers(userId: string) {
   }
 }
 
+// start here
+export async function countUserPinnedAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+          COUNT(*)
+        FROM Answers 
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        LEFT JOIN UserQuestionFriends ON UserQuestions.userquestion_id = UserQuestionFriends.userquestion_id -- NEW
+
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND UserQuestions.userquestion_is_pinned = TRUE
+
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user pinned answers.");
+  }
+}
+
 export async function fetchUserNativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);

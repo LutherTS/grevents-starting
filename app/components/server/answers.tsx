@@ -62,7 +62,13 @@ export async function ManyUserPinnedCriteria({ user }: { user: User }) {
   );
 }
 
-export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
+export async function ManyUserNativeNotIrlCriteria({
+  user,
+  pinnedAnswerCount,
+}: {
+  user: User;
+  pinnedAnswerCount: number;
+}) {
   const userNativeNotIrlAnswers = await fetchUserNativeNotIrlAnswers(
     user.user_id,
   );
@@ -73,6 +79,7 @@ export async function ManyUserNativeNotIrlCriteria({ user }: { user: User }) {
         answers={userNativeNotIrlAnswers}
         answersLabel={answersLabels.nativeNotIrl}
         noAnswersLabel={noAnswersLabels.nativeNotIrl}
+        pinnedAnswersLength={pinnedAnswerCount}
       />
     </>
   );
@@ -98,7 +105,13 @@ export async function ManyUserNativeNotIrlCriteriaModify({
   );
 }
 
-export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
+export async function ManyUserNativeIrlCriteria({
+  user,
+  pinnedAnswerCount,
+}: {
+  user: User;
+  pinnedAnswerCount: number;
+}) {
   const userNativeIrlAnswers = await fetchUserNativeIrlAnswers(user.user_id);
 
   return (
@@ -107,6 +120,7 @@ export async function ManyUserNativeIrlCriteria({ user }: { user: User }) {
         answers={userNativeIrlAnswers}
         answersLabel={answersLabels.nativeIrl}
         noAnswersLabel={noAnswersLabels.nativeIrl}
+        pinnedAnswersLength={pinnedAnswerCount}
       />
     </>
   );
@@ -132,8 +146,10 @@ export async function ManyUserNativeIrlCriteriaModify({
 
 export async function ManyUserPseudonativeNotIrlCriteria({
   user,
+  pinnedAnswerCount,
 }: {
   user: User;
+  pinnedAnswerCount: number;
 }) {
   const userPseudonativeNotIrlAnswers =
     await fetchUserPseudonativeNotIrlAnswers(user.user_id);
@@ -144,6 +160,7 @@ export async function ManyUserPseudonativeNotIrlCriteria({
         answers={userPseudonativeNotIrlAnswers}
         answersLabel={answersLabels.pseudonativeNotIrl}
         noAnswersLabel={noAnswersLabels.pseudonativeNotIrl}
+        pinnedAnswersLength={pinnedAnswerCount}
       />
     </>
   );
@@ -170,8 +187,10 @@ export async function ManyUserPseudonativeNotIrlCriteriaModify({
 
 export async function ManyUserPseudonativeIrlCriteria({
   user,
+  pinnedAnswerCount,
 }: {
   user: User;
+  pinnedAnswerCount: number;
 }) {
   const userPseudonativeIrlAnswers = await fetchUserPseudonativeIrlAnswers(
     user.user_id,
@@ -183,6 +202,7 @@ export async function ManyUserPseudonativeIrlCriteria({
         answers={userPseudonativeIrlAnswers}
         answersLabel={answersLabels.pseudonativeIrl}
         noAnswersLabel={noAnswersLabels.pseudonativeIrl}
+        pinnedAnswersLength={pinnedAnswerCount}
       />
     </>
   );
@@ -208,7 +228,13 @@ export async function ManyUserPseudonativeIrlCriteriaModify({
   );
 }
 
-export async function ManyUserCustomCriteria({ user }: { user: User }) {
+export async function ManyUserCustomCriteria({
+  user,
+  pinnedAnswerCount,
+}: {
+  user: User;
+  pinnedAnswerCount: number;
+}) {
   const userCustomAnswers = await fetchUserCustomAnswers(user.user_id);
 
   return (
@@ -217,6 +243,7 @@ export async function ManyUserCustomCriteria({ user }: { user: User }) {
         answers={userCustomAnswers}
         answersLabel={answersLabels.custom}
         noAnswersLabel={noAnswersLabels.custom}
+        pinnedAnswersLength={pinnedAnswerCount}
       />
     </>
   );

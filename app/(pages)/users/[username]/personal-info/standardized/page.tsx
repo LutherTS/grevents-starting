@@ -17,6 +17,7 @@ import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
+import { countUserPinnedAnswers } from "@/app/libraries/data/answers";
 
 export async function generateMetadata({
   params,
@@ -67,6 +68,9 @@ export default async function StardardizedPage({
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
+  const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
+  console.log(pinnedAnswerCount);
+
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
@@ -98,8 +102,14 @@ export default async function StardardizedPage({
             </>
           }
         >
-          <ManyUserNativeNotIrlCriteria user={user} />
-          <ManyUserNativeIrlCriteria user={user} />
+          <ManyUserNativeNotIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
+          <ManyUserNativeIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
         </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized/modify-criteria`}

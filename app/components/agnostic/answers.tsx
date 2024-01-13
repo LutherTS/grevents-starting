@@ -21,7 +21,10 @@ import {
 } from "../client/answers";
 import { AnswersLabel } from "@/app/libraries/utilities/answerslabels";
 import { NoAnswersLabel } from "@/app/libraries/utilities/noanswerslabels";
-import { ANSWERS_PINNED_BY_FRIEND_LIMIT } from "@/app/libraries/data/answers";
+import {
+  ANSWERS_PINNED_BY_FRIEND_LIMIT,
+  ANSWERS_PINNED_BY_USER_LIMIT,
+} from "@/app/libraries/data/answers";
 
 export function OneCriteriaQuestion({
   answer,
@@ -119,12 +122,42 @@ export function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   );
 }
 
-export function OneCriteriaAnswerPinnable({ answer }: { answer: Answer }) {
+export function OneCriteriaAnswerPinnable({
+  answer,
+  pinnedAnswersLength,
+}: {
+  answer: Answer;
+  pinnedAnswersLength: number;
+}) {
   return (
     <>
       <div className="mt-2 flex justify-center">
-        <ButtonPinnableForm answer={answer} />
+        {/* <ButtonPinnableForm answer={answer} /> */}
+        {pinnedAnswersLength < ANSWERS_PINNED_BY_USER_LIMIT && (
+          <ButtonPinnableForm answer={answer} />
+        )}
         <p>{answer.answer_value}</p>
+      </div>
+    </>
+  );
+}
+
+export function OneCriteriaAnswerPinnablePseudoable({
+  answer,
+  pinnedAnswersLength,
+}: {
+  answer: Answer;
+  pinnedAnswersLength: number;
+}) {
+  return (
+    <>
+      <div className="mt-2 flex justify-center">
+        {/* <ButtonPinnableForm answer={answer} /> */}
+        {pinnedAnswersLength < ANSWERS_PINNED_BY_USER_LIMIT && (
+          <ButtonPinnableForm answer={answer} />
+        )}
+        <p>{answer.answer_value}</p>
+        <ButtonPseudoableForm answer={answer} />
       </div>
     </>
   );
@@ -171,22 +204,6 @@ export function OneCriteriaAnswerCancelPinnableByFriend({
   );
 }
 
-export function OneCriteriaAnswerPinnablePseudoable({
-  answer,
-}: {
-  answer: Answer;
-}) {
-  return (
-    <>
-      <div className="mt-2 flex justify-center">
-        <ButtonPinnableForm answer={answer} />
-        <p>{answer.answer_value}</p>
-        <ButtonPseudoableForm answer={answer} />
-      </div>
-    </>
-  );
-}
-
 export function OneCriteria({
   // That async is actually useless, because no function inside this component is actually async. Thus it's time for a file structure overhaul.
   answer,
@@ -221,14 +238,37 @@ export function OneCriteriaModify({
 export function OneCriteriaPinnable({
   answer,
   personalView,
+  pinnedAnswersLength,
 }: {
   answer: Answer;
   personalView?: boolean;
+  pinnedAnswersLength: number;
 }) {
   return (
     <>
       <OneCriteriaQuestion answer={answer} personalView={personalView} />
-      <OneCriteriaAnswerPinnable answer={answer} />
+      <OneCriteriaAnswerPinnable
+        answer={answer}
+        pinnedAnswersLength={pinnedAnswersLength}
+      />
+    </>
+  );
+}
+
+export function OneCriteriaPinnablePseudoable({
+  answer,
+  pinnedAnswersLength,
+}: {
+  answer: Answer;
+  pinnedAnswersLength: number;
+}) {
+  return (
+    <>
+      <OneCriteriaQuestion answer={answer} />
+      <OneCriteriaAnswerPinnablePseudoable
+        answer={answer}
+        pinnedAnswersLength={pinnedAnswersLength}
+      />
     </>
   );
 }
@@ -272,16 +312,13 @@ export function OneCriteriaCancelPinnableByFriend({
   );
 }
 
-export function OneCriteriaPinnablePseudoable({ answer }: { answer: Answer }) {
-  return (
-    <>
-      <OneCriteriaQuestion answer={answer} />
-      <OneCriteriaAnswerPinnablePseudoable answer={answer} />
-    </>
-  );
-}
-
-export function OneLinkCriteria({ answer }: { answer: Answer }) {
+export function OneLinkCriteria({
+  answer,
+  pinnedAnswersLength,
+}: {
+  answer: Answer;
+  pinnedAnswersLength: number;
+}) {
   return (
     <>
       <div>
@@ -292,7 +329,10 @@ export function OneLinkCriteria({ answer }: { answer: Answer }) {
           <OneLinkCriteriaQuestion answer={answer} />
         </Link>
       </div>
-      <OneCriteriaAnswerPinnable answer={answer} />
+      <OneCriteriaAnswerPinnable
+        answer={answer}
+        pinnedAnswersLength={pinnedAnswersLength}
+      />
     </>
   );
 }
@@ -397,10 +437,12 @@ export function ManyCriteriaPinnable({
   answers,
   answersLabel,
   noAnswersLabel,
+  pinnedAnswersLength,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  pinnedAnswersLength: number;
 }) {
   return (
     <>
@@ -416,6 +458,7 @@ export function ManyCriteriaPinnable({
                       <OneCriteriaPinnable
                         answer={answer}
                         personalView={true}
+                        pinnedAnswersLength={pinnedAnswersLength}
                       />
                     </li>
                   );
@@ -425,7 +468,62 @@ export function ManyCriteriaPinnable({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ManyPaginatedCriteriaPinnable answers={answers} />
+              <ManyPaginatedCriteriaPinnable
+                answers={answers}
+                pinnedAnswersLength={pinnedAnswersLength}
+              />
+            </>
+          )}
+        </>
+      )}
+      {answers.length === 0 && noAnswersLabel && (
+        <>
+          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+          <p className="mt-2">{noAnswersLabel}</p>
+        </>
+      )}
+    </>
+  );
+}
+
+export function ManyCriteriaPinnablePseudoable({
+  answers,
+  answersLabel,
+  noAnswersLabel,
+  pinnedAnswersLength,
+}: {
+  answers: Answer[];
+  answersLabel: AnswersLabel;
+  noAnswersLabel?: NoAnswersLabel;
+  pinnedAnswersLength: number;
+}) {
+  return (
+    <>
+      {answers.length > 0 && (
+        <>
+          {answers.length <= 4 ? (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ol>
+                {answers.map((answer) => {
+                  return (
+                    <li key={answer.answer_id}>
+                      <OneCriteriaPinnablePseudoable
+                        answer={answer}
+                        pinnedAnswersLength={pinnedAnswersLength}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
+              <ManyPaginatedCriteriaPinnablePseudoable
+                answers={answers}
+                pinnedAnswersLength={pinnedAnswersLength}
+              />
             </>
           )}
         </>
@@ -550,58 +648,16 @@ export function ManyCriteriaCancelPinnableByFriend({
   );
 }
 
-export function ManyCriteriaPinnablePseudoable({
-  answers,
-  answersLabel,
-  noAnswersLabel,
-}: {
-  answers: Answer[];
-  answersLabel: AnswersLabel;
-  noAnswersLabel?: NoAnswersLabel;
-}) {
-  return (
-    <>
-      {answers.length > 0 && (
-        <>
-          {answers.length <= 4 ? (
-            <>
-              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ol>
-                {answers.map((answer) => {
-                  return (
-                    <li key={answer.answer_id}>
-                      <OneCriteriaPinnablePseudoable answer={answer} />
-                    </li>
-                  );
-                })}
-              </ol>
-            </>
-          ) : (
-            <>
-              <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ManyPaginatedCriteriaPinnablePseudoable answers={answers} />
-            </>
-          )}
-        </>
-      )}
-      {answers.length === 0 && noAnswersLabel && (
-        <>
-          <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-          <p className="mt-2">{noAnswersLabel}</p>
-        </>
-      )}
-    </>
-  );
-}
-
 export function ManyLinkCriteria({
   answers,
   answersLabel,
   noAnswersLabel,
+  pinnedAnswersLength,
 }: {
   answers: Answer[];
   answersLabel: AnswersLabel;
   noAnswersLabel?: NoAnswersLabel;
+  pinnedAnswersLength: number;
 }) {
   return (
     <>
@@ -614,7 +670,10 @@ export function ManyLinkCriteria({
                 {answers.map((answer) => {
                   return (
                     <li key={answer.answer_id}>
-                      <OneLinkCriteria answer={answer} />
+                      <OneLinkCriteria
+                        answer={answer}
+                        pinnedAnswersLength={pinnedAnswersLength}
+                      />
                     </li>
                   );
                 })}
@@ -623,7 +682,10 @@ export function ManyLinkCriteria({
           ) : (
             <>
               <p className="mt-2 font-semibold text-zinc-500">{answersLabel}</p>
-              <ManyPaginatedLinkCriteria answers={answers} />
+              <ManyPaginatedLinkCriteria
+                answers={answers}
+                pinnedAnswersLength={pinnedAnswersLength}
+              />
             </>
           )}
         </>
