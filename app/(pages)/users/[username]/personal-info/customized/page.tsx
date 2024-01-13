@@ -76,7 +76,7 @@ export default async function CustomizedPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
-  console.log(pinnedAnswerCount);
+  // console.log(pinnedAnswerCount);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
