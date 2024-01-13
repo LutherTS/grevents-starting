@@ -15,6 +15,10 @@ import {
 } from "@/app/components/client/toasts";
 import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
+import {
+  ANSWERS_PINNED_BY_USER_LIMIT,
+  countUserPinnedAnswers,
+} from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
 
@@ -67,6 +71,9 @@ export default async function StardardizedPage({
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
+  const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
+  // console.log(pinnedAnswerCount);
+
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
@@ -88,6 +95,11 @@ export default async function StardardizedPage({
         {user.user_status_personal_info === "NATIVECRITERIAIRLADDED" && (
           <UserNativeCriteriaIrlAdded user={user} />
         )}
+        {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
+          <p className="mb-2 cursor-default text-orange-500">
+            You can&apos;t pin more than 16 of your own criteria.
+          </p>
+        )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</H1>
         <BackToDashboardLink session={session} />
         <PageLink href={`/sign-in`} name={`sign out`} />
@@ -98,8 +110,14 @@ export default async function StardardizedPage({
             </>
           }
         >
-          <ManyUserNativeNotIrlCriteria user={user} />
-          <ManyUserNativeIrlCriteria user={user} />
+          <ManyUserNativeNotIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
+          <ManyUserNativeIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
         </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/standardized/modify-criteria`}

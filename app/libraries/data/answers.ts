@@ -23,6 +23,10 @@ const run = async () => {
 console.log(await pRetry(run, {retries: DEFAULT_RETRIES}));
 */
 
+export const ANSWERS_PINNED_BY_FRIEND_LIMIT = 8;
+export const ANSWERS_PINNED_BY_USER_LIMIT = 16;
+export const ANSWERS_DEFAULT_LIMIT = 32;
+
 export async function fetchUserPinnedAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);
@@ -72,7 +76,7 @@ export async function fetchUserPinnedAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 40; -- client-side pagination allowed
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT}; -- client-side pagination allowed
       `;
       // console.log(data);
       return data.rows;
@@ -83,6 +87,43 @@ export async function fetchUserPinnedAnswers(userId: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pinned answers.");
+  }
+}
+
+// start here
+export async function countUserPinnedAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+          COUNT(*)
+        FROM Answers 
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND UserQuestions.userquestion_is_pinned = TRUE
+
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED')
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user pinned answers.");
   }
 }
 
@@ -121,7 +162,7 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -132,6 +173,42 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native not irl answers.");
+  }
+}
+
+export async function countUserNativeNotIrlAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVE'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED');
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user native not irl answers.");
   }
 }
 
@@ -170,7 +247,7 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -181,6 +258,42 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user native irl answers.");
+  }
+}
+
+export async function countUserNativeIrlAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'NATIVEIRL'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED');
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user native irl answers.");
   }
 }
 
@@ -220,7 +333,7 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -231,6 +344,43 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch user pseudonative not irl answers.");
+  }
+}
+
+export async function countUserPseudonativeNotIrlAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVE'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED');
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user pseudonative not irl answers.");
   }
 }
 
@@ -270,7 +420,7 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -284,7 +434,43 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   }
 }
 
-// Internal
+export async function countUserPseudonativeIrlAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'PSEUDO'
+        AND UserQuestions.userquestion_kind = 'PSEUDONATIVEIRL'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED');
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to count user pseudonative irl answers.");
+  }
+}
+
 export async function fetchUserCustomAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);
@@ -334,7 +520,7 @@ export async function fetchUserCustomAnswers(userId: string) {
             userquestionfriends_count ASC, -- NEW
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -348,7 +534,43 @@ export async function fetchUserCustomAnswers(userId: string) {
   }
 }
 
-// Missing count.
+export async function countUserCustomAnswers(userId: string) {
+  // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
+  // console.log(userId);
+  try {
+    const run = async () => {
+      const data = await sql`
+        SELECT 
+            COUNT(*)
+        FROM Answers
+
+        JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id
+        JOIN Questions ON UserQuestions.question_id = Questions.question_id
+        JOIN Users ON Answers.user_id = Users.user_id
+        
+        WHERE UserQuestions.user_id = ${userId}
+        AND Answers.user_id = ${userId}
+        AND Questions.question_kind = 'CUSTOM'
+        
+        AND Answers.answer_state = 'LIVE'
+        AND UserQuestions.userquestion_state = 'LIVE'
+        AND Questions.question_state = 'LIVE'
+        AND (Users.user_state = 'LIVE'
+        OR Users.user_state = 'DEACTIVATED');
+      `;
+      // console.log(data);
+      return data.rows[0].count;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    // console.error("Database Error:", error);
+    throw new Error("Failed to count user custom answers.");
+  }
+}
+
+// Missing count. // ?
 export async function findAnswerByUserQuestionAndUser(
   userQuestion: UserQuestion,
   user: User,
@@ -456,7 +678,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -507,7 +729,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -563,7 +785,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -616,7 +838,7 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC -- lower for case sensitiveness
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -672,7 +894,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -731,7 +953,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -785,7 +1007,7 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -853,7 +1075,7 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
             UserQuestions.userquestion_pinned_at DESC, 
             Answers.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -904,7 +1126,7 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -958,7 +1180,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1009,7 +1231,7 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
             
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1063,7 +1285,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1120,7 +1342,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1174,7 +1396,7 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
         ORDER BY 
             lower(Questions.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1186,84 +1408,6 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
     console.error("Database Error:", error);
     throw new Error(
       "Failed to fetch user unpinned pseudonative irl answers queried.",
-    );
-  }
-}
-
-export async function fetchUserSharedToContactCustomAnswersQueried(
-  userId: string,
-  contactId: string,
-) {
-  noStore();
-  // console.log(userId);
-  // console.log(contactId);
-  try {
-    const run = async () => {
-      const data = await sql<Answer>`
-        SELECT 
-            q.question_name, 
-            a.answer_value, 
-            a.answer_id,
-            uq.userquestion_is_pinned,
-            q.question_kind,
-            uq.userquestion_kind,
-            uq.userquestion_id,
-            u.user_username,
-            u.user_id
-        FROM Answers a
-
-        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
-        JOIN Questions q ON uq.question_id = q.question_id
-        JOIN UserQuestionFriends uqf ON a.userquestion_id = uqf.userquestion_id
-        JOIN Users u ON a.user_id = u.user_id
-        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
-        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-
-        WHERE uq.user_id = ${userId}
-        AND a.user_id = ${userId}
-        AND q.question_kind = 'CUSTOM'
-        AND c1.contact_id = ${contactId}
-        AND uqf.contact_id = ${contactId} -- FIX
-
-        AND (
-            (
-                c1.contact_kind = 'FRIEND' AND 
-                c2.contact_kind = 'FRIEND' AND
-                c1.contact_blocking = FALSE AND
-                c2.contact_blocking = FALSE
-            )
-            OR (
-                c1.contact_kind = 'IRL' AND 
-                c2.contact_kind = 'IRL' AND
-                c1.contact_blocking = FALSE AND
-                c2.contact_blocking = FALSE
-            )
-        )
-
-        AND uq.userquestion_is_pinned = FALSE
-          
-        AND a.answer_state = 'LIVE'
-        AND uq.userquestion_state = 'LIVE'
-        AND uqf.userquestionfriend_state = 'LIVE'
-        AND c1.contact_state = 'LIVE'
-        AND c2.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
-
-        ORDER BY
-            lower(q.question_name) ASC
-
-        LIMIT 40;
-      `;
-      // console.log(data);
-      return data.rows;
-    };
-    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error(
-      "Failed to fetch user shared to contact custom answers queried.",
     );
   }
 }
@@ -1336,7 +1480,7 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
         ORDER BY
             lower(q.question_name) ASC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1348,6 +1492,84 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
     console.error("Database Error:", error);
     throw new Error(
       "Failed to fetch user shared to contact custom answers not pinned by friend exposed.",
+    );
+  }
+}
+
+export async function fetchUserSharedToContactCustomAnswersQueried(
+  userId: string,
+  contactId: string,
+) {
+  noStore();
+  // console.log(userId);
+  // console.log(contactId);
+  try {
+    const run = async () => {
+      const data = await sql<Answer>`
+        SELECT 
+            q.question_name, 
+            a.answer_value, 
+            a.answer_id,
+            uq.userquestion_is_pinned,
+            q.question_kind,
+            uq.userquestion_kind,
+            uq.userquestion_id,
+            u.user_username,
+            u.user_id
+        FROM Answers a
+
+        JOIN UserQuestions uq ON a.userquestion_id = uq.userquestion_id
+        JOIN Questions q ON uq.question_id = q.question_id
+        JOIN UserQuestionFriends uqf ON a.userquestion_id = uqf.userquestion_id
+        JOIN Users u ON a.user_id = u.user_id
+        JOIN Contacts c1 ON uqf.contact_id = c1.contact_id
+        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
+
+        WHERE uq.user_id = ${userId}
+        AND a.user_id = ${userId}
+        AND q.question_kind = 'CUSTOM'
+        AND c1.contact_id = ${contactId}
+        AND uqf.contact_id = ${contactId} -- FIX
+
+        AND (
+            (
+                c1.contact_kind = 'FRIEND' AND 
+                c2.contact_kind = 'FRIEND' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+            OR (
+                c1.contact_kind = 'IRL' AND 
+                c2.contact_kind = 'IRL' AND
+                c1.contact_blocking = FALSE AND
+                c2.contact_blocking = FALSE
+            )
+        )
+
+        AND uq.userquestion_is_pinned = FALSE
+          
+        AND a.answer_state = 'LIVE'
+        AND uq.userquestion_state = 'LIVE'
+        AND uqf.userquestionfriend_state = 'LIVE'
+        AND c1.contact_state = 'LIVE'
+        AND c2.contact_state = 'LIVE'
+        AND u.user_state = 'LIVE'
+
+        ORDER BY
+            lower(q.question_name) ASC
+
+        LIMIT ${ANSWERS_DEFAULT_LIMIT};
+      `;
+      // console.log(data);
+      return data.rows;
+    };
+    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error(
+      "Failed to fetch user shared to contact custom answers queried.",
     );
   }
 }
@@ -1425,7 +1647,7 @@ export async function fetchUserPinnedNotIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1507,7 +1729,7 @@ export async function fetchUserPinnedNotIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1601,7 +1823,7 @@ export async function fetchUserPinnedNotAndIrlAnswersExposed(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1690,7 +1912,7 @@ export async function fetchUserPinnedNotAndIrlAnswersQueried(
             uq.userquestion_pinned_at DESC, 
             a.answer_updated_at DESC
 
-        LIMIT 40;
+        LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -1777,7 +1999,7 @@ export async function fetchUserPinnedByFriendNotIrlAnswersExposed(
             uqf2.userquestionfriend_pinned_at DESC, -- NEW 
             a.answer_updated_at DESC
 
-        LIMIT 5; -- 5 for by friend, 10 for by user -- NEW
+        LIMIT ${ANSWERS_PINNED_BY_FRIEND_LIMIT} -- NEW
       `;
       // console.log(data);
       return data.rows;
@@ -1836,7 +2058,7 @@ export async function countUserPinnedByFriendNotIrlAnswersExposed(
         AND a.answer_state = 'LIVE'
         AND uq.userquestion_state = 'LIVE'
         AND q.question_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND u.user_state = 'LIVE';
       `;
       // console.log(data);
       return data.rows[0].count;
@@ -1932,7 +2154,7 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersExposed(
             uqf2.userquestionfriend_pinned_at DESC, -- NEW
             a.answer_updated_at DESC
 
-        LIMIT 5; -- 5 for by friend, 10 for by user -- NEW
+        LIMIT ${ANSWERS_PINNED_BY_FRIEND_LIMIT} -- NEW
       `;
       // console.log(data);
       return data.rows;
@@ -1998,7 +2220,7 @@ export async function countUserPinnedByFriendNotAndIrlAnswersExposed(
         AND a.answer_state = 'LIVE'
         AND uq.userquestion_state = 'LIVE'
         AND q.question_state = 'LIVE'
-        AND u.user_state = 'LIVE'
+        AND u.user_state = 'LIVE';
       `;
       // console.log(data);
       return data.rows[0].count;

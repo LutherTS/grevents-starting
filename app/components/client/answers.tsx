@@ -1,6 +1,10 @@
 "use client";
 
 import { Answer } from "@/app/libraries/definitions/answers";
+import { FoundContact } from "@/app/libraries/definitions/contacts";
+import _ from "lodash";
+import { useState } from "react";
+import { OnClickLinkButton } from "./buttons";
 import {
   OneCriteria,
   OneCriteriaCancelPinnableByFriend,
@@ -9,11 +13,7 @@ import {
   OneCriteriaPinnableByFriend,
   OneCriteriaPinnablePseudoable,
   OneLinkCriteria,
-} from "../server/answers";
-import { FoundContact } from "@/app/libraries/definitions/contacts";
-import _ from "lodash";
-import { useState } from "react";
-import { OnClickLinkButton } from "./buttons";
+} from "../agnostic/answers";
 
 // I'm going to need to find a way here, and for previous similar issues as well, to refactor the following component so they could all be based on a single one... Maybe.
 
@@ -120,9 +120,11 @@ export function ManyPaginatedCriteriaModify({
 export function ManyPaginatedCriteriaPinnable({
   // children,
   answers,
+  pinnedAnswersCount,
 }: {
   // children: React.ReactNode;
   answers: Answer[];
+  pinnedAnswersCount: number;
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
 
@@ -142,7 +144,65 @@ export function ManyPaginatedCriteriaPinnable({
         {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
-              <OneCriteriaPinnable answer={answer} personalView={true} />
+              <OneCriteriaPinnable
+                answer={answer}
+                personalView={true}
+                pinnedAnswersCount={pinnedAnswersCount}
+              />
+            </li>
+          );
+        })}
+      </ol>
+      <p className="mt-2">
+        <OnClickLinkButton
+          handleClick={handlePreviousPosition}
+          isDisabled={position === 0}
+        >
+          Previous
+        </OnClickLinkButton>
+        &nbsp;/&nbsp;
+        <OnClickLinkButton
+          handleClick={handleNextPosition}
+          isDisabled={position === chunkedAnswers.length - 1}
+        >
+          Next
+        </OnClickLinkButton>
+      </p>
+    </>
+  );
+}
+
+export function ManyPaginatedCriteriaPinnablePseudoable({
+  // children,
+  answers,
+  pinnedAnswersCount,
+}: {
+  // children: React.ReactNode;
+  answers: Answer[];
+  pinnedAnswersCount: number;
+}) {
+  const chunkedAnswers = _.chunk(answers, 4);
+
+  const [position, setPosition] = useState(0);
+
+  function handlePreviousPosition() {
+    setPosition(position - 1);
+  }
+
+  function handleNextPosition() {
+    setPosition(position + 1);
+  }
+
+  return (
+    <>
+      <ol>
+        {chunkedAnswers[position].map((answer) => {
+          return (
+            <li key={answer.answer_id}>
+              <OneCriteriaPinnablePseudoable
+                answer={answer}
+                pinnedAnswersCount={pinnedAnswersCount}
+              />
             </li>
           );
         })}
@@ -282,61 +342,14 @@ export function ManyPaginatedCriteriaCancelPinnableByFriend({
   );
 }
 
-export function ManyPaginatedCriteriaPinnablePseudoable({
-  // children,
-  answers,
-}: {
-  // children: React.ReactNode;
-  answers: Answer[];
-}) {
-  const chunkedAnswers = _.chunk(answers, 4);
-
-  const [position, setPosition] = useState(0);
-
-  function handlePreviousPosition() {
-    setPosition(position - 1);
-  }
-
-  function handleNextPosition() {
-    setPosition(position + 1);
-  }
-
-  return (
-    <>
-      <ol>
-        {chunkedAnswers[position].map((answer) => {
-          return (
-            <li key={answer.answer_id}>
-              <OneCriteriaPinnablePseudoable answer={answer} />
-            </li>
-          );
-        })}
-      </ol>
-      <p className="mt-2">
-        <OnClickLinkButton
-          handleClick={handlePreviousPosition}
-          isDisabled={position === 0}
-        >
-          Previous
-        </OnClickLinkButton>
-        &nbsp;/&nbsp;
-        <OnClickLinkButton
-          handleClick={handleNextPosition}
-          isDisabled={position === chunkedAnswers.length - 1}
-        >
-          Next
-        </OnClickLinkButton>
-      </p>
-    </>
-  );
-}
-
 export function ManyPaginatedLinkCriteria({
   // children,
   answers,
+  pinnedAnswersCount,
 }: {
   // children: React.ReactNode;
   answers: Answer[];
+  pinnedAnswersCount: number;
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
 
@@ -356,7 +369,10 @@ export function ManyPaginatedLinkCriteria({
         {chunkedAnswers[position].map((answer) => {
           return (
             <li key={answer.answer_id}>
-              <OneLinkCriteria answer={answer} />
+              <OneLinkCriteria
+                answer={answer}
+                pinnedAnswersCount={pinnedAnswersCount}
+              />
             </li>
           );
         })}

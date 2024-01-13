@@ -509,7 +509,7 @@ export async function signInUser(
 
   const { userUsernameOrEmail, userLoginPassword } = validatedFields.data;
   // console.log(userUsernameOrEmail);
-  console.log(userLoginPassword);
+  // console.log(userLoginPassword);
 
   const userByUsernameOrEmail =
     await fetchUserByUserNameOrEmail(userUsernameOrEmail);

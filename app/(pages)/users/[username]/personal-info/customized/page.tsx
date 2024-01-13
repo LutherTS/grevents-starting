@@ -19,6 +19,10 @@ import {
 } from "@/app/components/client/toasts";
 import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
+import {
+  ANSWERS_PINNED_BY_USER_LIMIT,
+  countUserPinnedAnswers,
+} from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
 
@@ -71,6 +75,9 @@ export default async function CustomizedPage({
   session.user = user;
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
+  const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
+  // console.log(pinnedAnswerCount);
+
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
@@ -104,6 +111,11 @@ export default async function CustomizedPage({
         {user.user_status_personal_info === "CUSTOMCRITERIAADDED" && (
           <UserCustomCriteriaAdded user={user} />
         )}
+        {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
+          <p className="mb-2 cursor-default text-orange-500">
+            You can&apos;t pin more than 16 of your own criteria.
+          </p>
+        )}
         <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
         <BackToDashboardLink session={session} />
         <PageLink href={`/sign-in`} name={`sign out`} />
@@ -114,9 +126,18 @@ export default async function CustomizedPage({
             </>
           }
         >
-          <ManyUserPseudonativeNotIrlCriteria user={user} />
-          <ManyUserPseudonativeIrlCriteria user={user} />
-          <ManyUserCustomCriteria user={user} />
+          <ManyUserPseudonativeNotIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
+          <ManyUserPseudonativeIrlCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
+          <ManyUserCustomCriteria
+            user={user}
+            pinnedAnswerCount={pinnedAnswerCount}
+          />
         </Suspense>
         <PageLink
           href={`/users/${username}/personal-info/customized/modify-criteria`}

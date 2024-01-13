@@ -41,6 +41,16 @@ import {
   changeCreateCustomQuestion,
   changeCreatePseudoQuestion,
 } from "../changes/questions";
+import {
+  ANSWERS_DEFAULT_LIMIT,
+  ANSWERS_PINNED_BY_USER_LIMIT,
+  countUserCustomAnswers,
+  countUserNativeIrlAnswers,
+  countUserNativeNotIrlAnswers,
+  countUserPinnedAnswers,
+  countUserPseudonativeIrlAnswers,
+  countUserPseudonativeNotIrlAnswers,
+} from "../data/answers";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -235,12 +245,18 @@ export async function updateOrDeleteAnswerValue(
 }
 
 export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
+  // FULL IMPOSSIBILITY TO PIN AT OR ABOVE ANSWERS_PINNED_BY_USER_LIMIT STILL NEEDS TO BE TESTED (ANSWERS_PINNED_BY_USER_LIMIT = 16).
+
   if (answer.userquestion_is_pinned === false) {
-    await changePinUserQuestionOfAnswer(answer);
+    const userPinnedAnswerLength = await countUserPinnedAnswers(answer.user_id);
 
-    // When the issue arises, I'm going to have to use data from RETURNING in order to trigger the following code not from answer.user_username (answer.user_id), but from the same data that should be obtained from the previous query to make the next one dependent on that result.
+    if (userPinnedAnswerLength < ANSWERS_PINNED_BY_USER_LIMIT) {
+      await changePinUserQuestionOfAnswer(answer);
 
-    await changeSetUserStatusPersonalInfo(answer.user_id, "CRITERIAPINNED");
+      // When the issue arises, I'm going to have to use data from RETURNING in order to trigger the following code not from answer.user_username (answer.user_id), but from the same data that should be obtained from the previous query to make the next one dependent on that result.
+
+      await changeSetUserStatusPersonalInfo(answer.user_id, "CRITERIAPINNED");
+    }
   }
 
   if (answer.userquestion_is_pinned === true) {
@@ -251,40 +267,44 @@ export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
 
   revalidatePath(`/users/${answer.user_username}/personal-info`);
 
-  if (
-    answer.question_kind === "NATIVE" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
-  }
+  // if (
+  //   answer.question_kind === "NATIVE" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  // }
 
-  if (
-    answer.question_kind === "NATIVEIRL" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
-  }
+  // if (
+  //   answer.question_kind === "NATIVEIRL" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  // }
 
-  if (
-    answer.question_kind === "PSEUDO" &&
-    answer.userquestion_kind === "PSEUDONATIVE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "PSEUDO" &&
+  //   answer.userquestion_kind === "PSEUDONATIVE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
 
-  if (
-    answer.question_kind === "PSEUDO" &&
-    answer.userquestion_kind === "PSEUDONATIVEIRL"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "PSEUDO" &&
+  //   answer.userquestion_kind === "PSEUDONATIVEIRL"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
 
-  if (
-    answer.question_kind === "CUSTOM" &&
-    answer.userquestion_kind === "NONE"
-  ) {
-    revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
-  }
+  // if (
+  //   answer.question_kind === "CUSTOM" &&
+  //   answer.userquestion_kind === "NONE"
+  // ) {
+  //   revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
+  // }
+
+  // Because both pages need to know if ANSWERS_PINNED_BY_USER_LIMIT has been reached.
+  revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+  revalidatePath(`/users/${answer.user_username}/personal-info/customized`);
 
   redirect(`/users/${answer.user_username}/personal-info`);
 }
@@ -415,6 +435,11 @@ export type CreateNativeNotIrlAnswerFormState = {
 //   }
 // }
 
+// I'm going to need to bind the current length of each list,
+// send that length to the function,
+// and return early to the form with an error message.
+// That means I'm going to have to bind the current length... actually no.
+// I'm just going to check the length within the function right before allowing it to happen or not.
 export async function createNativeNotIrlAnswer(
   user: User,
   prevState: CreateNativeNotIrlAnswerFormState | undefined,
@@ -437,6 +462,14 @@ export async function createNativeNotIrlAnswer(
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Create Native Not IRL Answer.",
+    };
+  }
+
+  const answersCount = await countUserNativeNotIrlAnswers(user.user_id);
+
+  if (answersCount >= ANSWERS_DEFAULT_LIMIT) {
+    return {
+      message: `Apologies, you can't create more than ${ANSWERS_DEFAULT_LIMIT} of a type of criteria.`,
     };
   }
 
@@ -579,6 +612,14 @@ export async function createNativeIrlAnswer(
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Create Native IRL Answer.",
+    };
+  }
+
+  const answersCount = await countUserNativeIrlAnswers(user.user_id);
+
+  if (answersCount >= ANSWERS_DEFAULT_LIMIT) {
+    return {
+      message: `Apologies, you can't create more than ${ANSWERS_DEFAULT_LIMIT} of a type of criteria.`,
     };
   }
 
@@ -893,6 +934,14 @@ export async function createPseudonativeNotIrlAnswer(
     };
   }
 
+  const answersCount = await countUserPseudonativeNotIrlAnswers(user.user_id);
+
+  if (answersCount >= ANSWERS_DEFAULT_LIMIT) {
+    return {
+      message: `Apologies, you can't create more than ${ANSWERS_DEFAULT_LIMIT} of a type of criteria.`,
+    };
+  }
+
   const { initialQuestionName, initialAnswerValue } = validatedFields.data;
 
   // console.log(initialQuestionName);
@@ -1094,6 +1143,14 @@ export async function createPseudonativeIrlAnswer(
     };
   }
 
+  const answersCount = await countUserPseudonativeIrlAnswers(user.user_id);
+
+  if (answersCount >= ANSWERS_DEFAULT_LIMIT) {
+    return {
+      message: `Apologies, you can't create more than ${ANSWERS_DEFAULT_LIMIT} of a type of criteria.`,
+    };
+  }
+
   const { initialQuestionName, initialAnswerValue } = validatedFields.data;
 
   // console.log(initialQuestionName);
@@ -1292,6 +1349,14 @@ export async function createCustomAnswer(
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Create Custom Answer.",
+    };
+  }
+
+  const answersCount = await countUserCustomAnswers(user.user_id);
+
+  if (answersCount >= ANSWERS_DEFAULT_LIMIT) {
+    return {
+      message: `Apologies, you can't create more than ${ANSWERS_DEFAULT_LIMIT} of a type of criteria.`,
     };
   }
 
