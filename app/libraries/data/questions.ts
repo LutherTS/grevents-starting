@@ -11,6 +11,8 @@ import { User } from "../definitions/users";
 import { DEFAULT_RETRIES } from "./users";
 import { unstable_noStore as noStore } from "next/cache";
 
+const NATIVE_QUESTION_LIMIT = 16;
+
 export async function fetchAllNativeNotIrlQuestions() {
   // noStore(); // since it pretty much does not change
   try {
@@ -29,7 +31,7 @@ export async function fetchAllNativeNotIrlQuestions() {
         ORDER BY 
             lower(question_name) ASC
 
-        LIMIT 10;
+        LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -61,7 +63,7 @@ export async function fetchAllNativeIrlQuestions() {
         ORDER BY 
             lower(question_name) ASC
 
-        LIMIT 10;
+        LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -108,7 +110,7 @@ export async function fetchAllUnansweredNativeNotIrlQuestions(user: User) {
         ORDER BY 
             lower(question_name) ASC
 
-        LIMIT 10;
+        LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -155,7 +157,7 @@ export async function fetchAllUnansweredNativeIrlQuestions(user: User) {
         ORDER BY 
             lower(question_name) ASC
 
-        LIMIT 10;
+        LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
       // console.log(data);
       return data.rows;
