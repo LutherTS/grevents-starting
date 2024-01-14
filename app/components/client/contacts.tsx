@@ -71,6 +71,9 @@ export function ManyPaginatedFriendsAddable({
   );
 }
 
+// all below to be tested
+// but non-breaking in current 0 & <= 4 cases
+
 export function ManyPaginatedNotIrlFriends({
   userNotIrlFriends,
 }: {
