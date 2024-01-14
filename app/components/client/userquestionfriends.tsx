@@ -1,3 +1,5 @@
+"use client";
+
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import _ from "lodash";
