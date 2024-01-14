@@ -115,7 +115,9 @@ export async function findPreExistingNativeUserQuestion(
         )
 
         AND Users.user_state = 'LIVE' -- la personne qui y a répondu est 
-        AND Questions.question_state = 'LIVE'; -- la question posée est opérationnelle
+        AND Questions.question_state = 'LIVE' -- la question posée est opérationnelle
+
+        LIMIT 1;
       `;
       // console.log(data);
       return data.rows[0];
@@ -163,7 +165,9 @@ export async function findPreExistingPseudonativeUserQuestion(
         )
 
         AND Users.user_state = 'LIVE' -- la personne qui y a répondu est 
-        AND Questions.question_state = 'LIVE'; -- la question posée est opérationnelle
+        AND Questions.question_state = 'LIVE' -- la question posée est opérationnelle
+
+        LIMIT 1;
       `;
       // console.log(data);
       return data.rows[0];
@@ -210,7 +214,9 @@ export async function findPreExistingCustomUserQuestion(
         )
 
         AND Users.user_state = 'LIVE' -- la personne qui y a répondu est 
-        AND Questions.question_state = 'LIVE'; -- la question posée est opérationnelle
+        AND Questions.question_state = 'LIVE' -- la question posée est opérationnelle
+
+        LIMIT 1;
       `;
       // console.log(data);
       return data.rows[0];

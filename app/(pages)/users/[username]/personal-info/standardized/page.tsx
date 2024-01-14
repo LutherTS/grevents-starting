@@ -2,7 +2,7 @@ import { fetchUserByUsername } from "@/app/libraries/data/users";
 import {
   ManyUserNativeNotIrlCriteria,
   ManyUserNativeIrlCriteria,
-} from "@/app/components/server/answers";
+} from "@/app/components/server/database/answers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";

@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 import {
   ManySentFriendFromContacts,
   ManySentIrlFromContacts,
-} from "@/app/components/server/contacts";
+} from "@/app/components/server/database/contacts";
 
 export async function generateMetadata({
   params,

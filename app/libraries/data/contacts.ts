@@ -11,60 +11,7 @@ import pRetry from "p-retry";
 import { UserQuestion } from "../definitions/userquestions";
 import { DEFAULT_RETRIES } from "./users";
 
-/* Improved, so no longer is use. Previously:
-// Going to need this improved to exclude current userQuestionFriends on userQuestion. 
-export async function fetchAllUserFriends(user: User) {
-  noStore();
-  // console.log(user);
-  try {
-    const run = async () => {
-      const data = await sql<Friend>`
-        SELECT 
-            u.user_app_wide_name, 
-            u.user_username, 
-            c1.contact_id 
-        FROM Contacts c1
-        
-        JOIN Users u ON c1.user_last_id = u.user_id
-        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        
-        WHERE c1.user_first_id = ${user.user_id}
-        AND (
-            (
-                c1.contact_kind = 'FRIEND' AND 
-                c2.contact_kind = 'FRIEND' AND
-                c1.contact_blocking = FALSE AND
-                c2.contact_blocking = FALSE
-            )
-            OR (
-                c1.contact_kind = 'IRL' AND 
-                c2.contact_kind = 'IRL' AND
-                c1.contact_blocking = FALSE AND
-                c2.contact_blocking = FALSE
-            )
-        )
-        
-        AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
-        AND c2.contact_state = 'LIVE'
-
-        ORDER BY 
-            c1.contact_updated_at DESC
-
-        LIMIT 10;
-      `;
-      // console.log(data);
-      return data.rows;
-    };
-    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch user friends.");
-  }
-}
-*/
+export const CONTACT_ARBITRARY_LIMIT = 256;
 
 export async function fetchAllUserFriendsNotToUserQuestion(
   user: User,
@@ -145,7 +92,7 @@ export async function fetchAllUserFriendsNotToUserQuestion(
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
 
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -160,46 +107,6 @@ export async function fetchAllUserFriendsNotToUserQuestion(
     );
   }
 }
-
-/* No longer in use.
-export async function fetchAllUserContacts(user: User) {
-  noStore();
-  // console.log(user);
-  try {
-    const run = async () => {
-      const data = await sql<Contact>`
-        SELECT 
-            u.user_app_wide_name, 
-            u.user_username, 
-            c1.contact_id 
-        FROM Contacts c1
-
-        JOIN Users u ON c1.user_last_id = u.user_id
-        JOIN Contacts c2 ON c1.contact_mirror_id = c2.contact_id
-        
-        WHERE c1.user_first_id = ${user.user_id}
-        
-        AND c1.contact_state = 'LIVE'
-        AND u.user_state = 'LIVE'
-        AND c2.contact_state = 'LIVE'
-
-        ORDER BY 
-            c1.contact_updated_at DESC
-
-        LIMIT 10;
-      `;
-      // console.log(data);
-      return data.rows;
-    };
-    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch user contacts.");
-  }
-}
-*/
 
 // Note: this is from existing contacts only, thus excluding users we have no idea of, as intended.
 export async function gatherContactByUserAndUsername(
@@ -286,7 +193,7 @@ export async function fetchAllUserNotIrlFriends(user: User) {
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
 
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -333,8 +240,7 @@ export async function fetchAllUserIrlFriends(user: User) {
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
             
-
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -381,7 +287,7 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
 
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -429,7 +335,7 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
 
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
@@ -550,7 +456,7 @@ export async function findSentFriendToContactsByUser(user: User) {
             lower(u2.user_app_wide_name) ASC,
             u2.user_username ASC
 
-          LIMIT 10;
+          LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
       // console.log(data);
       return data.rows;
@@ -609,7 +515,7 @@ export async function findSentIrlToContactsByUser(user: User) {
             lower(u2.user_app_wide_name) ASC,
             u2.user_username ASC
 
-          LIMIT 10;
+          LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
       // console.log(data);
       return data.rows;
@@ -668,7 +574,7 @@ export async function findSentFriendFromContactsByUser(user: User) {
             lower(u1.user_app_wide_name) ASC,
             u1.user_username ASC
 
-          LIMIT 10;
+          LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
       // console.log(data);
       return data.rows;
@@ -727,7 +633,7 @@ export async function findSentIrlFromContactsByUser(user: User) {
             lower(u1.user_app_wide_name) ASC,
             u1.user_username ASC
 
-          LIMIT 10;
+          LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
       // console.log(data);
       return data.rows;

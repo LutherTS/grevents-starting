@@ -45,7 +45,7 @@ import {
   ManyCriteriaPinnableByFriend,
   ManyCriteriaPinnablePseudoable,
   ManyLinkCriteria,
-} from "../agnostic/answers";
+} from "../../agnostic/database/answers";
 
 export async function ManyUserPinnedCriteria({ user }: { user: User }) {
   const pinnedAnswers = await fetchUserPinnedAnswers(user.user_id);

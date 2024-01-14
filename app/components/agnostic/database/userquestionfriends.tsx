@@ -1,12 +1,6 @@
-// "use server";
-
-import {
-  // countUserQuestionFriends,
-  fetchAllUserQuestionFriends,
-} from "@/app/libraries/data/userquestionfriends";
-import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
-import { ButtonCancelShareUserQuestionFriendForm } from "../client/forms";
+import { UserQuestion } from "@/app/libraries/definitions/userquestions";
+import { ButtonCancelShareUserQuestionFriendForm } from "../../client/forms";
 
 export function ManyUserQuestionFriendsLabel({
   userQuestionFriends,
@@ -49,39 +43,6 @@ export function OneUserQuestionFriend({
           / {userQuestionFriend.user_username}
         </p>
       </div>
-    </>
-  );
-}
-
-export async function ManyUserQuestionFriends({
-  userQuestion,
-}: {
-  userQuestion: UserQuestion;
-}) {
-  const allUserQuestionFriends =
-    await fetchAllUserQuestionFriends(userQuestion);
-
-  return (
-    <>
-      {allUserQuestionFriends.length > 0 && (
-        <>
-          <ManyUserQuestionFriendsLabel
-            userQuestionFriends={allUserQuestionFriends}
-          />
-          <ol>
-            {allUserQuestionFriends.map((userQuestionFriend) => {
-              return (
-                <li key={userQuestionFriend.userquestionfriend_id}>
-                  <OneUserQuestionFriend
-                    userQuestion={userQuestion}
-                    userQuestionFriend={userQuestionFriend}
-                  />
-                </li>
-              );
-            })}
-          </ol>
-        </>
-      )}
     </>
   );
 }
