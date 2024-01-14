@@ -7,6 +7,7 @@ import pRetry from "p-retry";
 import { DEFAULT_RETRIES } from "./users";
 import { FoundContact, Friend } from "../definitions/contacts";
 import { Answer } from "../definitions/answers";
+import { CONTACT_ARBITRARY_LIMIT } from "./contacts";
 
 /* No longer in use
 export async function countUserQuestionFriends(
@@ -85,7 +86,7 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
             lower(u.user_app_wide_name) ASC,
             u.user_username ASC
 
-        LIMIT 10;
+        LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
       // console.log(data);
       return data.rows;
