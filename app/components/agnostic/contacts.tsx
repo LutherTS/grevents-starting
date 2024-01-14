@@ -57,15 +57,6 @@ export function OneFriendAddable({
 export function OneBlock({ block }: { block: Block }) {
   return (
     <>
-      {/* <p className="mt-2">
-        <Link
-          href={`/users/${block.user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {block.user_app_wide_name}
-        </Link>{" "}
-        / {block.user_username}
-      </p> */}
       <p className="mt-2">
         <ContactLinkWithChildren href={`/users/${block.user_username}/profile`}>
           {block.user_app_wide_name}
@@ -79,15 +70,6 @@ export function OneBlock({ block }: { block: Block }) {
 export function OneSentToContact({ contact }: { contact: FoundContact }) {
   return (
     <>
-      {/* <p className="mt-2">
-        <Link
-          href={`/users/${contact.u2_user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {contact.u2_user_app_wide_name}
-        </Link>{" "}
-        / {contact.u2_user_username}
-      </p> */}
       <p className="mt-2">
         <ContactLinkWithChildren
           href={`/users/${contact.u2_user_username}/profile`}
@@ -103,15 +85,6 @@ export function OneSentToContact({ contact }: { contact: FoundContact }) {
 export function OneSentFromContact({ contact }: { contact: FoundContact }) {
   return (
     <>
-      {/* <p className="mt-2">
-        <Link
-          href={`/users/${contact.u1_user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {contact.u1_user_app_wide_name}
-        </Link>{" "}
-        / {contact.u1_user_username}
-      </p> */}
       <p className="mt-2">
         <ContactLinkWithChildren
           href={`/users/${contact.u1_user_username}/profile`}

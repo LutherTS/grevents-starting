@@ -28,6 +28,7 @@ export function PageLinkWithChildren({
 }) {
   return (
     <>
+      {/* Why is that div here? */}
       <div>
         <Link
           href={href}
@@ -55,18 +56,16 @@ export function ContactLinkWithChildren({
 }) {
   return (
     <>
-      <div>
-        <Link
-          href={href}
-          className={
-            specifiedClassName
-              ? specifiedClassName
-              : "font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-          }
-        >
-          {children}
-        </Link>
-      </div>
+      <Link
+        href={href}
+        className={
+          specifiedClassName
+            ? specifiedClassName
+            : "font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
+        }
+      >
+        {children}
+      </Link>
     </>
   );
 }
