@@ -20,6 +20,17 @@ import {
   OneSentFromContact,
   OneSentToContact,
 } from "../agnostic/contacts";
+import {
+  ManyPaginatedFriendsAddable,
+  ManyPaginatedIrlFriends,
+  ManyPaginatedNotIrlFriends,
+  ManyPaginatedSentFriendFromContacts,
+  ManyPaginatedSentFriendToContacts,
+  ManyPaginatedSentIrlFromContacts,
+  ManyPaginatedSentIrlToContacts,
+  ManyPaginatedWhoHaveMeBlocked,
+  ManyPaginatedWhoIAmBlocking,
+} from "../client/contacts";
 
 export async function ManyFriendsAddable({
   user,
@@ -37,21 +48,35 @@ export async function ManyFriendsAddable({
     <>
       {allUserFriends.length > 0 && (
         <>
-          <p className="mt-4 font-semibold text-zinc-500">
-            Find your list of friend(s) to share to below
-          </p>
-          <ol>
-            {allUserFriends.map((userFriend) => {
-              return (
-                <li key={userFriend.contact_id}>
-                  <OneFriendAddable
-                    friend={userFriend}
-                    userQuestion={userQuestion}
-                  />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserFriends.length <= 4 ? (
+            <>
+              <p className="mt-4 font-semibold text-zinc-500">
+                Find your list of friend(s) to share to below
+              </p>
+              <ol>
+                {allUserFriends.map((userFriend) => {
+                  return (
+                    <li key={userFriend.contact_id}>
+                      <OneFriendAddable
+                        friend={userFriend}
+                        userQuestion={userQuestion}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <p className="mt-4 font-semibold text-zinc-500">
+                Find your list of friend(s) to share to below
+              </p>
+              <ManyPaginatedFriendsAddable
+                userQuestion={userQuestion}
+                userFriends={allUserFriends}
+              />
+            </>
+          )}
         </>
       )}
       {allUserFriends.length === 0 && (
@@ -74,20 +99,31 @@ export async function ManyNotIrlFriends({ user }: { user: User }) {
       <p className="mt-2 font-semibold text-zinc-500">
         Friends (not upgraded to irl)
       </p>
-      {allUserNotIrlFriends.length > 0 ? (
+      {allUserNotIrlFriends.length > 0 && (
         <>
-          <ol>
-            {allUserNotIrlFriends.map((notIrlFriend) => {
-              return (
-                <li key={notIrlFriend.contact_id}>
-                  <OneFriend friend={notIrlFriend} />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserNotIrlFriends.length <= 4 ? (
+            <>
+              <ol>
+                {allUserNotIrlFriends.map((notIrlFriend) => {
+                  return (
+                    <li key={notIrlFriend.contact_id}>
+                      <OneFriend friend={notIrlFriend} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedNotIrlFriends
+              userNotIrlFriends={allUserNotIrlFriends}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You do not have any not irl friends.</p>
+      )}
+      {allUserNotIrlFriends.length === 0 && (
+        <>
+          <p className="mt-2">You do not have any not irl friends.</p>
+        </>
       )}
     </>
   );
@@ -99,20 +135,29 @@ export async function ManyIrlFriends({ user }: { user: User }) {
   return (
     <>
       <p className="mt-2 font-semibold text-zinc-500">Upgraded to irl</p>
-      {allUserIrlFriends.length > 0 ? (
+      {allUserIrlFriends.length > 0 && (
         <>
-          <ol>
-            {allUserIrlFriends.map((irlFriend) => {
-              return (
-                <li key={irlFriend.contact_id}>
-                  <OneFriend friend={irlFriend} />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserIrlFriends.length <= 4 ? (
+            <>
+              <ol>
+                {allUserIrlFriends.map((irlFriend) => {
+                  return (
+                    <li key={irlFriend.contact_id}>
+                      <OneFriend friend={irlFriend} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedIrlFriends userIrlFriends={allUserIrlFriends} />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You do not have any irl friends.</p>
+      )}
+      {allUserIrlFriends.length === 0 && (
+        <>
+          <p className="mt-2">You do not have any irl friends.</p>
+        </>
       )}
     </>
   );
@@ -124,20 +169,31 @@ export async function ManyWhoIAmBlocking({ user }: { user: User }) {
   return (
     <>
       <p className="mt-2 font-semibold text-zinc-500">Blocked users</p>
-      {allUserWhoIAmBlocking.length > 0 ? (
+      {allUserWhoIAmBlocking.length > 0 && (
         <>
-          <ol>
-            {allUserWhoIAmBlocking.map((whoIAmBlocking) => {
-              return (
-                <li key={whoIAmBlocking.contact_id}>
-                  <OneBlock block={whoIAmBlocking} />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserWhoIAmBlocking.length <= 4 ? (
+            <>
+              <ol>
+                {allUserWhoIAmBlocking.map((whoIAmBlocking) => {
+                  return (
+                    <li key={whoIAmBlocking.contact_id}>
+                      <OneBlock block={whoIAmBlocking} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedWhoIAmBlocking
+              userWhoIAmBlocking={allUserWhoIAmBlocking}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You do not have any blocked users.</p>
+      )}
+      {allUserWhoIAmBlocking.length === 0 && (
+        <>
+          <p className="mt-2">You do not have any blocked users.</p>
+        </>
       )}
     </>
   );
@@ -151,20 +207,33 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
       <p className="mt-2 font-semibold text-zinc-500">
         Users that have me blocked
       </p>
-      {allUserWhoHaveMeBlocked.length > 0 ? (
+      {allUserWhoHaveMeBlocked.length > 0 && (
         <>
-          <ol>
-            {allUserWhoHaveMeBlocked.map((whoHaveMeBlocked) => {
-              return (
-                <li key={whoHaveMeBlocked.contact_id}>
-                  <OneBlock block={whoHaveMeBlocked} />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserWhoHaveMeBlocked.length <= 4 ? (
+            <>
+              <ol>
+                {allUserWhoHaveMeBlocked.map((whoHaveMeBlocked) => {
+                  return (
+                    <li key={whoHaveMeBlocked.contact_id}>
+                      <OneBlock block={whoHaveMeBlocked} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedWhoHaveMeBlocked
+              userWhoHaveMeBlocked={allUserWhoHaveMeBlocked}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You do not have any users that have you blocked.</p>
+      )}
+      {allUserWhoHaveMeBlocked.length === 0 && (
+        <>
+          <p className="mt-2">
+            You do not have any users that have you blocked.
+          </p>
+        </>
       )}
     </>
   );
@@ -176,20 +245,31 @@ export async function ManySentFriendToContacts({ user }: { user: User }) {
   return (
     <>
       <p className="mt-2 font-semibold text-zinc-500">Friend requests sent</p>
-      {sentFriendToContacts.length > 0 ? (
+      {sentFriendToContacts.length > 0 && (
         <>
-          <ol>
-            {sentFriendToContacts.map((sentFriendToContact) => {
-              return (
-                <li key={sentFriendToContact.c1_contact_id}>
-                  <OneSentToContact contact={sentFriendToContact} />
-                </li>
-              );
-            })}
-          </ol>
+          {sentFriendToContacts.length <= 4 ? (
+            <>
+              <ol>
+                {sentFriendToContacts.map((sentFriendToContact) => {
+                  return (
+                    <li key={sentFriendToContact.c1_contact_id}>
+                      <OneSentToContact contact={sentFriendToContact} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedSentFriendToContacts
+              sentFriendToContacts={sentFriendToContacts}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You have not sent any friend requests.</p>
+      )}
+      {sentFriendToContacts.length === 0 && (
+        <>
+          <p className="mt-2">You have not sent any friend requests.</p>
+        </>
       )}
     </>
   );
@@ -203,20 +283,31 @@ export async function ManySentIrlToContacts({ user }: { user: User }) {
       <p className="mt-2 font-semibold text-zinc-500">
         Irl upgrade requests sent
       </p>
-      {sentIrlToContacts.length > 0 ? (
+      {sentIrlToContacts.length > 0 && (
         <>
-          <ol>
-            {sentIrlToContacts.map((sentIrlToContact) => {
-              return (
-                <li key={sentIrlToContact.c1_contact_id}>
-                  <OneSentToContact contact={sentIrlToContact} />
-                </li>
-              );
-            })}
-          </ol>
+          {sentIrlToContacts.length <= 4 ? (
+            <>
+              <ol>
+                {sentIrlToContacts.map((sentIrlToContact) => {
+                  return (
+                    <li key={sentIrlToContact.c1_contact_id}>
+                      <OneSentToContact contact={sentIrlToContact} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedSentIrlToContacts
+              sentIrlToContacts={sentIrlToContacts}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You have not sent any irl upgrade requests.</p>
+      )}
+      {sentIrlToContacts.length === 0 && (
+        <>
+          <p className="mt-2">You have not sent any irl friend requests.</p>
+        </>
       )}
     </>
   );
@@ -230,20 +321,31 @@ export async function ManySentFriendFromContacts({ user }: { user: User }) {
       <p className="mt-2 font-semibold text-zinc-500">
         Friend requests received
       </p>
-      {sentFriendFromContacts.length > 0 ? (
+      {sentFriendFromContacts.length > 0 && (
         <>
-          <ol>
-            {sentFriendFromContacts.map((sentFriendFromContact) => {
-              return (
-                <li key={sentFriendFromContact.c1_contact_id}>
-                  <OneSentFromContact contact={sentFriendFromContact} />
-                </li>
-              );
-            })}
-          </ol>
+          {sentFriendFromContacts.length <= 4 ? (
+            <>
+              <ol>
+                {sentFriendFromContacts.map((sentFriendFromContact) => {
+                  return (
+                    <li key={sentFriendFromContact.c1_contact_id}>
+                      <OneSentFromContact contact={sentFriendFromContact} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedSentFriendFromContacts
+              sentFriendFromContacts={sentFriendFromContacts}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You have not received any friend requests.</p>
+      )}
+      {sentFriendFromContacts.length === 0 && (
+        <>
+          <p className="mt-2">You have not received any friend requests.</p>
+        </>
       )}
     </>
   );
@@ -257,20 +359,33 @@ export async function ManySentIrlFromContacts({ user }: { user: User }) {
       <p className="mt-2 font-semibold text-zinc-500">
         Irl upgrade requests received
       </p>
-      {sentIrlFromContacts.length > 0 ? (
+      {sentIrlFromContacts.length > 0 && (
         <>
-          <ol>
-            {sentIrlFromContacts.map((sentIrlFromContact) => {
-              return (
-                <li key={sentIrlFromContact.c1_contact_id}>
-                  <OneSentFromContact contact={sentIrlFromContact} />
-                </li>
-              );
-            })}
-          </ol>
+          {sentIrlFromContacts.length <= 4 ? (
+            <>
+              <ol>
+                {sentIrlFromContacts.map((sentIrlFromContact) => {
+                  return (
+                    <li key={sentIrlFromContact.c1_contact_id}>
+                      <OneSentFromContact contact={sentIrlFromContact} />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <ManyPaginatedSentIrlFromContacts
+              sentIrlFromContacts={sentIrlFromContacts}
+            />
+          )}
         </>
-      ) : (
-        <p className="mt-2">You have not received any irl upgrade requests.</p>
+      )}
+      {sentIrlFromContacts.length === 0 && (
+        <>
+          <p className="mt-2">
+            You have not received any irl upgrade requests.
+          </p>
+        </>
       )}
     </>
   );
