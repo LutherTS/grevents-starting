@@ -11,54 +11,15 @@ import {
   findSentIrlFromContactsByUser,
   findSentIrlToContactsByUser,
 } from "@/app/libraries/data/contacts";
-import {
-  Block,
-  FoundContact,
-  Friend,
-} from "@/app/libraries/definitions/contacts";
 import { User } from "@/app/libraries/definitions/users";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
-import { ButtonShareUserQuestionFriendForm } from "../client/forms";
-import Link from "next/link";
-
-export function OneFriend({ friend }: { friend: Friend }) {
-  return (
-    <>
-      <p className="mt-2">
-        <Link
-          href={`/users/${friend.user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {friend.user_app_wide_name}
-        </Link>{" "}
-        / {friend.user_username}
-      </p>
-    </>
-  );
-}
-
-export function OneFriendAddable({
-  friend,
-  userQuestion,
-}: {
-  friend: Friend;
-  userQuestion: UserQuestion;
-}) {
-  return (
-    <>
-      <div className="mt-2 flex justify-center">
-        <ButtonShareUserQuestionFriendForm
-          contact={friend}
-          userQuestion={userQuestion}
-        />
-        <p>
-          <span className="font-semibold">{friend.user_app_wide_name}</span> /{" "}
-          {friend.user_username}
-        </p>
-      </div>
-    </>
-  );
-}
+import {
+  OneBlock,
+  OneFriend,
+  OneFriendAddable,
+  OneSentFromContact,
+  OneSentToContact,
+} from "../agnostic/contacts";
 
 export async function ManyFriendsAddable({
   user,
@@ -157,22 +118,6 @@ export async function ManyIrlFriends({ user }: { user: User }) {
   );
 }
 
-export function OneBlock({ block }: { block: Block }) {
-  return (
-    <>
-      <p className="mt-2">
-        <Link
-          href={`/users/${block.user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {block.user_app_wide_name}
-        </Link>{" "}
-        / {block.user_username}
-      </p>
-    </>
-  );
-}
-
 export async function ManyWhoIAmBlocking({ user }: { user: User }) {
   const allUserWhoIAmBlocking = await fetchAllUserWhoIAmBlocking(user);
 
@@ -225,22 +170,6 @@ export async function ManyWhoHaveMeBlocked({ user }: { user: User }) {
   );
 }
 
-export function OneSentToContact({ contact }: { contact: FoundContact }) {
-  return (
-    <>
-      <p className="mt-2">
-        <Link
-          href={`/users/${contact.u2_user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {contact.u2_user_app_wide_name}
-        </Link>{" "}
-        / {contact.u2_user_username}
-      </p>
-    </>
-  );
-}
-
 export async function ManySentFriendToContacts({ user }: { user: User }) {
   const sentFriendToContacts = await findSentFriendToContactsByUser(user);
 
@@ -289,22 +218,6 @@ export async function ManySentIrlToContacts({ user }: { user: User }) {
       ) : (
         <p className="mt-2">You have not sent any irl upgrade requests.</p>
       )}
-    </>
-  );
-}
-
-export function OneSentFromContact({ contact }: { contact: FoundContact }) {
-  return (
-    <>
-      <p className="mt-2">
-        <Link
-          href={`/users/${contact.u1_user_username}/profile`}
-          className="font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
-        >
-          {contact.u1_user_app_wide_name}
-        </Link>{" "}
-        / {contact.u1_user_username}
-      </p>
     </>
   );
 }

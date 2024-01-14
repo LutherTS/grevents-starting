@@ -6,6 +6,7 @@ import {
   ManyUserQuestionFriendsLabel,
   OneUserQuestionFriend,
 } from "../agnostic/userquestionfriends";
+import { ManyPaginatedUserQuestionFriends } from "../client/userquestionfriends";
 
 export async function ManyUserQuestionFriends({
   userQuestion,
@@ -19,21 +20,35 @@ export async function ManyUserQuestionFriends({
     <>
       {allUserQuestionFriends.length > 0 && (
         <>
-          <ManyUserQuestionFriendsLabel
-            userQuestionFriends={allUserQuestionFriends}
-          />
-          <ol>
-            {allUserQuestionFriends.map((userQuestionFriend) => {
-              return (
-                <li key={userQuestionFriend.userquestionfriend_id}>
-                  <OneUserQuestionFriend
-                    userQuestion={userQuestion}
-                    userQuestionFriend={userQuestionFriend}
-                  />
-                </li>
-              );
-            })}
-          </ol>
+          {allUserQuestionFriends.length <= 4 ? (
+            <>
+              <ManyUserQuestionFriendsLabel
+                userQuestionFriends={allUserQuestionFriends}
+              />
+              <ol>
+                {allUserQuestionFriends.map((userQuestionFriend) => {
+                  return (
+                    <li key={userQuestionFriend.userquestionfriend_id}>
+                      <OneUserQuestionFriend
+                        userQuestion={userQuestion}
+                        userQuestionFriend={userQuestionFriend}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </>
+          ) : (
+            <>
+              <ManyUserQuestionFriendsLabel
+                userQuestionFriends={allUserQuestionFriends}
+              />
+              <ManyPaginatedUserQuestionFriends
+                userQuestion={userQuestion}
+                userQuestionFriends={allUserQuestionFriends}
+              />
+            </>
+          )}
         </>
       )}
     </>

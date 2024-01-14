@@ -44,7 +44,33 @@ export function PageLinkWithChildren({
   );
 }
 
-// Temporary until actual working links are done.
+export function ContactLinkWithChildren({
+  href,
+  children,
+  specifiedClassName,
+}: {
+  href: string;
+  children: React.ReactNode;
+  specifiedClassName?: string;
+}) {
+  return (
+    <>
+      <div>
+        <Link
+          href={href}
+          className={
+            specifiedClassName
+              ? specifiedClassName
+              : "font-semibold text-blue-500 hover:text-blue-400 dark:hover:text-blue-600"
+          }
+        >
+          {children}
+        </Link>
+      </div>
+    </>
+  );
+}
+
 export function ActionLink({ children }: { children: React.ReactNode }) {
   return (
     <>
