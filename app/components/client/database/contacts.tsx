@@ -14,8 +14,8 @@ import {
   OneFriendAddable,
   OneSentFromContact,
   OneSentToContact,
-} from "../agnostic/contacts";
-import { OnClickLinkButton } from "./buttons";
+} from "../../agnostic/database/contacts";
+import { OnClickLinkButton } from "../buttons";
 
 // definitely could use some refactoring here
 

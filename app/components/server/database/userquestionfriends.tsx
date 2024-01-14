@@ -5,8 +5,8 @@ import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import {
   ManyUserQuestionFriendsLabel,
   OneUserQuestionFriend,
-} from "../agnostic/userquestionfriends";
-import { ManyPaginatedUserQuestionFriends } from "../client/userquestionfriends";
+} from "../../agnostic/database/userquestionfriends";
+import { ManyPaginatedUserQuestionFriends } from "../../client/database/userquestionfriends";
 
 export async function ManyUserQuestionFriends({
   userQuestion,

@@ -4,8 +4,8 @@ import {
   Friend,
 } from "@/app/libraries/definitions/contacts";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
-import { ButtonShareUserQuestionFriendForm } from "../client/forms";
-import { ContactLinkWithChildren } from "./links";
+import { ButtonShareUserQuestionFriendForm } from "../../client/forms";
+import { ContactLinkWithChildren } from "../links";
 
 export function OneFriend({ friend }: { friend: Friend }) {
   return (

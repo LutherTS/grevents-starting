@@ -7,7 +7,7 @@ import {
   ButtonPinnableForm,
   ButtonPseudoableForm,
   OneCriteriaAnswerModifyForm,
-} from "../client/forms";
+} from "../../client/forms";
 import { FoundContact } from "@/app/libraries/definitions/contacts";
 import Link from "next/link";
 import {
@@ -18,7 +18,7 @@ import {
   ManyPaginatedCriteriaPinnableByFriend,
   ManyPaginatedCriteriaPinnablePseudoable,
   ManyPaginatedLinkCriteria,
-} from "../client/answers";
+} from "../../client/database/answers";
 import { AnswersLabel } from "@/app/libraries/utilities/answerslabels";
 import { NoAnswersLabel } from "@/app/libraries/utilities/noanswerslabels";
 import {

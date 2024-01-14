@@ -19,7 +19,7 @@ import {
   OneFriendAddable,
   OneSentFromContact,
   OneSentToContact,
-} from "../agnostic/contacts";
+} from "../../agnostic/database/contacts";
 import {
   ManyPaginatedFriendsAddable,
   ManyPaginatedIrlFriends,
@@ -30,7 +30,7 @@ import {
   ManyPaginatedSentIrlToContacts,
   ManyPaginatedWhoHaveMeBlocked,
   ManyPaginatedWhoIAmBlocking,
-} from "../client/contacts";
+} from "../../client/database/contacts";
 
 export async function ManyFriendsAddable({
   user,

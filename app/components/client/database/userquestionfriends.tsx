@@ -4,8 +4,8 @@ import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfrie
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
 import _ from "lodash";
 import { useState } from "react";
-import { OneUserQuestionFriend } from "../agnostic/userquestionfriends";
-import { OnClickLinkButton } from "./buttons";
+import { OneUserQuestionFriend } from "../../agnostic/database/userquestionfriends";
+import { OnClickLinkButton } from "../buttons";
 
 export function ManyPaginatedUserQuestionFriends({
   userQuestion,

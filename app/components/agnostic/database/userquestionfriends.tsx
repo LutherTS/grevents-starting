@@ -1,6 +1,6 @@
 import { UserQuestionFriend } from "@/app/libraries/definitions/userquestionfriends";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
-import { ButtonCancelShareUserQuestionFriendForm } from "../client/forms";
+import { ButtonCancelShareUserQuestionFriendForm } from "../../client/forms";
 
 export function ManyUserQuestionFriendsLabel({
   userQuestionFriends,

@@ -2,7 +2,7 @@ import { fetchUserByUsername } from "@/app/libraries/data/users";
 import {
   ManyWhoIAmBlocking,
   ManyWhoHaveMeBlocked,
-} from "@/app/components/server/contacts";
+} from "@/app/components/server/database/contacts";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";

@@ -1,8 +1,8 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { fetchCustomUserQuestionByIDAndUser } from "@/app/libraries/data/userquestions";
 import { findAnswerByUserQuestionAndUser } from "@/app/libraries/data/answers";
-import { ManyFriendsAddable } from "@/app/components/server/contacts";
-import { ManyUserQuestionFriends } from "@/app/components/server/userquestionfriends";
+import { ManyFriendsAddable } from "@/app/components/server/database/contacts";
+import { ManyUserQuestionFriends } from "@/app/components/server/database/userquestionfriends";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { H1 } from "@/app/components/agnostic/tags";
@@ -12,7 +12,7 @@ import {
   UserQuestionFriendCreated,
   UserQuestionFriendDeleted,
 } from "@/app/components/client/toasts";
-import { OneCriteriaModify } from "@/app/components/agnostic/answers";
+import { OneCriteriaModify } from "@/app/components/agnostic/database/answers";
 
 import type { Metadata } from "next";
 

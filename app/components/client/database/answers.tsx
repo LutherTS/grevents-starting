@@ -4,7 +4,7 @@ import { Answer } from "@/app/libraries/definitions/answers";
 import { FoundContact } from "@/app/libraries/definitions/contacts";
 import _ from "lodash";
 import { useState } from "react";
-import { OnClickLinkButton } from "./buttons";
+import { OnClickLinkButton } from "../buttons";
 import {
   OneCriteria,
   OneCriteriaCancelPinnableByFriend,
@@ -13,7 +13,7 @@ import {
   OneCriteriaPinnableByFriend,
   OneCriteriaPinnablePseudoable,
   OneLinkCriteria,
-} from "../agnostic/answers";
+} from "../../agnostic/database/answers";
 
 // I'm going to need to find a way here, and for previous similar issues as well, to refactor the following component so they could all be based on a single one... Maybe.
 

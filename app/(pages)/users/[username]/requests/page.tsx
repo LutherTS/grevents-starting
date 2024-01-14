@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import {
   ManySentFriendToContacts,
   ManySentIrlToContacts,
-} from "@/app/components/server/contacts";
+} from "@/app/components/server/database/contacts";
 
 import type { Metadata } from "next";
 

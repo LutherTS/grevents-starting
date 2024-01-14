@@ -7,7 +7,7 @@ import {
   ManyRelComboIrlCriteriaPreviewed,
   ManyRelComboIrlCriteriaExposed,
   ManyRelComboIrlCriteriaQueried,
-} from "../server/answers";
+} from "../server/database/answers";
 import {
   FoundContact,
   GatheredContact,
