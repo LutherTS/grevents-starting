@@ -29,6 +29,9 @@ import {
   changeSetContactMirrorContact,
   changeSetContactStatusOtherProfile,
 } from "../changes/contacts";
+import { findQuestionByQuestionID } from "../data/questions";
+import { changeCreateNativeUserQuestion } from "../changes/userquestions";
+import { changeCreateAnswer } from "../changes/answers";
 
 const USER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -84,6 +87,9 @@ const UserSchema = z.object({
     })
     .max(50, {
       message: "Your username cannot be more than 50 characters long.",
+    })
+    .regex(/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/gm, {
+      message: "Your username should be slug-friendly.",
     }),
   // for now I voluntarily don't use .email()
   userEmail: z
@@ -175,7 +181,7 @@ export async function updateUserAppWideName(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("userappwidename"));
 
@@ -267,7 +273,7 @@ export async function createOrFindContactsByFriendCode(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("friendcode"));
 
@@ -379,11 +385,13 @@ export type SignUpUserFormState = {
   message?: string | null;
 };
 
+const EMAIL_ADDRESS_QUESTION_ID = "b80f6893-f013-4964-b770-6935ef8fc4a4";
+
 export async function signUpUser(
   prevState: SignUpUserFormState | undefined,
   formData: FormData,
 ) {
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("username"));
   // console.log(formData.get("appwidename"));
@@ -461,6 +469,29 @@ export async function signUpUser(
     generatedFriendCode,
   );
 
+  //
+
+  const user = await fetchUserByEmail(userEmail);
+  // console.log(user);
+
+  const question = await findQuestionByQuestionID(EMAIL_ADDRESS_QUESTION_ID);
+  // console.log(question);
+
+  const generatedUserQuestionID = uuidv4();
+
+  await changeCreateNativeUserQuestion(user, question, generatedUserQuestionID);
+
+  const generatedAnswerID = uuidv4();
+
+  await changeCreateAnswer(
+    user,
+    userEmail,
+    generatedAnswerID,
+    generatedUserQuestionID,
+  );
+
+  //
+
   revalidatePath(`/users/${userUsername}/dashboard`);
   redirect(`/users/${userUsername}/dashboard`);
 }
@@ -488,7 +519,7 @@ export async function signInUser(
   prevState: SignInUserFormState | undefined,
   formData: FormData,
 ) {
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("usernameoremail"));
   // console.log(formData.get("loginpassword"));

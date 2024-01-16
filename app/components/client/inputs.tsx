@@ -32,11 +32,14 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
     <>
       <input
         className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}
         name="answervalue"
         placeholder={answer.answer_value}
-        disabled={status.pending}
+        disabled={status.pending || answer.question_name === "Email address"}
+        // That's actually better than id in some way because the id could change in production.
+        // Since at creation EMAIL_ADDRESS_QUESTION_ID is used (and working), I'll have to streamline both solutions closer to production by making a decision.
       />
     </>
   );

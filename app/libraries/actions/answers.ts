@@ -104,7 +104,7 @@ export async function updateOrDeleteAnswerValue(
   formData: FormData,
 ) {
   // console.log(answer);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("answervalue"));
 
@@ -446,7 +446,7 @@ export async function createNativeNotIrlAnswer(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("nativenotirlquestion"));
   // console.log(formData.get("nativenotirlanswer"));
@@ -596,7 +596,7 @@ export async function createNativeIrlAnswer(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("nativeirlquestion"));
   // console.log(formData.get("nativeirlanswer"));
@@ -915,7 +915,7 @@ export async function createPseudonativeNotIrlAnswer(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("pseudonativenotirlquestion"));
   // console.log(formData.get("pseudonativenotirlanswer"));
@@ -1124,7 +1124,7 @@ export async function createPseudonativeIrlAnswer(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("pseudonativeirlquestion"));
   // console.log(formData.get("pseudonativeirlanswer"));
@@ -1333,7 +1333,7 @@ export async function createCustomAnswer(
   formData: FormData,
 ) {
   // console.log(user);
-  console.log(prevState);
+  // console.log(prevState);
   // console.log(formData);
   // console.log(formData.get("customquestion"));
   // console.log(formData.get("customanswer"));
