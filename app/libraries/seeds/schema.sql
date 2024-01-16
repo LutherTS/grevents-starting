@@ -174,7 +174,8 @@ CREATE TABLE Questions (
 CREATE TYPE userquestion_state AS ENUM (
     'NONE',
     'LIVE',
-    'DELETED'
+    'DELETED',
+    'HIDDEN' -- to be added
 ); -- Done.
 
 CREATE TYPE userquestion_kind AS ENUM (
