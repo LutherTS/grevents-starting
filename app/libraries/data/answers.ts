@@ -128,7 +128,7 @@ export async function countUserPinnedAnswers(userId: string) {
   }
 }
 
-// I'm going to need to verify 'HIDDEN' at a later time.
+// I'm going to need to verify 'HIDDEN' across the app at a later time.
 export async function fetchUserNativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);

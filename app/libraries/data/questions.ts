@@ -11,7 +11,7 @@ import { User } from "../definitions/users";
 import { DEFAULT_RETRIES } from "./users";
 import { unstable_noStore as noStore } from "next/cache";
 
-const NATIVE_QUESTION_LIMIT = 16;
+export const NATIVE_QUESTION_LIMIT = 16;
 
 // Only async functions are allowed to be exported in a "use server" file.
 export const EMAIL_ADDRESS_QUESTION_ID = "b80f6893-f013-4964-b770-6935ef8fc4a4";
