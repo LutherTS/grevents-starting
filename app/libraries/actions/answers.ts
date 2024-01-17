@@ -30,6 +30,7 @@ import {
   changeSetUserQuestionLive,
 } from "../changes/userquestions";
 import {
+  EMAIL_ADDRESS_QUESTION_ID,
   findCustomQuestionByQuestionName,
   findPseudoQuestionByQuestionName,
   findQuestionByQuestionID,
@@ -53,7 +54,6 @@ import {
   countUserPseudonativeIrlAnswers,
   countUserPseudonativeNotIrlAnswers,
 } from "../data/answers";
-import { EMAIL_ADDRESS_QUESTION_ID } from "./users";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 

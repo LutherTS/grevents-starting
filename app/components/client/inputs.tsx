@@ -7,6 +7,7 @@ import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
 } from "@/app/libraries/definitions/questions";
+import { ButtonHiddableForm } from "./forms";
 
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
@@ -31,7 +32,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}

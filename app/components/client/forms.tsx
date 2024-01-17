@@ -38,6 +38,7 @@ import {
   CreatePseudonativeIrlAnswerFormState,
   createPseudonativeNotIrlAnswer,
   CreatePseudonativeNotIrlAnswerFormState,
+  hideOrUnhideUserQuestionOfAnswer,
   pinOrUnpinUserQuestionOfAnswer,
   switchUserQuestionKindOfAnswer,
   updateOrDeleteAnswerValue,
@@ -53,6 +54,7 @@ import {
   FormButton,
   ButtonPinUserQuestionFriend,
   ButtonCancelPinUserQuestionFriend,
+  ButtonHiddable,
 } from "./buttons";
 import { FoundContact, Friend } from "@/app/libraries/definitions/contacts";
 import { UserQuestion } from "@/app/libraries/definitions/userquestions";
@@ -144,7 +146,7 @@ export function OneCriteriaAnswerModifyForm({ answer }: { answer: Answer }) {
 
   return (
     <>
-      <form className="mt-2" action={formAction}>
+      <form className="" action={formAction}>
         <label className="sr-only" htmlFor={answer.answer_id}>
           Modify answer &quot;{answer.answer_value}&quot;
         </label>
@@ -568,6 +570,21 @@ export function ButtonPinnableForm({ answer }: { answer: Answer }) {
         action={() => pinOrUnpinUserQuestionOfAnswer(answer)}
       >
         <ButtonPinnable answer={answer} />
+      </form>
+    </>
+  );
+}
+
+export function ButtonHiddableForm({ answer }: { answer: Answer }) {
+  return (
+    <>
+      <form
+        className="absolute -right-8 flex items-center"
+        action={() => hideOrUnhideUserQuestionOfAnswer(answer)}
+      >
+        {/* ButtonPinnable was still working because the only job of the button here is to submit, and for that they are actually interchangeable. */}
+        {/* <ButtonPinnable answer={answer} /> */}
+        <ButtonHiddable answer={answer} />
       </form>
     </>
   );

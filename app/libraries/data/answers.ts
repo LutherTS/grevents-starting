@@ -110,7 +110,8 @@ export async function countUserPinnedAnswers(userId: string) {
         AND UserQuestions.userquestion_is_pinned = TRUE
 
         AND Answers.answer_state = 'LIVE'
-        AND UserQuestions.userquestion_state = 'LIVE'
+        AND (UserQuestions.userquestion_state = 'LIVE'
+        OR UserQuestions.userquestion_state = 'HIDDEN')
         AND Questions.question_state = 'LIVE'
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED')
@@ -127,6 +128,7 @@ export async function countUserPinnedAnswers(userId: string) {
   }
 }
 
+// I'm going to need to verify 'HIDDEN' at a later time.
 export async function fetchUserNativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
   // console.log(userId);
@@ -156,7 +158,8 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
         AND Questions.question_kind = 'NATIVE'
         
         AND Answers.answer_state = 'LIVE'
-        AND UserQuestions.userquestion_state = 'LIVE'
+        AND (UserQuestions.userquestion_state = 'LIVE'
+        OR UserQuestions.userquestion_state = 'HIDDEN')
         AND Questions.question_state = 'LIVE'
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED')

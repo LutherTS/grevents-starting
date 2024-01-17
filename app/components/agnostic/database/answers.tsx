@@ -3,6 +3,7 @@
 import { Answer } from "@/app/libraries/definitions/answers";
 import {
   ButtonCancelPinUserQuestionFriendForm,
+  ButtonHiddableForm,
   ButtonPinUserQuestionFriendForm,
   ButtonPinnableForm,
   ButtonPseudoableForm,
@@ -109,7 +110,13 @@ export function OneLinkCriteriaQuestion({ answer }: { answer: Answer }) {
 export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
   return (
     <>
-      <p className="mt-2">{answer.answer_value}</p>
+      <p
+        className={
+          answer.userquestion_state === "HIDDEN" ? "mt-2 text-gray-500" : "mt-2"
+        }
+      >
+        {answer.answer_value}
+      </p>
     </>
   );
 }
@@ -117,7 +124,12 @@ export function OneCriteriaAnswer({ answer }: { answer: Answer }) {
 export function OneCriteriaAnswerModify({ answer }: { answer: Answer }) {
   return (
     <>
-      <OneCriteriaAnswerModifyForm answer={answer} />
+      <div className="relative mt-2 inline-flex items-center justify-center">
+        <OneCriteriaAnswerModifyForm answer={answer} />
+        {answer.question_name === "Email address" && (
+          <ButtonHiddableForm answer={answer} />
+        )}
+      </div>
     </>
   );
 }
@@ -140,7 +152,13 @@ export function OneCriteriaAnswerPinnable({
           answer.userquestion_is_pinned === true && (
             <ButtonPinnableForm answer={answer} />
           )}
-        <p>{answer.answer_value}</p>
+        <p
+          className={
+            answer.userquestion_state === "HIDDEN" ? "text-gray-500" : ""
+          }
+        >
+          {answer.answer_value}
+        </p>
       </div>
     </>
   );
