@@ -28,6 +28,8 @@ CREATE TYPE user_status_dashboard AS ENUM (
 
 CREATE TYPE user_status_personal_info AS ENUM (
     'NONE',
+    'CRITERIAHIDDEN', -- added
+    'CRITERIAREVEALED', -- added
     'CRITERIAPINNED',
     'CRITERIAUNPINNED',
     'STANDARDIZEDANSWERUPDATED', -- added
@@ -175,7 +177,7 @@ CREATE TYPE userquestion_state AS ENUM (
     'NONE',
     'LIVE',
     'DELETED',
-    'HIDDEN' -- to be added
+    'HIDDEN' -- added
 ); -- Done.
 
 CREATE TYPE userquestion_kind AS ENUM (
@@ -195,7 +197,7 @@ CREATE TABLE UserQuestions (
     userquestion_updated_at timestamp NOT NULL,
     userquestion_pinned_at timestamp NULL,
     userquestion_up_to_irl_at timestamp NULL,
-    userquestion_down_from_irl_at timestamp NULL, -- FROM not TO, mistake in seeding, userquestion_down_to_irl_at in current seeding
+    userquestion_down_from_irl_at timestamp NULL, -- FROM not TO, mistake in seeding, userquestion_down_to_irl_at in current seeding (renamed)
     UNIQUE (
         user_id, 
         question_id

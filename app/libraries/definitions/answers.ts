@@ -2,7 +2,7 @@
 // My understanding is that some tools can create definitions automatically from the schema of the database.
 
 import { QuestionKind } from "./questions";
-import { UserQuestionKind } from "./userquestions";
+import { UserQuestionKind, UserQuestionState } from "./userquestions";
 
 export type Answer = {
   question_name: string;
@@ -16,6 +16,8 @@ export type Answer = {
   user_id: string;
   userquestionfriends_count?: number;
   userquestionfriend_id?: string;
+  question_id?: string;
+  userquestion_state?: UserQuestionState;
 };
 
 export type AnswerState = "LIVE" | "DELETED";

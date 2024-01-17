@@ -66,4 +66,4 @@ export type PreExistingCustomUserQuestion = {
 
 export type UserQuestionKind = "NONE" | "PSEUDONATIVE" | "PSEUDONATIVEIRL";
 
-export type UserQuestionState = "LIVE" | "DELETED";
+export type UserQuestionState = "LIVE" | "DELETED" | "HIDDEN";

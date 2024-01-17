@@ -31,6 +31,8 @@ export type UserStatusTitle =
 
 export type UserStatusPersonalInfo =
   | "NONE"
+  | "CRITERIAHIDDEN"
+  | "CRITERIAREVEALED"
   | "CRITERIAPINNED"
   | "CRITERIAUNPINNED"
   | "STANDARDIZEDANSWERUPDATED"

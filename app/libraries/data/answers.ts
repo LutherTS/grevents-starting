@@ -142,7 +142,9 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
             Users.user_username,
-            Users.user_id
+            Users.user_id,
+            Questions.question_id, -- SO FAR ONLY FOR EMAIL ADDRESS
+            UserQuestions.userquestion_state -- SO FAR ONLY FOR EMAIL ADDRESS
         FROM Answers
 
         JOIN UserQuestions ON Answers.userquestion_id = UserQuestions.userquestion_id

@@ -26,6 +26,8 @@ import {
   changeSwitchUserQuestionToPseudonative,
   changeSwitchUserQuestionToPseudonativeIrl,
   changeUnpinUserQuestionOfAnswer,
+  changeSetUserQuestionHidden,
+  changeSetUserQuestionLive,
 } from "../changes/userquestions";
 import {
   findCustomQuestionByQuestionName,
@@ -51,6 +53,7 @@ import {
   countUserPseudonativeIrlAnswers,
   countUserPseudonativeNotIrlAnswers,
 } from "../data/answers";
+import { EMAIL_ADDRESS_QUESTION_ID } from "./users";
 
 const ANSWER_STATES = ["NONE", "LIVE", "DELETED"] as const;
 
@@ -245,7 +248,7 @@ export async function updateOrDeleteAnswerValue(
 }
 
 export async function pinOrUnpinUserQuestionOfAnswer(answer: Answer) {
-  // FULL IMPOSSIBILITY TO PIN AT OR ABOVE ANSWERS_PINNED_BY_USER_LIMIT STILL NEEDS TO BE TESTED (ANSWERS_PINNED_BY_USER_LIMIT = 16).
+  // FULL IMPOSSIBILITY TO PIN AT OR ABOVE ANSWERS_PINNED_BY_USER_LIMIT STILL NEEDS TO BE TESTED (ANSWERS_PINNED_BY_USER_LIMIT = 16). // Done recently.
 
   if (answer.userquestion_is_pinned === false) {
     const userPinnedAnswerLength = await countUserPinnedAnswers(answer.user_id);
@@ -1492,4 +1495,30 @@ export async function createCustomAnswer(
     `/users/${user.user_username}/personal-info/customized/modify`,
   );
   redirect(`/users/${user.user_username}/personal-info/customized`);
+}
+
+export async function hideOrUnhideUserQuestionOfAnswer(answer: Answer) {
+  // for now only for "Email address"
+  if (answer.question_id === EMAIL_ADDRESS_QUESTION_ID) {
+    if (answer.userquestion_state === "LIVE") {
+      await changeSetUserQuestionHidden(answer);
+
+      await changeSetUserStatusPersonalInfo(answer.user_id, "CRITERIAHIDDEN");
+    }
+
+    if (answer.userquestion_state === "HIDDEN") {
+      await changeSetUserQuestionLive(answer);
+
+      await changeSetUserStatusPersonalInfo(answer.user_id, "CRITERIAREVEALED");
+    }
+
+    // since for now only for "Email address"
+    // ...and eventually it will be revalidateTag once full flow stable
+    revalidatePath(`/users/${answer.user_username}/personal-info/standardized`);
+    revalidatePath(
+      `/users/${answer.user_username}/personal-info/standardized/modify`,
+    );
+    revalidatePath(`/users/${answer.user_username}/personal-info`);
+    redirect(`/users/${answer.user_username}/personal-info/standardized`);
+  }
 }
