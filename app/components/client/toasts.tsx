@@ -214,6 +214,29 @@ export function UserCustomCriteriaAdded({ user }: { user: User }) {
   );
 }
 
+// for now only on Standardized since only for "Email address"
+export function UserCriteriaHidden({ user }: { user: User }) {
+  return (
+    <>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria hidden</ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
+// for now only on Standardized since only for "Email address"
+// I will for now block the functions to "Email address" alone. // Done.
+export function UserCriteriaRevealed({ user }: { user: User }) {
+  return (
+    <>
+      <ToastForm action={() => resetUserStatusPersonalInfo(user)}>
+        <ToastChild>Criteria revealed</ToastChild>
+      </ToastForm>
+    </>
+  );
+}
+
 export function ContactFirstAccessThroughFind({
   contact,
   user,

@@ -357,3 +357,49 @@ export async function changeCreateCustomUserQuestion(
     };
   }
 }
+
+export async function changeSetUserQuestionHidden(answer: Answer) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_state = 'HIDDEN',
+            userquestion_updated_at = now()
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Hide User Question.",
+    };
+  }
+}
+
+export async function changeSetUserQuestionLive(answer: Answer) {
+  noStore();
+
+  try {
+    const run = async () => {
+      const data = await sql`
+        UPDATE UserQuestions
+        SET 
+            userquestion_state = 'LIVE',
+            userquestion_updated_at = now()
+        WHERE userquestion_id = ${answer.userquestion_id}
+        RETURNING * -- to make sure
+      `;
+      console.log(data.rows);
+    };
+    await pRetry(run, { retries: DEFAULT_RETRIES });
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Unhide User Question.",
+    };
+  }
+}

@@ -12,6 +12,8 @@ import {
   AnswerValueDeleted,
   UserNativeCriteriaNotIrlAdded,
   UserNativeCriteriaIrlAdded,
+  UserCriteriaHidden,
+  UserCriteriaRevealed,
 } from "@/app/components/client/toasts";
 import { User } from "@/app/libraries/definitions/users";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
@@ -77,12 +79,6 @@ export default async function StardardizedPage({
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
       <div className="max-w-prose text-center">
-        {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
-          <AnswerValueUpdated user={user} />
-        )}
-        {user.user_status_personal_info === "ANSWERDELETED" && (
-          <AnswerValueDeleted user={user} />
-        )} */}
         {user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
         )}
@@ -94,6 +90,12 @@ export default async function StardardizedPage({
         )}
         {user.user_status_personal_info === "NATIVECRITERIAIRLADDED" && (
           <UserNativeCriteriaIrlAdded user={user} />
+        )}
+        {user.user_status_personal_info === "CRITERIAHIDDEN" && (
+          <UserCriteriaHidden user={user} />
+        )}
+        {user.user_status_personal_info === "CRITERIAREVEALED" && (
+          <UserCriteriaRevealed user={user} />
         )}
         {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
           <p className="mb-2 cursor-default text-orange-500">

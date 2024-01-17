@@ -29,7 +29,10 @@ import {
   changeSetContactMirrorContact,
   changeSetContactStatusOtherProfile,
 } from "../changes/contacts";
-import { findQuestionByQuestionID } from "../data/questions";
+import {
+  EMAIL_ADDRESS_QUESTION_ID,
+  findQuestionByQuestionID,
+} from "../data/questions";
 import { changeCreateNativeUserQuestion } from "../changes/userquestions";
 import { changeCreateAnswer } from "../changes/answers";
 
@@ -384,8 +387,6 @@ export type SignUpUserFormState = {
   };
   message?: string | null;
 };
-
-const EMAIL_ADDRESS_QUESTION_ID = "b80f6893-f013-4964-b770-6935ef8fc4a4";
 
 export async function signUpUser(
   prevState: SignUpUserFormState | undefined,
