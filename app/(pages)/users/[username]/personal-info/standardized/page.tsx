@@ -78,68 +78,70 @@ export default async function StardardizedPage({
   // console.log(pinnedAnswerCount);
 
   return (
-    <Main>
-      <Wrapper>
-        {user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED" && (
-          <AnswerValueUpdated user={user} />
-        )}
-        {user.user_status_personal_info === "STANDARDIZEDANSWERDELETED" && (
-          <AnswerValueDeleted user={user} />
-        )}
-        {user.user_status_personal_info === "NATIVECRITERIANOTIRLADDED" && (
-          <UserNativeCriteriaNotIrlAdded user={user} />
-        )}
-        {user.user_status_personal_info === "NATIVECRITERIAIRLADDED" && (
-          <UserNativeCriteriaIrlAdded user={user} />
-        )}
-        {user.user_status_personal_info === "CRITERIAHIDDEN" && (
-          <UserCriteriaHidden user={user} />
-        )}
-        {user.user_status_personal_info === "CRITERIAREVEALED" && (
-          <UserCriteriaRevealed user={user} />
-        )}
-        {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
-          <p className="mb-2 cursor-default text-orange-500">
-            You can&apos;t pin more than 16 of your own criteria.
-          </p>
-        )}
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyUserNativeNotIrlCriteria
-            user={user}
-            pinnedAnswerCount={pinnedAnswerCount}
-          />
-          <ManyUserNativeIrlCriteria
-            user={user}
-            pinnedAnswerCount={pinnedAnswerCount}
-          />
-        </Suspense>
-        <PageLink
-          href={`/users/${username}/personal-info/standardized/modify-criteria`}
-          name={"Modify"}
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      {user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED" && (
+        <AnswerValueUpdated user={user} />
+      )}
+      {user.user_status_personal_info === "STANDARDIZEDANSWERDELETED" && (
+        <AnswerValueDeleted user={user} />
+      )}
+      {user.user_status_personal_info === "NATIVECRITERIANOTIRLADDED" && (
+        <UserNativeCriteriaNotIrlAdded user={user} />
+      )}
+      {user.user_status_personal_info === "NATIVECRITERIAIRLADDED" && (
+        <UserNativeCriteriaIrlAdded user={user} />
+      )}
+      {user.user_status_personal_info === "CRITERIAHIDDEN" && (
+        <UserCriteriaHidden user={user} />
+      )}
+      {user.user_status_personal_info === "CRITERIAREVEALED" && (
+        <UserCriteriaRevealed user={user} />
+      )}
+      {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
+        <p className="mb-2 cursor-default text-orange-500">
+          You can&apos;t pin more than 16 of your own criteria.
+        </p>
+      )}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Standardized Info.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyUserNativeNotIrlCriteria
+          user={user}
+          pinnedAnswerCount={pinnedAnswerCount}
         />
-        <PageLink
-          href={`/users/${username}/personal-info/standardized/add-criteria`}
-          name={"Add standardized criteria"}
+        <ManyUserNativeIrlCriteria
+          user={user}
+          pinnedAnswerCount={pinnedAnswerCount}
         />
-        <PageLink
-          href={`/users/${username}/personal-info`}
-          name={"To Personal Info"}
-        />
-        <PageLink
-          href={`/users/${username}/personal-info/customized`}
-          name={"To Customized criteria"}
-        />
-        <RevalidateButtonForm />
-      </Wrapper>
-    </Main>
+      </Suspense>
+      <PageLink
+        href={`/users/${username}/personal-info/standardized/modify-criteria`}
+        name={"Modify"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info/standardized/add-criteria`}
+        name={"Add standardized criteria"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info`}
+        name={"To Personal Info"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info/customized`}
+        name={"To Customized criteria"}
+      />
+      <RevalidateButtonForm />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

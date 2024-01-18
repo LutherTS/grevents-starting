@@ -58,14 +58,16 @@ export default async function NonePreviewPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <Main>
-      <Wrapper>
-        <H1>Welcome to {user.user_app_wide_name}&apos;s None Preview.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <RelationCombinationNonePreviewed />
-        <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-      </Wrapper>
-    </Main>
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s None Preview.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <RelationCombinationNonePreviewed />
+      <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

@@ -63,34 +63,35 @@ export default async function ModifyCriteriaCustomizedPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <Main>
-      <Wrapper>
-        <H1>
-          Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
-          Customized.
-        </H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyUserPseudonativeNotIrlCriteriaModify user={user} />
-          <ManyUserPseudonativeIrlCriteriaModify user={user} />
-        </Suspense>
-        <p className="mt-2">
-          (Custom criteria have their own dynamic modify page directly available
-          from the parent Customized criteria page.)
-        </p>
-        <PageLink
-          href={`/users/${username}/personal-info/customized`}
-          name={"Cancel"}
-        />
-        <RevalidateButtonForm />
-      </Wrapper>
-    </Main>
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>
+        Welcome to {user.user_app_wide_name}&apos;s Modify Criteria Customized.
+      </H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyUserPseudonativeNotIrlCriteriaModify user={user} />
+        <ManyUserPseudonativeIrlCriteriaModify user={user} />
+      </Suspense>
+      <p className="mt-2">
+        (Custom criteria have their own dynamic modify page directly available
+        from the parent Customized criteria page.)
+      </p>
+      <PageLink
+        href={`/users/${username}/personal-info/customized`}
+        name={"Cancel"}
+      />
+      <RevalidateButtonForm />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

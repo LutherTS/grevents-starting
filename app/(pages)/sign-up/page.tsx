@@ -11,13 +11,15 @@ export const metadata: Metadata = {
 
 export default async function SignUpPage() {
   return (
-    <Main>
-      <Wrapper>
-        <H1>Welcome to the Sign Up Page.</H1>
-        <SignUpForm />
-        <PageLink href={`/sign-in`} name={`To sign in`} />
-        <PageLink href={`/`} name={`Return home`} />
-      </Wrapper>
-    </Main>
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>Welcome to the Sign Up Page.</H1>
+      <SignUpForm />
+      <PageLink href={`/sign-in`} name={`To sign in`} />
+      <PageLink href={`/`} name={`Return home`} />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

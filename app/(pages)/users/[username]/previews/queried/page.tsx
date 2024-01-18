@@ -89,122 +89,121 @@ export default async function QueriedPreviewPage({
   }
 
   return (
-    <Main>
-      <Wrapper>
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
-        <BackToDashboardLink session={session} />
-        <UserLastInputForm userLast={userLast} />
-        {userLast !== "" && (
-          <>
-            {gatheredContact ? (
-              <p className="mt-2 font-semibold">userlast: {userLast}</p>
-            ) : (
-              <p className="mt-2">
-                You aren&apos;t acquainted with any such other user.
-              </p>
-            )}
-          </>
-        )}
-        <RelComboInputForm relCombo={relCombo} />
-        {relCombo !== "" && (
-          <>
-            {relationCombinations.includes(relCombo) ? (
-              <>
-                {gatheredContact && (
-                  <p className="mt-2 font-semibold">relcombo: {relCombo}</p>
-                )}
-                {!gatheredContact && (
-                  <p className="mt-2">You first need to enter a user.</p>
-                )}
-              </>
-            ) : (
-              <p className="mt-2">
-                There is no such relation combinaison defined.
-              </p>
-            )}
-          </>
-        )}
-        <Suspense
-          fallback={
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
+      <BackToDashboardLink session={session} />
+      <UserLastInputForm userLast={userLast} />
+      {userLast !== "" && (
+        <>
+          {gatheredContact ? (
+            <p className="mt-2 font-semibold">userlast: {userLast}</p>
+          ) : (
+            <p className="mt-2">
+              You aren&apos;t acquainted with any such other user.
+            </p>
+          )}
+        </>
+      )}
+      <RelComboInputForm relCombo={relCombo} />
+      {relCombo !== "" && (
+        <>
+          {relationCombinations.includes(relCombo) ? (
             <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          {gatheredContact &&
-          relationCombinations.includes(relCombo) &&
-          user.user_state === "DEACTIVATED" ? (
-            <>
-              <p className="mt-2">
-                {user.user_app_wide_name} has deactivated their profile.
-              </p>
+              {gatheredContact && (
+                <p className="mt-2 font-semibold">relcombo: {relCombo}</p>
+              )}
+              {!gatheredContact && (
+                <p className="mt-2">You first need to enter a user.</p>
+              )}
             </>
           ) : (
-            <>
-              {gatheredContact &&
-                gatheredContact.user_state === "DEACTIVATED" && (
-                  <p className="mt-2">
-                    You cannot see other users&apos; profiles while yours is
-                    deactivated.
-                  </p>
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "none" && <RelationCombinationNonePreviewed />}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "friend" && (
-                  <>
-                    <RelationCombinationFriendQueried
-                      user={user}
-                      contact={gatheredContact}
-                    />
-                  </>
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "irl" && (
-                  <>
-                    <RelationCombinationIrlQueried
-                      user={user}
-                      contact={gatheredContact}
-                    />
-                  </>
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "i-am-blocking" && (
-                  <RelationCombinationIAmBlockingPreviewed user={user} />
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "has-me-blocked" && (
-                  <RelationCombinationHasMeBlockedPreviewed user={user} />
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relCombo === "blocking-blocked" && (
-                  <RelationCombinationBlockingBlockedPreviewed user={user} />
-                )}
-              {gatheredContact &&
-                gatheredContact.user_state === "LIVE" &&
-                relationCombinations.includes(relCombo) && (
-                  <>
-                    <PageLink
-                      href={`/users/${gatheredContact.user_username}/profile`}
-                      name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
-                    />
-                  </>
-                )}
-            </>
+            <p className="mt-2">
+              There is no such relation combinaison defined.
+            </p>
           )}
-        </Suspense>
-        <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-        <PageLink
-          href={`/users/${username}/profile`}
-          name={"To Your Profile"}
-        />
-      </Wrapper>
-    </Main>
+        </>
+      )}
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        {gatheredContact &&
+        relationCombinations.includes(relCombo) &&
+        user.user_state === "DEACTIVATED" ? (
+          <>
+            <p className="mt-2">
+              {user.user_app_wide_name} has deactivated their profile.
+            </p>
+          </>
+        ) : (
+          <>
+            {gatheredContact &&
+              gatheredContact.user_state === "DEACTIVATED" && (
+                <p className="mt-2">
+                  You cannot see other users&apos; profiles while yours is
+                  deactivated.
+                </p>
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "none" && <RelationCombinationNonePreviewed />}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "friend" && (
+                <>
+                  <RelationCombinationFriendQueried
+                    user={user}
+                    contact={gatheredContact}
+                  />
+                </>
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "irl" && (
+                <>
+                  <RelationCombinationIrlQueried
+                    user={user}
+                    contact={gatheredContact}
+                  />
+                </>
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "i-am-blocking" && (
+                <RelationCombinationIAmBlockingPreviewed user={user} />
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "has-me-blocked" && (
+                <RelationCombinationHasMeBlockedPreviewed user={user} />
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relCombo === "blocking-blocked" && (
+                <RelationCombinationBlockingBlockedPreviewed user={user} />
+              )}
+            {gatheredContact &&
+              gatheredContact.user_state === "LIVE" &&
+              relationCombinations.includes(relCombo) && (
+                <>
+                  <PageLink
+                    href={`/users/${gatheredContact.user_username}/profile`}
+                    name={`To ${gatheredContact.user_app_wide_name}'s Profile`}
+                  />
+                </>
+              )}
+          </>
+        )}
+      </Suspense>
+      <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
+      <PageLink href={`/users/${username}/profile`} name={"To Your Profile"} />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

@@ -63,22 +63,22 @@ export default async function AddCriteriaCustomizedPage({
 
   return (
     <>
-      <Main>
-        <Wrapper>
-          <H1>
-            Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
-          </H1>
-          <BackToDashboardLink session={session} />
-          <PageLink href={`/sign-in`} name={`sign out`} />
-          <PseudoNativeNotIrlAnswerForm user={user} />
-          <PseudoNativeIrlAnswerForm user={user} />
-          <CustomAnswerForm user={user} />
-          <PageLink
-            href={`/users/${username}/personal-info/customized`}
-            name={"Cancel"}
-          />
-        </Wrapper>
-      </Main>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>
+        Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
+      </H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <PseudoNativeNotIrlAnswerForm user={user} />
+      <PseudoNativeIrlAnswerForm user={user} />
+      <CustomAnswerForm user={user} />
+      <PageLink
+        href={`/users/${username}/personal-info/customized`}
+        name={"Cancel"}
+      />
+      {/* </Wrapper> */}
+      {/* </Main> */}
     </>
   );
 }

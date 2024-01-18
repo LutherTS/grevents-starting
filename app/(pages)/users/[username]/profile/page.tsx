@@ -160,262 +160,256 @@ export default async function UserPage({
   // relCombo = "blocking-blocked";
 
   return (
-    <Main>
-      <Wrapper>
-        {session &&
-          session.user.user_state === "LIVE" &&
-          user.user_state === "LIVE" && (
-            <>
-              {/* This is where toasts for accessing the other user profile, creating contacts then accessing the other user profile, and other circumstances, will be called. */}
-              {foundContact &&
-                // That below could and should be deeper with _ eventually.
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_other_profile ===
-                  "FIRSTACCESSTHROUGHFIND" && (
-                  <ContactFirstAccessThroughFind
-                    contact={foundContact}
-                    user={user}
-                  />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_other_profile ===
-                  "REACCESSTHROUGHFIND" && (
-                  <ContactReaccessThroughFind
-                    contact={foundContact}
-                    user={user}
-                  />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_other_profile ===
-                  "USERQUESTIONFRIENDPINNED" && (
-                  <ContactUserQuestionFriendPinned
-                    contact={foundContact}
-                    user={user}
-                  />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_other_profile ===
-                  "USERQUESTIONFRIENDUNPINNED" && (
-                  <ContactUserQuestionFriendUnpinned
-                    contact={foundContact}
-                    user={user}
-                  />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOWFRIENDS" && (
-                  <ContactNowFriends contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship === "NOWIRLS" && (
-                  <ContactNowIrls contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOLONGERFRIENDS" && (
-                  <ContactNoLongerFriends contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOLONGERIRLS" && (
-                  <ContactNoLongerIrls contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOWBLOCKING" && (
-                  <ContactNowBlocking contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOWUNBLOCKING" && (
-                  <ContactNowUnblocking contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOWBLOCKED" && (
-                  <ContactNowBlocked contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "NOWUNBLOCKED" && (
-                  <ContactNowUnblocked contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "SENTFRIEND" && (
-                  <ContactSentFriend contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship === "SENTIRL" && (
-                  <ContactSentIrl contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "ANNULFRIEND" && (
-                  <ContactAnnulFriend contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship === "ANNULIRL" && (
-                  <ContactAnnulIrl contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "RECEIVEFRIEND" && (
-                  <ContactReceiveFriend contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "RECEIVEIRL" && (
-                  <ContactReceiveIrl contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "REFUSEDFRIEND" && (
-                  <ContactRefusedFriend contact={foundContact} user={user} />
-                )}
-              {foundContact &&
-                session.user.user_id !== user.user_id &&
-                foundContact.c2_contact_status_relationship ===
-                  "REFUSEDIRL" && (
-                  <ContactRefusedIrl contact={foundContact} user={user} />
-                )}
-              <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
-              <BackToDashboardLink session={session} />
-              <PageLink href={`/sign-in`} name={`sign out`} />
-              {username === session.user.user_username && (
-                <p className="mt-2">
-                  This is your profile page, the one where others will be able
-                  to see the data you&apos;ve shared with them on a single URL,
-                  and eventually on more children paths as the application
-                  develops.
-                </p>
-              )}
-              {relCombo === "" && username !== session.user.user_username && (
-                <>
-                  <p className="mt-2">
-                    You have no contact with {user.user_app_wide_name}. In the
-                    full application, you&apos;ll be required to enter their
-                    friend code to start connecting.
-                  </p>
-                </>
-              )}
-              {foundContact && relCombo === "none" && (
-                <RelationCombinationNoneExposed
-                  user={user}
-                  contact={foundContact}
-                  session={session}
-                />
-              )}
-              {relCombo === "friend" && foundContact && (
-                <>
-                  <RelationCombinationFriendExposed
-                    user={user}
-                    contact={foundContact}
-                    session={session}
-                  />
-                </>
-              )}
-              {relCombo === "irl" && foundContact && (
-                <>
-                  <RelationCombinationIrlExposed
-                    user={user}
-                    contact={foundContact}
-                    session={session}
-                  />
-                </>
-              )}
-              {foundContact && relCombo === "i-am-blocking" && (
-                <RelationCombinationIAmBlockingExposed
-                  user={user}
-                  contact={foundContact}
-                  session={session}
-                />
-              )}
-              {foundContact && relCombo === "has-me-blocked" && (
-                <RelationCombinationHasMeBlockedExposed
-                  user={user}
-                  contact={foundContact}
-                  session={session}
-                />
-              )}
-              {foundContact && relCombo === "blocking-blocked" && (
-                <RelationCombinationBlockingBlockedExposed
-                  user={user}
-                  contact={foundContact}
-                  session={session}
-                />
-              )}
-
-              <PageLink
-                href={`/users/${session.user.user_username}/friends`}
-                name={`back to your friends`}
-              />
-              <RevalidateButtonForm />
-            </>
-          )}
-        {session &&
-          session.user.user_state === "LIVE" &&
-          user.user_state === "DEACTIVATED" && (
-            <>
-              <BackToDashboardLink session={session} />
-              <p className="mt-2">
-                {user.user_app_wide_name} has deactivated their profile.
-              </p>
-              <BackLinkForm />
-              <RevalidateButtonForm />
-            </>
-          )}
-        {session &&
-          session.user.user_state === "DEACTIVATED" &&
-          session.user.user_id !== user.user_id && (
-            <>
-              <BackToDashboardLink session={session} />
-              <p className="mt-2">
-                You cannot see other users&apos; profiles while yours is
-                deactivated.
-              </p>
-              <BackLinkForm />
-              <RevalidateButtonForm />
-            </>
-          )}
-        {session &&
-          session.user.user_state === "DEACTIVATED" &&
-          session.user.user_id === user.user_id && (
-            <>
-              <BackToDashboardLink session={session} />
-              <p className="mt-2">You&apos;ve deactivated your profile.</p>
-              <BackLinkForm />
-              <RevalidateButtonForm />
-            </>
-          )}
-        {!session && (
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      {session &&
+        session.user.user_state === "LIVE" &&
+        user.user_state === "LIVE" && (
           <>
-            <p>
-              You have no session. You shall eventually be redirected to the
-              sign-in page or the home page.
-            </p>
-            <PageLink href={`/`} name={`Return home`} />
+            {/* This is where toasts for accessing the other user profile, creating contacts then accessing the other user profile, and other circumstances, will be called. */}
+            {foundContact &&
+              // That below could and should be deeper with _ eventually.
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "FIRSTACCESSTHROUGHFIND" && (
+                <ContactFirstAccessThroughFind
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "REACCESSTHROUGHFIND" && (
+                <ContactReaccessThroughFind
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "USERQUESTIONFRIENDPINNED" && (
+                <ContactUserQuestionFriendPinned
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_other_profile ===
+                "USERQUESTIONFRIENDUNPINNED" && (
+                <ContactUserQuestionFriendUnpinned
+                  contact={foundContact}
+                  user={user}
+                />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "NOWFRIENDS" && (
+                <ContactNowFriends contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "NOWIRLS" && (
+                <ContactNowIrls contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "NOLONGERFRIENDS" && (
+                <ContactNoLongerFriends contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "NOLONGERIRLS" && (
+                <ContactNoLongerIrls contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "NOWBLOCKING" && (
+                <ContactNowBlocking contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "NOWUNBLOCKING" && (
+                <ContactNowUnblocking contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "NOWBLOCKED" && (
+                <ContactNowBlocked contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "NOWUNBLOCKED" && (
+                <ContactNowUnblocked contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "SENTFRIEND" && (
+                <ContactSentFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "SENTIRL" && (
+                <ContactSentIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "ANNULFRIEND" && (
+                <ContactAnnulFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "ANNULIRL" && (
+                <ContactAnnulIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "RECEIVEFRIEND" && (
+                <ContactReceiveFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "RECEIVEIRL" && (
+                <ContactReceiveIrl contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship ===
+                "REFUSEDFRIEND" && (
+                <ContactRefusedFriend contact={foundContact} user={user} />
+              )}
+            {foundContact &&
+              session.user.user_id !== user.user_id &&
+              foundContact.c2_contact_status_relationship === "REFUSEDIRL" && (
+                <ContactRefusedIrl contact={foundContact} user={user} />
+              )}
+            <H1>Welcome to {user.user_app_wide_name}&apos;s Profile.</H1>
+            <BackToDashboardLink session={session} />
+            <PageLink href={`/sign-in`} name={`sign out`} />
+            {username === session.user.user_username && (
+              <p className="mt-2">
+                This is your profile page, the one where others will be able to
+                see the data you&apos;ve shared with them on a single URL, and
+                eventually on more children paths as the application develops.
+              </p>
+            )}
+            {relCombo === "" && username !== session.user.user_username && (
+              <>
+                <p className="mt-2">
+                  You have no contact with {user.user_app_wide_name}. In the
+                  full application, you&apos;ll be required to enter their
+                  friend code to start connecting.
+                </p>
+              </>
+            )}
+            {foundContact && relCombo === "none" && (
+              <RelationCombinationNoneExposed
+                user={user}
+                contact={foundContact}
+                session={session}
+              />
+            )}
+            {relCombo === "friend" && foundContact && (
+              <>
+                <RelationCombinationFriendExposed
+                  user={user}
+                  contact={foundContact}
+                  session={session}
+                />
+              </>
+            )}
+            {relCombo === "irl" && foundContact && (
+              <>
+                <RelationCombinationIrlExposed
+                  user={user}
+                  contact={foundContact}
+                  session={session}
+                />
+              </>
+            )}
+            {foundContact && relCombo === "i-am-blocking" && (
+              <RelationCombinationIAmBlockingExposed
+                user={user}
+                contact={foundContact}
+                session={session}
+              />
+            )}
+            {foundContact && relCombo === "has-me-blocked" && (
+              <RelationCombinationHasMeBlockedExposed
+                user={user}
+                contact={foundContact}
+                session={session}
+              />
+            )}
+            {foundContact && relCombo === "blocking-blocked" && (
+              <RelationCombinationBlockingBlockedExposed
+                user={user}
+                contact={foundContact}
+                session={session}
+              />
+            )}
+
+            <PageLink
+              href={`/users/${session.user.user_username}/friends`}
+              name={`back to your friends`}
+            />
+            <RevalidateButtonForm />
           </>
         )}
-      </Wrapper>
-    </Main>
+      {session &&
+        session.user.user_state === "LIVE" &&
+        user.user_state === "DEACTIVATED" && (
+          <>
+            <BackToDashboardLink session={session} />
+            <p className="mt-2">
+              {user.user_app_wide_name} has deactivated their profile.
+            </p>
+            <BackLinkForm />
+            <RevalidateButtonForm />
+          </>
+        )}
+      {session &&
+        session.user.user_state === "DEACTIVATED" &&
+        session.user.user_id !== user.user_id && (
+          <>
+            <BackToDashboardLink session={session} />
+            <p className="mt-2">
+              You cannot see other users&apos; profiles while yours is
+              deactivated.
+            </p>
+            <BackLinkForm />
+            <RevalidateButtonForm />
+          </>
+        )}
+      {session &&
+        session.user.user_state === "DEACTIVATED" &&
+        session.user.user_id === user.user_id && (
+          <>
+            <BackToDashboardLink session={session} />
+            <p className="mt-2">You&apos;ve deactivated your profile.</p>
+            <BackLinkForm />
+            <RevalidateButtonForm />
+          </>
+        )}
+      {!session && (
+        <>
+          <p>
+            You have no session. You shall eventually be redirected to the
+            sign-in page or the home page.
+          </p>
+          <PageLink href={`/`} name={`Return home`} />
+        </>
+      )}
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }

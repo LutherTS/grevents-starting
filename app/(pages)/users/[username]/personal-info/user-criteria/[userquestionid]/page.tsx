@@ -89,44 +89,41 @@ export default async function UserQuestionPage({
 
   return (
     <>
-      <Main>
-        <Wrapper>
-          {user.user_status_personal_info === "USERQUESTIONFRIENDADDED" && (
-            <UserQuestionFriendCreated user={user} />
-          )}
-          {user.user_status_personal_info === "USERQUESTIONFRIENDDELETED" && (
-            <UserQuestionFriendDeleted user={user} />
-          )}
-          <H1>
-            Welcome to {user.user_app_wide_name}&apos;s &quot;
-            {userQuestion.question_name}&quot; User Criteria.
-          </H1>
-          <BackToDashboardLink session={session} />
-          <PageLink href={`/sign-in`} name={`sign out`} />
-          <Suspense
-            fallback={
-              <>
-                <p className="mt-2">Loading...</p>
-              </>
-            }
-          >
-            <OneCriteriaModify
-              answer={userQuestionAnswer}
-              personalView={true}
-            />
-            <ManyFriendsAddable user={user} userQuestion={userQuestion} />
-            <ManyUserQuestionFriends userQuestion={userQuestion} />
-          </Suspense>
-          <PageLink
-            href={`/users/${username}/personal-info/customized`}
-            name={"To Customized criteria"}
-          />
-          <PageLink
-            href={`/users/${username}/personal-info`}
-            name={"To Personal Info"}
-          />
-        </Wrapper>
-      </Main>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      {user.user_status_personal_info === "USERQUESTIONFRIENDADDED" && (
+        <UserQuestionFriendCreated user={user} />
+      )}
+      {user.user_status_personal_info === "USERQUESTIONFRIENDDELETED" && (
+        <UserQuestionFriendDeleted user={user} />
+      )}
+      <H1>
+        Welcome to {user.user_app_wide_name}&apos;s &quot;
+        {userQuestion.question_name}&quot; User Criteria.
+      </H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <OneCriteriaModify answer={userQuestionAnswer} personalView={true} />
+        <ManyFriendsAddable user={user} userQuestion={userQuestion} />
+        <ManyUserQuestionFriends userQuestion={userQuestion} />
+      </Suspense>
+      <PageLink
+        href={`/users/${username}/personal-info/customized`}
+        name={"To Customized criteria"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info`}
+        name={"To Personal Info"}
+      />
+      {/* </Wrapper> */}
+      {/* </Main> */}
     </>
   );
 }

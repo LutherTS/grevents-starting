@@ -70,13 +70,14 @@ export default async function FindContactsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <Main>
-      <Wrapper>
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <FriendCodeInputForm user={user} />
-        {/* {friendCode !== "" && (
+    <>
+      {/* <Main> */}
+      {/* <Wrapper> */}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <FriendCodeInputForm user={user} />
+      {/* {friendCode !== "" && (
           <>
             {friendCodeUser ? (
               <p className="mt-2 font-semibold">friendcode: {friendCode}</p>
@@ -94,9 +95,10 @@ export default async function FindContactsPage({
             </p>
           </>
         )} */}
-        <PageLink href={`/users/${username}/friends`} name={`See friends`} />
-        <PageLink href={`/users/${username}/previews`} name={`See previews`} />
-      </Wrapper>
-    </Main>
+      <PageLink href={`/users/${username}/friends`} name={`See friends`} />
+      <PageLink href={`/users/${username}/previews`} name={`See previews`} />
+      {/* </Wrapper> */}
+      {/* </Main> */}
+    </>
   );
 }
