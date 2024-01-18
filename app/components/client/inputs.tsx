@@ -7,7 +7,8 @@ import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
 } from "@/app/libraries/definitions/questions";
-import { ButtonHiddableForm } from "./forms";
+
+// I could, should put these classes in variables, but I'm not used to it just yet.
 
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
@@ -15,7 +16,7 @@ export function UserAppWideNameModifyInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="user-app-wide-name"
         name="userappwidename"
@@ -32,7 +33,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}
@@ -53,7 +54,7 @@ export function FriendCodeInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="friend-code"
         name="friendcode"
@@ -76,11 +77,11 @@ export function UserLastInput({ userLast }: { userLast: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="user-last"
         name="userlast"
-        placeholder={userLast}
+        placeholder={userLast ? userLast : "userlast"}
         disabled={status.pending}
         required
       />
@@ -94,11 +95,11 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="rel-combo"
         name="relcombo"
-        placeholder={relCombo}
+        placeholder={relCombo ? relCombo : "relcombo"}
         disabled={status.pending}
         required
       />
@@ -142,7 +143,7 @@ export function NativeNotIrlQuestionSelect({
     <>
       <div className="mt-4 flex w-full justify-center">
         <select
-          className="block truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+          className="block truncate rounded px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
           id="native-not-irl-question"
           name="nativenotirlquestion"
           defaultValue=""
@@ -181,7 +182,7 @@ export function AnswerInput({
   return (
     <>
       <input
-        className="mt-4 w-10/12 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-6 w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id={id}
         name={name}
@@ -203,7 +204,7 @@ export function NativeIrlQuestionSelect({
     <>
       <div className="mt-4 flex w-full justify-center">
         <select
-          className="block truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+          className="block truncate rounded px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
           id="native-irl-question"
           name="nativeirlquestion"
           defaultValue=""
@@ -242,7 +243,7 @@ export function CustomizedQuestionInput({
   return (
     <>
       <input
-        className="mt-4 w-11/12 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-4 w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id={id}
         name={name}
@@ -270,7 +271,7 @@ export function SignInput({
     <>
       <input
         // disabled classes don't apply when the field is fulfilled via autocomplete
-        className="mt-2 w-full truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type={type ? type : "text"}
         id={id}
         name={name}

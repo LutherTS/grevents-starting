@@ -25,6 +25,7 @@ import {
 } from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -79,84 +80,80 @@ export default async function CustomizedPage({
   // console.log(pinnedAnswerCount);
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
-        {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
+    <>
+      {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
         )}
         {user.user_status_personal_info === "ANSWERDELETED" && (
           <AnswerValueDeleted user={user} />
         )} */}
-        {user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" && (
-          <AnswerValueUpdated user={user} />
-        )}
-        {user.user_status_personal_info === "CUSTOMIZEDANSWERDELETED" && (
-          <AnswerValueDeleted user={user} />
-        )}
-        {user.user_status_personal_info ===
-          "PSEUDONATIVECRITERIAUPPEDTOIRL" && (
-          <UserQuestionUppedToIrl user={user} />
-        )}
-        {user.user_status_personal_info ===
-          "PSEUDONATIVECRITERIADOWNEDFROMIRL" && (
-          <UserQuestionDownedToIrl user={user} />
-        )}
-        {user.user_status_personal_info ===
-          "PSEUDONATIVECRITERIANOTIRLADDED" && (
-          <UserPseudonativeCriteriaNotIrlAdded user={user} />
-        )}
-        {user.user_status_personal_info === "PSEUDONATIVECRITERIAIRLADDED" && (
-          <UserPseudonativeCriteriaIrlAdded user={user} />
-        )}
-        {user.user_status_personal_info === "CUSTOMCRITERIAADDED" && (
-          <UserCustomCriteriaAdded user={user} />
-        )}
-        {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
-          <p className="mb-2 cursor-default text-orange-500">
-            You can&apos;t pin more than 16 of your own criteria.
-          </p>
-        )}
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyUserPseudonativeNotIrlCriteria
-            user={user}
-            pinnedAnswerCount={pinnedAnswerCount}
-          />
-          <ManyUserPseudonativeIrlCriteria
-            user={user}
-            pinnedAnswerCount={pinnedAnswerCount}
-          />
-          <ManyUserCustomCriteria
-            user={user}
-            pinnedAnswerCount={pinnedAnswerCount}
-          />
-        </Suspense>
-        <PageLink
-          href={`/users/${username}/personal-info/customized/modify-criteria`}
-          name={"Modify"}
+      {user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" && (
+        <AnswerValueUpdated user={user} />
+      )}
+      {user.user_status_personal_info === "CUSTOMIZEDANSWERDELETED" && (
+        <AnswerValueDeleted user={user} />
+      )}
+      {user.user_status_personal_info === "PSEUDONATIVECRITERIAUPPEDTOIRL" && (
+        <UserQuestionUppedToIrl user={user} />
+      )}
+      {user.user_status_personal_info ===
+        "PSEUDONATIVECRITERIADOWNEDFROMIRL" && (
+        <UserQuestionDownedToIrl user={user} />
+      )}
+      {user.user_status_personal_info === "PSEUDONATIVECRITERIANOTIRLADDED" && (
+        <UserPseudonativeCriteriaNotIrlAdded user={user} />
+      )}
+      {user.user_status_personal_info === "PSEUDONATIVECRITERIAIRLADDED" && (
+        <UserPseudonativeCriteriaIrlAdded user={user} />
+      )}
+      {user.user_status_personal_info === "CUSTOMCRITERIAADDED" && (
+        <UserCustomCriteriaAdded user={user} />
+      )}
+      {pinnedAnswerCount >= ANSWERS_PINNED_BY_USER_LIMIT && (
+        <p className="mb-2 cursor-default text-orange-500">
+          You can&apos;t pin more than 16 of your own criteria.
+        </p>
+      )}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Customized Info.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyUserPseudonativeNotIrlCriteria
+          user={user}
+          pinnedAnswerCount={pinnedAnswerCount}
         />
-        <PageLink
-          href={`/users/${username}/personal-info/customized/add-criteria`}
-          name={"Add customized criteria"}
+        <ManyUserPseudonativeIrlCriteria
+          user={user}
+          pinnedAnswerCount={pinnedAnswerCount}
         />
-        <PageLink
-          href={`/users/${username}/personal-info`}
-          name={"To Personal Info"}
+        <ManyUserCustomCriteria
+          user={user}
+          pinnedAnswerCount={pinnedAnswerCount}
         />
-        <PageLink
-          href={`/users/${username}/personal-info/standardized`}
-          name={"To Standardized criteria"}
-        />
-        <RevalidateButtonForm />
-      </div>
-    </main>
+      </Suspense>
+      <PageLink
+        href={`/users/${username}/personal-info/customized/modify-criteria`}
+        name={"Modify"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info/customized/add-criteria`}
+        name={"Add customized criteria"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info`}
+        name={"To Personal Info"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info/standardized`}
+        name={"To Standardized criteria"}
+      />
+      <RevalidateButtonForm />
+    </>
   );
 }

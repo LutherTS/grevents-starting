@@ -61,23 +61,21 @@ export default async function NotificationsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Notifications.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManySentFriendFromContacts user={user} />
-          <ManySentIrlFromContacts user={user} />
-        </Suspense>
-        <PageLink href={`/users/${username}/requests`} name={`To requests`} />
-      </div>
-    </main>
+    <>
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Notifications.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManySentFriendFromContacts user={user} />
+        <ManySentIrlFromContacts user={user} />
+      </Suspense>
+      <PageLink href={`/users/${username}/requests`} name={`To requests`} />
+    </>
   );
 }

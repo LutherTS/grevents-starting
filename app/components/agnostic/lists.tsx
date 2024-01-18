@@ -9,7 +9,8 @@ export function ManyRelationCombinations() {
           <label className="mt-2" htmlFor="rel-combo">
             <p>
               Type a relation combination between you and this user you&apos;ve
-              selected. (relcombo in searchParams.)
+              selected.
+              {/* (relcombo in searchParams.) */}
             </p>
           </label>
           <ol>

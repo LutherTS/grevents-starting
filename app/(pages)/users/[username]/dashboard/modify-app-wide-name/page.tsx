@@ -62,34 +62,30 @@ export default async function ModifyAppWideNamePage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
-        <H1>
-          Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.
-        </H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <UserAppWideNameModifyForm user={user} />
-        <UserFriendCodeUpdateForm user={user} />
-        <p className="mt-2">
-          You&apos;ll see it changed on your Personal info page.
-        </p>
-        {user.user_state === "LIVE" && (
-          <>
-            <UserDeactivateForm user={user} />
-            <p className="mt-2">
-              All other users will no longer be able to see your profile.
-            </p>
-          </>
-        )}
-        {user.user_state === "DEACTIVATED" && (
-          <>
-            <UserReactivateForm user={user} />
-            <p className="mt-2">Reallow your friends to access your profile.</p>
-          </>
-        )}
-        <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
-      </div>
-    </main>
+    <>
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Modify App-Wide Name.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <UserAppWideNameModifyForm user={user} />
+      <UserFriendCodeUpdateForm user={user} />
+      <p className="mt-2">
+        You&apos;ll see it changed on your Personal info page.
+      </p>
+      {user.user_state === "LIVE" && (
+        <>
+          <UserDeactivateForm user={user} />
+          <p className="mt-2">
+            All other users will no longer be able to see your profile.
+          </p>
+        </>
+      )}
+      {user.user_state === "DEACTIVATED" && (
+        <>
+          <UserReactivateForm user={user} />
+          <p className="mt-2">Reallow your friends to access your profile.</p>
+        </>
+      )}
+      <PageLink href={`/users/${username}/dashboard`} name={`Cancel`} />
+    </>
   );
 }

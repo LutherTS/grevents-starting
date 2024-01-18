@@ -79,15 +79,12 @@ export default async function AddCriteriaStandardizedPage({
 
   return (
     <>
-      <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-        <div className="max-w-prose text-center">
-          <H1>
-            Welcome to {user.user_app_wide_name}&apos;s Add Criteria
-            Standardized.
-          </H1>
-          <BackToDashboardLink session={session} />
-          <PageLink href={`/sign-in`} name={`sign out`} />
-          {/* {allNativeNotIrlQuestions.length > 0 && (
+      <H1>
+        Welcome to {user.user_app_wide_name}&apos;s Add Criteria Standardized.
+      </H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      {/* {allNativeNotIrlQuestions.length > 0 && (
             <>
               <p className="mt-2 font-semibold text-zinc-500">
                 Select a native question below
@@ -129,28 +126,26 @@ export default async function AddCriteriaStandardizedPage({
               </ol>
             </>
           )} */}
-          {/* <p className="mt-4 font-semibold text-zinc-500">
+      {/* <p className="mt-4 font-semibold text-zinc-500">
             Select then answer a native question below
           </p> */}
-          <NativeNotIrlAnswerForm
-            allNativeNotIrlQuestions={allNativeUnansweredNotIrlQuestions}
-            user={user}
-          />
-          {/* <p className="mt-4 font-semibold text-zinc-500">
+      <NativeNotIrlAnswerForm
+        allNativeNotIrlQuestions={allNativeUnansweredNotIrlQuestions}
+        user={user}
+      />
+      {/* <p className="mt-4 font-semibold text-zinc-500">
             Select then answer a native irl question below
           </p> */}
-          <NativeIrlAnswerForm
-            allNativeIrlQuestions={allNativeUnansweredIrlQuestions}
-            user={user}
-          />
-          {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
+      <NativeIrlAnswerForm
+        allNativeIrlQuestions={allNativeUnansweredIrlQuestions}
+        user={user}
+      />
+      {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
           For now I'm choosing to map directly on the page, but eventually I'll do so on the form component once I'll reach the development phase when I'm mutating data. */}
-          <PageLink
-            href={`/users/${username}/personal-info/standardized`}
-            name={"Cancel"}
-          />
-        </div>
-      </main>
+      <PageLink
+        href={`/users/${username}/personal-info/standardized`}
+        name={"Cancel"}
+      />
     </>
   );
 }

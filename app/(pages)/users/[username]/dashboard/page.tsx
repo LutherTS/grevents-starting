@@ -89,45 +89,44 @@ export default async function DashboardPage({
     sentFriendFromContactsCount + sentIrlFromContactsCount;
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
-        {user.user_status_title === "WELCOMETOGREVENTS" && (
-          <UserWelcomeToGrevents user={user} />
-        )}
-        {user.user_status_title === "WELCOMEBACKTOGREVENTS" && (
-          <UserWelcomeBackToGrevents user={user} />
-        )}
-        {user.user_status_dashboard === "APPWIDENAMEUPDATED" && (
-          <UserAppWideNameUpdated user={user} />
-        )}
-        {user.user_status_dashboard === "FRIENDCODEUPDATED" && (
-          <UserFriendCodeUpdated user={user} />
-        )}
-        {user.user_status_dashboard === "NOWDEACTIVATED" && (
-          <UserDeactivated user={user} />
-        )}
-        {user.user_status_dashboard === "NOWREACTIVATED" && (
-          <UserReactivated user={user} />
-        )}
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <PageLinkWithChildren
-          href={`/users/${username}/dashboard/modify-app-wide-name`}
-        >
-          <p>App-wide name *</p>
-        </PageLinkWithChildren>
-        <p className="mt-2">{user.user_app_wide_name}</p>
-        <PageLink
-          href={`/users/${username}/personal-info`}
-          name={`More personal info`}
-        />
-        <PageLink href={`/users/${username}/friends`} name={`My friends`} />
-        {/* <PageLink href={`/users/${username}/requests`} name={`My requests`} />
+    <>
+      {user.user_status_title === "WELCOMETOGREVENTS" && (
+        <UserWelcomeToGrevents user={user} />
+      )}
+      {user.user_status_title === "WELCOMEBACKTOGREVENTS" && (
+        <UserWelcomeBackToGrevents user={user} />
+      )}
+      {user.user_status_dashboard === "APPWIDENAMEUPDATED" && (
+        <UserAppWideNameUpdated user={user} />
+      )}
+      {user.user_status_dashboard === "FRIENDCODEUPDATED" && (
+        <UserFriendCodeUpdated user={user} />
+      )}
+      {user.user_status_dashboard === "NOWDEACTIVATED" && (
+        <UserDeactivated user={user} />
+      )}
+      {user.user_status_dashboard === "NOWREACTIVATED" && (
+        <UserReactivated user={user} />
+      )}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Dashboard.</H1>
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <PageLinkWithChildren
+        href={`/users/${username}/dashboard/modify-app-wide-name`}
+      >
+        <p>App-wide name *</p>
+      </PageLinkWithChildren>
+      <p className="mt-2">{user.user_app_wide_name}</p>
+      <PageLink
+        href={`/users/${username}/personal-info`}
+        name={`More personal info`}
+      />
+      <PageLink href={`/users/${username}/friends`} name={`My friends`} />
+      {/* <PageLink href={`/users/${username}/requests`} name={`My requests`} />
         <PageLink
           href={`/users/${username}/notifications`}
           name={`My notifications`}
         /> */}
-        {/* <PageLinkWithChildren href={`/users/${username}/requests`}>
+      {/* <PageLinkWithChildren href={`/users/${username}/requests`}>
           <p>
             My requests
             {sentToContactsCount > 0 && <> ({sentToContactsCount})</>}
@@ -139,33 +138,32 @@ export default async function DashboardPage({
             {sentFromContactsCount > 0 && <> ({sentFromContactsCount})</>}
           </p>
         </PageLinkWithChildren> */}
-        <PageLinkWithChildren
-          href={`/users/${username}/requests`}
-          specifiedClassName={
-            sentToContactsCount > 0
-              ? "mt-2 inline-block text-teal-500 underline hover:text-teal-400 dark:hover:text-teal-600"
-              : undefined
-          }
-        >
-          <p>My requests</p>
-        </PageLinkWithChildren>
-        <PageLinkWithChildren
-          href={`/users/${username}/notifications`}
-          specifiedClassName={
-            sentFromContactsCount > 0
-              ? "mt-2 inline-block text-cyan-500 underline hover:text-cyan-400 dark:hover:text-cyan-600"
-              : undefined
-          }
-        >
-          <p>My notifications</p>
-        </PageLinkWithChildren>
-        <PageLink href={`/`} name={`Return home`} />
-        {user.user_state === "DEACTIVATED" && (
-          <p className="mt-8 font-bold text-red-500">
-            You&apos;ve deactived your profile.
-          </p>
-        )}
-      </div>
-    </main>
+      <PageLinkWithChildren
+        href={`/users/${username}/requests`}
+        specifiedClassName={
+          sentToContactsCount > 0
+            ? "mt-2 inline-block text-teal-500 underline hover:text-teal-400 dark:hover:text-teal-600"
+            : undefined
+        }
+      >
+        <p>My requests</p>
+      </PageLinkWithChildren>
+      <PageLinkWithChildren
+        href={`/users/${username}/notifications`}
+        specifiedClassName={
+          sentFromContactsCount > 0
+            ? "mt-2 inline-block text-cyan-500 underline hover:text-cyan-400 dark:hover:text-cyan-600"
+            : undefined
+        }
+      >
+        <p>My notifications</p>
+      </PageLinkWithChildren>
+      <PageLink href={`/`} name={`Return home`} />
+      {user.user_state === "DEACTIVATED" && (
+        <p className="mt-8 font-bold text-red-500">
+          You&apos;ve deactived your profile.
+        </p>
+      )}
+    </>
   );
 }

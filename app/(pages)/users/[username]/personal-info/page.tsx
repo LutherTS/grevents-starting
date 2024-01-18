@@ -65,46 +65,44 @@ export default async function PersonalInfoPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
-        {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
-          user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
-          <AnswerValueUpdated user={user} />
-        )}
-        {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
-          user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
-          <AnswerValueDeleted user={user} />
-        )}
-        {user.user_status_personal_info === "CRITERIAPINNED" && (
-          <UserQuestionPinned user={user} />
-        )}
-        {user.user_status_personal_info === "CRITERIAUNPINNED" && (
-          <UserQuestionUnpinned user={user} />
-        )}
-        <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
-        <BackToDashboardLink session={session} />
-        <PageLink href={`/sign-in`} name={`sign out`} />
-        <p className="mt-2">{user.user_username}</p>
-        <p className="mt-2">{user.user_friend_code}</p>
-        <Suspense
-          fallback={
-            <>
-              <p className="mt-2">Loading...</p>
-            </>
-          }
-        >
-          <ManyUserPinnedCriteria user={user} />
-        </Suspense>
-        <PageLink
-          href={`/users/${username}/personal-info/standardized`}
-          name={"To Standardized criteria"}
-        />
-        <PageLink
-          href={`/users/${username}/personal-info/customized`}
-          name={"To Customized criteria"}
-        />
-        <RevalidateButtonForm />
-      </div>
-    </main>
+    <>
+      {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
+        user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
+        <AnswerValueUpdated user={user} />
+      )}
+      {(user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" ||
+        user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED") && (
+        <AnswerValueDeleted user={user} />
+      )}
+      {user.user_status_personal_info === "CRITERIAPINNED" && (
+        <UserQuestionPinned user={user} />
+      )}
+      {user.user_status_personal_info === "CRITERIAUNPINNED" && (
+        <UserQuestionUnpinned user={user} />
+      )}
+      <H1>Welcome to {user.user_app_wide_name}&apos;s Personal Info.</H1>
+      <BackToDashboardLink session={session} />
+      <PageLink href={`/sign-in`} name={`sign out`} />
+      <p className="mt-2">{user.user_username}</p>
+      <p className="mt-2">{user.user_friend_code}</p>
+      <Suspense
+        fallback={
+          <>
+            <p className="mt-2">Loading...</p>
+          </>
+        }
+      >
+        <ManyUserPinnedCriteria user={user} />
+      </Suspense>
+      <PageLink
+        href={`/users/${username}/personal-info/standardized`}
+        name={"To Standardized criteria"}
+      />
+      <PageLink
+        href={`/users/${username}/personal-info/customized`}
+        name={"To Customized criteria"}
+      />
+      <RevalidateButtonForm />
+    </>
   );
 }
