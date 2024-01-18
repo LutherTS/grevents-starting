@@ -7,7 +7,6 @@ import {
   NativeIrlQuestion,
   NativeNotIrlQuestion,
 } from "@/app/libraries/definitions/questions";
-import { ButtonHiddableForm } from "./forms";
 
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
@@ -15,7 +14,7 @@ export function UserAppWideNameModifyInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 truncate rounded bg-gray-100 px-2 text-center text-black focus:border-none disabled:!bg-gray-500 disabled:!text-white dark:bg-gray-900"
         type="text"
         id="user-app-wide-name"
         name="userappwidename"
@@ -270,7 +269,7 @@ export function SignInput({
     <>
       <input
         // disabled classes don't apply when the field is fulfilled via autocomplete
-        className="mt-2 w-full truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-100 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white dark:bg-gray-900"
         type={type ? type : "text"}
         id={id}
         name={name}

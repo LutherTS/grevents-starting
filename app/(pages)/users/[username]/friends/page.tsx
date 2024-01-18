@@ -10,6 +10,7 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
+import { Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -62,7 +63,7 @@ export default async function FriendsPage({
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
+      <Wrapper>
         <H1>Welcome to {user.user_app_wide_name}&apos;s Friends.</H1>
         <BackToDashboardLink session={session} />
         <PageLink href={`/sign-in`} name={`sign out`} />
@@ -73,8 +74,14 @@ export default async function FriendsPage({
             </>
           }
         >
+          {/* <div className="mb-2 mt-2 grid grid-cols-2 gap-8"> */}
+          {/* <div className="mt-2 flex h-full min-h-48 flex-col items-center justify-center rounded-lg bg-slate-50"> */}
           <ManyNotIrlFriends user={user} />
+          {/* </div> */}
+          {/* <div className="mt-2 flex h-full min-h-48 flex-col items-center justify-center rounded-lg bg-slate-50"> */}
           <ManyIrlFriends user={user} />
+          {/* </div> */}
+          {/* </div> */}
         </Suspense>
         <PageLink
           href={`/users/${username}/blocks`}
@@ -84,7 +91,7 @@ export default async function FriendsPage({
           href={`/users/${username}/friends/find`}
           name={`Search for contacts`}
         />
-      </div>
+      </Wrapper>
     </main>
   );
 }
