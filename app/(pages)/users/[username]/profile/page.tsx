@@ -44,6 +44,7 @@ import {
   BackLinkForm,
   RevalidateButtonForm,
 } from "@/app/components/client/forms";
+import { Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -160,7 +161,7 @@ export default async function UserPage({
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
+      <Wrapper>
         {session &&
           session.user.user_state === "LIVE" &&
           user.user_state === "LIVE" && (
@@ -414,7 +415,7 @@ export default async function UserPage({
             <PageLink href={`/`} name={`Return home`} />
           </>
         )}
-      </div>
+      </Wrapper>
     </main>
   );
 }
