@@ -25,6 +25,7 @@ import {
 } from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
+import { Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -80,7 +81,7 @@ export default async function CustomizedPage({
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
+      <Wrapper>
         {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
         )}
@@ -156,7 +157,7 @@ export default async function CustomizedPage({
           name={"To Standardized criteria"}
         />
         <RevalidateButtonForm />
-      </div>
+      </Wrapper>
     </main>
   );
 }
