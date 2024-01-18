@@ -6,7 +6,6 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -59,8 +58,6 @@ export default async function BlockingBlockedPreviewPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>
         Welcome to {user.user_app_wide_name}&apos;s Blocking-Blocked Preview.
       </H1>
@@ -68,8 +65,6 @@ export default async function BlockingBlockedPreviewPage({
       <PageLink href={`/sign-in`} name={`sign out`} />
       <RelationCombinationBlockingBlockedPreviewed user={user} />
       <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

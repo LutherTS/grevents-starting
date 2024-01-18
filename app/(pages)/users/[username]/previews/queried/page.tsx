@@ -23,7 +23,6 @@ import {
 } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -90,8 +89,6 @@ export default async function QueriedPreviewPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>Welcome to {user.user_app_wide_name}&apos;s Queried Previews.</H1>
       <BackToDashboardLink session={session} />
       <UserLastInputForm userLast={userLast} />
@@ -202,8 +199,6 @@ export default async function QueriedPreviewPage({
       </Suspense>
       <PageLink href={`/users/${username}/previews`} name={"To Previews"} />
       <PageLink href={`/users/${username}/profile`} name={"To Your Profile"} />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

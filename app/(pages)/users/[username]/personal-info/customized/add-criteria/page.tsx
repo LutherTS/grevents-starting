@@ -10,7 +10,6 @@ import {
   PseudoNativeIrlAnswerForm,
   PseudoNativeNotIrlAnswerForm,
 } from "@/app/components/client/forms";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -63,8 +62,6 @@ export default async function AddCriteriaCustomizedPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>
         Welcome to {user.user_app_wide_name}&apos;s Add Criteria Customized.
       </H1>
@@ -77,8 +74,6 @@ export default async function AddCriteriaCustomizedPage({
         href={`/users/${username}/personal-info/customized`}
         name={"Cancel"}
       />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

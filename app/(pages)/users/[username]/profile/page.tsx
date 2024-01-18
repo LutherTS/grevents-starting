@@ -44,7 +44,6 @@ import {
   BackLinkForm,
   RevalidateButtonForm,
 } from "@/app/components/client/forms";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -161,8 +160,6 @@ export default async function UserPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       {session &&
         session.user.user_state === "LIVE" &&
         user.user_state === "LIVE" && (
@@ -408,8 +405,6 @@ export default async function UserPage({
           <PageLink href={`/`} name={`Return home`} />
         </>
       )}
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

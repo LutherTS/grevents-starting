@@ -15,7 +15,6 @@ import {
 } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -80,8 +79,6 @@ export default async function AddCriteriaStandardizedPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>
         Welcome to {user.user_app_wide_name}&apos;s Add Criteria Standardized.
       </H1>
@@ -149,8 +146,6 @@ export default async function AddCriteriaStandardizedPage({
         href={`/users/${username}/personal-info/standardized`}
         name={"Cancel"}
       />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

@@ -81,8 +81,6 @@ export default async function CustomizedPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
         )}
@@ -156,8 +154,6 @@ export default async function CustomizedPage({
         name={"To Standardized criteria"}
       />
       <RevalidateButtonForm />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

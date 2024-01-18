@@ -1,6 +1,5 @@
 import { H1 } from "../components/agnostic/tags";
 import { PageLink } from "../components/agnostic/links";
-import { Main, Wrapper } from "../components/agnostic/wrappers";
 
 // import { Flex, Text, Button, Heading, Link } from "@radix-ui/themes";
 
@@ -18,9 +17,6 @@ export default async function HomePage() {
         </Link>
       </Flex> */}
 
-      {/* <Main> */}
-      {/* <div className="max-w-prose rounded-lg bg-white px-8 py-16 text-center"> */}
-      {/* <Wrapper> */}
       <H1>Welcome to Grevents.</H1>
       <p className="mt-2">Start the demonstration at the links below.</p>
       <PageLink
@@ -82,9 +78,6 @@ export default async function HomePage() {
           remember at any random time from your friends and family.
         </p>
       </div>
-      {/* </Wrapper> */}
-      {/* </div> */}
-      {/* </Main> */}
     </>
   );
 }

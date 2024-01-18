@@ -23,7 +23,6 @@ import {
 } from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -79,8 +78,6 @@ export default async function StardardizedPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       {user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED" && (
         <AnswerValueUpdated user={user} />
       )}
@@ -140,8 +137,6 @@ export default async function StardardizedPage({
         name={"To Customized criteria"}
       />
       <RevalidateButtonForm />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

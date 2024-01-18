@@ -10,7 +10,6 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -63,8 +62,6 @@ export default async function FriendsPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>Welcome to {user.user_app_wide_name}&apos;s Friends.</H1>
       <BackToDashboardLink session={session} />
       <PageLink href={`/sign-in`} name={`sign out`} />
@@ -89,8 +86,6 @@ export default async function FriendsPage({
         href={`/users/${username}/friends/find`}
         name={`Search for contacts`}
       />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

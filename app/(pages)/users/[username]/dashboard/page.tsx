@@ -22,7 +22,6 @@ import {
 /* import { User } from "@/app/lib/definitions/users"; */
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -91,8 +90,6 @@ export default async function DashboardPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       {user.user_status_title === "WELCOMETOGREVENTS" && (
         <UserWelcomeToGrevents user={user} />
       )}
@@ -167,8 +164,6 @@ export default async function DashboardPage({
           You&apos;ve deactived your profile.
         </p>
       )}
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

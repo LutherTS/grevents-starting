@@ -11,7 +11,6 @@ import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -64,8 +63,6 @@ export default async function ModifyCriteriaStandardizedPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>
         Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
         Standardized.
@@ -87,8 +84,6 @@ export default async function ModifyCriteriaStandardizedPage({
         name={"Cancel"}
       />
       <RevalidateButtonForm />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }

@@ -10,7 +10,6 @@ import {
 } from "@/app/components/server/database/contacts";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -63,8 +62,6 @@ export default async function RequestsPage({
 
   return (
     <>
-      {/* <Main> */}
-      {/* <Wrapper> */}
       <H1>Welcome to {user.user_app_wide_name}&apos;s Requests.</H1>
       <BackToDashboardLink session={session} />
       <PageLink href={`/sign-in`} name={`sign out`} />
@@ -82,8 +79,6 @@ export default async function RequestsPage({
         href={`/users/${username}/notifications`}
         name={`To notifications`}
       />
-      {/* </Wrapper> */}
-      {/* </Main> */}
     </>
   );
 }
