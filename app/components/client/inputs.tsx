@@ -33,7 +33,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="w-[30ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}
@@ -182,7 +182,7 @@ export function AnswerInput({
   return (
     <>
       <input
-        className="mt-6 w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-6 w-[30ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id={id}
         name={name}
