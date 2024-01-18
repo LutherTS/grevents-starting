@@ -16,7 +16,7 @@ export function UserAppWideNameModifyInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-[32ch] max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id="user-app-wide-name"
         name="userappwidename"
@@ -33,7 +33,7 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
   return (
     <>
       <input
-        className="w-[30ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
+        className="w-[32ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}
@@ -54,7 +54,7 @@ export function FriendCodeInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-[32ch] max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id="friend-code"
         name="friendcode"
@@ -77,7 +77,7 @@ export function UserLastInput({ userLast }: { userLast: string }) {
   return (
     <>
       <input
-        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-[32ch] max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id="user-last"
         name="userlast"
@@ -95,7 +95,7 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
   return (
     <>
       <input
-        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-[32ch] max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id="rel-combo"
         name="relcombo"
@@ -182,7 +182,7 @@ export function AnswerInput({
   return (
     <>
       <input
-        className="mt-6 w-[30ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
+        className="mt-6 w-[32ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id={id}
         name={name}
@@ -243,7 +243,7 @@ export function CustomizedQuestionInput({
   return (
     <>
       <input
-        className="mt-4 w-[40ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-4 w-[32ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type="text"
         id={id}
         name={name}
@@ -271,7 +271,7 @@ export function SignInput({
     <>
       <input
         // disabled classes don't apply when the field is fulfilled via autocomplete
-        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-[32ch] max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
         type={type ? type : "text"}
         id={id}
         name={name}
