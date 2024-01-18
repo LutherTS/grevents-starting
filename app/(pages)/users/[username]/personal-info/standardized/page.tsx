@@ -23,7 +23,7 @@ import {
 } from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
-import { Wrapper } from "@/app/components/agnostic/wrappers";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -78,7 +78,7 @@ export default async function StardardizedPage({
   // console.log(pinnedAnswerCount);
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+    <Main>
       <Wrapper>
         {user.user_status_personal_info === "STANDARDIZEDANSWERUPDATED" && (
           <AnswerValueUpdated user={user} />
@@ -140,6 +140,6 @@ export default async function StardardizedPage({
         />
         <RevalidateButtonForm />
       </Wrapper>
-    </main>
+    </Main>
   );
 }

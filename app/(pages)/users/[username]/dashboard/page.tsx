@@ -22,7 +22,7 @@ import {
 /* import { User } from "@/app/lib/definitions/users"; */
 
 import type { Metadata } from "next";
-import { Wrapper } from "@/app/components/agnostic/wrappers";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -90,7 +90,7 @@ export default async function DashboardPage({
     sentFriendFromContactsCount + sentIrlFromContactsCount;
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+    <Main>
       <Wrapper>
         {user.user_status_title === "WELCOMETOGREVENTS" && (
           <UserWelcomeToGrevents user={user} />
@@ -167,6 +167,6 @@ export default async function DashboardPage({
           </p>
         )}
       </Wrapper>
-    </main>
+    </Main>
   );
 }

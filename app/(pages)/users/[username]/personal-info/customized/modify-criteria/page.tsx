@@ -11,7 +11,7 @@ import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
 import { RevalidateButtonForm } from "@/app/components/client/forms";
-import { Wrapper } from "@/app/components/agnostic/wrappers";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -63,7 +63,7 @@ export default async function ModifyCriteriaCustomizedPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+    <Main>
       <Wrapper>
         <H1>
           Welcome to {user.user_app_wide_name}&apos;s Modify Criteria
@@ -91,6 +91,6 @@ export default async function ModifyCriteriaCustomizedPage({
         />
         <RevalidateButtonForm />
       </Wrapper>
-    </main>
+    </Main>
   );
 }

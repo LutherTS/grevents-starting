@@ -8,6 +8,8 @@ import {
   NativeNotIrlQuestion,
 } from "@/app/libraries/definitions/questions";
 
+// I could, should put these classes in variables, but I'm not used to it just yet.
+
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
 
@@ -52,7 +54,7 @@ export function FriendCodeInput({ user }: { user: User }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="friend-code"
         name="friendcode"
@@ -75,11 +77,11 @@ export function UserLastInput({ userLast }: { userLast: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="user-last"
         name="userlast"
-        placeholder={userLast}
+        placeholder={userLast ? userLast : "userlast"}
         disabled={status.pending}
         required
       />
@@ -93,11 +95,11 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
   return (
     <>
       <input
-        className="mt-2 truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
+        className="mt-2 w-full max-w-[40ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
         type="text"
         id="rel-combo"
         name="relcombo"
-        placeholder={relCombo}
+        placeholder={relCombo ? relCombo : "relcombo"}
         disabled={status.pending}
         required
       />

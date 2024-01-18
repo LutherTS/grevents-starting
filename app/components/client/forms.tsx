@@ -108,6 +108,7 @@ export function UserAppWideNameModifyForm({ user }: { user: User }) {
       <form className="mt-2" action={formAction}>
         <label htmlFor="user-app-wide-name">
           {/* This and similar shouldn't have the mt-2, the form rather */}
+          {/* Inline-block, and a div for the input later on */}
           <p className="mt-2">App-wide name *</p>
         </label>
         <UserAppWideNameModifyInput user={user} />
@@ -757,8 +758,9 @@ export function UserLastInputForm({ userLast }: { userLast: string }) {
       <form className="mt-2">
         <label htmlFor="user-last">
           <p>
-            Type the username of a user you are acquainted with. (userlast in
-            searchParams.)
+            Type the username of a user you are acquainted with.
+            {/* (userlast in
+            searchParams.) */}
           </p>
         </label>
         <UserLastInput userLast={userLast} />

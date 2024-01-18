@@ -36,3 +36,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+// En vrai, et je le sais déjà, le travail de style est aussi complet et complexe que le travail de la logique, et les deux se font en amont avant le démarrage du projet entier.
+// Dans cette itération, j'ai privilégier le back de mon application full-stack, mais à l'avenir la logique et le style devront tous les deux être entièrement conçus avant de commencer le développement.

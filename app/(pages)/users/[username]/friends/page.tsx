@@ -10,7 +10,7 @@ import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
 import { User } from "@/app/libraries/definitions/users";
 
 import type { Metadata } from "next";
-import { Wrapper } from "@/app/components/agnostic/wrappers";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -62,7 +62,7 @@ export default async function FriendsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+    <Main>
       <Wrapper>
         <H1>Welcome to {user.user_app_wide_name}&apos;s Friends.</H1>
         <BackToDashboardLink session={session} />
@@ -92,6 +92,6 @@ export default async function FriendsPage({
           name={`Search for contacts`}
         />
       </Wrapper>
-    </main>
+    </Main>
   );
 }

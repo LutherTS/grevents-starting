@@ -44,7 +44,7 @@ import {
   BackLinkForm,
   RevalidateButtonForm,
 } from "@/app/components/client/forms";
-import { Wrapper } from "@/app/components/agnostic/wrappers";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -160,7 +160,7 @@ export default async function UserPage({
   // relCombo = "blocking-blocked";
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
+    <Main>
       <Wrapper>
         {session &&
           session.user.user_state === "LIVE" &&
@@ -416,6 +416,6 @@ export default async function UserPage({
           </>
         )}
       </Wrapper>
-    </main>
+    </Main>
   );
 }

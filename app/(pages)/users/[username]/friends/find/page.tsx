@@ -9,6 +9,7 @@ import { User } from "@/app/libraries/definitions/users";
 import { FriendCodeInputForm } from "@/app/components/client/forms";
 
 import type { Metadata } from "next";
+import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -69,8 +70,8 @@ export default async function FindContactsPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-      <div className="max-w-prose text-center">
+    <Main>
+      <Wrapper>
         <H1>Welcome to {user.user_app_wide_name}&apos;s Find Contacts.</H1>
         <BackToDashboardLink session={session} />
         <PageLink href={`/sign-in`} name={`sign out`} />
@@ -95,7 +96,7 @@ export default async function FindContactsPage({
         )} */}
         <PageLink href={`/users/${username}/friends`} name={`See friends`} />
         <PageLink href={`/users/${username}/previews`} name={`See previews`} />
-      </div>
-    </main>
+      </Wrapper>
+    </Main>
   );
 }
