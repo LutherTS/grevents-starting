@@ -15,6 +15,7 @@ import {
 import { OneCriteriaModify } from "@/app/components/agnostic/database/answers";
 
 import type { Metadata } from "next";
+import { Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -88,8 +89,8 @@ export default async function UserQuestionPage({
 
   return (
     <>
-      <main className="flex min-h-screen w-full items-center justify-center px-8 py-32">
-        <div className="max-w-prose text-center">
+      <main className="flex min-h-screen w-full items-center justify-center px-8 py-24">
+        <Wrapper>
           {user.user_status_personal_info === "USERQUESTIONFRIENDADDED" && (
             <UserQuestionFriendCreated user={user} />
           )}
@@ -124,7 +125,7 @@ export default async function UserQuestionPage({
             href={`/users/${username}/personal-info`}
             name={"To Personal Info"}
           />
-        </div>
+        </Wrapper>
       </main>
     </>
   );
