@@ -6,6 +6,10 @@ import { unstable_noStore as noStore } from "next/cache";
 import pRetry from "p-retry";
 import { DEFAULT_RETRIES } from "./users";
 
+export const ANSWERS_PINNED_BY_FRIEND_LIMIT = 8;
+export const ANSWERS_PINNED_BY_USER_LIMIT = 16;
+export const ANSWERS_DEFAULT_LIMIT = 32;
+
 /* Trying out p-retry.
 import pRetry, { AbortError } from "p-retry";
 
@@ -22,10 +26,6 @@ const run = async () => {
 
 console.log(await pRetry(run, {retries: DEFAULT_RETRIES}));
 */
-
-export const ANSWERS_PINNED_BY_FRIEND_LIMIT = 8;
-export const ANSWERS_PINNED_BY_USER_LIMIT = 16;
-export const ANSWERS_DEFAULT_LIMIT = 32;
 
 export async function fetchUserPinnedAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
