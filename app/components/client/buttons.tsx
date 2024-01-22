@@ -101,7 +101,7 @@ export function ButtonHiddable({ answer }: { answer: Answer }) {
       <button
         disabled={status.pending}
         className={clsx(
-          "h-4 w-4 rounded-full disabled:!bg-gray-500 disabled:hover:bg-gray-500",
+          "h-4 w-4 rounded-full disabled:!bg-gray-400 disabled:hover:bg-gray-400 dark:disabled:!bg-gray-600 dark:disabled:hover:bg-gray-600",
           {
             "bg-cyan-500 hover:bg-pink-300 dark:hover:bg-pink-700":
               answer.userquestion_state === "LIVE",

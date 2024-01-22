@@ -154,7 +154,9 @@ export function OneCriteriaAnswerPinnable({
           )}
         <p
           className={
-            answer.userquestion_state === "HIDDEN" ? "text-gray-500" : ""
+            answer.userquestion_state === "HIDDEN"
+              ? "text-gray-300 dark:text-gray-700"
+              : "text-inherit"
           }
         >
           {answer.answer_value}
