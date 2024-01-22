@@ -68,8 +68,6 @@ export default async function DashboardPage({
     notFound();
   }
 
-  /* Aborting. Numbers on dashboard are too stressful.
-  BUT. I could replace this by colors. And I did. */
   const sentFriendToContactsCount = Number(
     await countSentFriendToContactsByUser(user),
   );
@@ -121,23 +119,6 @@ export default async function DashboardPage({
         name={`More personal info`}
       />
       <PageLink href={`/users/${username}/friends`} name={`My friends`} />
-      {/* <PageLink href={`/users/${username}/requests`} name={`My requests`} />
-        <PageLink
-          href={`/users/${username}/notifications`}
-          name={`My notifications`}
-        /> */}
-      {/* <PageLinkWithChildren href={`/users/${username}/requests`}>
-          <p>
-            My requests
-            {sentToContactsCount > 0 && <> ({sentToContactsCount})</>}
-          </p>
-        </PageLinkWithChildren>
-        <PageLinkWithChildren href={`/users/${username}/notifications`}>
-          <p>
-            My notifications
-            {sentFromContactsCount > 0 && <> ({sentFromContactsCount})</>}
-          </p>
-        </PageLinkWithChildren> */}
       <PageLinkWithChildren
         href={`/users/${username}/requests`}
         specifiedClassName={

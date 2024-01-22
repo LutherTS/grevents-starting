@@ -580,7 +580,7 @@ export function ButtonHiddableForm({ answer }: { answer: Answer }) {
   return (
     <>
       <form
-        className="absolute -right-8 flex items-center"
+        className="absolute right-4 flex items-center"
         action={() => hideOrUnhideUserQuestionOfAnswer(answer)}
       >
         {/* ButtonPinnable was still working because the only job of the button here is to submit, and for that they are actually interchangeable. */}
