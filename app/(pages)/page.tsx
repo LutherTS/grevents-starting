@@ -1,12 +1,14 @@
 import { H1 } from "../components/agnostic/tags";
 import { PageLink } from "../components/agnostic/links";
+// import NextLink from "next/link";
 
-// import { Flex, Text, Button, Heading, Link } from "@radix-ui/themes";
+// import { Flex, Text, Heading, Link } from "@radix-ui/themes";
 
 export default async function HomePage() {
   return (
     <>
       {/* Typing issues, and the Link is not client-side.
+      asChild worked! Typing issue still but I'll see to it later.
       <Flex direction="column">
         <Heading size={"5"} align="center">
           Welcome to Grevents.
@@ -14,6 +16,9 @@ export default async function HomePage() {
         <Text align="center">Start the demonstration at the link below.</Text>
         <Link align="center" href={`/users/LePapier/dashboard`}>
           Go to my dashboard
+        </Link>
+        <Link asChild>
+          <NextLink href="/sign-up">Sign up</NextLink>
         </Link>
       </Flex> */}
 
