@@ -59,7 +59,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function UserPage({
+export default async function ProfilePage({
   params,
 }: {
   params: {
