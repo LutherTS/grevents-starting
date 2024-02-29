@@ -93,7 +93,7 @@ export default async function ProfilePage({
       user_status_personal_info: "NONE",
       user_username: "Alice-chan",
       user_app_wide_name: "Alice",
-      user_friend_code: "k7mdsfwq2e9g",
+      user_friend_code: "X_CESa8ACtHT",
       user_has_temporary_password: false,
       user_created_at: "2023-12-09T06:00:33.323Z",
       user_updated_at: "2023-12-09T06:00:33.323Z",
