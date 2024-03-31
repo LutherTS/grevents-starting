@@ -226,7 +226,6 @@ export function UserCriteriaHidden({ user }: { user: User }) {
 }
 
 // for now only on Standardized since only for "Email address"
-// I will for now block the functions to "Email address" alone. // Done.
 export function UserCriteriaRevealed({ user }: { user: User }) {
   return (
     <>
@@ -306,8 +305,6 @@ export function ContactUserQuestionFriendUnpinned({
     </>
   );
 }
-
-// Penser à mettre en place un label dynamique sur les toasts comme précédemment avec les answers.
 
 export function ContactNowFriends({
   contact,

@@ -113,8 +113,8 @@ CREATE TYPE contact_status_profile AS ENUM (
 
 CREATE TYPE contact_status_mirror_profile AS ENUM (
     'NONE',
-    'FIRSTACCESSTHROUGHFIND',
-    'REACCESSTHROUGHFIND' --,
+    'FIRSTACCESSTHROUGHFIND', -- I believe not needed
+    'REACCESSTHROUGHFIND', -- I believe not needed
     'USERQUESTIONFRIENDPINNED', -- added
     'USERQUESTIONFRIENDUNPINNED' -- added
 ); -- from contact_status_other_profile to contact_status_mirror_profile

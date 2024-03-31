@@ -64,9 +64,6 @@ import {
   cancelShareUserQuestionFriend,
   pinUserQuestionFriend,
   cancelPinUserQuestionFriend,
-  // pinUserQuestionFriendForBind,
-  // Pelepelepele,
-  // AnswerAndContact,
 } from "@/app/libraries/actions/userquestionfriends";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -90,7 +87,6 @@ import {
   upgradeFriendshipToIrl,
 } from "@/app/libraries/actions/contacts";
 import { ManyRelationCombinations } from "../agnostic/lists";
-import { bind } from "lodash";
 
 export function UserAppWideNameModifyForm({ user }: { user: User }) {
   const initialState: UpdateUserAppWideNameFormState = {
@@ -107,8 +103,6 @@ export function UserAppWideNameModifyForm({ user }: { user: User }) {
     <>
       <form className="mt-2" action={formAction}>
         <label htmlFor="user-app-wide-name">
-          {/* This and similar shouldn't have the mt-2, the form rather */}
-          {/* Inline-block, and a div for the input later on */}
           <p className="mt-2">App-wide name *</p>
         </label>
         <UserAppWideNameModifyInput user={user} />
@@ -200,50 +194,6 @@ export function UserReactivateForm({ user }: { user: User }) {
     </>
   );
 }
-
-/* No longer in use
-export function SendFriendRequestForm({
-  user,
-  contact,
-}: {
-  user: User;
-  contact: FoundContact;
-}) {
-  return (
-    <>
-      <form
-        className="mt-2"
-        action={() => sendFriendRequestButItsAutoFriend(contact, user)}
-        // action={() => sendFriendRequest(contact, user)}
-      >
-        <LinkButton>Send friend request but it&apos;s auto friend</LinkButton>
-      </form>
-    </>
-  );
-}
-
-export function UpgradeFriendshipToIrlForm({
-  user,
-  contact,
-}: {
-  user: User;
-  contact: FoundContact;
-}) {
-  return (
-    <>
-      <form
-        className="mt-2"
-        action={() => upgradeFriendshipToIrlButItsAutoIrl(contact, user)}
-        // action={() => upgradeFriendshipToIrl(contact, user)}
-      >
-        <LinkButton>
-          Upgrade friendship to irl but it&apos;s auto irl
-        </LinkButton>
-      </form>
-    </>
-  );
-}
-*/
 
 export function DowngradeFriendshipToIrlForm({
   contact,
@@ -355,8 +305,6 @@ export function UnblockIfThatsOKWithYouForm({
     </>
   );
 }
-
-// Continues
 
 export function SendFriendForm({
   contact,
@@ -583,8 +531,6 @@ export function ButtonHiddableForm({ answer }: { answer: Answer }) {
         className="absolute right-4 flex items-center"
         action={() => hideOrUnhideUserQuestionOfAnswer(answer)}
       >
-        {/* ButtonPinnable was still working because the only job of the button here is to submit, and for that they are actually interchangeable. */}
-        {/* <ButtonPinnable answer={answer} /> */}
         <ButtonHiddable answer={answer} />
       </form>
     </>
@@ -651,35 +597,13 @@ export function ButtonPinUserQuestionFriendForm({
   answer: Answer;
   contact: FoundContact;
 }) {
-  /*
-  const answerAndContact: AnswerAndContact = {
-    answer: answer,
-    contact: contact
-  }
-  const initialState: Pelepelepele = {
-    message: null,
-  };
-  const pinUserQuestionFriendWithBind = pinUserQuestionFriendForBind.bind(null, answerAndContact);
-  const [state, formAction] = useFormState(
-    pinUserQuestionFriendWithBind,
-    initialState,
-  );
-  */
-
   return (
     <>
       <form
         className="me-2 flex items-center"
         action={() => pinUserQuestionFriend(answer, contact)}
-        // action={formAction}
       >
         <ButtonPinUserQuestionFriend />
-        {/* {state && state.message ? (
-          <div id="native-not-irl-answer-form-error" aria-live="polite">
-            <p className="mt-2 text-red-500">{state.message}</p>
-          </div>
-        ) : null} */}
-        {/* Note : À l'avenir, si je veux et peux vraiment faire ressortir le message d'erreur sous la Answer, il faudra que la Answer toute entière soit incluse dans le formulaire. En soi, que la Answer soit encapsulée par le formulaire. */}
       </form>
     </>
   );
@@ -704,13 +628,7 @@ export function ButtonCancelPinUserQuestionFriendForm({
   );
 }
 
-export function FriendCodeInputForm({
-  // friendCode,
-  user,
-}: {
-  // friendCode: string;
-  user: User;
-}) {
+export function FriendCodeInputForm({ user }: { user: User }) {
   const initialState: CreateOrFindContactsByFriendCodeFormState = {
     errors: {},
     message: null,
@@ -724,11 +642,7 @@ export function FriendCodeInputForm({
 
   return (
     <>
-      <form
-        className="mt-2"
-        action={formAction}
-        // A form action will be required in order to show error messages.
-      >
+      <form className="mt-2" action={formAction}>
         <label htmlFor="friend-code">
           <p>Find a user by their friend code.</p>
         </label>
@@ -757,11 +671,7 @@ export function UserLastInputForm({ userLast }: { userLast: string }) {
     <>
       <form className="mt-2">
         <label htmlFor="user-last">
-          <p>
-            Type the username of a user you are acquainted with.
-            {/* (userlast in
-            searchParams.) */}
-          </p>
+          <p>Type the username of a user you are acquainted with.</p>
         </label>
         <UserLastInput userLast={userLast} />
       </form>
@@ -775,29 +685,21 @@ export function RelComboInputForm({ relCombo }: { relCombo: string }) {
   const { replace } = useRouter();
 
   function handleSubmit(formData: FormData) {
-    // console.log(formData);
     const params = new URLSearchParams(searchParams);
-    // console.log(params);
     const term = formData.get("relcombo")?.toString();
-    // console.log(term);
 
     if (term) {
       params.set("relcombo", term);
     } else {
       params.delete("relcombo");
     }
-    // console.log(params);
 
     replace(`${pathname}?${params.toString()}`);
   }
 
   return (
     <>
-      <form
-        className="mt-2"
-        action={(formData) => handleSubmit(formData)}
-        // Action still needed to be developed, to add to the existing searchParams.
-      >
+      <form className="mt-2" action={(formData) => handleSubmit(formData)}>
         <ManyRelationCombinations />
         <RelComboInput relCombo={relCombo} />
       </form>
@@ -808,23 +710,6 @@ export function RelComboInputForm({ relCombo }: { relCombo: string }) {
 /* Some explaining.
 Theoritically, I should apply this elongated logic to userlast as well for consistency. But in this case, I specifically want userlast to override relcombo in searchParams. (In order for a queried preview on any user to begin with the current relcombo between userfirst and userlast.) That's why the default behavior turns out to be exactly what I need.
 */
-
-/* To develop during UI phase.
-export function RelComboSelectForm({ relCombo }: { relCombo: string }) {
-  return (
-    <>
-      <form
-        className="mt-2"
-        // Action doesn't seem automatic with a select.
-      >
-        <RelComboSelect relCombo={relCombo} />
-      </form>
-    </>
-  );
-}
-*/
-
-// All that is missing below is integrated labels.
 
 export function NativeNotIrlAnswerForm({
   allNativeNotIrlQuestions,

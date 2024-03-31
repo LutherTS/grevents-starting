@@ -647,6 +647,7 @@ export async function findSentIrlFromContactsByUser(user: User) {
   }
 }
 
+// That's a bug. AND u1.user_state = 'LIVE' -- NEW should be OR 'DEACTIVATED'
 export async function countSentFriendToContactsByUser(user: User) {
   noStore(); // since always changing
   try {

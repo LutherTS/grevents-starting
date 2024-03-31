@@ -91,7 +91,7 @@ const UserSchema = z.object({
     .max(50, {
       message: "Your username cannot be more than 50 characters long.",
     })
-    .regex(/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/gm, {
+    .regex(/^[A-Za-z0-9]+(?:[-_][A-Za-z0-9]+)*$/gm, {
       message: "Your username should be slug-friendly.",
     }),
   // for now I voluntarily don't use .email()

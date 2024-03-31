@@ -30,30 +30,30 @@ export async function fetchCustomUserQuestionByIDAndUser(
             UserQuestions.userquestion_id,
             UserQuestions.user_id,
             UserQuestions.question_id,
-            UserQuestions.userquestion_state,
-            UserQuestions.userquestion_kind,
-            UserQuestions.userquestion_is_pinned,
-            UserQuestions.userquestion_created_at,
-            UserQuestions.userquestion_updated_at,
-            UserQuestions.userquestion_pinned_at,
-            UserQuestions.userquestion_up_to_irl_at,
-            UserQuestions.userquestion_down_from_irl_at,
-            Users.user_state,
-            Users.user_status_title,
-            Users.user_status_dashboard,
-            Users.user_status_personal_info,
-            Users.user_username,
-            Users.user_app_wide_name,
-            Users.user_friend_code,
-            Users.user_has_temporary_password,
-            Users.user_created_at,
-            Users.user_updated_at,
-            Questions.question_state,
-            Questions.question_kind,
+            UserQuestions.userquestion_state, -- why
+            UserQuestions.userquestion_kind, -- why
+            UserQuestions.userquestion_is_pinned, -- why
+            UserQuestions.userquestion_created_at, -- why
+            UserQuestions.userquestion_updated_at, -- why
+            UserQuestions.userquestion_pinned_at, -- why
+            UserQuestions.userquestion_up_to_irl_at, -- why
+            UserQuestions.userquestion_down_from_irl_at, -- why
+            Users.user_state, -- why
+            Users.user_status_title, -- why
+            Users.user_status_dashboard, -- why
+            Users.user_status_personal_info, -- why
+            Users.user_username, -- why
+            Users.user_app_wide_name, -- why
+            Users.user_friend_code, -- why
+            Users.user_has_temporary_password, -- why
+            Users.user_created_at, -- why
+            Users.user_updated_at, -- why
+            Questions.question_state, -- why
+            Questions.question_kind, -- why
             Questions.question_name,
-            Questions.question_is_suggested,
-            Questions.question_created_at,
-            Questions.question_updated_at
+            Questions.question_is_suggested, -- why
+            Questions.question_created_at, -- why
+            Questions.question_updated_at -- why
         FROM UserQuestions
 
         JOIN Users ON UserQuestions.user_id = Users.user_id

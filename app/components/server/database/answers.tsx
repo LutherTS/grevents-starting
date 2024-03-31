@@ -295,7 +295,7 @@ export async function ManyRelComboIrlCriteriaPreviewed({
     userUnpinnedPseudonativeIrlAnswers,
   ] = await Promise.all([
     fetchUserPinnedNotAndIrlAnswers(user.user_id),
-    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id), // garder DEACTIVATED, enlever pinned_by_friend
+    fetchUserUnpinnedNativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswers(user.user_id),
     fetchUserUnpinnedNativeIrlAnswers(user.user_id),
     fetchUserUnpinnedPseudonativeIrlAnswers(user.user_id),
@@ -335,23 +335,23 @@ export async function ManyRelComboFriendCriteriaExposed({
   contact: FoundContact;
 }) {
   const [
-    pinnedByFriendNotIrlAnswers, // new
+    pinnedByFriendNotIrlAnswers,
     pinnedNotIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
     userUnpinnedPseudonativeNotIrlAnswers,
-    userSharedToContactCustomAnswers, // optimisation
+    userSharedToContactCustomAnswers,
   ] = await Promise.all([
     fetchUserPinnedByFriendNotIrlAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
-    ), // new
+    ),
     fetchUserPinnedNotIrlAnswersExposed(user.user_id, contact.c1_contact_id),
-    fetchUserUnpinnedNativeNotIrlAnswersExposed(user.user_id), // enlever DEACTIVATED
+    fetchUserUnpinnedNativeNotIrlAnswersExposed(user.user_id),
     fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(user.user_id),
     fetchUserSharedToContactCustomAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
-    ), // optimisation
+    ),
   ]);
 
   const pinnedByFriendNotIrlAnswersCount = pinnedByFriendNotIrlAnswers.length;
@@ -415,13 +415,13 @@ export async function ManyRelComboIrlCriteriaExposed({
   contact: FoundContact;
 }) {
   const [
-    pinnedByFriendNotAndIrlAnswers, // new
+    pinnedByFriendNotAndIrlAnswers,
     pinnedNotAndIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
     userUnpinnedPseudonativeNotIrlAnswers,
     userUnpinnedNativeIrlAnswers,
     userUnpinnedPseudonativeIrlAnswers,
-    userSharedToContactCustomAnswers, // optimisation
+    userSharedToContactCustomAnswers,
   ] = await Promise.all([
     fetchUserPinnedByFriendNotAndIrlAnswersExposed(
       user.user_id,
@@ -435,7 +435,7 @@ export async function ManyRelComboIrlCriteriaExposed({
     fetchUserSharedToContactCustomAnswersExposed(
       user.user_id,
       contact.c1_contact_id,
-    ), // optimisation
+    ),
   ]);
 
   const pinnedByFriendNotAndIrlAnswersCount =
@@ -517,7 +517,7 @@ export async function ManyRelComboFriendCriteriaQueried({
     pinnedNotIrlAnswers,
     userUnpinnedNativeNotIrlAnswers,
     userUnpinnedPseudonativeNotIrlAnswers,
-    userSharedToContactCustomAnswers, // optimisation
+    userSharedToContactCustomAnswers,
   ] = await Promise.all([
     fetchUserPinnedNotIrlAnswersQueried(user.user_id, contact.c1_contact_id),
     fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
@@ -525,7 +525,7 @@ export async function ManyRelComboFriendCriteriaQueried({
     fetchUserSharedToContactCustomAnswersQueried(
       user.user_id,
       contact.c1_contact_id,
-    ), // optimisation
+    ),
   ]);
 
   return (
@@ -577,7 +577,7 @@ export async function ManyRelComboIrlCriteriaQueried({
     userUnpinnedPseudonativeNotIrlAnswers,
     userUnpinnedNativeIrlAnswers,
     userUnpinnedPseudonativeIrlAnswers,
-    userSharedToContactCustomAnswers, // optimisation
+    userSharedToContactCustomAnswers,
   ] = await Promise.all([
     fetchUserPinnedNotAndIrlAnswersQueried(user.user_id, contact.c1_contact_id),
     fetchUserUnpinnedNativeNotIrlAnswersQueried(user.user_id),
@@ -587,7 +587,7 @@ export async function ManyRelComboIrlCriteriaQueried({
     fetchUserSharedToContactCustomAnswersQueried(
       user.user_id,
       contact.c1_contact_id,
-    ), // optimisation
+    ),
   ]);
 
   return (

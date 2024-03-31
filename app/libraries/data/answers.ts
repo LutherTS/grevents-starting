@@ -648,7 +648,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             Questions.question_name, 
             Answers.answer_value, 
             Answers.answer_id,
-            UserQuestions.userquestion_is_pinned,
+            UserQuestions.userquestion_is_pinned, -- unneeded
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,

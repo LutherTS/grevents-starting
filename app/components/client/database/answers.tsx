@@ -15,14 +15,10 @@ import {
   OneLinkCriteria,
 } from "../../agnostic/database/answers";
 
-// I'm going to need to find a way here, and for previous similar issues as well, to refactor the following component so they could all be based on a single one... Maybe.
-
 export function ManyPaginatedCriteria({
-  // children,
   answers,
   personalView,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   personalView?: boolean;
 }) {
@@ -69,10 +65,8 @@ export function ManyPaginatedCriteria({
 }
 
 export function ManyPaginatedCriteriaModify({
-  // children,
   answers,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
 }) {
   const chunkedAnswers = _.chunk(answers, 4);
@@ -118,11 +112,9 @@ export function ManyPaginatedCriteriaModify({
 }
 
 export function ManyPaginatedCriteriaPinnable({
-  // children,
   answers,
   pinnedAnswersCount,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   pinnedAnswersCount: number;
 }) {
@@ -173,11 +165,9 @@ export function ManyPaginatedCriteriaPinnable({
 }
 
 export function ManyPaginatedCriteriaPinnablePseudoable({
-  // children,
   answers,
   pinnedAnswersCount,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   pinnedAnswersCount: number;
 }) {
@@ -227,22 +217,15 @@ export function ManyPaginatedCriteriaPinnablePseudoable({
 }
 
 export function ManyPaginatedCriteriaPinnableByFriend({
-  // children,
   answers,
   contact,
   pinnedbyFriendAnswersLength,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   contact: FoundContact;
   pinnedbyFriendAnswersLength: number;
 }) {
-  // console.log(answers); // C'est dans le client !!
-  // console.log(answers.length); // Après ça veut aussi surtout dire qu'il faudra que je sois encore plus au taquet sur ce que je passe comme informations sur Answer.
-
   const chunkedAnswers = _.chunk(answers, 4);
-  // console.log(chunkedAnswers);
-  // console.log(chunkedAnswers.length);
 
   const [position, setPosition] = useState(0);
 
@@ -289,11 +272,9 @@ export function ManyPaginatedCriteriaPinnableByFriend({
 }
 
 export function ManyPaginatedCriteriaCancelPinnableByFriend({
-  // children,
   answers,
   contact,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   contact: FoundContact;
 }) {
@@ -343,11 +324,9 @@ export function ManyPaginatedCriteriaCancelPinnableByFriend({
 }
 
 export function ManyPaginatedLinkCriteria({
-  // children,
   answers,
   pinnedAnswersCount,
 }: {
-  // children: React.ReactNode;
   answers: Answer[];
   pinnedAnswersCount: number;
 }) {
@@ -395,5 +374,3 @@ export function ManyPaginatedLinkCriteria({
     </>
   );
 }
-
-// Indeed, I'm really going to need to refactor this is some way.

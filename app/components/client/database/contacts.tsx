@@ -17,8 +17,6 @@ import {
 } from "../../agnostic/database/contacts";
 import { OnClickLinkButton } from "../buttons";
 
-// definitely could use some refactoring here
-
 export function ManyPaginatedFriendsAddable({
   userQuestion,
   userFriends,
@@ -70,9 +68,6 @@ export function ManyPaginatedFriendsAddable({
     </>
   );
 }
-
-// all below to be tested
-// but non-breaking in current 0 & <= 4 cases
 
 export function ManyPaginatedNotIrlFriends({
   userNotIrlFriends,

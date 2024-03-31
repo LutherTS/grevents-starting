@@ -10,7 +10,6 @@ export function ManyRelationCombinations() {
             <p>
               Type a relation combination between you and this user you&apos;ve
               selected.
-              {/* (relcombo in searchParams.) */}
             </p>
           </label>
           <ol>

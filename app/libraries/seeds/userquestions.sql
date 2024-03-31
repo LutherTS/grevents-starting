@@ -271,7 +271,7 @@ VALUES (
     now()
 ); -- Done. 
 
-INSERT INTO UserQuestions ( -- Elijah, First name
+INSERT INTO UserQuestions ( -- El-Hadj, First name
 -- native / pinned
     userquestion_id,
     user_id,
@@ -291,7 +291,7 @@ VALUES (
     now()
 ); -- Done.
 
-INSERT INTO UserQuestions ( -- Elijah, Last name
+INSERT INTO UserQuestions ( -- El-Hadj, Last name
 -- native / irl
     userquestion_id,
     user_id,

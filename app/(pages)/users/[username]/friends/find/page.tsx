@@ -26,14 +26,14 @@ export async function generateMetadata({
 
 export default async function FindContactsPage({
   params,
-  searchParams,
+  // searchParams,
 }: {
   params: {
     username: string;
   };
-  searchParams: {
-    friendcode?: string;
-  };
+  // searchParams: {
+  //   friendcode?: string;
+  // };
 }) {
   const session: { [K in "user"]: User } = {
     // “me” // default demo behavior
