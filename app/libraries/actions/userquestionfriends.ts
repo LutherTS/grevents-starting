@@ -99,41 +99,23 @@ export async function cancelShareUserQuestionFriend(
   );
 }
 
-// Better, easier in two
-// export async function pinOrUnpinUserQuestionFriend() {}
-
-// now making sure there aren't 5 or more pinned at time of execution
 export async function pinUserQuestionFriend(
   answer: Answer,
   contact: FoundContact,
 ) {
-  // I can refactor either with a Promise.all on the count functions, or by conditioning either function according to relCombo first, but this is so far so fast that the hassle at this time isn't worth the performance.
-  // ...But I'm going to need a verifyContact here.
-  /*
-  const verifyContact = await findContactByUserAndSession(user, session);
-  if (verifyContact && _.isEqual(contact, verifyContact)) {
-  }
-  */
-  // Though that case is so rare and so unimportant that it isn't worth it at this time. Here's the thing:
-  // Now, you can't have more that 5, rather ANSWERS_PINNED_BY_FRIEND_LIMIT pinned with this function. That's definitive. But you can pin even if in the meantime you've been blocked or unfriended, which you'll find out with revalidatePath at the end of the function. But is it really as important as changing relation combinaison where this verification is mandatory and has been implemented?
-  // This is to say that, there are many tweaks that could and should be made to a project in order to assess E-VE-RY SIN-GLE case, but some are a lot more rare than others, less breaking than others, and therefore can be depriorities for assessment ONLY when they actually happen, assuming that their happening has a truly minor impact on user experience.
-
   const pinnedByFriendNotIrlAnswersLength =
     await countUserPinnedByFriendNotIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );
-  // console.log(pinnedByFriendNotIrlAnswersLength);
 
   const pinnedByFriendNotAndIrlAnswersLength =
     await countUserPinnedByFriendNotAndIrlAnswersExposed(
       answer.user_id,
       contact.c1_contact_id,
     );
-  // console.log(pinnedByFriendNotAndIrlAnswersLength);
 
   const relCombo = defineFoundRelCombo(contact);
-  // console.log(relCombo);
 
   if (
     (pinnedByFriendNotIrlAnswersLength < ANSWERS_PINNED_BY_FRIEND_LIMIT &&
@@ -193,58 +175,3 @@ export async function cancelPinUserQuestionFriend(
     `/users/${answer.user_username}/personal-info/user-criteria/${answer.userquestion_id}`,
   );
 }
-
-/*
-export type Pelepelepele = {
-  message?: string | null;
-};
-
-export type AnswerAndContact = { answer: Answer; contact: FoundContact }
-
-export async function pinUserQuestionFriendForBind(
-  answerAndContact: AnswerAndContact,
-  prevState: Pelepelepele | undefined,
-  formData: FormData
-) {
-  console.log(prevState);
-  console.log(formData)
-
-  const userQuestionFriend = await findUserQuestionFriendByAnswerAndContact(
-    answerAndContact.answer,
-    answerAndContact.contact,
-  );
-
-  if (userQuestionFriend === undefined) {
-    await changeDeleteAtUserQuestionFriendByAnswerAndContact(
-      answerAndContact.answer,
-      answerAndContact.contact,
-    );
-
-    const generatedUserQuestionFriendID = uuidv4();
-
-    await changeCreatePinUserQuestionFriend(
-      answerAndContact.answer,
-      answerAndContact.contact,
-      generatedUserQuestionFriendID,
-    );
-
-    await changeSetContactStatusOtherProfile(
-      answerAndContact.contact.c1_contact_mirror_id,
-      "USERQUESTIONFRIENDPINNED",
-    );
-  }
-
-  if (userQuestionFriend) {
-    await changePinUserQuestionFriend(userQuestionFriend);
-
-    await changeSetContactStatusOtherProfile(
-      answerAndContact.contact.c1_contact_mirror_id,
-      "USERQUESTIONFRIENDPINNED",
-    );
-  }
-
-  revalidatePath(
-    `/users/${answerAndContact.answer.user_username}/personal-info/user-criteria/${answerAndContact.answer.userquestion_id}`,
-  );
-}
-*/

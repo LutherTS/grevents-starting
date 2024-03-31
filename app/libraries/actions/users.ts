@@ -183,16 +183,9 @@ export async function updateUserAppWideName(
   prevState: UpdateUserAppWideNameFormState | undefined,
   formData: FormData,
 ) {
-  // console.log(user);
-  // console.log(prevState);
-  // console.log(formData);
-  // console.log(formData.get("userappwidename"));
-
   const validatedFields = UpdateUserAppWideName.safeParse({
     userAppWideName: formData.get("userappwidename"),
   });
-  // console.log(UpdateUserAppWideName);
-  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -202,9 +195,6 @@ export async function updateUserAppWideName(
   }
 
   const { userAppWideName } = validatedFields.data;
-
-  // console.log(userAppWideName);
-  // console.log(user.user_id);
 
   await changeUpdateUserAppWideName(userAppWideName, user); // and that first change worked
 
@@ -254,11 +244,6 @@ export async function reactivateUser(user: User) {
   redirect(`/users/${user.user_username}/dashboard`);
 }
 
-/* Note importante :
-La fonction createOrFindContactsByFriendCode sera placée dans ce fichier users.ts. 
-La convention sur laquelle je vais pour l'instant me baser est que les fonctions doivent être rangées à partir de leurs arguments plutôt que de leurs résultats. Ici, l'argument correspond à la table Users et le résultat correspond à la table Contacts. Il est donc plus simple de partir du schéma Zod présent sur ce fichier users.ts que d'avoir à configurer celui de contacts.ts à cet effet, spécifiquement parce que aucun champ de la table Contacts n'est requis pour ce formulaire.
-*/
-
 const CreateOrFindContactsByFriendCode = UserSchema.pick({
   otherUserFriendCode: true,
 });
@@ -275,16 +260,9 @@ export async function createOrFindContactsByFriendCode(
   prevState: CreateOrFindContactsByFriendCodeFormState | undefined,
   formData: FormData,
 ) {
-  // console.log(user);
-  // console.log(prevState);
-  // console.log(formData);
-  // console.log(formData.get("friendcode"));
-
   const validatedFields = CreateOrFindContactsByFriendCode.safeParse({
     otherUserFriendCode: formData.get("friendcode"),
   });
-  // console.log(CreateOrFindContactsByFriendCode);
-  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -296,11 +274,7 @@ export async function createOrFindContactsByFriendCode(
 
   const { otherUserFriendCode } = validatedFields.data;
 
-  // console.log(otherUserFriendCode);
-  // console.log(user.user_id);
-
   const otherUser = await findUserByFriendCode(otherUserFriendCode);
-  // console.log(otherUser);
 
   if (otherUser === undefined) {
     return {
@@ -318,7 +292,6 @@ export async function createOrFindContactsByFriendCode(
     user,
     otherUser.user_username,
   );
-  // console.log(userOtherUserContact);
 
   if (userOtherUserContact === undefined) {
     const generatedUserOtherUserContactID = uuidv4();
@@ -344,12 +317,6 @@ export async function createOrFindContactsByFriendCode(
       "FIRSTACCESSTHROUGHFIND",
     );
 
-    // Missing notification on generatedOtherUserUserContactID
-    // to confirm to otherUser that user has accessed their profile page
-    // on their Notifications page.
-    // contact_status_profile (many)
-    // ADDITIONAL FEATURE TO EXPLORE //
-
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
   }
@@ -359,10 +326,6 @@ export async function createOrFindContactsByFriendCode(
       userOtherUserContact.c1_contact_id,
       "REACCESSTHROUGHFIND",
     );
-
-    // Other user ABSOLUTELY DO NOT NEED TO KNOW ABOUT REVISITS.
-    // For example, they don't need to know that user came back to
-    // their profile to remember their birthday.
 
     revalidatePath(`/users/${otherUser.user_username}/profile`);
     redirect(`/users/${otherUser.user_username}/profile`);
@@ -392,14 +355,6 @@ export async function signUpUser(
   prevState: SignUpUserFormState | undefined,
   formData: FormData,
 ) {
-  // console.log(prevState);
-  // console.log(formData);
-  // console.log(formData.get("username"));
-  // console.log(formData.get("appwidename"));
-  // console.log(formData.get("email"));
-  // console.log(formData.get("password"));
-  // console.log(formData.get("confirmpassword"));
-
   const validatedFields = SignUpUser.safeParse({
     userUsername: formData.get("username"),
     userAppWideName: formData.get("appwidename"),
@@ -407,8 +362,6 @@ export async function signUpUser(
     userPassword: formData.get("password"),
     userConfirmPassword: formData.get("confirmpassword"),
   });
-  // console.log(SignUpUser);
-  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -424,11 +377,6 @@ export async function signUpUser(
     userPassword,
     userConfirmPassword,
   } = validatedFields.data;
-  // console.log(userUsername);
-  // console.log(userAppWideName);
-  // console.log(userEmail);
-  // console.log(userPassword);
-  // console.log(userConfirmPassword);
 
   if (userPassword !== userConfirmPassword) {
     return {
@@ -438,7 +386,6 @@ export async function signUpUser(
   }
 
   const preExistingUserByUsername = await fetchUserByUsername(userUsername);
-  // console.log(preExistingUserByUsername);
 
   if (preExistingUserByUsername) {
     return {
@@ -447,7 +394,6 @@ export async function signUpUser(
   }
 
   const preExistingUserByEmail = await fetchUserByEmail(userEmail);
-  // console.log(preExistingUserByEmail);
 
   if (preExistingUserByEmail) {
     return {
@@ -473,10 +419,8 @@ export async function signUpUser(
   //
 
   const user = await fetchUserByEmail(userEmail);
-  // console.log(user);
 
   const question = await findQuestionByQuestionID(EMAIL_ADDRESS_QUESTION_ID);
-  // console.log(question);
 
   const generatedUserQuestionID = uuidv4();
 
@@ -520,17 +464,10 @@ export async function signInUser(
   prevState: SignInUserFormState | undefined,
   formData: FormData,
 ) {
-  // console.log(prevState);
-  // console.log(formData);
-  // console.log(formData.get("usernameoremail"));
-  // console.log(formData.get("loginpassword"));
-
   const validatedFields = SignInUser.safeParse({
     userUsernameOrEmail: formData.get("usernameoremail"),
     userLoginPassword: formData.get("loginpassword"),
   });
-  // console.log(SignInUser);
-  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -540,12 +477,9 @@ export async function signInUser(
   }
 
   const { userUsernameOrEmail, userLoginPassword } = validatedFields.data;
-  // console.log(userUsernameOrEmail);
-  // console.log(userLoginPassword);
 
   const userByUsernameOrEmail =
     await fetchUserByUserNameOrEmail(userUsernameOrEmail);
-  // console.log(userByUsernameOrEmail);
 
   if (!userByUsernameOrEmail) {
     return {
@@ -564,4 +498,4 @@ export async function signInUser(
   redirect(`/users/${userByUsernameOrEmail.user_username}/dashboard`);
 }
 
-// No signOutUser function since that's entirely auth. In the meantime, it will simply be a PageLink to the Sign In Page.
+// No signOutUser function since that's meant to be entirely auth. In the meantime, it will simply be a PageLink to the Sign In Page.
