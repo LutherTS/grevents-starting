@@ -11,9 +11,6 @@ export default function ErrorPage({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  console.log(error);
-  console.log(reset);
-
   return (
     <html>
       <body>
