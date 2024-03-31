@@ -1,7 +1,5 @@
 import { fetchUserByUsername } from "@/app/libraries/data/users";
 import {
-  // fetchAllNativeNotIrlQuestions,
-  // fetchAllNativeIrlQuestions,
   fetchAllUnansweredNativeNotIrlQuestions,
   fetchAllUnansweredNativeIrlQuestions,
 } from "@/app/libraries/data/questions";
@@ -57,17 +55,11 @@ export default async function AddCriteriaStandardizedPage({
   const username = params.username;
   const user = await fetchUserByUsername(username);
 
-  const [
-    // allNativeNotIrlQuestions,
-    // allNativeIrlQuestions,
-    allNativeUnansweredNotIrlQuestions,
-    allNativeUnansweredIrlQuestions,
-  ] = await Promise.all([
-    // fetchAllNativeNotIrlQuestions(),
-    // fetchAllNativeIrlQuestions(),
-    fetchAllUnansweredNativeNotIrlQuestions(user),
-    fetchAllUnansweredNativeIrlQuestions(user),
-  ]);
+  const [allNativeUnansweredNotIrlQuestions, allNativeUnansweredIrlQuestions] =
+    await Promise.all([
+      fetchAllUnansweredNativeNotIrlQuestions(user),
+      fetchAllUnansweredNativeIrlQuestions(user),
+    ]);
 
   if (!user) {
     notFound();
@@ -84,64 +76,14 @@ export default async function AddCriteriaStandardizedPage({
       </H1>
       <BackToDashboardLink session={session} />
       <PageLink href={`/sign-in`} name={`sign out`} />
-      {/* {allNativeNotIrlQuestions.length > 0 && (
-            <>
-              <p className="mt-2 font-semibold text-zinc-500">
-                Select a native question below
-              </p>
-              <ol>
-                {allNativeNotIrlQuestions.map((nativeNotIrlQuestion) => {
-                  return (
-                    <li key={nativeNotIrlQuestion.question_id}>
-                      <p className="mt-2">
-                        <span className="font-semibold">
-                          {nativeNotIrlQuestion.question_name}
-                        </span>{" "}
-                        / native
-                      </p>
-                    </li>
-                  );
-                })}
-              </ol>
-            </>
-          )}
-          {allNativeIrlQuestions.length > 0 && (
-            <>
-              <p className="mt-2 font-semibold text-zinc-500">
-                Select a native irl question below
-              </p>
-              <ol>
-                {allNativeIrlQuestions.map((nativeIrlQuestion) => {
-                  return (
-                    <li key={nativeIrlQuestion.question_id}>
-                      <p className="mt-2">
-                        <span className="font-semibold">
-                          {nativeIrlQuestion.question_name}
-                        </span>{" "}
-                        / native / irl
-                      </p>
-                    </li>
-                  );
-                })}
-              </ol>
-            </>
-          )} */}
-      {/* <p className="mt-4 font-semibold text-zinc-500">
-            Select then answer a native question below
-          </p> */}
       <NativeNotIrlAnswerForm
         allNativeNotIrlQuestions={allNativeUnansweredNotIrlQuestions}
         user={user}
       />
-      {/* <p className="mt-4 font-semibold text-zinc-500">
-            Select then answer a native irl question below
-          </p> */}
       <NativeIrlAnswerForm
         allNativeIrlQuestions={allNativeUnansweredIrlQuestions}
         user={user}
       />
-      {/* Suspense doesn't work here because I'm fetching from the page and not from server components. It's a decision I had made because I considered that... a form is a client component, therefore it can't be expected to fetch. But that doesn't mean I can't organize on overall component above the form that's actually going to fetch.
-          For now I'm choosing to map directly on the page, but eventually I'll do so on the form component once I'll reach the development phase when I'm mutating data. */}
       <PageLink
         href={`/users/${username}/personal-info/standardized`}
         name={"Cancel"}

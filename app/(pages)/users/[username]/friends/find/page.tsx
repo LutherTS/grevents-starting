@@ -1,7 +1,4 @@
-import {
-  fetchUserByUsername,
-  // findOtherUserByFriendCodeAgainstUser,
-} from "@/app/libraries/data/users";
+import { fetchUserByUsername } from "@/app/libraries/data/users";
 import { notFound } from "next/navigation";
 import { H1 } from "@/app/components/agnostic/tags";
 import { BackToDashboardLink, PageLink } from "@/app/components/agnostic/links";
@@ -26,14 +23,10 @@ export async function generateMetadata({
 
 export default async function FindContactsPage({
   params,
-  // searchParams,
 }: {
   params: {
     username: string;
   };
-  // searchParams: {
-  //   friendcode?: string;
-  // };
 }) {
   const session: { [K in "user"]: User } = {
     // “me” // default demo behavior
@@ -53,12 +46,7 @@ export default async function FindContactsPage({
   };
 
   const username = params.username;
-  // const friendCode = searchParams?.friendcode || "";
   const user = await fetchUserByUsername(username);
-  // const friendCodeUser = await findOtherUserByFriendCodeAgainstUser(
-  //   friendCode,
-  //   user,
-  // );
 
   if (!user) {
     notFound();
@@ -74,24 +62,6 @@ export default async function FindContactsPage({
       <BackToDashboardLink session={session} />
       <PageLink href={`/sign-in`} name={`sign out`} />
       <FriendCodeInputForm user={user} />
-      {/* {friendCode !== "" && (
-          <>
-            {friendCodeUser ? (
-              <p className="mt-2 font-semibold">friendcode: {friendCode}</p>
-            ) : (
-              <p className="mt-2">No other user found with this friend code.</p>
-            )}
-          </>
-        )}
-        {friendCodeUser && (
-          <>
-            <p className="mt-2">Here&apos;s the user you&apos;re looking for</p>
-            <p className="mt-2 font-semibold">
-              {friendCodeUser.user_app_wide_name} /{" "}
-              {friendCodeUser.user_username} / {friendCodeUser.user_friend_code}
-            </p>
-          </>
-        )} */}
       <PageLink href={`/users/${username}/friends`} name={`See friends`} />
       <PageLink href={`/users/${username}/previews`} name={`See previews`} />
     </>

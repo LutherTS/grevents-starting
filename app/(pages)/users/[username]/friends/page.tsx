@@ -72,14 +72,8 @@ export default async function FriendsPage({
           </>
         }
       >
-        {/* <div className="mb-2 mt-2 grid grid-cols-2 gap-8"> */}
-        {/* <div className="mt-2 flex h-full min-h-48 flex-col items-center justify-center rounded-lg bg-slate-50"> */}
         <ManyNotIrlFriends user={user} />
-        {/* </div> */}
-        {/* <div className="mt-2 flex h-full min-h-48 flex-col items-center justify-center rounded-lg bg-slate-50"> */}
         <ManyIrlFriends user={user} />
-        {/* </div> */}
-        {/* </div> */}
       </Suspense>
       <PageLink href={`/users/${username}/blocks`} name={`See blocked users`} />
       <PageLink

@@ -25,7 +25,6 @@ import {
 } from "@/app/libraries/data/answers";
 
 import type { Metadata } from "next";
-import { Main, Wrapper } from "@/app/components/agnostic/wrappers";
 
 export async function generateMetadata({
   params,
@@ -77,16 +76,9 @@ export default async function CustomizedPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
-  // console.log(pinnedAnswerCount);
 
   return (
     <>
-      {/* {user.user_status_personal_info === "ANSWERUPDATED" && (
-          <AnswerValueUpdated user={user} />
-        )}
-        {user.user_status_personal_info === "ANSWERDELETED" && (
-          <AnswerValueDeleted user={user} />
-        )} */}
       {user.user_status_personal_info === "CUSTOMIZEDANSWERUPDATED" && (
         <AnswerValueUpdated user={user} />
       )}
