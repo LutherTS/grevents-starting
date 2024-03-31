@@ -110,67 +110,6 @@ export async function resetContactStatusRelationship(
   revalidatePath(`/users/${user.user_username}/profile`);
 }
 
-// The following functions are essentially temporary. Send friend request, Upgrade friendship to irl, Downgrade friendship from irl, Unfriend, along with Block, Block them back, Unblock, and Unblock if it's OK with you are meant to be processes, not actions.
-
-// Notification methods
-
-// Process methods
-
-// Now the component-called methods
-
-// For the revalidates, eventually I should work from the session I believe, but since I can get this data from the contact, I might eventually do away from needing the user altogether.
-
-// Also, by convention no matter the method I will always revalidate the profiles of both users on the contact. (Which is what shows how I do not actually need now to have the user as a prop and an argument.)
-
-/* NOTES FROM TESTING */
-
-// Entirely shifted to using exclusively contact for revalidatePath.
-
-// And this is why I don't like Promise.all, because I only get the last RETURNING and not all of them.
-
-// Il y avait un typo....
-
-// Another typo. And revalidatePath only works for your own client. This doesn't revalidate simultaneously for everyone from the server.
-
-// Blocks and unblocks work. Let's go.
-
-// It all works, real slow today though, with only revalidations on acceptFriendRequest and acceptIrlRequest being issues in production.
-
-// So what's needed now is making sure that... What's going to be first would be deactivating Accept when Decline is active and vice versa. Je peux ou pourrais faire ça dans le même composant. Mieux encore, je pourrais, voir devrais mettre toutes les boutons dans le même composant pour qu'ils désactivent respectivement tous les autres à l'activation d'un des leurs.
-// Ça c'est ce qu'il faut réaliser. ainsi il y aurait acceptStatus, declineStatus, etc. Et ça empêcherait de cliquer sur un autre bouton quand l'un des leurs est en status.pending.
-// Demain. ...En vrai, c'est aussi pour ça que useFormStatus est expérimental. Je me poserai donc la question après qu'il soit sorti de canary.
-
-// Ce qu'il reste par contre, c'est bel et bien de vérifier dans les fonctions l'état foundContact. En pseudo-code : verifyContact = = await findContactByUserAndSession(user, session)
-// if contact === verifyContact // faire tout le code.
-// if contact !== verifyContact // ne pas faire les modifications
-
-// ALL OF THESE SHOULD REVALIDATE DASHBOARD.
-// AND REVALIDATE REQUESTS OR NOTIFICATIONS ACCORDINGLY.
-// Objectively it's not impactful, for revalidate only affect the tab, not the full browser, and for sure not the server itself. (Meaning all the clients on all devices currently on that URL. Someday hopefully.)
-
-/* Did it's demo time.
-export async function sendFriendRequestButItsAutoFriend(
-  contact: FoundContact,
-  user: User,
-  session: { [K in "user"]: User },
-) {
-  const verifyContact = await findContactByUserAndSession(user, session);
-  if (verifyContact && _.isEqual(contact, verifyContact)) {
-    await Promise.all([
-      changeUpdateContactKindToFriend(contact),
-      changeUpdateMirrorContactKindToFriend(contact),
-      setContactStatusRelationship(contact, "NOWFRIENDS"),
-      // uncomment below when available for testing
-      // setMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
-    ]);
-  }
-  // revalidatePath(`/users/${user.user_username}/profile`);
-  revalidatePath(`/users/${contact.u1_user_username}/profile`);
-  revalidatePath(`/users/${contact.u2_user_username}/profile`);
-  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
-}
-*/
-
 // No idea why this doesn't revalidate in production.
 export async function acceptFriendRequest(
   contact: FoundContact,
@@ -187,7 +126,6 @@ export async function acceptFriendRequest(
       changeSetMirrorContactStatusRelationship(contact, "NOWFRIENDS"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -207,7 +145,6 @@ export async function sendFriendRequest(
       changeSetMirrorContactStatusRelationship(contact, "RECEIVEFRIEND"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -225,7 +162,6 @@ export async function annulFriendRequest(
       changeSetContactStatusRelationship(contact, "ANNULFRIEND"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -243,34 +179,10 @@ export async function declineFriendRequest(
       changeSetContactStatusRelationship(contact, "REFUSEDFRIEND"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
 }
-
-/* Did it's demo time.
-export async function upgradeFriendshipToIrlButItsAutoIrl(
-  contact: FoundContact,
-  user: User,
-  session: { [K in "user"]: User },
-) {
-  const verifyContact = await findContactByUserAndSession(user, session);
-  if (verifyContact && _.isEqual(contact, verifyContact)) {
-    await Promise.all([
-      changeUpdateContactKindToIrl(contact),
-      updateMirrorContactKindToIrl(contact),
-      changeSetContactStatusRelationship(contact, "NOWIRLS"),
-      // uncomment below when available for testing
-      // changeSetMirrorContactStatusRelationship(contact, "NOWIRLS"),
-    ]);
-  }
-  // revalidatePath(`/users/${user.user_username}/profile`);
-  revalidatePath(`/users/${contact.u1_user_username}/profile`);
-  revalidatePath(`/users/${contact.u2_user_username}/profile`);
-  revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
-}
-*/
 
 // No idea why this doesn't revalidate in production.
 export async function acceptIrlRequest(
@@ -288,7 +200,6 @@ export async function acceptIrlRequest(
       changeSetMirrorContactStatusRelationship(contact, "NOWIRLS"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -308,7 +219,6 @@ export async function upgradeFriendshipToIrl(
       changeSetMirrorContactStatusRelationship(contact, "RECEIVEIRL"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -326,7 +236,6 @@ export async function annulUpgradeFriendshipToIrl(
       changeSetContactStatusRelationship(contact, "ANNULIRL"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -344,7 +253,6 @@ export async function declineIrlRequest(
       changeSetContactStatusRelationship(contact, "REFUSEDIRL"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -364,7 +272,6 @@ export async function downgradeFriendshipFromIrl(
       changeSetMirrorContactStatusRelationship(contact, "NOLONGERIRLS"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -384,7 +291,6 @@ export async function unfriend(
       changeSetMirrorContactStatusRelationship(contact, "NOLONGERFRIENDS"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -403,7 +309,6 @@ export async function block(
       changeSetMirrorContactStatusRelationship(contact, "NOWBLOCKED"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);
@@ -422,7 +327,6 @@ export async function unblock(
       changeSetMirrorContactStatusRelationship(contact, "NOWUNBLOCKED"),
     ]);
   }
-  // revalidatePath(`/users/${user.user_username}/profile`);
   revalidatePath(`/users/${contact.u1_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/profile`);
   revalidatePath(`/users/${contact.u2_user_username}/dashboard`);

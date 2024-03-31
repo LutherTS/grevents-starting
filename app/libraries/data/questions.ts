@@ -36,11 +36,9 @@ export async function fetchAllNativeNotIrlQuestions() {
 
         LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -68,11 +66,9 @@ export async function fetchAllNativeIrlQuestions() {
 
         LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -115,11 +111,9 @@ export async function fetchAllUnansweredNativeNotIrlQuestions(user: User) {
 
         LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -162,11 +156,9 @@ export async function fetchAllUnansweredNativeIrlQuestions(user: User) {
 
         LIMIT ${NATIVE_QUESTION_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -176,7 +168,6 @@ export async function fetchAllUnansweredNativeIrlQuestions(user: User) {
 
 export async function findQuestionByQuestionID(questionId: string) {
   noStore(); // just in case of caching issues
-  // console.log(questionId);
   try {
     const run = async () => {
       const data = await sql<NativeNotIrlQuestion | NativeIrlQuestion>`
@@ -192,11 +183,9 @@ export async function findQuestionByQuestionID(questionId: string) {
 
         AND Questions.question_state = 'LIVE'; 
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -206,7 +195,6 @@ export async function findQuestionByQuestionID(questionId: string) {
 
 export async function findPseudoQuestionByQuestionName(questionName: string) {
   noStore();
-  // console.log(questionName);
   try {
     const run = async () => {
       const data = await sql<PseudonativeQuestion>`
@@ -232,11 +220,9 @@ export async function findPseudoQuestionByQuestionName(questionName: string) {
 
         AND question_state = 'LIVE';
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -246,7 +232,6 @@ export async function findPseudoQuestionByQuestionName(questionName: string) {
 
 export async function findCustomQuestionByQuestionName(questionName: string) {
   noStore();
-  // console.log(questionName);
   try {
     const run = async () => {
       const data = await sql<CustomQuestion>`
@@ -264,11 +249,9 @@ export async function findCustomQuestionByQuestionName(questionName: string) {
 
         AND question_state = 'LIVE';
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

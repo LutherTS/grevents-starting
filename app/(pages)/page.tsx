@@ -1,22 +1,9 @@
 import { H1 } from "../components/agnostic/tags";
 import { PageLink } from "../components/agnostic/links";
 
-// import { Flex, Text, Button, Heading, Link } from "@radix-ui/themes";
-
 export default async function HomePage() {
   return (
     <>
-      {/* Typing issues, and the Link is not client-side.
-      <Flex direction="column">
-        <Heading size={"5"} align="center">
-          Welcome to Grevents.
-        </Heading>
-        <Text align="center">Start the demonstration at the link below.</Text>
-        <Link align="center" href={`/users/LePapier/dashboard`}>
-          Go to my dashboard
-        </Link>
-      </Flex> */}
-
       <H1>Welcome to Grevents.</H1>
       <p className="mt-2">Start the demonstration at the links below.</p>
       <PageLink

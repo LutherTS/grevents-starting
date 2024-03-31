@@ -8,8 +8,6 @@ export type User = {
   user_status_dashboard: UserStatusDashboard;
   user_status_personal_info: UserStatusPersonalInfo;
   user_username: string;
-  // user_email: string;
-  // user_password: string;
   user_app_wide_name: string;
   user_friend_code: string;
   user_has_temporary_password: boolean;

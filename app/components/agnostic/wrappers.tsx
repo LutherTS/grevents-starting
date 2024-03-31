@@ -17,5 +17,3 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-
-// It really feels like Tailwind has such a wide opinion of what mobile is that they want you to make it a completely different experience.

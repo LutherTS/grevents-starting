@@ -8,8 +8,6 @@ import {
   NativeNotIrlQuestion,
 } from "@/app/libraries/definitions/questions";
 
-// I could, should put these classes in variables, but I'm not used to it just yet.
-
 export function UserAppWideNameModifyInput({ user }: { user: User }) {
   const status = useFormStatus();
 
@@ -34,12 +32,15 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
     <>
       <input
         className="w-[32ch] max-w-[50ch] truncate rounded bg-gray-50 px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white sm:w-[40ch]"
-        // !important didn't change a thing against user agent
         type="text"
         id={answer.answer_id}
         name="answervalue"
         placeholder={answer.answer_value}
-        disabled={status.pending || answer.question_name === "Email address"}
+        disabled={
+          status.pending ||
+          (answer.question_name === "Email address" &&
+            answer.question_kind === "NATIVE")
+        }
         // That's actually better than id in some way because the id could change in production.
         // Since at creation EMAIL_ADDRESS_QUESTION_ID is used (and working), I'll have to streamline both solutions closer to production by making a decision.
       />
@@ -48,7 +49,6 @@ export function OneCriteriaAnswerModifyInput({ answer }: { answer: Answer }) {
 }
 
 export function FriendCodeInput({ user }: { user: User }) {
-  // { friendCode }: { friendCode: string }
   const status = useFormStatus();
 
   return (
@@ -60,7 +60,6 @@ export function FriendCodeInput({ user }: { user: User }) {
         name="friendcode"
         placeholder="Enter a user's friend code"
         disabled={status.pending || user.user_state === "DEACTIVATED"}
-        // required // validation now gone server-side
       />
       {user.user_state === "DEACTIVATED" && (
         <p className="mt-2 text-red-500">
@@ -106,31 +105,6 @@ export function RelComboInput({ relCombo }: { relCombo: string }) {
     </>
   );
 }
-
-/* To develop during UI phase.
-export function RelComboSelect({ relCombo }: { relCombo: string }) {
-  const status = useFormStatus();
-
-  return (
-    <>
-      <select
-        className="truncate px-2 text-center text-black disabled:!bg-gray-500 disabled:!text-white"
-        id="rel-combo"
-        name="relcombo"
-        placeholder={relCombo}
-        disabled={status.pending}
-      >
-        <option value="none">none</option>
-        <option value="friend">friend</option>
-        <option value="irl">irl</option>
-        <option value="i-am-blocking">i-am-blocking</option>
-        <option value="has-me-blocked">has-me-blocked</option>
-        <option value="blocking-blocked">blocking-blocked</option>
-      </select>
-    </>
-  );
-}
-*/
 
 export function NativeNotIrlQuestionSelect({
   allNativeNotIrlQuestions,

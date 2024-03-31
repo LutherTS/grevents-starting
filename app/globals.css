@@ -2,21 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Removing pre-configured CSS.
-...Or not at this time.
-*/
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
-  /* --background-start-rgb: 255, 255, 255; */
   --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    /* --background-start-rgb: 0, 0, 0; */
     --background-start-rgb: 8, 12, 20;
     --background-end-rgb: 0, 0, 0;
   }
@@ -30,19 +24,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
-
-/* https://codepen.io/laylacodogno/pen/yeNydz 
-That's the best I'll be able to do on this issue.
-The work around can't affect the text color.
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
-  background-color: transparent;
-}
-*/
-input:-webkit-autofill:disabled {
-  -webkit-box-shadow: 0 0 0px 1000px rgb(107 114 128 / var(--tw-text-opacity))
-    inset;
-  background-color: transparent;
-  color: white;
 }

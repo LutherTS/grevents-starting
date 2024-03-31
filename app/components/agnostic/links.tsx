@@ -27,7 +27,6 @@ export function PageLinkWithChildren({
 }) {
   return (
     <>
-      {/* Why is that div here? */}
       <div>
         <Link
           href={href}

@@ -7,7 +7,6 @@ export const DEFAULT_RETRIES = 7;
 
 export async function fetchUserByUsername(username: string) {
   // noStore(); // It's always going to be the same user as in the params.
-  // Therefore, there's no need to constantly revalidate.
 
   try {
     const run = async () => {
@@ -33,11 +32,9 @@ export async function fetchUserByUsername(username: string) {
         
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -45,46 +42,8 @@ export async function fetchUserByUsername(username: string) {
   }
 }
 
-/* No longer in use.
-export async function findOtherUserByFriendCodeAgainstUser(
-  friendCode: string,
-  user: User,
-) {
-  noStore();
-  // console.log(friendCode);
-  try {
-    const run = async () => {
-      const data = await sql<FriendCodeUser>`
-        SELECT
-            user_id,
-            user_username,
-            user_app_wide_name,
-            user_friend_code
-        FROM Users
-
-        WHERE user_friend_code = ${friendCode}
-        AND user_id != ${user.user_id}
-
-        AND user_state = 'LIVE'
-        
-        LIMIT 1;
-      `;
-      // console.log(data);
-      return data.rows[0];
-    };
-    const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
-    return data;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch friend code user data.");
-  }
-}
-*/
-
 export async function findUserByFriendCode(friendCode: string) {
   noStore();
-  // console.log(friendCode);
   try {
     const run = async () => {
       const data = await sql<FriendCodeUser>`
@@ -101,11 +60,9 @@ export async function findUserByFriendCode(friendCode: string) {
         
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -139,11 +96,9 @@ export async function fetchUserByEmail(email: string) {
         
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -183,11 +138,9 @@ export async function fetchUserByUserNameOrEmail(usernameOrEmail: string) {
         
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

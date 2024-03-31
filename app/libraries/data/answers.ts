@@ -10,26 +10,8 @@ export const ANSWERS_PINNED_BY_FRIEND_LIMIT = 8;
 export const ANSWERS_PINNED_BY_USER_LIMIT = 16;
 export const ANSWERS_DEFAULT_LIMIT = 32;
 
-/* Trying out p-retry.
-import pRetry, { AbortError } from "p-retry";
-
-const run = async () => {
-	const response = await fetch('https://sindresorhus.com/unicorn');
-
-	// Abort retrying if the resource doesn't exist
-	if (response.status === 404) {
-		throw new AbortError(response.statusText);
-	}
-
-	return response.blob();
-};
-
-console.log(await pRetry(run, {retries: DEFAULT_RETRIES}));
-*/
-
 export async function fetchUserPinnedAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -78,11 +60,9 @@ export async function fetchUserPinnedAnswers(userId: string) {
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT}; -- client-side pagination allowed
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -90,10 +70,8 @@ export async function fetchUserPinnedAnswers(userId: string) {
   }
 }
 
-// start here
 export async function countUserPinnedAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -116,11 +94,9 @@ export async function countUserPinnedAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED')
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -131,7 +107,6 @@ export async function countUserPinnedAnswers(userId: string) {
 // I'm going to need to verify 'HIDDEN' across the app at a later time.
 export async function fetchUserNativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -169,11 +144,9 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -183,7 +156,6 @@ export async function fetchUserNativeNotIrlAnswers(userId: string) {
 
 export async function countUserNativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -205,11 +177,9 @@ export async function countUserNativeNotIrlAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED');
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -219,7 +189,6 @@ export async function countUserNativeNotIrlAnswers(userId: string) {
 
 export async function fetchUserNativeIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -254,11 +223,9 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -268,7 +235,6 @@ export async function fetchUserNativeIrlAnswers(userId: string) {
 
 export async function countUserNativeIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -290,11 +256,9 @@ export async function countUserNativeIrlAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED');
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -304,7 +268,6 @@ export async function countUserNativeIrlAnswers(userId: string) {
 
 export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -340,11 +303,9 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -354,7 +315,6 @@ export async function fetchUserPseudonativeNotIrlAnswers(userId: string) {
 
 export async function countUserPseudonativeNotIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -377,11 +337,9 @@ export async function countUserPseudonativeNotIrlAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED');
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -391,7 +349,6 @@ export async function countUserPseudonativeNotIrlAnswers(userId: string) {
 
 export async function fetchUserPseudonativeIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -427,11 +384,9 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -441,7 +396,6 @@ export async function fetchUserPseudonativeIrlAnswers(userId: string) {
 
 export async function countUserPseudonativeIrlAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -464,11 +418,9 @@ export async function countUserPseudonativeIrlAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED');
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -478,7 +430,6 @@ export async function countUserPseudonativeIrlAnswers(userId: string) {
 
 export async function fetchUserCustomAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -527,21 +478,17 @@ export async function fetchUserCustomAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
-    // console.error("Database Error:", error);
     throw new Error("Failed to fetch user custom answers.");
   }
 }
 
 export async function countUserCustomAnswers(userId: string) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -563,14 +510,11 @@ export async function countUserCustomAnswers(userId: string) {
         AND (Users.user_state = 'LIVE'
         OR Users.user_state = 'DEACTIVATED');
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
-    // console.error("Database Error:", error);
     throw new Error("Failed to count user custom answers.");
   }
 }
@@ -581,8 +525,6 @@ export async function findAnswerByUserQuestionAndUser(
   user: User,
 ) {
   // noStore(); // since it's your data and you're the one that's going to have it updated and therefore revalidated
-  // console.log(userQuestion);
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -626,11 +568,9 @@ export async function findAnswerByUserQuestionAndUser(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -640,7 +580,6 @@ export async function findAnswerByUserQuestionAndUser(
 
 export async function fetchUserPinnedNotIrlAnswers(userId: string) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -648,7 +587,7 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
             Questions.question_name, 
             Answers.answer_value, 
             Answers.answer_id,
-            UserQuestions.userquestion_is_pinned,
+            UserQuestions.userquestion_is_pinned, -- unneeded
             Questions.question_kind,
             UserQuestions.userquestion_kind,
             UserQuestions.userquestion_id,
@@ -685,11 +624,9 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -697,10 +634,8 @@ export async function fetchUserPinnedNotIrlAnswers(userId: string) {
   }
 }
 
-// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -736,11 +671,9 @@ export async function fetchUserUnpinnedNativeNotIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -752,7 +685,6 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
   userId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -792,11 +724,9 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersExposed(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -810,7 +740,6 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
   userId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -845,11 +774,9 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -859,12 +786,10 @@ export async function fetchUserUnpinnedNativeNotIrlAnswersQueried(
   }
 }
 
-// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
   userId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -901,11 +826,9 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswers(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -919,7 +842,6 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
   userId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -960,11 +882,9 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersExposed(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -978,7 +898,6 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
   userId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1014,11 +933,9 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1030,7 +947,6 @@ export async function fetchUserUnpinnedPseudonativeNotIrlAnswersQueried(
 
 export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1082,11 +998,9 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1094,10 +1008,8 @@ export async function fetchUserPinnedNotAndIrlAnswers(userId: string) {
   }
 }
 
-// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1133,11 +1045,9 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
             
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1147,7 +1057,6 @@ export async function fetchUserUnpinnedNativeIrlAnswers(userId: string) {
 
 export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1187,11 +1096,9 @@ export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
             
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1203,7 +1110,6 @@ export async function fetchUserUnpinnedNativeIrlAnswersExposed(userId: string) {
 
 export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1238,11 +1144,9 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
             
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1252,10 +1156,8 @@ export async function fetchUserUnpinnedNativeIrlAnswersQueried(userId: string) {
   }
 }
 
-// !! NEEDS CONTACTID // Nope. :)
 export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1292,11 +1194,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswers(userId: string) {
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1308,7 +1208,6 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
   userId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1349,11 +1248,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersExposed(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1367,7 +1264,6 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
   userId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1403,11 +1299,9 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1417,8 +1311,6 @@ export async function fetchUserUnpinnedPseudonativeIrlAnswersQueried(
   }
 }
 
-// Maintenance here is starting to get real. I will eventually have to put these SQL strings into variables.
-
 // Previously and more descriptively:
 // fetchUserSharedToContactCustomAnswersNotPinnedByFriend
 export async function fetchUserSharedToContactCustomAnswersExposed(
@@ -1426,8 +1318,6 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
   contactId: string,
 ) {
   // noStore();
-  // console.log(userId);
-  // console.log(contactId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1487,11 +1377,9 @@ export async function fetchUserSharedToContactCustomAnswersExposed(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1506,8 +1394,6 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
   contactId: string,
 ) {
   noStore();
-  // console.log(userId);
-  // console.log(contactId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1565,11 +1451,9 @@ export async function fetchUserSharedToContactCustomAnswersQueried(
 
         LIMIT ${ANSWERS_DEFAULT_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1584,7 +1468,6 @@ export async function fetchUserPinnedNotIrlAnswersExposed(
   contactId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1654,11 +1537,9 @@ export async function fetchUserPinnedNotIrlAnswersExposed(
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1671,7 +1552,6 @@ export async function fetchUserPinnedNotIrlAnswersQueried(
   contactId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1736,11 +1616,9 @@ export async function fetchUserPinnedNotIrlAnswersQueried(
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1753,7 +1631,6 @@ export async function fetchUserPinnedNotAndIrlAnswersExposed(
   contactId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1830,11 +1707,9 @@ export async function fetchUserPinnedNotAndIrlAnswersExposed(
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1847,7 +1722,6 @@ export async function fetchUserPinnedNotAndIrlAnswersQueried(
   contactId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -1919,11 +1793,9 @@ export async function fetchUserPinnedNotAndIrlAnswersQueried(
 
         LIMIT ${ANSWERS_PINNED_BY_USER_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -1938,7 +1810,6 @@ export async function fetchUserPinnedByFriendNotIrlAnswersExposed(
   contactId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -2006,11 +1877,9 @@ export async function fetchUserPinnedByFriendNotIrlAnswersExposed(
 
         LIMIT ${ANSWERS_PINNED_BY_FRIEND_LIMIT} -- NEW
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -2025,7 +1894,6 @@ export async function countUserPinnedByFriendNotIrlAnswersExposed(
   contactId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -2065,11 +1933,9 @@ export async function countUserPinnedByFriendNotIrlAnswersExposed(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE';
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -2086,7 +1952,6 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersExposed(
   contactId: string,
 ) {
   // noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql<Answer>`
@@ -2161,11 +2026,9 @@ export async function fetchUserPinnedByFriendNotAndIrlAnswersExposed(
 
         LIMIT ${ANSWERS_PINNED_BY_FRIEND_LIMIT} -- NEW
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -2180,7 +2043,6 @@ export async function countUserPinnedByFriendNotAndIrlAnswersExposed(
   contactId: string,
 ) {
   noStore();
-  // console.log(userId);
   try {
     const run = async () => {
       const data = await sql`
@@ -2227,11 +2089,9 @@ export async function countUserPinnedByFriendNotAndIrlAnswersExposed(
         AND q.question_state = 'LIVE'
         AND u.user_state = 'LIVE';
       `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

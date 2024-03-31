@@ -91,9 +91,6 @@ export async function ManyFriendsAddable({
   );
 }
 
-// all below to be tested
-// but non-breaking in current 0 & <= 4 cases
-
 export async function ManyNotIrlFriends({ user }: { user: User }) {
   const allUserNotIrlFriends = await fetchAllUserNotIrlFriends(user);
 

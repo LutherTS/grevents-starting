@@ -74,7 +74,6 @@ export default async function StardardizedPage({
   // because this and all /users/[username] pages except /users/[username]/profile pages are to be all only accessible to their own user
 
   const pinnedAnswerCount = await countUserPinnedAnswers(user.user_id);
-  // console.log(pinnedAnswerCount);
 
   return (
     <>

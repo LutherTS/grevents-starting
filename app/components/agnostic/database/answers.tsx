@@ -233,7 +233,6 @@ export function OneCriteriaAnswerCancelPinnableByFriend({
 }
 
 export function OneCriteria({
-  // That async is actually useless, because no function inside this component is actually async. Thus it's time for a file structure overhaul.
   answer,
   personalView,
 }: {
