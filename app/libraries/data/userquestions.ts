@@ -21,8 +21,6 @@ export async function fetchCustomUserQuestionByIDAndUser(
   user: User,
 ) {
   // noStore(); // since its for its own page
-  // console.log(userQuestionId);
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<UserQuestion>` -- UserQuestion
@@ -70,11 +68,9 @@ export async function fetchCustomUserQuestionByIDAndUser(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -87,7 +83,6 @@ export async function findPreExistingNativeUserQuestion(
   question: NativeNotIrlQuestion | NativeIrlQuestion,
 ) {
   noStore();
-  // console.log(questionId);
   try {
     const run = async () => {
       const data = await sql<PreExistingNativeUserQuestion>`
@@ -119,11 +114,9 @@ export async function findPreExistingNativeUserQuestion(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -136,7 +129,6 @@ export async function findPreExistingPseudonativeUserQuestion(
   question: PseudonativeQuestion,
 ) {
   noStore();
-  // console.log(questionId);
   try {
     const run = async () => {
       const data = await sql<PreExistingPseudonativeUserQuestion>`
@@ -169,11 +161,9 @@ export async function findPreExistingPseudonativeUserQuestion(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -186,7 +176,6 @@ export async function findPreExistingCustomUserQuestion(
   question: CustomQuestion,
 ) {
   noStore();
-  // console.log(questionId);
   try {
     const run = async () => {
       const data = await sql<PreExistingCustomUserQuestion>`
@@ -218,11 +207,9 @@ export async function findPreExistingCustomUserQuestion(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

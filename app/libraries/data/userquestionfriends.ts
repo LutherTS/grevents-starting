@@ -1,5 +1,4 @@
 import { sql } from "@vercel/postgres";
-// import { Answer } from "../definitions/answers"; // no longer used
 import { UserQuestion } from "../definitions/userquestions";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { unstable_noStore as noStore } from "next/cache";
@@ -9,40 +8,8 @@ import { FoundContact, Friend } from "../definitions/contacts";
 import { Answer } from "../definitions/answers";
 import { CONTACT_ARBITRARY_LIMIT } from "./contacts";
 
-/* No longer in use
-export async function countUserQuestionFriends(
-  userQuestion: UserQuestion, // | Answer , // no longer used this way
-) {
-  // noStore(); // since adding and removing will revalidate
-  // console.log(userQuestion.question_kind);
-  // console.log(userQuestion.userquestion_id);
-  if (userQuestion.question_kind === "CUSTOM") {
-    try {
-      const run = async () => {
-        const data = await sql`
-          SELECT COUNT(userquestionfriend_id) FROM UserQuestionFriends
-      
-          WHERE userquestion_id = ${userQuestion.userquestion_id}
-          
-          AND userquestionfriend_state = 'LIVE';
-        `;
-        // console.log(data);
-        return data.rows[0].count;
-      };
-      const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-      // console.log(data);
-      return data;
-    } catch (error) {
-      console.error("Database Error:", error);
-      throw new Error("Failed to count user question friends.");
-    }
-  }
-}
-*/
-
 export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
   // noStore(); // since adding and removing will revalidate
-  // console.log(userQuestion);
   try {
     const run = async () => {
       const data = await sql<UserQuestionFriend>`
@@ -88,11 +55,9 @@ export async function fetchAllUserQuestionFriends(userQuestion: UserQuestion) {
 
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -105,8 +70,6 @@ export async function findUserQuestionFriend(
   contact: Friend,
 ) {
   noStore(); // just in case
-  // console.log(userQuestion);
-  // console.log(contact);
   try {
     const run = async () => {
       const data = await sql<UserQuestionFriend>`
@@ -131,11 +94,9 @@ export async function findUserQuestionFriend(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -148,8 +109,6 @@ export async function findUserQuestionFriendByAnswerAndContact(
   contact: FoundContact,
 ) {
   noStore(); // just in case
-  // console.log(userQuestion);
-  // console.log(contact);
   try {
     const run = async () => {
       const data = await sql<UserQuestionFriend>`
@@ -173,11 +132,9 @@ export async function findUserQuestionFriendByAnswerAndContact(
 
         LIMIT 1;
       `;
-      // console.log(data);
       return data.rows[0];
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

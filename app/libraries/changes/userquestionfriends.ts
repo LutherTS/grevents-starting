@@ -7,10 +7,6 @@ import { FoundContact, Friend } from "../definitions/contacts";
 import { UserQuestionFriend } from "../definitions/userquestionfriends";
 import { Answer } from "../definitions/answers";
 
-/* NOTE:
-ADDING userquestionfriend_shared_to_friend and userquestionfriend_pinned_by_friend is calling for rethink of the nature of UserQuestionFriends, doing away with the usage of carefree usage of DELETED and DELETE.
-*/
-
 export async function changeDeleteAtUserQuestionFriend(
   userQuestion: UserQuestion,
   contact: Friend,

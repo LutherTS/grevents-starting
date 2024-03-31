@@ -18,7 +18,6 @@ export async function fetchAllUserFriendsNotToUserQuestion(
   userQuestion: UserQuestion,
 ) {
   noStore();
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Friend>`
@@ -94,11 +93,9 @@ export async function fetchAllUserFriendsNotToUserQuestion(
 
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -114,8 +111,6 @@ export async function gatherContactByUserAndUsername(
   username: string,
 ) {
   // noStore(); // since juggling between relcombos
-  // console.log(user);
-  // console.log(username);
   if (username !== "") {
     try {
       const run = async () => {
@@ -147,11 +142,9 @@ export async function gatherContactByUserAndUsername(
 
           LIMIT 1;
         `;
-        // console.log(data);
         return data.rows[0];
       };
       const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-      // console.log(data);
       return data;
     } catch (error) {
       console.error("Database Error:", error);
@@ -162,7 +155,6 @@ export async function gatherContactByUserAndUsername(
 
 export async function fetchAllUserNotIrlFriends(user: User) {
   noStore();
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Friend>`
@@ -195,11 +187,9 @@ export async function fetchAllUserNotIrlFriends(user: User) {
 
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -209,7 +199,6 @@ export async function fetchAllUserNotIrlFriends(user: User) {
 
 export async function fetchAllUserIrlFriends(user: User) {
   noStore();
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Friend>`
@@ -242,11 +231,9 @@ export async function fetchAllUserIrlFriends(user: User) {
             
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -256,7 +243,6 @@ export async function fetchAllUserIrlFriends(user: User) {
 
 export async function fetchAllUserWhoIAmBlocking(user: User) {
   noStore();
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Block>`
@@ -289,11 +275,9 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
 
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -304,7 +288,6 @@ export async function fetchAllUserWhoIAmBlocking(user: User) {
 // Since I'm not verifying if I'm deactivated or not, it's not an issue.
 export async function fetchAllUserWhoHaveMeBlocked(user: User) {
   noStore();
-  // console.log(user);
   try {
     const run = async () => {
       const data = await sql<Block>`
@@ -337,11 +320,9 @@ export async function fetchAllUserWhoHaveMeBlocked(user: User) {
 
         LIMIT ${CONTACT_ARBITRARY_LIMIT};
       `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -356,8 +337,6 @@ export async function findContactByUserAndSession(
 ) {
   noStore(); // since changes in relation will revalidate // no
   // revalidate all the time now that I know revalidate isn't general
-  // console.log(user);
-  // console.log(session);
   if (session !== null) {
     try {
       const run = async () => {
@@ -398,11 +377,9 @@ export async function findContactByUserAndSession(
 
           LIMIT 1;
         `;
-        // console.log(data);
         return data.rows[0];
       };
       const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-      // console.log(data);
       return data;
     } catch (error) {
       console.error("Database Error:", error);
@@ -458,11 +435,9 @@ export async function findSentFriendToContactsByUser(user: User) {
 
           LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -517,11 +492,9 @@ export async function findSentIrlToContactsByUser(user: User) {
 
           LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -576,11 +549,9 @@ export async function findSentFriendFromContactsByUser(user: User) {
 
           LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -635,11 +606,9 @@ export async function findSentIrlFromContactsByUser(user: User) {
 
           LIMIT ${CONTACT_ARBITRARY_LIMIT};
         `;
-      // console.log(data);
       return data.rows;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -669,11 +638,9 @@ export async function countSentFriendToContactsByUser(user: User) {
           AND u1.user_state = 'LIVE' -- NEW
           AND u2.user_state = 'LIVE' -- NEW
         `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -702,11 +669,9 @@ export async function countSentIrlToContactsByUser(user: User) {
           AND u1.user_state = 'LIVE' -- NEW
           AND u2.user_state = 'LIVE' -- NEW
         `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -735,11 +700,9 @@ export async function countSentFriendFromContactsByUser(user: User) {
           AND u1.user_state = 'LIVE' -- NEW
           AND u2.user_state = 'LIVE' -- NEW
         `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);
@@ -768,11 +731,9 @@ export async function countSentIrlFromContactsByUser(user: User) {
           AND u1.user_state = 'LIVE' -- NEW
           AND u2.user_state = 'LIVE' -- NEW
         `;
-      // console.log(data);
       return data.rows[0].count;
     };
     const data = await pRetry(run, { retries: DEFAULT_RETRIES });
-    // console.log(data);
     return data;
   } catch (error) {
     console.error("Database Error:", error);

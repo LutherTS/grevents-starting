@@ -18,7 +18,6 @@ export type GatheredContact = {
   c2_contact_blocking: boolean;
   c1_contact_id: string;
   c1_contact_mirror_id: string;
-  // c1_contact_status_profile: ContactStatusProfile;
   c2_contact_status_other_profile: ContactStatusOtherProfile;
   user_state: UserState;
 };
@@ -38,7 +37,6 @@ export type FoundContact = {
   c1_contact_mirror_id: string;
   c1_user_first_id: string;
   c1_user_last_id: string;
-  // c1_contact_status_profile: ContactStatusProfile;
   c2_contact_status_other_profile: ContactStatusOtherProfile;
   c2_contact_status_relationship: ContactStatusRelationship;
   c2_contact_process_relationship: ContactProcessRelationship;
@@ -83,5 +81,3 @@ export type ContactProcessRelationship =
   | "ANNULIRL";
 
 export type ContactKind = "NONE" | "FRIEND" | "IRL";
-
-// export type ContactStatusProfile = "NONE" | "FIRSTACCESSEDTHROUGHFIND";
